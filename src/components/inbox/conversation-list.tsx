@@ -234,9 +234,9 @@ export function ConversationList({
 
   const activeAssigneeLabel = useMemo(() => {
     if (assigneeFilter === "all") return "Todos os Agentes";
-    if (assigneeFilter === "unassigned") return "NÃ£o AtribuÃ­do";
+    if (assigneeFilter === "unassigned") return "Não Atribuído";
     if (assigneeFilter === "me") return "Minhas Conversas";
-    return profiles.find((p) => p.user_id === assigneeFilter)?.full_name || "ResponsÃ¡vel";
+    return profiles.find((p) => p.user_id === assigneeFilter)?.full_name || "Responsável";
   }, [assigneeFilter, profiles]);
 
   const activeAiLabel = AI_FILTER_OPTIONS.find((o) => o.value === aiFilter)?.label ?? "Modo de Chat";
@@ -245,12 +245,12 @@ export function ConversationList({
   const INBOX_TABS = [
     { label: "Compartilhado", value: "shared" },
     { label: "Privado", value: "private" },
-    { label: "AtribuÃ­do", value: "assigned" },
-    { label: "NÃ£o AtribuÃ­do", value: "unassigned" },
+    { label: "Atribuído", value: "assigned" },
+    { label: "Não Atribuído", value: "unassigned" },
     { label: "Arquivado", value: "archived" },
     { label: "Fixado", value: "pinned" },
-    { label: "NÃ£o Lidas", value: "unread" },
-    { label: "MenÃ§Ãµes", value: "mentioned" },
+    { label: "Não Lidas", value: "unread" },
+    { label: "Menções", value: "mentioned" },
     { label: "Resolvido", value: "resolved" },
     { label: "Pendente", value: "pending" },
     { label: "Acompanhamento", value: "follow_up" },
@@ -340,7 +340,7 @@ export function ConversationList({
             <DropdownMenuContent align="start" className="border-slate-700 bg-slate-800 max-h-[250px] overflow-y-auto">
               <DropdownMenuItem onClick={() => setAssigneeFilter("all")} className={cn("text-xs", assigneeFilter === "all" && "text-primary font-bold")}>Todos os Agentes</DropdownMenuItem>
               <DropdownMenuItem onClick={() => setAssigneeFilter("me")} className={cn("text-xs", assigneeFilter === "me" && "text-primary font-bold")}>Minhas Conversas (eu)</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setAssigneeFilter("unassigned")} className={cn("text-xs", assigneeFilter === "unassigned" && "text-primary font-bold")}>NÃ£o AtribuÃ­do</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setAssigneeFilter("unassigned")} className={cn("text-xs", assigneeFilter === "unassigned" && "text-primary font-bold")}>Não Atribuído</DropdownMenuItem>
               {profiles.map((p) => (
                 <DropdownMenuItem
                   key={p.id}
