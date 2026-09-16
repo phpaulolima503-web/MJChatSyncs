@@ -6,7 +6,7 @@ import type { ComponentType } from 'react'
 
 // Quick-action shortcuts. Each navigates to the page that owns the
 // relevant "create" flow. We deliberately don't try to auto-open any
-// modal on the target page â€” that'd require touching those pages,
+// modal on the target page — that'd require touching those pages,
 // which is out of scope here.
 interface Action {
   label: string
@@ -17,10 +17,10 @@ interface Action {
 
 const ACTIONS: Action[] = [
   { label: 'Novo Contato', href: '/contacts', icon: UserPlus, tint: 'text-primary' },
-  { label: 'Novo NegÃ³cio', href: '/pipelines', icon: Briefcase, tint: 'text-blue-400' },
-  { label: 'Nova TransmissÃ£o', href: '/broadcasts/new', icon: Radio, tint: 'text-amber-400' },
-  { label: 'Nova AutomaÃ§Ã£o', href: '/automations/new', icon: Zap, tint: 'text-primary' },
-  { label: 'HistÃ³rico de Atendimentos', href: '/conversation-history', icon: History, tint: 'text-indigo-400' },
+  { label: 'Novo Negócio', href: '/pipelines', icon: Briefcase, tint: 'text-blue-400' },
+  { label: 'Nova Transmissão', href: '/broadcasts/new', icon: Radio, tint: 'text-amber-400' },
+  { label: 'Nova Automação', href: '/automations/new', icon: Zap, tint: 'text-primary' },
+  { label: 'Histórico de Atendimentos', href: '/conversation-history', icon: History, tint: 'text-indigo-400' },
 ]
 
 export function QuickActions() {
