@@ -1,15 +1,16 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { decrypt } from '@/lib/whatsapp/encryption'
+import { normalizeCategory, normalizeStatus } from '@/lib/whatsapp/template-mapping'
 
 /**
- * Sync message templates from Meta → local message_templates table.
+ * Sync message templates from Meta â†’ local message_templates table.
  *
  * Why this exists:
- *   The Settings → Message Templates UI only writes to Supabase. It does
+ *   The Settings â†’ Message Templates UI only writes to Supabase. It does
  *   NOT submit templates for approval to Meta. Users would create a
  *   template locally, try to broadcast with it, and hit Meta's error
- *   #132001 "Template name does not exist in the translation" — because
+ *   #132001 "Template name does not exist in the translation" â€” because
  *   Meta had never seen the template, or had it approved under a
  *   different language code than what we stored locally.
  *
@@ -19,13 +20,13 @@ import { decrypt } from '@/lib/whatsapp/encryption'
  *   something Meta will actually accept on send.
  *
  * Scope:
- *   - Read-only against Meta. We never push local → Meta (template
+ *   - Read-only against Meta. We never push local â†’ Meta (template
  *     submission happens in Meta's WhatsApp Manager and requires human
  *     review).
  *   - Only approved templates are surfaced by default. We return
- *     everything Meta returns and let the UI filter — so the user can
+ *     everything Meta returns and let the UI filter â€” so the user can
  *     see their Pending / Rejected templates and understand why.
- *   - Locally-created templates (no Meta counterpart) are NOT deleted —
+ *   - Locally-created templates (no Meta counterpart) are NOT deleted â€”
  *     they remain visible so the user can notice drift and clean up
  *     manually.
  */
@@ -46,41 +47,6 @@ interface MetaTemplate {
   status: 'APPROVED' | 'PENDING' | 'REJECTED' | 'PAUSED'
   category: string
   components?: MetaTemplateComponent[]
-}
-
-/**
- * Meta's template categories are upper-snake (MARKETING / UTILITY /
- * AUTHENTICATION); our DB CHECK constraint is TitleCase. Normalize.
- */
-function normalizeCategory(
-  meta: string,
-): 'Marketing' | 'Utility' | 'Authentication' {
-  const upper = meta.toUpperCase()
-  if (upper === 'UTILITY') return 'Utility'
-  if (upper === 'AUTHENTICATION') return 'Authentication'
-  return 'Marketing'
-}
-
-/**
- * Meta's template status is UPPERCASE; our DB uses TitleCase.
- */
-function normalizeStatus(
-  meta: string,
-): 'Draft' | 'Pending' | 'Approved' | 'Rejected' {
-  switch (meta.toUpperCase()) {
-    case 'APPROVED':
-      return 'Approved'
-    case 'PENDING':
-    case 'IN_APPEAL':
-    case 'PENDING_DELETION':
-      return 'Pending'
-    case 'REJECTED':
-    case 'DISABLED':
-    case 'PAUSED':
-      return 'Rejected'
-    default:
-      return 'Draft'
-  }
 }
 
 export async function POST() {
@@ -148,7 +114,7 @@ export async function POST() {
           const body = await metaRes.json()
           if (body?.error?.message) metaErr = body.error.message
         } catch {
-          // response wasn't JSON — keep the fallback
+          // response wasn't JSON â€” keep the fallback
         }
         return NextResponse.json({ error: metaErr }, { status: 502 })
       }
