@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils";
 const STATUS_LABELS: Record<ConversationStatus, string> = {
   open: "Aberta",
   pending: "Pendente",
-  closed: "ConcluÃ­da",
+  closed: "Concluída",
 };
 
 const STATUS_COLORS: Record<ConversationStatus, string> = {
@@ -133,11 +133,11 @@ export default function ConversationHistoryPage() {
       <div>
         <h1 className="flex items-center gap-2 text-2xl font-bold text-white">
           <History className="h-6 w-6 text-primary" />
-          HistÃ³rico de Atendimentos
+          Histórico de Atendimentos
         </h1>
         <p className="mt-1 text-sm text-slate-400">
           Todas as conversas com clientes, novas e antigas. Busque por nome
-          ou telefone, ou filtre por atendente e data pra ver quem atendeu o quÃª.
+          ou telefone, ou filtre por atendente e data pra ver quem atendeu o quê.
         </p>
       </div>
 
@@ -223,7 +223,7 @@ export default function ConversationHistoryPage() {
                   <th className="px-4 py-3 font-semibold">Telefone</th>
                   <th className="px-4 py-3 font-semibold">Atendente</th>
                   <th className="px-4 py-3 font-semibold">Status</th>
-                  <th className="px-4 py-3 font-semibold">Ãšltima mensagem</th>
+                  <th className="px-4 py-3 font-semibold">Última mensagem</th>
                   <th className="px-4 py-3 font-semibold">Quando</th>
                 </tr>
               </thead>
@@ -251,10 +251,10 @@ export default function ConversationHistoryPage() {
                         </div>
                       </td>
                       <td className="px-4 py-3 font-mono text-xs text-slate-400">
-                        {conv.contact?.phone ?? "â€”"}
+                        {conv.contact?.phone ?? "—"}
                       </td>
                       <td className="px-4 py-3 text-xs text-slate-300">
-                        {agent ?? <span className="text-slate-600">NÃ£o atribuÃ­do</span>}
+                        {agent ?? <span className="text-slate-600">Não atribuído</span>}
                       </td>
                       <td className="px-4 py-3">
                         <span
@@ -272,7 +272,7 @@ export default function ConversationHistoryPage() {
                       <td className="whitespace-nowrap px-4 py-3 text-xs text-slate-500">
                         {conv.last_message_at
                           ? format(new Date(conv.last_message_at), "dd/MM/yyyy HH:mm")
-                          : "â€”"}
+                          : "—"}
                       </td>
                     </tr>
                   );
