@@ -28,7 +28,7 @@ interface TemplatePickerProps {
   onSelect: (template: MessageTemplate, params: string[]) => void;
 }
 
-// Meta numbers template placeholders from 1 ({{1}}, {{2}}, â€¦) and the
+// Meta numbers template placeholders from 1 ({{1}}, {{2}}, …) and the
 // indices passed to the Graph API must be contiguous starting at 1.
 // We sort + dedupe here so a body using only {{2}} still drives a single
 // input slot, and so render-order matches send-order.
@@ -77,7 +77,7 @@ export function TemplatePicker({
         return;
       }
 
-      // Only Approved templates are sendable through Meta â€” anything else
+      // Only Approved templates are sendable through Meta — anything else
       // would 400 on the send route. Hide them rather than letting the
       // user pick a template that will be rejected.
       const { data, error } = await supabase
@@ -142,7 +142,7 @@ export function TemplatePicker({
           </DialogTitle>
           <DialogDescription className="text-slate-400">
             {selected
-              ? "Preencha os campos para montar este modelo. A Meta exige que toda variÃ¡vel seja preenchida."
+              ? "Preencha os campos para montar este modelo. A Meta exige que toda variável seja preenchida."
               : "Escolha um modelo aprovado do WhatsApp para enviar a este contato."}
           </DialogDescription>
         </DialogHeader>
@@ -158,7 +158,7 @@ export function TemplatePicker({
                 <p className="text-sm text-slate-300">Nenhum modelo aprovado</p>
                 <p className="mt-1 text-xs text-slate-500">
                   Aprove um modelo no Gerenciador do WhatsApp da Meta e depois
-                  sincronize em ConfiguraÃ§Ãµes â†’ Modelos.
+                  sincronize em Configurações → Modelos.
                 </p>
               </div>
             ) : (
@@ -197,7 +197,7 @@ export function TemplatePicker({
         ) : (
           <div className="space-y-3">
             <div className="rounded-md border border-slate-800 bg-slate-950/50 p-3">
-              <p className="mb-1 text-xs text-slate-400">PrÃ©-visualizaÃ§Ã£o</p>
+              <p className="mb-1 text-xs text-slate-400">Pré-visualização</p>
               <p className="whitespace-pre-wrap text-sm text-slate-200">
                 {renderBodyPreview(selected.body_text, params)}
               </p>
@@ -209,7 +209,7 @@ export function TemplatePicker({
             </div>
             {variables.map((v, i) => (
               <div key={v} className="space-y-1">
-                <Label className="text-xs text-slate-300">{`VariÃ¡vel {{${v}}}`}</Label>
+                <Label className="text-xs text-slate-300">{`Variável {{${v}}}`}</Label>
                 <Input
                   value={params[i] ?? ""}
                   onChange={(e) => {
