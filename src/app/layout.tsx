@@ -61,7 +61,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="pt-BR"
       data-theme={DEFAULT_THEME}
       className="h-full antialiased"
       suppressHydrationWarning
