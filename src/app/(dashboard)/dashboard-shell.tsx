@@ -7,14 +7,14 @@ import { Sidebar } from "@/components/layout/sidebar";
 import { Header } from "@/components/layout/header";
 
 // Auth-gated dashboard shell. Extracted from the layout so the layout
-// itself can stay a server component and export metadata (noindex) —
+// itself can stay a server component and export metadata (noindex) â€”
 // client components can't export Next's metadata object.
 
 function DashboardShellInner({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
   const router = useRouter();
 
-  // Sidebar drawer state — only used on mobile. On lg+ the sidebar is
+  // Sidebar drawer state â€” only used on mobile. On lg+ the sidebar is
   // always visible and this stays at `false` (ignored by the component).
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const closeSidebar = useCallback(() => setSidebarOpen(false), []);
@@ -30,7 +30,7 @@ function DashboardShellInner({ children }: { children: React.ReactNode }) {
       <div className="flex h-screen items-center justify-center bg-slate-950">
         <div className="flex flex-col items-center gap-3">
           <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-          <p className="text-sm text-slate-400">Loading...</p>
+          <p className="text-sm text-slate-400">Carregando...</p>
         </div>
       </div>
     );
