@@ -27,6 +27,9 @@ import {
   Star,
   AlertOctagon,
   Ban,
+  CheckCircle2,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 import { format, isToday, isYesterday, differenceInHours } from "date-fns";
 import { Badge } from "@/components/ui/badge";
@@ -97,6 +100,15 @@ interface MessageThreadProps {
    * working; the button is only rendered when this is provided.
    */
   onRefresh?: () => void;
+  /**
+   * Whether the contact details panel (desktop-only, rendered by the
+   * parent alongside this thread) is currently shown. Drives the
+   * eye/eye-off toggle icon. Optional â€” the toggle button only renders
+   * when the parent wires this up alongside `onToggleContactSidebar`.
+   */
+  contactSidebarVisible?: boolean;
+  /** Fired when the user clicks the eye toggle to show/hide the contact panel. */
+  onToggleContactSidebar?: () => void;
 }
 
 function formatDateSeparator(dateStr: string): string {
@@ -124,9 +136,9 @@ function groupMessagesByDate(messages: Message[]) {
 }
 
 const STATUS_OPTIONS: { label: string; value: ConversationStatus; color: string }[] = [
-  { label: "Open", value: "open", color: "text-primary" },
-  { label: "Pending", value: "pending", color: "text-amber-400" },
-  { label: "Closed", value: "closed", color: "text-slate-400" },
+  { label: "Aberta", value: "open", color: "text-primary" },
+  { label: "Pendente", value: "pending", color: "text-amber-400" },
+  { label: "Fechada", value: "closed", color: "text-slate-400" },
 ];
 
 /**
@@ -154,6 +166,8 @@ export function MessageThread({
   onBack,
   resyncToken = 0,
   onRefresh,
+  contactSidebarVisible,
+  onToggleContactSidebar,
 }: MessageThreadProps) {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
@@ -991,8 +1005,8 @@ export function MessageThread({
               type="button"
               onClick={handleRefreshClick}
               disabled={isRefreshing}
-              aria-label="Refresh conversation"
-              title="Refresh"
+              aria-label="Atualizar conversa"
+              title="Atualizar"
               className={cn(
                 "inline-flex h-7 w-7 items-center justify-center rounded-md text-slate-400 transition-colors hover:bg-slate-800 hover:text-white disabled:opacity-60",
               )}
@@ -1003,11 +1017,30 @@ export function MessageThread({
             </button>
           )}
 
+          {/* Contact panel show/hide â€” desktop only, since the panel
+              itself is desktop-only. Hiding it gives the thread more
+              width for the actual conversation. */}
+          {onToggleContactSidebar && (
+            <button
+              type="button"
+              onClick={onToggleContactSidebar}
+              title={contactSidebarVisible ? "Ocultar painel do contato" : "Mostrar painel do contato"}
+              aria-label={contactSidebarVisible ? "Ocultar painel do contato" : "Mostrar painel do contato"}
+              className="hidden lg:inline-flex h-7 w-7 items-center justify-center rounded-md text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
+            >
+              {contactSidebarVisible ? (
+                <Eye className="h-3.5 w-3.5" />
+              ) : (
+                <EyeOff className="h-3.5 w-3.5" />
+              )}
+            </button>
+          )}
+
           {/* Pin Toggle */}
           <button
             type="button"
             onClick={handleTogglePin}
-            title={conversation.pinned ? "Unpin conversation" : "Pin conversation"}
+            title={conversation.pinned ? "Desafixar conversa" : "Fixar conversa"}
             className={cn(
               "inline-flex h-7 w-7 items-center justify-center rounded-md transition-colors hover:bg-slate-800",
               conversation.pinned ? "text-primary fill-primary rotate-45" : "text-slate-400 hover:text-white"
@@ -1020,7 +1053,7 @@ export function MessageThread({
           <button
             type="button"
             onClick={handleToggleFavorite}
-            title={conversation.favorite ? "Remove from favorites" : "Add to favorites"}
+            title={conversation.favorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
             className={cn(
               "inline-flex h-7 w-7 items-center justify-center rounded-md transition-colors hover:bg-slate-800",
               conversation.favorite ? "text-amber-400 fill-amber-400" : "text-slate-400 hover:text-white"
@@ -1033,7 +1066,7 @@ export function MessageThread({
           <button
             type="button"
             onClick={handleToggleSpam}
-            title={conversation.spam ? "Unmark as spam" : "Mark as spam"}
+            title={conversation.spam ? "Desmarcar como spam" : "Marcar como spam"}
             className={cn(
               "inline-flex h-7 w-7 items-center justify-center rounded-md transition-colors hover:bg-slate-800",
               conversation.spam ? "text-rose-500 fill-rose-500/10" : "text-slate-400 hover:text-white"
@@ -1046,7 +1079,7 @@ export function MessageThread({
           <button
             type="button"
             onClick={handleToggleBlocked}
-            title={conversation.blocked ? "Unblock contact" : "Block contact"}
+            title={conversation.blocked ? "Desbloquear contato" : "Bloquear contato"}
             className={cn(
               "inline-flex h-7 w-7 items-center justify-center rounded-md transition-colors hover:bg-slate-800",
               conversation.blocked ? "text-rose-650" : "text-slate-400 hover:text-white"
@@ -1054,6 +1087,22 @@ export function MessageThread({
           >
             <Ban className="h-3.5 w-3.5" />
           </button>
+
+          {/* Conclude â€” the prominent one-click way to close a conversation.
+              The Status dropdown next to it still exists for switching to
+              Pending or reopening; this button is just the fast path for
+              the single most common action (finishing an attendance). */}
+          {conversation.status !== "closed" && (
+            <button
+              type="button"
+              onClick={() => handleStatusChange("closed")}
+              title="Concluir esta conversa"
+              className="inline-flex h-8 items-center justify-center gap-1.5 rounded-md bg-emerald-600 px-3 text-xs font-bold text-white shadow-sm transition-colors hover:bg-emerald-500"
+            >
+              <CheckCircle2 className="h-4 w-4" />
+              Concluir
+            </button>
+          )}
 
           {/* Status dropdown */}
           <DropdownMenu>
@@ -1085,11 +1134,11 @@ export function MessageThread({
             <button
               type="button"
               onClick={() => handleAssignChange(user?.id || null)}
-              title="Take over this conversation"
+              title="Assumir esta conversa"
               className="inline-flex h-7 items-center justify-center gap-1 px-2.5 text-xs font-semibold rounded-md bg-indigo-600 hover:bg-indigo-700 text-white transition-colors"
             >
               <UserPlus className="h-3 w-3" />
-              <span className="hidden md:inline">Take Over</span>
+              <span className="hidden md:inline">Assumir</span>
             </button>
           )}
 
@@ -1098,11 +1147,11 @@ export function MessageThread({
             <button
               type="button"
               onClick={() => handleAssignChange(null)}
-              title="Release this conversation to unassigned"
+              title="Liberar esta conversa (remover atribuiÃ§Ã£o)"
               className="inline-flex h-7 items-center justify-center gap-1 px-2.5 text-xs font-semibold rounded-md bg-slate-800 hover:bg-slate-750 text-slate-300 transition-colors border border-slate-700"
             >
               <UserMinus className="h-3 w-3" />
-              <span className="hidden md:inline">Release</span>
+              <span className="hidden md:inline">Liberar</span>
             </button>
           )}
 
@@ -1111,11 +1160,11 @@ export function MessageThread({
             <button
               type="button"
               onClick={handleRequestHelp}
-              title="Request assistance from teammates"
+              title="Pedir ajuda a um colega"
               className="inline-flex h-7 items-center justify-center gap-1 px-2.5 text-xs font-semibold rounded-md bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/20 transition-colors"
             >
               <HelpCircle className="h-3 w-3" />
-              <span className="hidden md:inline">Request Help</span>
+              <span className="hidden md:inline">Pedir Ajuda</span>
             </button>
           )}
 
@@ -1137,7 +1186,7 @@ export function MessageThread({
             >
               {profiles.length === 0 ? (
                 <DropdownMenuItem disabled className="text-sm text-slate-500">
-                  No teammates available
+                  Nenhum colega disponÃ­vel
                 </DropdownMenuItem>
               ) : (
                 profiles.map((p) => {
@@ -1153,7 +1202,7 @@ export function MessageThread({
                     >
                       <span className="flex-1">
                         {p.full_name}
-                        {p.user_id === user?.id ? " (me)" : ""}
+                        {p.user_id === user?.id ? " (eu)" : ""}
                       </span>
                       {isSelected && <Check className="ml-2 h-3 w-3" />}
                     </DropdownMenuItem>
