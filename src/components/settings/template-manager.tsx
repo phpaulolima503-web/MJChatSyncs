@@ -29,7 +29,10 @@ import {
 import type { MessageTemplate } from '@/types';
 
 const CATEGORIES = ['Marketing', 'Utility', 'Authentication'] as const;
-const HEADER_TYPES = ['text', 'image', 'video', 'document'] as const;
+// Image/video/document headers need a sample file uploaded to Meta before
+// submission â€” that flow isn't wired up yet. Create those directly in
+// Meta Business Manager and use "Sync from Meta" to pull them in.
+const HEADER_TYPES = ['text'] as const;
 
 const categoryColors: Record<string, string> = {
   Marketing: 'bg-purple-600/20 text-purple-400 border-purple-600/30',
@@ -50,10 +53,11 @@ interface TemplateFormData {
   language: string;
   body_text: string;
   header_type: string;
+  header_content: string;
   footer_text: string;
 }
 
-// Meta's language codes are exact — "en" and "en_US" are distinct and a
+// Meta's language codes are exact â€” "en" and "en_US" are distinct and a
 // template approved under one will be rejected if you send with the other
 // (Graph API error #132001 "Template name does not exist in the
 // translation"). Default to en_US to match the DB default on
@@ -64,11 +68,12 @@ const emptyForm: TemplateFormData = {
   language: 'en_US',
   body_text: '',
   header_type: '',
+  header_content: '',
   footer_text: '',
 };
 
 // Common Meta template language codes. The field still accepts any
-// string — this just offers autocomplete for the usual suspects. Full
+// string â€” this just offers autocomplete for the usual suspects. Full
 // list: https://developers.facebook.com/docs/whatsapp/api/messages/message-templates#supported-languages
 const COMMON_LANGUAGE_CODES = [
   'en_US',
@@ -140,35 +145,43 @@ export function TemplateManager() {
       toast.error('Body text is required');
       return;
     }
+    if (form.header_type === 'text' && !form.header_content.trim()) {
+      toast.error('Header text is required when header type is Text');
+      return;
+    }
+    if (!user) {
+      toast.error('Not authenticated');
+      return;
+    }
 
     try {
       setSaving(true);
-      if (!user) {
-        toast.error('Not authenticated');
+
+      const res = await fetch('/api/whatsapp/templates', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name.trim(),
+          category: form.category,
+          language: form.language.trim() || 'en_US',
+          body_text: form.body_text.trim(),
+          header_type: form.header_type || null,
+          header_content: form.header_content.trim() || null,
+          footer_text: form.footer_text.trim() || null,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        toast.error(data.error || 'Failed to create template');
         return;
       }
 
-      const payload = {
-        user_id: user.id,
-        name: form.name.trim(),
-        category: form.category,
-        language: form.language.trim() || 'en_US',
-        body_text: form.body_text.trim(),
-        header_type: form.header_type || null,
-        footer_text: form.footer_text.trim() || null,
-        status: 'Draft' as const,
-      };
-
-      const { error } = await supabase
-        .from('message_templates')
-        .insert(payload);
-
-      if (error) throw error;
-
-      toast.success('Template created successfully');
+      toast.success('Template submitted to Meta for approval');
       setDialogOpen(false);
       setForm(emptyForm);
-      if (user) await fetchTemplates(user.id);
+      await fetchTemplates(user.id);
     } catch (err) {
       console.error('Save error:', err);
       toast.error('Failed to create template');
@@ -180,7 +193,7 @@ export function TemplateManager() {
   /**
    * Pull approved templates from Meta and upsert them into the local
    * catalog. After this runs, every local row is guaranteed to match
-   * something Meta will actually accept on send — stops users getting
+   * something Meta will actually accept on send â€” stops users getting
    * stuck on error #132001 "Template name does not exist".
    */
   async function handleSyncFromMeta() {
@@ -213,7 +226,7 @@ export function TemplateManager() {
       }
       if (data.truncated) {
         toast.warning(
-          'Hit Meta pagination cap — more templates may exist. Contact support if this persists.',
+          'Hit Meta pagination cap â€” more templates may exist. Contact support if this persists.',
         );
       }
       await fetchTemplates(user.id);
@@ -243,48 +256,6 @@ export function TemplateManager() {
     }
   }
 
-  async function handleLoadReferenceTemplates() {
-    if (!user) return;
-    setSaving(true);
-    try {
-      const examples = [
-        {
-          user_id: user.id,
-          name: 'welcome_message',
-          category: 'Marketing',
-          language: 'en_US',
-          body_text: 'Hi {{1}}! Welcome to our store. We have a special 20% discount for you using code WELCOME20.',
-          status: 'Approved',
-        },
-        {
-          user_id: user.id,
-          name: 'appointment_reminder',
-          category: 'Utility',
-          language: 'en_US',
-          body_text: 'Hello {{1}}, this is a reminder for your upcoming appointment on {{2}}.',
-          status: 'Approved',
-        },
-        {
-          user_id: user.id,
-          name: 'payment_update',
-          category: 'Utility',
-          language: 'en_US',
-          body_text: 'Hi {{1}}, we have successfully received your payment of {{2}}. Thank you!',
-          status: 'Approved',
-        }
-      ];
-      const { error } = await supabase.from('message_templates').insert(examples as any);
-      if (error) throw error;
-      toast.success('Reference templates loaded');
-      await fetchTemplates(user.id);
-    } catch (err) {
-      console.error(err);
-      toast.error('Failed to load templates');
-    } finally {
-      setSaving(false);
-    }
-  }
-
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
@@ -301,7 +272,7 @@ export function TemplateManager() {
           <p className="text-sm text-slate-400">
             Create and manage your WhatsApp message templates. Meta requires
             every template to be approved in the WhatsApp Manager before it can
-            be sent — use &quot;Sync from Meta&quot; to pull your approved list.
+            be sent â€” use &quot;Sync from Meta&quot; to pull your approved list.
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -315,7 +286,7 @@ export function TemplateManager() {
             <RefreshCw
               className={`size-4 ${syncing ? 'animate-spin' : ''}`}
             />
-            {syncing ? 'Syncing…' : 'Sync from Meta'}
+            {syncing ? 'Syncingâ€¦' : 'Sync from Meta'}
           </Button>
           <Button
             onClick={() => {
@@ -339,9 +310,6 @@ export function TemplateManager() {
               <Button onClick={() => { setForm(emptyForm); setDialogOpen(true); }} className="bg-primary hover:bg-primary/90 text-primary-foreground">
                 <Plus className="size-4 mr-2" />
                 Create Template
-              </Button>
-              <Button variant="outline" onClick={handleLoadReferenceTemplates} disabled={saving} className="border-slate-700 text-slate-300 bg-slate-800">
-                Load Examples
               </Button>
             </div>
           </CardContent>
@@ -446,7 +414,7 @@ export function TemplateManager() {
                 </datalist>
                 <p className="text-[11px] text-slate-500">
                   Must match the exact language code the template is approved
-                  under on Meta — e.g. <code>en_US</code> and <code>en</code>{' '}
+                  under on Meta â€” e.g. <code>en_US</code> and <code>en</code>{' '}
                   are distinct.
                 </p>
               </div>
@@ -473,6 +441,18 @@ export function TemplateManager() {
                 </SelectContent>
               </Select>
             </div>
+
+            {form.header_type === 'text' && (
+              <div className="space-y-2">
+                <Label className="text-slate-300">Header Text</Label>
+                <Input
+                  placeholder="e.g. Order Confirmation"
+                  value={form.header_content}
+                  onChange={(e) => setForm({ ...form, header_content: e.target.value })}
+                  className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-500"
+                />
+              </div>
+            )}
 
             <div className="space-y-2">
               <Label className="text-slate-300">Body Text</Label>
