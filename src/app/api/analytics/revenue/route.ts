@@ -66,8 +66,8 @@ export async function GET(req: Request) {
     });
 
     const totalClosed = wonCount + lostCount;
-    const winRate = totalClosed > 0 ? Math.round((wonCount / totalClosed) * 100) : 70; // 70% premium default
-    const avgDealValue = deals.length > 0 ? Math.round(totalPipeline / deals.length) : 45000;
+    const winRate = totalClosed > 0 ? Math.round((wonCount / totalClosed) * 100) : 0;
+    const avgDealValue = deals.length > 0 ? Math.round(totalPipeline / deals.length) : 0;
 
     // 4. Forecast Buckets (Monthly, Quarterly, Annual)
     const now = new Date();
@@ -131,73 +131,47 @@ export async function GET(req: Request) {
     const revenueByService = Object.entries(serviceMap).map(([name, value]) => ({ name, value }));
     const revenueBySource = Object.entries(sourceMap).map(([name, value]) => ({ name, value }));
 
-    // Fallback Mock Data if database is empty for visual excellence
-    if (revenueByService.length === 0) {
-      revenueByService.push(
-        { name: 'Enterprise WhatsApp CRM', value: 350000 },
-        { name: 'E-commerce Portal', value: 180000 },
-        { name: 'Standard Dynamic Website', value: 135000 },
-        { name: 'SEO & Maintenance Plans', value: 45000 }
-      );
-    }
-    if (revenueBySource.length === 0) {
-      revenueBySource.push(
-        { name: 'WhatsApp Inbound', value: 380000 },
-        { name: 'Web Forms', value: 180000 },
-        { name: 'Referrals', value: 120000 },
-        { name: 'Direct Outreach', value: 30000 }
-      );
-    }
-
     // 6. Compute Customer Lifetime Value (CLV) Leaderboard
     const clvLeaderboard = contacts.map(c => {
       // Find matching predictions in MongoDB
       const pred = mongodbPredictions.find(p => p.contact_id === c.id)?.predictions || {};
-      
+
       const actualPaymentsSum = payments
         .filter(p => p.contact_id === c.id && p.status === 'completed')
         .reduce((sum, p) => sum + (Number(p.amount) || 0), 0);
 
-      // Predicted Lifetime value incorporates won deals + future recurring projections
-      const predictedClv = pred.clv?.estimatedValue || (actualPaymentsSum > 0 ? actualPaymentsSum * 1.5 : 45000);
-      const recurringRevenue = pred.clv?.recurringRevenue || (actualPaymentsSum > 0 ? Math.round(actualPaymentsSum * 0.1) : 150);
-      const repeatProbability = pred.clv?.repeatPurchaseProbability || 65;
+      // Predicted Lifetime value: use the ML prediction when we have one,
+      // otherwise project from real payments. With neither, 0 â€” we don't
+      // invent a number with no data behind it.
+      const predictedClv = pred.clv?.estimatedValue || (actualPaymentsSum > 0 ? actualPaymentsSum * 1.5 : 0);
+      const recurringRevenue = pred.clv?.recurringRevenue || (actualPaymentsSum > 0 ? Math.round(actualPaymentsSum * 0.1) : 0);
+      const repeatProbability = pred.clv?.repeatPurchaseProbability || 0;
 
       return {
         id: c.id,
         contactName: c.name || 'Client',
         company: c.company || 'Their Business',
         industry: c.industry || 'IT Services',
-        actualPaid: actualPaymentsSum || 15000, // Premium mock baseline if no payments
+        actualPaid: actualPaymentsSum,
         predictedClv: Math.max(predictedClv, actualPaymentsSum),
         recurringRevenue,
         repeatProbability,
       };
     }).sort((a, b) => b.predictedClv - a.predictedClv).slice(0, 10);
 
-    // Fallback leaderboard if empty
-    if (clvLeaderboard.length === 0) {
-      clvLeaderboard.push(
-        { id: '1', contactName: 'Ashish Kumar', company: 'MaaJanki Enterprises', industry: 'Retail & Commerce', actualPaid: 90000, predictedClv: 180000, recurringRevenue: 1500, repeatProbability: 85 },
-        { id: '2', contactName: 'Rajesh Sharma', company: 'Sharda Logistics', industry: 'Logistics & Transport', actualPaid: 45000, predictedClv: 95000, recurringRevenue: 800, repeatProbability: 70 },
-        { id: '3', contactName: 'Pooja Patel', company: 'Aarav Tech Solutions', industry: 'Tech SaaS', actualPaid: 120000, predictedClv: 210000, recurringRevenue: 2000, repeatProbability: 90 },
-        { id: '4', contactName: 'Vikram Singh', company: 'Jaipur Crafts', industry: 'E-commerce Export', actualPaid: 15000, predictedClv: 75000, recurringRevenue: 500, repeatProbability: 60 }
-      );
-    }
-
     return NextResponse.json({
       metrics: {
-        totalPipeline: totalPipeline || 710000,
-        expectedRevenue: expectedRevenue || 456000,
-        wonRevenue: wonRevenue || 255000,
-        lostRevenue: lostRevenue || 60000,
+        totalPipeline,
+        expectedRevenue,
+        wonRevenue,
+        lostRevenue,
         winRate,
         avgDealValue,
       },
       forecasts: {
-        monthly: monthlyForecast || 85000,
-        quarterly: quarterlyForecast || 245000,
-        annual: annualForecast || 456000,
+        monthly: monthlyForecast,
+        quarterly: quarterlyForecast,
+        annual: annualForecast,
       },
       groupings: {
         revenueByService,
