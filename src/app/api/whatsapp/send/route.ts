@@ -46,6 +46,7 @@ export async function POST(request: Request) {
       media_url,
       template_name,
       template_params,
+      template_language,
       reply_to_message_id,
       is_internal,
     } = body
@@ -159,7 +160,7 @@ export async function POST(request: Request) {
 
     // Self-heal legacy CBC-encrypted tokens. Fire-and-forget: we
     // return from the send without waiting, so a failed upgrade just
-    // means the next send tries again. The upgrade is idempotent —
+    // means the next send tries again. The upgrade is idempotent â€”
     // concurrent sends both produce valid GCM ciphertexts of the same
     // plaintext, last write wins.
     if (isLegacyFormat(config.access_token)) {
@@ -179,7 +180,7 @@ export async function POST(request: Request) {
 
     // Resolve the reply target (if any) to its Meta message_id, which is
     // what `context.message_id` on the outgoing Meta payload needs. The
-    // parent must belong to this same conversation — otherwise a caller
+    // parent must belong to this same conversation â€” otherwise a caller
     // could quote messages they can't see by guessing UUIDs.
     let contextMessageId: string | undefined
     if (reply_to_message_id) {
@@ -197,7 +198,7 @@ export async function POST(request: Request) {
         )
       }
       if (!parent.message_id) {
-        // Parent never reached Meta (still in 'sending' or 'failed') — we
+        // Parent never reached Meta (still in 'sending' or 'failed') â€” we
         // can't quote it on WhatsApp. Send without context rather than
         // dropping the message entirely.
         console.warn(
@@ -208,7 +209,7 @@ export async function POST(request: Request) {
       }
     }
 
-    // Send via Meta API — retry with phone-number variants if Meta rejects
+    // Send via Meta API â€” retry with phone-number variants if Meta rejects
     // with "recipient not in allowed list" (common in sandbox / when a
     // number was registered with/without a trunk 0). If an alternate
     // format succeeds, we persist it back to the contact row so the
@@ -223,6 +224,7 @@ export async function POST(request: Request) {
           accessToken,
           to: phone,
           templateName: template_name,
+          language: template_language || undefined,
           params: template_params || [],
           contextMessageId,
         })
@@ -257,7 +259,7 @@ export async function POST(request: Request) {
             throw err
           }
           lastError = err
-          console.warn(`[whatsapp/send] variant "${variant}" rejected by Meta, trying next…`)
+          console.warn(`[whatsapp/send] variant "${variant}" rejected by Meta, trying nextâ€¦`)
         }
       }
 
@@ -276,7 +278,7 @@ export async function POST(request: Request) {
     // will yield workingPhone itself, so re-storing preserves it.
     if (workingPhone !== sanitizedPhone) {
       console.log(
-        `[whatsapp/send] Auto-corrected contact phone: ${sanitizedPhone} → ${workingPhone}`
+        `[whatsapp/send] Auto-corrected contact phone: ${sanitizedPhone} â†’ ${workingPhone}`
       )
       await supabase
         .from('contacts')
@@ -284,7 +286,7 @@ export async function POST(request: Request) {
         .eq('id', contact.id)
     }
 
-    // Insert message into DB — field names MUST match the messages schema
+    // Insert message into DB â€” field names MUST match the messages schema
     // (see supabase/migrations/001_initial_schema.sql):
     //   conversation_id, sender_type, content_type, content_text,
     //   media_url, template_name, message_id, status, created_at
@@ -322,12 +324,12 @@ export async function POST(request: Request) {
       })
       .eq('id', conversation_id)
 
-    // Pause any active Flow run for this contact — the agent stepping
+    // Pause any active Flow run for this contact â€” the agent stepping
     // in is the strongest "yield, human is here" signal. See PR #2
     // plan for why we pause (not end): preserves diagnostic state +
     // lets the agent or the 24h timeout sweep cleanly resolve the
     // run later. For accounts with no active runs the UPDATE matches
-    // zero rows — cheap and harmless.
+    // zero rows â€” cheap and harmless.
     try {
       const { error: pauseErr } = await supabaseAdmin()
         .from('flow_runs')
@@ -340,7 +342,7 @@ export async function POST(request: Request) {
         .eq('contact_id', contact.id)
         .eq('status', 'active')
       if (pauseErr) {
-        // Best-effort — log + continue. The agent's message already
+        // Best-effort â€” log + continue. The agent's message already
         // landed at Meta; don't fail the response over a bookkeeping
         // miss. Worst case: a stale active run gets caught by the
         // stale-run cron sweep within 24h.
