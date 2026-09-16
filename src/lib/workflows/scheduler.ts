@@ -156,9 +156,9 @@ export async function processPendingDelays(): Promise<number> {
   return resumed
 }
 
-// ─────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Helpers
-// ─────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function computeNextFireAt(type: ScheduleType, value: string, timezone: string): string | null {
   const now = new Date()
@@ -197,17 +197,104 @@ function parseRecurringInterval(value: string): number | null {
   }
 }
 
+// Parses one cron field (e.g. "*", "5", "1-5", "*/15", "1,15,30") into the
+// set of values it matches within [min, max].
+function parseCronField(field: string, min: number, max: number): Set<number> {
+  const values = new Set<number>()
+  for (const part of field.split(',')) {
+    let step = 1
+    let range = part
+    if (part.includes('/')) {
+      const [r, s] = part.split('/')
+      range = r
+      step = parseInt(s, 10)
+      if (!Number.isFinite(step) || step <= 0) continue
+    }
+
+    let start = min
+    let end = max
+    if (range !== '*') {
+      if (range.includes('-')) {
+        const [a, b] = range.split('-').map((n) => parseInt(n, 10))
+        if (!Number.isFinite(a) || !Number.isFinite(b)) continue
+        start = a
+        end = b
+      } else {
+        const v = parseInt(range, 10)
+        if (!Number.isFinite(v)) continue
+        start = end = v
+      }
+    }
+    for (let v = start; v <= end; v += step) {
+      if (v >= min && v <= max) values.add(v)
+    }
+  }
+  return values
+}
+
+// Standard 5-field cron (minute hour day-of-month month day-of-week).
+// Searches forward minute-by-minute (day-granularity first, for speed) up
+// to 4 years out; returns null if the expression is invalid or unsatisfiable
+// in that window (e.g. "0 0 30 2 *" â€” Feb 30 never exists).
 function parseCronNextFire(cron: string, from: Date): Date | null {
-  // Simple cron parser for common patterns
-  // Full cron parsing would use a library like croner
   const parts = cron.trim().split(/\s+/)
   if (parts.length !== 5) return null
+  const [minField, hourField, domField, monthField, dowField] = parts
 
-  // For now: always fire next minute (production would use proper cron parsing)
-  // In production, use: import { Cron } from 'croner'
-  const next = new Date(from)
-  next.setMinutes(next.getMinutes() + 1, 0, 0)
-  return next
+  const minutes = parseCronField(minField, 0, 59)
+  const hours = parseCronField(hourField, 0, 23)
+  const doms = parseCronField(domField, 1, 31)
+  const months = parseCronField(monthField, 1, 12)
+  const dows = parseCronField(dowField, 0, 6)
+
+  if ([minutes, hours, doms, months, dows].some((s) => s.size === 0)) return null
+
+  const sortedHours = Array.from(hours).sort((a, b) => a - b)
+  const sortedMinutes = Array.from(minutes).sort((a, b) => a - b)
+
+  // POSIX cron rule: if both day-of-month and day-of-week are restricted
+  // (not "*"), a day matches when EITHER matches; if only one is
+  // restricted, that one alone decides.
+  const domWildcard = domField.trim() === '*'
+  const dowWildcard = dowField.trim() === '*'
+
+  const candidate = new Date(from)
+  candidate.setSeconds(0, 0)
+  candidate.setMinutes(candidate.getMinutes() + 1)
+
+  const maxDays = 4 * 366
+  for (let dayIter = 0; dayIter < maxDays; dayIter++) {
+    const month = candidate.getMonth() + 1
+    const dom = candidate.getDate()
+    const dow = candidate.getDay()
+
+    const domMatch = doms.has(dom)
+    const dowMatch = dows.has(dow)
+    const dayMatches =
+      months.has(month) &&
+      (domWildcard && dowWildcard ? true : domWildcard ? dowMatch : dowWildcard ? domMatch : domMatch || dowMatch)
+
+    if (dayMatches) {
+      const dayStart = new Date(candidate)
+      dayStart.setHours(0, 0, 0, 0)
+      const isFirstDay = dayIter === 0
+
+      for (const h of sortedHours) {
+        if (isFirstDay && h < candidate.getHours()) continue
+        for (const m of sortedMinutes) {
+          if (isFirstDay && h === candidate.getHours() && m < candidate.getMinutes()) continue
+          const result = new Date(dayStart)
+          result.setHours(h, m, 0, 0)
+          return result
+        }
+      }
+    }
+
+    candidate.setDate(candidate.getDate() + 1)
+    candidate.setHours(0, 0, 0, 0)
+  }
+
+  return null
 }
 
 function isBusinessHours(timezone: string): boolean {
