@@ -27,6 +27,7 @@ import { cn } from "@/lib/utils";
 const pageTitles: Record<string, string> = {
   "/dashboard": "Painel",
   "/inbox": "Caixa de Entrada",
+  "/conversation-history": "HistÃ³rico de Atendimentos",
   "/contacts": "Contatos",
   "/pipelines": "Funis",
   "/pipeline-manager": "Gerenciador de Funis",
