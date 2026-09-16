@@ -83,7 +83,7 @@ interface MessageThreadProps {
   onBack?: () => void;
   /**
    * Increment to force the messages + reactions fetch effects to refire.
-   * Parent bumps this on realtime reconnect / tab visibility → visible
+   * Parent bumps this on realtime reconnect / tab visibility â†’ visible
    * so the open thread catches up on any events sent while the WS was
    * disconnected or the tab was throttled. Optional so existing callers
    * keep working.
@@ -91,7 +91,7 @@ interface MessageThreadProps {
   resyncToken?: number;
   /**
    * Fired by the manual-refresh button in the thread header. The parent
-   * typically bumps the same `resyncToken` it controls — this gives the
+   * typically bumps the same `resyncToken` it controls â€” this gives the
    * user a way to force a refetch when they suspect realtime missed an
    * event (or they're impatient). Optional so existing callers keep
    * working; the button is only rendered when this is provided.
@@ -135,7 +135,7 @@ const STATUS_OPTIONS: { label: string; value: ConversationStatus; color: string 
  * `/public/inbox-doodle.svg`; the slate-950 colour sits underneath so
  * the doodles read as a subtle pattern rather than a stark grid.
  *
- * Defined once at module scope so the two render paths can't drift —
+ * Defined once at module scope so the two render paths can't drift â€”
  * if we ever switch the asset, both spots update together.
  */
 const DOODLE_BG_CLASSES =
@@ -280,7 +280,7 @@ export function MessageThread({
   }, [profiles, user?.id]);
 
   // Profiles are bounded by RLS to rows the current user is allowed to
-  // see — today that's just the current user, but the dropdown keeps the
+  // see â€” today that's just the current user, but the dropdown keeps the
   // shape ready for shared-team workspaces without a refactor.
   useEffect(() => {
     let cancelled = false;
@@ -330,9 +330,9 @@ export function MessageThread({
   }, [messages]);
 
   // Store latest callback in a ref so fetchMessages doesn't need to
-  // depend on `onMessagesLoaded` — otherwise parent re-renders cause
-  // fetchMessages to change → useEffect re-fires → refetch → realtime
-  // UPDATE on conversations.unread_count → parent re-renders → LOOP.
+  // depend on `onMessagesLoaded` â€” otherwise parent re-renders cause
+  // fetchMessages to change â†’ useEffect re-fires â†’ refetch â†’ realtime
+  // UPDATE on conversations.unread_count â†’ parent re-renders â†’ LOOP.
   // The ref is written inside an effect so the mutation doesn't happen
   // during render (React 19 refs rule); consumers only read `.current`
   // inside the async fetch completion, which runs after the render.
@@ -345,7 +345,7 @@ export function MessageThread({
 
   // Fetch messages whenever the selected conversation changes. Kept
   // separate from the unread-reset effect so that incoming messages
-  // arriving while the thread is open don't trigger a full refetch —
+  // arriving while the thread is open don't trigger a full refetch â€”
   // they only flip hasUnread, which only the reset effect listens to.
   useEffect(() => {
     if (!conversationId) return;
@@ -377,12 +377,12 @@ export function MessageThread({
       cancelled = true;
     };
     // `resyncToken` is included so the parent can force a refetch when
-    // the realtime channel reconnects or the tab regains focus —
+    // the realtime channel reconnects or the tab regains focus â€”
     // realtime is best-effort and any message events sent while the WS
     // was disconnected or throttled are otherwise lost.
   }, [conversationId, resyncToken]);
 
-  // Reactions fetch — pulls the current state from the DB. Kept separate
+  // Reactions fetch â€” pulls the current state from the DB. Kept separate
   // from the channel subscription below so a `resyncToken` bump just
   // refetches the rows without also tearing down and rebuilding the
   // realtime channel.
@@ -485,14 +485,14 @@ export function MessageThread({
     };
   }, [conversationId]);
 
-  // Clear any in-progress reply draft when the active conversation changes —
+  // Clear any in-progress reply draft when the active conversation changes â€”
   // a quote pulled from conversation A shouldn't bleed into conversation B.
   useEffect(() => {
     setReplyTo(null);
   }, [conversationId]);
 
   // Reset the server-side unread_count to 0 whenever an unread count
-  // surfaces on the active conversation — covers both (a) opening a
+  // surfaces on the active conversation â€” covers both (a) opening a
   // conversation that had unread messages and (b) new messages arriving
   // while the user is already viewing the thread (webhook server-bumps
   // unread_count to N+1; the realtime UPDATE propagates it into the
@@ -526,7 +526,7 @@ export function MessageThread({
 
       const tempId = `temp-${Date.now()}`;
 
-      // Optimistic update — shows the message immediately with "sending" status
+      // Optimistic update â€” shows the message immediately with "sending" status
       const optimisticMsg: Message = {
         id: tempId,
         conversation_id: conversation.id,
@@ -565,7 +565,7 @@ export function MessageThread({
           return;
         }
 
-        // Success — the realtime INSERT event will replace the temp bubble
+        // Success â€” the realtime INSERT event will replace the temp bubble
         // with the real DB row. If realtime hasn't arrived yet, at least
         // flip status to 'sent' so the UI stops showing "sending".
         onUpdateMessage(tempId, { status: "sent" });
@@ -626,6 +626,7 @@ export function MessageThread({
             message_type: "template",
             template_name: template.name,
             template_params: params,
+            template_language: template.language,
             content_text: renderedBody,
           }),
         });
@@ -651,8 +652,8 @@ export function MessageThread({
     [conversation, onNewMessage, onUpdateMessage],
   );
 
-  // Build a quick id → Message map so reply quotes can be rendered without
-  // an extra fetch — the thread already holds the full conversation.
+  // Build a quick id â†’ Message map so reply quotes can be rendered without
+  // an extra fetch â€” the thread already holds the full conversation.
   const messagesById = useMemo(() => {
     const map = new Map<string, Message>();
     for (const m of messages) map.set(m.id, m);
@@ -696,7 +697,7 @@ export function MessageThread({
 
   // Single reaction-set primitive. emoji === "" removes; otherwise adds/swaps.
   // The "toggle" semantic (pill click) is computed at the call site where the
-  // current reactions for the bubble are already in scope — keeps this
+  // current reactions for the bubble are already in scope â€” keeps this
   // function dependency-free w.r.t. the reaction list.
   const postReaction = useCallback(
     async (messageId: string, emoji: string) => {
@@ -713,7 +714,7 @@ export function MessageThread({
       const userId = user.id;
       let snapshot: MessageReaction[] = [];
 
-      // Functional updater — captures the freshest reactions list, never a
+      // Functional updater â€” captures the freshest reactions list, never a
       // stale closure. Snapshot stored for rollback on POST failure.
       setReactions((prev) => {
         snapshot = prev;
@@ -787,7 +788,7 @@ export function MessageThread({
     
     // 2. Insert an internal note
     const myName = profiles.find(p => p.user_id === user.id)?.full_name || user.email || "Agent";
-    await handleSend(`⚠️ **Help Requested:** ${myName} has requested assistance with this conversation. Please review!`, undefined, true);
+    await handleSend(`âš ï¸ **Help Requested:** ${myName} has requested assistance with this conversation. Please review!`, undefined, true);
     
     toast.success("Help request posted as an internal note");
   }, [conversationId, user?.id, profiles, handleStatusChange, handleSend]);
@@ -864,7 +865,7 @@ export function MessageThread({
     toast.success(nextVal ? "Contact blocked" : "Contact unblocked");
   }, [conversation, onConversationUpdate]);
 
-  // Empty state — same WhatsApp-style doodle background as the active
+  // Empty state â€” same WhatsApp-style doodle background as the active
   // thread below, so swapping between empty/selected doesn't change the
   // pattern under the user's eye.
   if (!conversation || !contact) {
@@ -941,11 +942,11 @@ export function MessageThread({
 
   return (
     <div className={cn("flex flex-1 flex-col", DOODLE_BG_CLASSES)}>
-      {/* Header — solid bg-slate-900 sits on top of the doodle so the
+      {/* Header â€” solid bg-slate-900 sits on top of the doodle so the
           name/avatar/dropdowns stay legible. */}
       <div className="flex items-center justify-between gap-2 border-b border-slate-800 bg-slate-900 px-3 py-3 sm:px-4">
         <div className="flex min-w-0 items-center gap-2 sm:gap-3">
-          {/* Back-to-list button — mobile only. Hidden on lg+ where the
+          {/* Back-to-list button â€” mobile only. Hidden on lg+ where the
               conversation list is always visible next to the thread. */}
           {onBack && (
             <button
@@ -964,7 +965,7 @@ export function MessageThread({
             <h2 className="truncate text-sm font-semibold text-white">{displayName}</h2>
             <p className="truncate text-xs text-slate-400">{contact.phone}</p>
           </div>
-          {/* Session timer badge — hidden on the narrowest phones so
+          {/* Session timer badge â€” hidden on the narrowest phones so
               the name + back arrow keep their room. */}
           <Badge
             variant="outline"
@@ -980,7 +981,7 @@ export function MessageThread({
         </div>
 
         <div className="flex items-center gap-2">
-          {/* Manual refresh — forces a refetch of the messages + the
+          {/* Manual refresh â€” forces a refetch of the messages + the
               conversation list (the parent bumps its resyncToken). Useful
               when realtime missed an event or the agent just wants to be
               sure nothing's stale. Only rendered when the parent wires
@@ -1179,7 +1180,7 @@ export function MessageThread({
         <div className="flex shrink-0 items-center justify-center gap-2 border-b border-indigo-500/20 bg-indigo-500/10 px-4 py-1.5 animate-pulse">
           <span className="flex h-1.5 w-1.5 rounded-full bg-indigo-400" />
           <p className="text-[11px] text-indigo-300">
-            ⚠️ <strong>Collision Alert:</strong> {viewingTeammates.map((t) => t.userName).join(", ")} is also viewing this conversation.
+            âš ï¸ <strong>Collision Alert:</strong> {viewingTeammates.map((t) => t.userName).join(", ")} is also viewing this conversation.
           </p>
         </div>
       )}
@@ -1220,7 +1221,7 @@ export function MessageThread({
                         }
                       : null;
                     const msgReactions = reactionsByMessageId.get(msg.id);
-                    // Toggle is computed at the call site — `msgReactions`
+                    // Toggle is computed at the call site â€” `msgReactions`
                     // and `user?.id` are already in scope, no extra hook.
                     const handlePillToggle = (emoji: string) => {
                       const own = msgReactions?.find(
