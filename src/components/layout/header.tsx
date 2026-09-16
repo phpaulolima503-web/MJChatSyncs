@@ -25,33 +25,33 @@ import { GlobalSearchModal } from "./global-search-modal";
 import { cn } from "@/lib/utils";
 
 const pageTitles: Record<string, string> = {
-  "/dashboard": "Dashboard",
-  "/inbox": "Inbox",
-  "/contacts": "Contacts",
-  "/pipelines": "Pipelines",
-  "/pipeline-manager": "Pipeline Manager",
-  "/broadcasts": "Broadcasts",
-  "/automations": "Automations",
-  "/settings": "Settings",
-  "/workspace": "Workspace & Branding",
-  "/team": "Team",
-  "/appearance": "Appearance",
-  "/templates": "Templates",
-  "/tags": "Tags",
-  "/flows": "Flows",
-  "/quick-replies": "Quick Replies",
-  "/segments": "Segments",
-  "/commerce": "Commerce",
-  "/integrations": "Integrations",
-  "/widgets": "Chat Widget",
-  "/ai-router": "AI Router",
-  "/analytics": "Analytics",
-  "/support": "Help & Support",
-  "/admin": "Admin Dashboard",
-  "/ai-conversations": "AI Conversations",
-  "/ai-knowledge": "AI Knowledge",
-  "/developers": "Developer Settings",
-  "/docs": "Documentation",
+  "/dashboard": "Painel",
+  "/inbox": "Caixa de Entrada",
+  "/contacts": "Contatos",
+  "/pipelines": "Funis",
+  "/pipeline-manager": "Gerenciador de Funis",
+  "/broadcasts": "TransmissÃµes",
+  "/automations": "AutomaÃ§Ãµes",
+  "/settings": "ConfiguraÃ§Ãµes",
+  "/workspace": "Workspace e Marca",
+  "/team": "Equipe",
+  "/appearance": "AparÃªncia",
+  "/templates": "Modelos",
+  "/tags": "Etiquetas",
+  "/flows": "Fluxos",
+  "/quick-replies": "Respostas RÃ¡pidas",
+  "/segments": "Segmentos",
+  "/commerce": "ComÃ©rcio",
+  "/integrations": "IntegraÃ§Ãµes",
+  "/widgets": "Widget de Chat",
+  "/ai-router": "Roteador de IA",
+  "/analytics": "AnÃ¡lises",
+  "/support": "Ajuda e Suporte",
+  "/admin": "Painel Admin",
+  "/ai-conversations": "Conversas de IA",
+  "/ai-knowledge": "Conhecimento de IA",
+  "/developers": "ConfiguraÃ§Ãµes de Desenvolvedor",
+  "/docs": "DocumentaÃ§Ã£o",
 };
 
 function getPageTitle(pathname: string): string {
@@ -99,9 +99,9 @@ export function Header({ onOpenSidebar }: HeaderProps) {
           tasksData.forEach(t => {
             list.push({
               id: t.id,
-              title: `CRM Task: ${t.title}`,
-              body: t.description || 'Action pending.',
-              time: t.due_date ? new Date(t.due_date).toLocaleDateString() : 'No due date',
+              title: `Tarefa do CRM: ${t.title}`,
+              body: t.description || 'AÃ§Ã£o pendente.',
+              time: t.due_date ? new Date(t.due_date).toLocaleDateString('pt-BR') : 'Sem data de vencimento',
             });
           });
         }
@@ -117,9 +117,9 @@ export function Header({ onOpenSidebar }: HeaderProps) {
           meetingsData.forEach(m => {
             list.push({
               id: m.id,
-              title: `Meeting: ${m.title || 'Client Call'}`,
-              body: `Discussion scheduled.`,
-              time: new Date(m.start_time).toLocaleDateString(),
+              title: `ReuniÃ£o: ${m.title || 'Chamada com Cliente'}`,
+              body: `DiscussÃ£o agendada.`,
+              time: new Date(m.start_time).toLocaleDateString('pt-BR'),
             });
           });
         }
@@ -141,9 +141,10 @@ export function Header({ onOpenSidebar }: HeaderProps) {
       .eq('id', user.id);
 
     if (error) {
-      toast.error('Failed to update availability status');
+      toast.error('Falha ao atualizar status de disponibilidade');
     } else {
-      toast.success(`Status set to ${status.toUpperCase()}`);
+      const labels: Record<typeof status, string> = { online: 'ONLINE', busy: 'OCUPADO', away: 'AUSENTE' };
+      toast.success(`Status definido como ${labels[status]}`);
       router.refresh();
     }
   };
@@ -201,7 +202,7 @@ export function Header({ onOpenSidebar }: HeaderProps) {
     setActiveWorkspace(ws);
     localStorage.setItem("wacrm_active_workspace_id", ws.id);
     window.dispatchEvent(new Event("wacrm_workspace_changed"));
-    toast.success(`Switched to workspace: ${ws.name}`);
+    toast.success(`Alternado para workspace: ${ws.name}`);
   };
 
   const initial =
@@ -230,10 +231,10 @@ export function Header({ onOpenSidebar }: HeaderProps) {
           setActiveWorkspace(data);
           localStorage.setItem("wacrm_active_workspace_id", data.id);
           window.dispatchEvent(new Event("wacrm_workspace_changed"));
-          toast.success(`Workspace "${data.name}" created!`);
+          toast.success(`Workspace "${data.name}" criado!`);
         }
       } catch (err: any) {
-        toast.error("Failed to create workspace: " + err.message);
+        toast.error("Falha ao criar workspace: " + err.message);
       } finally {
         setNewWorkspaceName("");
         setIsAddingWorkspace(false);
@@ -244,11 +245,11 @@ export function Header({ onOpenSidebar }: HeaderProps) {
   return (
     <header className="flex h-14 shrink-0 items-center justify-between gap-3 border-b border-slate-800 bg-slate-950 px-4 lg:px-6">
       <div className="flex min-w-0 items-center gap-3">
-        {/* Hamburger — mobile only */}
+        {/* Hamburger â€” mobile only */}
         <button
           type="button"
           onClick={onOpenSidebar}
-          aria-label="Open menu"
+          aria-label="Abrir menu"
           className="flex h-10 w-10 items-center justify-center rounded-md text-slate-300 transition-colors hover:bg-slate-800 hover:text-white lg:hidden"
         >
           <Menu className="h-5 w-5" />
@@ -267,14 +268,14 @@ export function Header({ onOpenSidebar }: HeaderProps) {
           >
             <Building2 className="h-3.5 w-3.5 text-slate-400" />
             <span className="truncate max-w-[120px] sm:max-w-[180px]">
-              {activeWorkspace?.name || "Select Workspace..."}
+              {activeWorkspace?.name || "Selecionar Workspace..."}
             </span>
             <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-56 bg-slate-900 border-slate-800 text-slate-200">
             <>
               <div className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500">
-                  Workspaces
+                  EspaÃ§os de Trabalho
                 </div>
                 {workspaces.map((ws) => (
                   <DropdownMenuItem
@@ -291,14 +292,14 @@ export function Header({ onOpenSidebar }: HeaderProps) {
                   <form onSubmit={handleAddWorkspace} className="p-2 flex gap-1.5">
                     <input
                       type="text"
-                      placeholder="Workspace name..."
+                      placeholder="Nome do workspace..."
                       value={newWorkspaceName}
                       onChange={(e) => setNewWorkspaceName(e.target.value)}
                       className="flex h-7 w-full rounded border border-slate-800 bg-slate-950 px-2 py-1 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-primary"
                       autoFocus
                     />
                     <Button type="submit" size="sm" className="h-7 px-2 bg-primary text-white text-xs">
-                      Add
+                      Adicionar
                     </Button>
                   </form>
                 ) : (
@@ -307,7 +308,7 @@ export function Header({ onOpenSidebar }: HeaderProps) {
                     className="flex items-center gap-1.5 text-xs text-primary focus:bg-slate-800 focus:text-primary cursor-pointer"
                   >
                     <Plus className="h-3.5 w-3.5" />
-                    New Workspace
+                    Novo Workspace
                   </DropdownMenuItem>
                 )}
             </>
@@ -323,9 +324,9 @@ export function Header({ onOpenSidebar }: HeaderProps) {
           className="hidden md:flex items-center gap-2.5 w-60 rounded-xl border border-slate-800 bg-slate-950/40 hover:bg-slate-900/50 px-3 py-1.5 text-xs text-slate-450 hover:text-slate-300 transition-all focus:outline-none cursor-pointer"
         >
           <Search className="h-3.5 w-3.5 text-slate-500" />
-          <span className="flex-1 text-left">Search anything...</span>
+          <span className="flex-1 text-left">Buscar qualquer coisa...</span>
           <kbd className="flex h-4 items-center gap-0.5 rounded bg-slate-900 px-1 text-[8px] font-bold text-slate-600 border border-slate-800 font-mono">
-            <span>⌘</span>
+            <span>âŒ˜</span>
             <span>K</span>
           </kbd>
         </button>
@@ -358,19 +359,19 @@ export function Header({ onOpenSidebar }: HeaderProps) {
           />
           <DropdownMenuContent align="end" className="w-72 bg-slate-905 border-slate-800 text-slate-250 p-2 space-y-2">
             <div className="flex items-center justify-between px-2 py-1 border-b border-slate-800">
-              <span className="text-[10px] font-extrabold text-white uppercase tracking-wider">Alerts & Actions</span>
+              <span className="text-[10px] font-extrabold text-white uppercase tracking-wider">Alertas e AÃ§Ãµes</span>
               {notifications.length > 0 && (
                 <button
                   onClick={() => setNotifications([])}
                   className="text-[9px] text-primary hover:text-primary/80 font-bold uppercase"
                 >
-                  Clear
+                  Limpar
                 </button>
               )}
             </div>
             {notifications.length === 0 ? (
               <div className="text-center py-5 text-slate-550 text-[11px]">
-                No new notifications. Everything clear!
+                Nenhuma notificaÃ§Ã£o nova. Tudo em dia!
               </div>
             ) : (
               <div className="space-y-1 max-h-52 overflow-y-auto pr-1 scrollbar-thin">
@@ -392,7 +393,7 @@ export function Header({ onOpenSidebar }: HeaderProps) {
         <DropdownMenu>
           <DropdownMenuTrigger
             className="flex items-center gap-2 rounded-md px-1 py-1 transition-colors hover:bg-slate-800/70 focus:bg-slate-800/70 focus:outline-none data-popup-open:bg-slate-800/70 sm:gap-3 sm:pl-1 sm:pr-3"
-            aria-label="Open account menu"
+            aria-label="Abrir menu da conta"
           >
             <div className="relative">
               <Avatar className="size-8">
@@ -415,7 +416,7 @@ export function Header({ onOpenSidebar }: HeaderProps) {
               )} />
             </div>
             <span className="hidden text-sm font-medium text-white sm:inline">
-              {profile?.full_name ?? "User"}
+              {profile?.full_name ?? "UsuÃ¡rio"}
             </span>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -425,7 +426,7 @@ export function Header({ onOpenSidebar }: HeaderProps) {
           >
             <div className="px-2 py-1.5">
               <p className="truncate text-sm font-medium text-white">
-                {profile?.full_name ?? "User"}
+                {profile?.full_name ?? "UsuÃ¡rio"}
               </p>
               <p className="truncate text-xs text-slate-400">
                 {profile?.email ?? ""}
@@ -433,12 +434,12 @@ export function Header({ onOpenSidebar }: HeaderProps) {
             </div>
 
             <div className="px-2 py-1.5 border-t border-b border-slate-850 my-1 bg-slate-950/20">
-              <span className="text-[9px] text-slate-500 uppercase font-extrabold block mb-1 tracking-wider">Set Availability</span>
+              <span className="text-[9px] text-slate-500 uppercase font-extrabold block mb-1 tracking-wider">Definir Disponibilidade</span>
               <div className="flex items-center gap-1">
                 {([
                   { key: 'online', label: 'Online', color: 'bg-emerald-500' },
-                  { key: 'busy', label: 'Busy', color: 'bg-rose-500' },
-                  { key: 'away', label: 'Away', color: 'bg-amber-500' },
+                  { key: 'busy', label: 'Ocupado', color: 'bg-rose-500' },
+                  { key: 'away', label: 'Ausente', color: 'bg-amber-500' },
                 ] as const).map(status => (
                   <button
                     key={status.key}
@@ -468,7 +469,7 @@ export function Header({ onOpenSidebar }: HeaderProps) {
               }
             >
               <User className="size-4" />
-              Profile
+              Perfil
             </DropdownMenuItem>
             <DropdownMenuItem
               render={
@@ -479,7 +480,7 @@ export function Header({ onOpenSidebar }: HeaderProps) {
               }
             >
               <SettingsIcon className="size-4" />
-              Settings
+              ConfiguraÃ§Ãµes
             </DropdownMenuItem>
             {profile?.role === "admin" && (
               <DropdownMenuItem
@@ -491,7 +492,7 @@ export function Header({ onOpenSidebar }: HeaderProps) {
                 }
               >
                 <Building2 className="size-4 text-amber-300" />
-                Admin Dashboard
+                Painel Admin
               </DropdownMenuItem>
             )}
             <DropdownMenuSeparator className="bg-slate-800" />
@@ -500,7 +501,7 @@ export function Header({ onOpenSidebar }: HeaderProps) {
               className="text-slate-200 focus:bg-slate-800 focus:text-white cursor-pointer"
             >
               <LogOut className="size-4" />
-              Sign out
+              Sair
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
