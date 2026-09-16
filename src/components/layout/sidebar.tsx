@@ -59,61 +59,61 @@ interface NavItem {
   icon: typeof LayoutDashboard;
   /**
    * When true, the nav row renders a small "Beta" chip after the label.
-   * Purely informational — doesn't affect routing or access.
+   * Purely informational â€” doesn't affect routing or access.
    */
   beta?: boolean;
 }
 
 const navItems: NavItem[] = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/inbox", label: "Inbox", icon: MessageSquare },
-  { href: "/tasks", label: "Tasks", icon: CheckSquare },
-  { href: "/contacts", label: "Contacts", icon: Users },
-  { href: "/pipelines", label: "Pipelines", icon: GitBranch },
-  { href: "/pipeline-manager", label: "Pipeline Manager", icon: Settings2 },
-  { href: "/broadcasts", label: "Broadcasts", icon: Radio },
-  { href: "/automations", label: "Automations", icon: Zap },
-  // ── Enterprise Workflow Engine (Part 10) ──────────────────
-  { href: "/workflows", label: "Workflow Engine", icon: Workflow },
-  { href: "/workflows/templates", label: "WF Templates", icon: Sparkles },
-  // ── Analytics & BI (Part 11) ────────────────────────────
-  { href: "/analytics/executive", label: "Executive BI", icon: BarChart3 },
-  { href: "/analytics/sales", label: "Sales Analytics", icon: BarChart3 },
-  { href: "/analytics/ai-usage", label: "AI Usage", icon: Bot },
-  { href: "/analytics/reports", label: "Reports & Alerts", icon: ListFilter },
-  // ── GST & Billing (Part 12) ─────────────────────────────
-  { href: "/billing", label: "GST Billing", icon: Receipt },
-  { href: "/billing/new", label: "New Invoice", icon: FileText },
-  { href: "/gst-reports", label: "GST Returns", icon: BarChart3 },
-  { href: "/payment-history", label: "Payment History", icon: CreditCard },
-  // ── Knowledge Base (Part 13) ─────────────────────────────
-  { href: "/knowledge", label: "Knowledge Base", icon: BookOpen },
-  // ── Customer Support (Part 14) ──────────────────────────
-  { href: "/support", label: "Support Tickets", icon: Headphones },
-  { href: "/support/settings", label: "Support Settings", icon: Settings2 },
-  // ── SEO Module (Part 15) ────────────────────────────────
-  { href: "/seo", label: "SEO & Marketing", icon: Globe },
-  // ── SaaS Admin (Part 16) ────────────────────────────────
-  { href: "/admin", label: "Admin Panel", icon: Shield },
-  // ── Existing ────────────────────────────────────────────
-  { href: "/flows", label: "Flows", icon: Workflow, beta: true },
-  { href: "/templates", label: "Templates", icon: MessageSquare },
-  { href: "/quick-replies", label: "Quick Replies", icon: MessageSquare },
-  { href: "/tags", label: "Tags", icon: Tag },
-  { href: "/segments", label: "Segments", icon: ListFilter },
-  { href: "/commerce", label: "Commerce", icon: ShoppingCart },
-  { href: "/integrations", label: "Integrations", icon: Webhook },
-  { href: "/widgets", label: "Chat Widget", icon: MessageCircle },
-  { href: "/ai-router", label: "AI Router", icon: Bot },
-  { href: "/analytics", label: "Analytics (Legacy)", icon: BarChart3 },
-  { href: "/team", label: "Team", icon: Users },
-  { href: "/workspace", label: "Workspace & Branding", icon: Building2 },
-  { href: "/appearance", label: "Appearance", icon: Palette },
+  { href: "/dashboard", label: "Painel", icon: LayoutDashboard },
+  { href: "/inbox", label: "Caixa de Entrada", icon: MessageSquare },
+  { href: "/tasks", label: "Tarefas", icon: CheckSquare },
+  { href: "/contacts", label: "Contatos", icon: Users },
+  { href: "/pipelines", label: "Funis", icon: GitBranch },
+  { href: "/pipeline-manager", label: "Gerenciador de Funis", icon: Settings2 },
+  { href: "/broadcasts", label: "TransmissÃµes", icon: Radio },
+  { href: "/automations", label: "AutomaÃ§Ãµes", icon: Zap },
+  // â”€â”€ Enterprise Workflow Engine (Part 10) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  { href: "/workflows", label: "Fluxos de Trabalho", icon: Workflow },
+  { href: "/workflows/templates", label: "Modelos de Fluxo", icon: Sparkles },
+  // â”€â”€ Analytics & BI (Part 11) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  { href: "/analytics/executive", label: "BI Executivo", icon: BarChart3 },
+  { href: "/analytics/sales", label: "AnÃ¡lise de Vendas", icon: BarChart3 },
+  { href: "/analytics/ai-usage", label: "Uso de IA", icon: Bot },
+  { href: "/analytics/reports", label: "RelatÃ³rios e Alertas", icon: ListFilter },
+  // â”€â”€ GST & Billing (Part 12) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  { href: "/billing", label: "Faturamento GST", icon: Receipt },
+  { href: "/billing/new", label: "Nova Fatura", icon: FileText },
+  { href: "/gst-reports", label: "DeclaraÃ§Ãµes GST", icon: BarChart3 },
+  { href: "/payment-history", label: "HistÃ³rico de Pagamentos", icon: CreditCard },
+  // â”€â”€ Knowledge Base (Part 13) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  { href: "/knowledge", label: "Base de Conhecimento", icon: BookOpen },
+  // â”€â”€ Customer Support (Part 14) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  { href: "/support", label: "Chamados de Suporte", icon: Headphones },
+  { href: "/support/settings", label: "ConfiguraÃ§Ãµes de Suporte", icon: Settings2 },
+  // â”€â”€ SEO Module (Part 15) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  { href: "/seo", label: "SEO e Marketing", icon: Globe },
+  // â”€â”€ SaaS Admin (Part 16) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  { href: "/admin", label: "Painel Admin", icon: Shield },
+  // â”€â”€ Existing â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  { href: "/flows", label: "Fluxos", icon: Workflow, beta: true },
+  { href: "/templates", label: "Modelos", icon: MessageSquare },
+  { href: "/quick-replies", label: "Respostas RÃ¡pidas", icon: MessageSquare },
+  { href: "/tags", label: "Etiquetas", icon: Tag },
+  { href: "/segments", label: "Segmentos", icon: ListFilter },
+  { href: "/commerce", label: "ComÃ©rcio", icon: ShoppingCart },
+  { href: "/integrations", label: "IntegraÃ§Ãµes", icon: Webhook },
+  { href: "/widgets", label: "Widget de Chat", icon: MessageCircle },
+  { href: "/ai-router", label: "Roteador de IA", icon: Bot },
+  { href: "/analytics", label: "AnÃ¡lises (Legado)", icon: BarChart3 },
+  { href: "/team", label: "Equipe", icon: Users },
+  { href: "/workspace", label: "Workspace e Marca", icon: Building2 },
+  { href: "/appearance", label: "AparÃªncia", icon: Palette },
 ];
 
 const bottomNavItems = [
-  { href: "/docs", label: "Help & Docs", icon: HelpCircle },
-  { href: "/settings", label: "Settings", icon: Settings },
+  { href: "/docs", label: "Ajuda e DocumentaÃ§Ã£o", icon: HelpCircle },
+  { href: "/settings", label: "ConfiguraÃ§Ãµes", icon: Settings },
 ];
 
 interface SidebarProps {
@@ -127,11 +127,11 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
   const { profile, signOut } = useAuth();
   const totalUnread = useTotalUnread();
 
-  // Close the drawer when route changes — users opened it to navigate,
+  // Close the drawer when route changes â€” users opened it to navigate,
   // so once they pick a destination the drawer should get out of the way.
   useEffect(() => {
     onClose?.();
-    // Only pathname drives this — onClose identity doesn't need to re-run it.
+    // Only pathname drives this â€” onClose identity doesn't need to re-run it.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
@@ -153,12 +153,12 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
 
   return (
     <>
-      {/* Backdrop — only exists on mobile and only when open. Clicking
+      {/* Backdrop â€” only exists on mobile and only when open. Clicking
           it closes the drawer. Hidden from lg+ since the sidebar is
           part of the main flex row there. */}
       <button
         type="button"
-        aria-label="Close menu"
+        aria-label="Fechar menu"
         onClick={onClose}
         className={cn(
           "fixed inset-0 z-30 bg-slate-950/70 backdrop-blur-sm transition-opacity lg:hidden",
@@ -174,7 +174,7 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
           "fixed inset-y-0 left-0 z-40 flex h-full w-64 flex-col border-r border-slate-800 bg-slate-900",
           "transition-transform duration-200 ease-out will-change-transform",
           open ? "translate-x-0" : "-translate-x-full",
-          // Desktop: static, always visible — reset all the mobile framing.
+          // Desktop: static, always visible â€” reset all the mobile framing.
           "lg:static lg:z-0 lg:w-60 lg:translate-x-0 lg:transition-none",
         )}
         aria-label="Primary"
@@ -187,13 +187,13 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
               <MessageSquare className="h-4 w-4" />
             </div>
             <span className="text-sm font-semibold text-white">
-              CRM Template for WhatsApp
+              CRM para WhatsApp
             </span>
           </Link>
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close menu"
+            aria-label="Fechar menu"
             className="flex h-9 w-9 items-center justify-center rounded-md text-slate-400 hover:bg-slate-800 hover:text-white lg:hidden"
           >
             <X className="h-5 w-5" />
@@ -216,7 +216,7 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
                   <Link
                     href={item.href}
                     className={cn(
-                      // Taller on mobile so fingers can hit the row reliably (≥44px).
+                      // Taller on mobile so fingers can hit the row reliably (â‰¥44px).
                       "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors lg:py-2",
                       isActive
                         ? "bg-primary/10 text-primary"
@@ -227,7 +227,7 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
                     <span className="flex-1">{item.label}</span>
                     {item.beta && (
                       <span
-                        aria-label="Beta feature"
+                        aria-label="Recurso beta"
                         className="rounded-full border border-amber-500/40 bg-amber-500/10 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-amber-300"
                       >
                         Beta
@@ -235,7 +235,7 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
                     )}
                     {showUnreadDot && (
                       <span
-                        aria-label={`${totalUnread} unread conversation${totalUnread === 1 ? "" : "s"}`}
+                        aria-label={`${totalUnread} conversa${totalUnread === 1 ? "" : "s"} nÃ£o lida${totalUnread === 1 ? "" : "s"}`}
                         className="relative flex h-2 w-2"
                       >
                         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
@@ -315,7 +315,7 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
                 }
               >
                 <User className="size-4" />
-                Profile
+                Perfil
               </DropdownMenuItem>
               <DropdownMenuItem
                 render={
@@ -327,7 +327,7 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
                 }
               >
                 <Settings className="size-4" />
-                Settings
+                ConfiguraÃ§Ãµes
               </DropdownMenuItem>
               <DropdownMenuSeparator className="bg-slate-800" />
               <DropdownMenuItem
@@ -335,7 +335,7 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
                 className="text-slate-200 focus:bg-slate-800 focus:text-white"
               >
                 <LogOut className="size-4" />
-                Sign out
+                Sair
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
