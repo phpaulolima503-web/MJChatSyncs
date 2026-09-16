@@ -33,7 +33,7 @@ import {
   AccordionContent,
 } from '@/components/ui/accordion';
 
-const MASKED_TOKEN = '••••••••••••••••';
+const MASKED_TOKEN = 'â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢';
 
 interface ConnectedNumber {
   id: string;
@@ -56,7 +56,6 @@ export function WhatsAppConfig() {
   const [saving, setSaving] = useState(false);
   const [testingId, setTestingId] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
-  const [metaLinking, setMetaLinking] = useState(false);
   const [showToken, setShowToken] = useState(false);
   
   const [configs, setConfigs] = useState<ConnectedNumber[]>([]);
@@ -251,26 +250,15 @@ export function WhatsAppConfig() {
     }
   }
 
-  // EMBEDDED SIGNUP FLOW - OPEN META DEVELOPERS & AUTO FILL MOCKUP SECURELY
-  async function handleMetaEmbeddedSignup() {
-    setMetaLinking(true);
-    toast.info("Redirecting to developers.facebook.com in a new window...", { duration: 3000 });
-    
-    // 1. Open developers.facebook.com in new tab
+  // Opens the Meta developer console for the user to create/configure their
+  // WhatsApp app. The official embedded signup flow (FB.login with a
+  // config_id issued by Meta for this business) isn't wired up yet â€” it
+  // needs a Meta App reviewed for the embedded signup product. Until then
+  // we send the user to fetch real credentials and paste them below, rather
+  // than pretending to auto-fill a connection.
+  function handleMetaEmbeddedSignup() {
     window.open("https://developers.facebook.com", "_blank");
-
-    // 2. Pre-fill mock credentials so the user can immediately save and test local capabilities
-    setTimeout(() => {
-      setPhoneNumberId("108123456789012");
-      setWabaId("109987654321098");
-      setCustomPhoneNumber("+1 (555) 019-9823");
-      setAccessToken("EAAOXYZ...");
-      setTokenEdited(true);
-      setVerifyToken("wa_crm_custom_secret_" + Math.floor(Math.random() * 1000));
-      
-      setMetaLinking(false);
-      toast.success("Successfully fetched connection profiles! Click Save Configuration to activate.");
-    }, 3000);
+    toast.info("Copy your Phone Number ID, WABA ID and Access Token from the Meta dashboard, then paste them below.", { duration: 5000 });
   }
 
   function handleCopyWebhookUrl() {
@@ -419,17 +407,13 @@ export function WhatsAppConfig() {
             
             <Button
               onClick={handleMetaEmbeddedSignup}
-              disabled={metaLinking || saving}
+              disabled={saving}
               className="bg-[#1877F2] hover:bg-[#1877F2]/90 text-white font-semibold shrink-0 shadow-lg shadow-blue-900/20"
             >
-              {metaLinking ? (
-                <Loader2 className="size-4 mr-2 animate-spin" />
-              ) : (
-                <svg className="size-4 mr-2 fill-current" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                </svg>
-              )}
-              {metaLinking ? "Authenticating..." : "Connect with Facebook"}
+              <svg className="size-4 mr-2 fill-current" viewBox="0 0 24 24">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+              </svg>
+              Open Meta Developers
             </Button>
           </CardHeader>
           
