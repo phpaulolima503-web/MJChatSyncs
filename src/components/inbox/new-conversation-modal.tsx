@@ -26,7 +26,7 @@ interface NewConversationModalProps {
   onCreated: (conversation: Conversation) => void;
 }
 
-// Same placeholder-fill logic as template-picker.tsx / message-thread.tsx â€”
+// Same placeholder-fill logic as template-picker.tsx / message-thread.tsx —
 // small enough that sharing it isn't worth a shared-module indirection.
 function renderTemplateBody(body: string, params: string[]): string {
   return body.replace(/\{\{(\d+)\}\}/g, (_, raw) => {
@@ -38,7 +38,7 @@ function renderTemplateBody(body: string, params: string[]): string {
 
 /**
  * Meta requires every WhatsApp conversation with a contact who hasn't
- * messaged you in the last 24h to be opened with a pre-approved template â€”
+ * messaged you in the last 24h to be opened with a pre-approved template —
  * free-form text is rejected outside that window. This modal is the only
  * path the UI offers to start a brand-new thread, so it always routes
  * through TemplatePicker (which only lists Approved templates) instead of
@@ -80,7 +80,7 @@ export function NewConversationModal({
       const supabase = createClient();
 
       // Find-or-create the contact by phone. Reusing an existing contact
-      // (and its conversation, below) is deliberate â€” "new conversation"
+      // (and its conversation, below) is deliberate — "new conversation"
       // with someone you already have a closed/stale thread with should
       // reopen it, not fork a duplicate.
       const { data: existingContact, error: contactLookupErr } =
@@ -173,13 +173,13 @@ export function NewConversationModal({
             </DialogTitle>
             <DialogDescription className="text-slate-400">
               A Meta exige um modelo aprovado para iniciar uma conversa com
-              um contato novo. No prÃ³ximo passo vocÃª escolhe o modelo.
+              um contato novo. No próximo passo você escolhe o modelo.
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4 py-2">
             <div className="space-y-2">
-              <Label className="text-slate-300">NÃºmero de telefone</Label>
+              <Label className="text-slate-300">Número de telefone</Label>
               <Input
                 placeholder="+55 11 99999-9999"
                 value={phone}
@@ -187,14 +187,14 @@ export function NewConversationModal({
                 className="border-slate-700 bg-slate-800 text-white placeholder:text-slate-500"
               />
               <p className="text-[11px] text-slate-500">
-                Inclua o cÃ³digo do paÃ­s (ex: 55 para Brasil).
+                Inclua o código do país (ex: 55 para Brasil).
               </p>
             </div>
 
             <div className="space-y-2">
               <Label className="text-slate-300">Nome do contato (opcional)</Label>
               <Input
-                placeholder="Ex: JoÃ£o Silva"
+                placeholder="Ex: João Silva"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="border-slate-700 bg-slate-800 text-white placeholder:text-slate-500"
@@ -215,7 +215,7 @@ export function NewConversationModal({
               onClick={() => setStep("template")}
               className="bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
             >
-              AvanÃ§ar: Escolher Modelo
+              Avançar: Escolher Modelo
             </Button>
           </DialogFooter>
         </DialogContent>
