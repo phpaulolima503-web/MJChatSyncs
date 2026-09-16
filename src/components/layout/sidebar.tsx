@@ -39,6 +39,7 @@ import {
   FileText,
   Shield,
   AreaChart,
+  History,
 } from "lucide-react";
 import {
   Avatar,
@@ -67,6 +68,7 @@ interface NavItem {
 const navItems: NavItem[] = [
   { href: "/dashboard", label: "Painel", icon: LayoutDashboard },
   { href: "/inbox", label: "Caixa de Entrada", icon: MessageSquare },
+  { href: "/conversation-history", label: "HistÃ³rico de Atendimentos", icon: History },
   { href: "/tasks", label: "Tarefas", icon: CheckSquare },
   { href: "/contacts", label: "Contatos", icon: Users },
   { href: "/pipelines", label: "Funis", icon: GitBranch },
