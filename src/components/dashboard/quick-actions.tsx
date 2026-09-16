@@ -1,12 +1,12 @@
 "use client"
 
 import Link from 'next/link'
-import { UserPlus, Briefcase, Radio, Zap } from 'lucide-react'
+import { UserPlus, Briefcase, Radio, Zap, History } from 'lucide-react'
 import type { ComponentType } from 'react'
 
 // Quick-action shortcuts. Each navigates to the page that owns the
 // relevant "create" flow. We deliberately don't try to auto-open any
-// modal on the target page — that'd require touching those pages,
+// modal on the target page â€” that'd require touching those pages,
 // which is out of scope here.
 interface Action {
   label: string
@@ -16,15 +16,16 @@ interface Action {
 }
 
 const ACTIONS: Action[] = [
-  { label: 'New Contact', href: '/contacts', icon: UserPlus, tint: 'text-primary' },
-  { label: 'New Deal', href: '/pipelines', icon: Briefcase, tint: 'text-blue-400' },
-  { label: 'New Broadcast', href: '/broadcasts/new', icon: Radio, tint: 'text-amber-400' },
-  { label: 'New Automation', href: '/automations/new', icon: Zap, tint: 'text-primary' },
+  { label: 'Novo Contato', href: '/contacts', icon: UserPlus, tint: 'text-primary' },
+  { label: 'Novo NegÃ³cio', href: '/pipelines', icon: Briefcase, tint: 'text-blue-400' },
+  { label: 'Nova TransmissÃ£o', href: '/broadcasts/new', icon: Radio, tint: 'text-amber-400' },
+  { label: 'Nova AutomaÃ§Ã£o', href: '/automations/new', icon: Zap, tint: 'text-primary' },
+  { label: 'HistÃ³rico de Atendimentos', href: '/conversation-history', icon: History, tint: 'text-indigo-400' },
 ]
 
 export function QuickActions() {
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
       {ACTIONS.map((a) => {
         const Icon = a.icon
         return (
