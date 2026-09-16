@@ -27,32 +27,32 @@ import { cn } from "@/lib/utils";
 const pageTitles: Record<string, string> = {
   "/dashboard": "Painel",
   "/inbox": "Caixa de Entrada",
-  "/conversation-history": "HistÃ³rico de Atendimentos",
+  "/conversation-history": "Histórico de Atendimentos",
   "/contacts": "Contatos",
   "/pipelines": "Funis",
   "/pipeline-manager": "Gerenciador de Funis",
-  "/broadcasts": "TransmissÃµes",
-  "/automations": "AutomaÃ§Ãµes",
-  "/settings": "ConfiguraÃ§Ãµes",
+  "/broadcasts": "Transmissões",
+  "/automations": "Automações",
+  "/settings": "Configurações",
   "/workspace": "Workspace e Marca",
   "/team": "Equipe",
-  "/appearance": "AparÃªncia",
+  "/appearance": "Aparência",
   "/templates": "Modelos",
   "/tags": "Etiquetas",
   "/flows": "Fluxos",
-  "/quick-replies": "Respostas RÃ¡pidas",
+  "/quick-replies": "Respostas Rápidas",
   "/segments": "Segmentos",
-  "/commerce": "ComÃ©rcio",
-  "/integrations": "IntegraÃ§Ãµes",
+  "/commerce": "Comércio",
+  "/integrations": "Integrações",
   "/widgets": "Widget de Chat",
   "/ai-router": "Roteador de IA",
-  "/analytics": "AnÃ¡lises",
+  "/analytics": "Análises",
   "/support": "Ajuda e Suporte",
   "/admin": "Painel Admin",
   "/ai-conversations": "Conversas de IA",
   "/ai-knowledge": "Conhecimento de IA",
-  "/developers": "ConfiguraÃ§Ãµes de Desenvolvedor",
-  "/docs": "DocumentaÃ§Ã£o",
+  "/developers": "Configurações de Desenvolvedor",
+  "/docs": "Documentação",
 };
 
 function getPageTitle(pathname: string): string {
@@ -101,7 +101,7 @@ export function Header({ onOpenSidebar }: HeaderProps) {
             list.push({
               id: t.id,
               title: `Tarefa do CRM: ${t.title}`,
-              body: t.description || 'AÃ§Ã£o pendente.',
+              body: t.description || 'Ação pendente.',
               time: t.due_date ? new Date(t.due_date).toLocaleDateString('pt-BR') : 'Sem data de vencimento',
             });
           });
@@ -118,8 +118,8 @@ export function Header({ onOpenSidebar }: HeaderProps) {
           meetingsData.forEach(m => {
             list.push({
               id: m.id,
-              title: `ReuniÃ£o: ${m.title || 'Chamada com Cliente'}`,
-              body: `DiscussÃ£o agendada.`,
+              title: `Reunião: ${m.title || 'Chamada com Cliente'}`,
+              body: `Discussão agendada.`,
               time: new Date(m.start_time).toLocaleDateString('pt-BR'),
             });
           });
@@ -246,7 +246,7 @@ export function Header({ onOpenSidebar }: HeaderProps) {
   return (
     <header className="flex h-14 shrink-0 items-center justify-between gap-3 border-b border-slate-800 bg-slate-950 px-4 lg:px-6">
       <div className="flex min-w-0 items-center gap-3">
-        {/* Hamburger â€” mobile only */}
+        {/* Hamburger — mobile only */}
         <button
           type="button"
           onClick={onOpenSidebar}
@@ -276,7 +276,7 @@ export function Header({ onOpenSidebar }: HeaderProps) {
           <DropdownMenuContent align="start" className="w-56 bg-slate-900 border-slate-800 text-slate-200">
             <>
               <div className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500">
-                  EspaÃ§os de Trabalho
+                  Espaços de Trabalho
                 </div>
                 {workspaces.map((ws) => (
                   <DropdownMenuItem
@@ -327,7 +327,7 @@ export function Header({ onOpenSidebar }: HeaderProps) {
           <Search className="h-3.5 w-3.5 text-slate-500" />
           <span className="flex-1 text-left">Buscar qualquer coisa...</span>
           <kbd className="flex h-4 items-center gap-0.5 rounded bg-slate-900 px-1 text-[8px] font-bold text-slate-600 border border-slate-800 font-mono">
-            <span>âŒ˜</span>
+            <span>⌘</span>
             <span>K</span>
           </kbd>
         </button>
@@ -360,7 +360,7 @@ export function Header({ onOpenSidebar }: HeaderProps) {
           />
           <DropdownMenuContent align="end" className="w-72 bg-slate-905 border-slate-800 text-slate-250 p-2 space-y-2">
             <div className="flex items-center justify-between px-2 py-1 border-b border-slate-800">
-              <span className="text-[10px] font-extrabold text-white uppercase tracking-wider">Alertas e AÃ§Ãµes</span>
+              <span className="text-[10px] font-extrabold text-white uppercase tracking-wider">Alertas e Ações</span>
               {notifications.length > 0 && (
                 <button
                   onClick={() => setNotifications([])}
@@ -372,7 +372,7 @@ export function Header({ onOpenSidebar }: HeaderProps) {
             </div>
             {notifications.length === 0 ? (
               <div className="text-center py-5 text-slate-550 text-[11px]">
-                Nenhuma notificaÃ§Ã£o nova. Tudo em dia!
+                Nenhuma notificação nova. Tudo em dia!
               </div>
             ) : (
               <div className="space-y-1 max-h-52 overflow-y-auto pr-1 scrollbar-thin">
@@ -417,7 +417,7 @@ export function Header({ onOpenSidebar }: HeaderProps) {
               )} />
             </div>
             <span className="hidden text-sm font-medium text-white sm:inline">
-              {profile?.full_name ?? "UsuÃ¡rio"}
+              {profile?.full_name ?? "Usuário"}
             </span>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -427,7 +427,7 @@ export function Header({ onOpenSidebar }: HeaderProps) {
           >
             <div className="px-2 py-1.5">
               <p className="truncate text-sm font-medium text-white">
-                {profile?.full_name ?? "UsuÃ¡rio"}
+                {profile?.full_name ?? "Usuário"}
               </p>
               <p className="truncate text-xs text-slate-400">
                 {profile?.email ?? ""}
@@ -481,7 +481,7 @@ export function Header({ onOpenSidebar }: HeaderProps) {
               }
             >
               <SettingsIcon className="size-4" />
-              ConfiguraÃ§Ãµes
+              Configurações
             </DropdownMenuItem>
             {profile?.role === "admin" && (
               <DropdownMenuItem
