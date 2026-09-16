@@ -40,6 +40,7 @@ export default function InboxPage() {
    */
   const [resyncToken, setResyncToken] = useState(0);
   const [newConversationOpen, setNewConversationOpen] = useState(false);
+  const [contactSidebarVisible, setContactSidebarVisible] = useState(true);
 
   // Fire the deep-link auto-select exactly once per URL â€” subsequent
   // list refreshes (realtime, manual refetch) must not snap the user
@@ -599,16 +600,22 @@ export default function InboxPage() {
             onBack={handleCloseConversation}
             resyncToken={resyncToken}
             onRefresh={handleManualRefresh}
+            contactSidebarVisible={contactSidebarVisible}
+            onToggleContactSidebar={() => setContactSidebarVisible((v) => !v)}
           />
         </div>
 
-        {/* Right panel: Contact sidebar â€” desktop only. */}
-        <div className="hidden lg:block">
-          <ContactSidebar
-            contact={activeContact}
-            onContactUpdate={handleContactUpdate}
-          />
-        </div>
+        {/* Right panel: Contact sidebar â€” desktop only, and only when the
+            user hasn't hidden it via the eye toggle in the thread header
+            (gives the conversation more width). */}
+        {contactSidebarVisible && (
+          <div className="hidden lg:block">
+            <ContactSidebar
+              contact={activeContact}
+              onContactUpdate={handleContactUpdate}
+            />
+          </div>
+        )}
       </div>
 
       <NewConversationModal
