@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 import type { Conversation, ConversationStatus, Profile, Tag } from "@/types";
-import { Search, ChevronDown, Bot, User, Tag as TagIcon, Clock, Pin, Star } from "lucide-react";
+import { Search, ChevronDown, Bot, User, Tag as TagIcon, Clock, Pin, Star, MessageSquarePlus } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { Input } from "@/components/ui/input";
 import {
@@ -22,6 +22,7 @@ interface ConversationListProps {
   conversations: Conversation[];
   onConversationsLoaded: (conversations: Conversation[]) => void;
   resyncToken?: number;
+  onNewConversation?: () => void;
 }
 
 const STATUS_COLORS: Record<ConversationStatus, string> = {
@@ -31,16 +32,16 @@ const STATUS_COLORS: Record<ConversationStatus, string> = {
 };
 
 const STATUS_FILTER_OPTIONS: { label: string; value: ConversationStatus | "all" }[] = [
-  { label: "All Statuses", value: "all" },
-  { label: "Open", value: "open" },
-  { label: "Pending", value: "pending" },
-  { label: "Closed", value: "closed" },
+  { label: "Todos os Status", value: "all" },
+  { label: "Aberta", value: "open" },
+  { label: "Pendente", value: "pending" },
+  { label: "Fechada", value: "closed" },
 ];
 
 const AI_FILTER_OPTIONS = [
-  { label: "All Modes", value: "all" },
-  { label: "AI Active", value: "active" },
-  { label: "Human Only", value: "inactive" },
+  { label: "Todos os Modos", value: "all" },
+  { label: "IA Ativa", value: "active" },
+  { label: "Apenas Humano", value: "inactive" },
 ];
 
 export function ConversationList({
@@ -49,6 +50,7 @@ export function ConversationList({
   conversations,
   onConversationsLoaded,
   resyncToken = 0,
+  onNewConversation,
 }: ConversationListProps) {
   const { user } = useAuth();
   const [search, setSearch] = useState("");
@@ -229,39 +231,40 @@ export function ConversationList({
 
   // Active label resolution
   const activeStatusLabel = STATUS_FILTER_OPTIONS.find((o) => o.value === statusFilter)?.label ?? "Status";
-  
+
   const activeAssigneeLabel = useMemo(() => {
-    if (assigneeFilter === "all") return "All Agents";
-    if (assigneeFilter === "unassigned") return "Unassigned";
-    if (assigneeFilter === "me") return "My Chats";
-    return profiles.find((p) => p.user_id === assigneeFilter)?.full_name || "Assignee";
+    if (assigneeFilter === "all") return "Todos os Agentes";
+    if (assigneeFilter === "unassigned") return "NÃ£o AtribuÃ­do";
+    if (assigneeFilter === "me") return "Minhas Conversas";
+    return profiles.find((p) => p.user_id === assigneeFilter)?.full_name || "ResponsÃ¡vel";
   }, [assigneeFilter, profiles]);
 
-  const activeAiLabel = AI_FILTER_OPTIONS.find((o) => o.value === aiFilter)?.label ?? "Chat Mode";
-  const activeTagLabel = tagFilter === "all" ? "All Tags" : allTags.find((t) => t.id === tagFilter)?.name || "Tags";
+  const activeAiLabel = AI_FILTER_OPTIONS.find((o) => o.value === aiFilter)?.label ?? "Modo de Chat";
+  const activeTagLabel = tagFilter === "all" ? "Todas as Etiquetas" : allTags.find((t) => t.id === tagFilter)?.name || "Etiquetas";
 
   const INBOX_TABS = [
-    { label: "Shared", value: "shared" },
-    { label: "Private", value: "private" },
-    { label: "Assigned", value: "assigned" },
-    { label: "Unassigned", value: "unassigned" },
-    { label: "Archived", value: "archived" },
-    { label: "Pinned", value: "pinned" },
-    { label: "Unread", value: "unread" },
-    { label: "Mentions", value: "mentioned" },
-    { label: "Resolved", value: "resolved" },
-    { label: "Pending", value: "pending" },
-    { label: "Follow-up", value: "follow_up" },
+    { label: "Compartilhado", value: "shared" },
+    { label: "Privado", value: "private" },
+    { label: "AtribuÃ­do", value: "assigned" },
+    { label: "NÃ£o AtribuÃ­do", value: "unassigned" },
+    { label: "Arquivado", value: "archived" },
+    { label: "Fixado", value: "pinned" },
+    { label: "NÃ£o Lidas", value: "unread" },
+    { label: "MenÃ§Ãµes", value: "mentioned" },
+    { label: "Resolvido", value: "resolved" },
+    { label: "Pendente", value: "pending" },
+    { label: "Acompanhamento", value: "follow_up" },
     { label: "Spam", value: "spam" },
-    { label: "Blocked", value: "blocked" },
-    { label: "Favorites", value: "favorites" },
-    { label: "Recent", value: "recently_active" },
+    { label: "Bloqueado", value: "blocked" },
+    { label: "Favoritos", value: "favorites" },
+    { label: "Recentes", value: "recently_active" },
   ] as const;
 
   return (
     <div className="flex h-full w-full flex-col border-r border-slate-800 bg-slate-900 lg:w-80">
       {/* Horizontal Tabs */}
-      <div className="flex overflow-x-auto gap-1 border-b border-slate-800 bg-slate-950/20 px-2 py-1.5 select-none shrink-0 scrollbar-none">
+      <div className="flex items-center gap-1 border-b border-slate-800 bg-slate-950/20 px-2 py-1.5 shrink-0">
+        <div className="flex flex-1 overflow-x-auto gap-1 select-none scrollbar-none">
         {INBOX_TABS.map((tab) => {
           const isActive = inboxTab === tab.value;
           return (
@@ -280,6 +283,18 @@ export function ConversationList({
             </button>
           );
         })}
+        </div>
+        {onNewConversation && (
+          <button
+            type="button"
+            onClick={onNewConversation}
+            title="Nova conversa"
+            aria-label="Nova conversa"
+            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-primary hover:bg-primary/10"
+          >
+            <MessageSquarePlus className="h-4 w-4" />
+          </button>
+        )}
       </div>
 
       {/* Search + Smart Filters */}
@@ -289,7 +304,7 @@ export function ConversationList({
           <Input
             value={search}
             onChange={handleSearchChange}
-            placeholder="Search inbox..."
+            placeholder="Buscar na caixa de entrada..."
             className="border-slate-700 bg-slate-800 pl-9 text-sm text-white placeholder-slate-500 focus:border-primary/50"
           />
         </div>
@@ -323,9 +338,9 @@ export function ConversationList({
                 <ChevronDown className="h-2.5 w-2.5" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="border-slate-700 bg-slate-800 max-h-[250px] overflow-y-auto">
-              <DropdownMenuItem onClick={() => setAssigneeFilter("all")} className={cn("text-xs", assigneeFilter === "all" && "text-primary font-bold")}>All Agents</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setAssigneeFilter("me")} className={cn("text-xs", assigneeFilter === "me" && "text-primary font-bold")}>My Chats (me)</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setAssigneeFilter("unassigned")} className={cn("text-xs", assigneeFilter === "unassigned" && "text-primary font-bold")}>Unassigned</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setAssigneeFilter("all")} className={cn("text-xs", assigneeFilter === "all" && "text-primary font-bold")}>Todos os Agentes</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setAssigneeFilter("me")} className={cn("text-xs", assigneeFilter === "me" && "text-primary font-bold")}>Minhas Conversas (eu)</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setAssigneeFilter("unassigned")} className={cn("text-xs", assigneeFilter === "unassigned" && "text-primary font-bold")}>NÃ£o AtribuÃ­do</DropdownMenuItem>
               {profiles.map((p) => (
                 <DropdownMenuItem
                   key={p.id}
@@ -366,7 +381,7 @@ export function ConversationList({
                 <ChevronDown className="h-2.5 w-2.5" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="border-slate-700 bg-slate-800 max-h-[250px] overflow-y-auto">
-              <DropdownMenuItem onClick={() => setTagFilter("all")} className={cn("text-xs", tagFilter === "all" && "text-primary font-bold")}>All Tags</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTagFilter("all")} className={cn("text-xs", tagFilter === "all" && "text-primary font-bold")}>Todas as Etiquetas</DropdownMenuItem>
               {allTags.map((t) => (
                 <DropdownMenuItem
                   key={t.id}
@@ -390,7 +405,7 @@ export function ConversationList({
           </div>
         ) : filtered.length === 0 ? (
           <div className="px-4 py-12 text-center">
-            <p className="text-sm text-slate-500">No conversations found</p>
+            <p className="text-sm text-slate-500">Nenhuma conversa encontrada</p>
           </div>
         ) : (
           <div className="flex flex-col">
@@ -437,7 +452,7 @@ function ConversationItem({
   tags = [],
 }: ConversationItemProps) {
   const contact = conversation.contact;
-  const displayName = contact?.name || contact?.phone || "Unknown";
+  const displayName = contact?.name || contact?.phone || "Desconhecido";
   const initials = displayName.charAt(0).toUpperCase();
 
   const handleClick = useCallback(() => {
@@ -466,14 +481,14 @@ function ConversationItem({
       slaBadge = (
         <span className="flex items-center gap-0.5 text-[9px] font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/20 px-1 py-0.5 rounded">
           <Clock className="h-2.5 w-2.5" />
-          SLA Breach ({Math.floor(elapsedMins - SLA_LIMIT_MINS)}m)
+          SLA Estourado ({Math.floor(elapsedMins - SLA_LIMIT_MINS)}m)
         </span>
       );
     } else if (isSlaWarning) {
       slaBadge = (
         <span className="flex items-center gap-0.5 text-[9px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20 px-1 py-0.5 rounded">
           <Clock className="h-2.5 w-2.5" />
-          SLA Warning ({remainingMins}m)
+          Alerta de SLA ({remainingMins}m)
         </span>
       );
     } else {
@@ -507,7 +522,7 @@ function ConversationItem({
         )}
         {/* AI active dot badge */}
         {aiActive && (
-          <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-indigo-500 border border-slate-900" title="AI active on this chat" />
+          <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-indigo-500 border border-slate-900" title="IA ativa nesta conversa" />
         )}
       </div>
 
@@ -523,7 +538,7 @@ function ConversationItem({
         </div>
         <div className="mt-0.5 flex items-center justify-between gap-2">
           <p className="truncate text-xs text-slate-400">
-            {conversation.last_message_text || "No messages yet"}
+            {conversation.last_message_text || "Nenhuma mensagem ainda"}
           </p>
           <div className="flex shrink-0 items-center gap-1.5">
             {conversation.unread_count > 0 && (
