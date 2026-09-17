@@ -294,8 +294,8 @@ function StatusIcon({ status }: { status: Message["status"] }) {
 
 function MediaUnavailable({ label }: { label: string }) {
   return (
-    <div className="flex items-center gap-2 rounded-lg bg-slate-700/40 px-3 py-2 text-xs text-slate-300">
-      <ImageOff className="h-4 w-4 shrink-0 text-slate-500" />
+    <div className="flex items-center gap-2 rounded-lg bg-muted px-3 py-2 text-xs text-muted-foreground">
+      <ImageOff className="h-4 w-4 shrink-0 text-muted-foreground" />
       <span>{label} unavailable</span>
     </div>
   );
@@ -340,15 +340,15 @@ function MediaImage({ url, alt }: { url: string; alt: string }) {
 
   if (error) {
     return (
-      <div className="flex h-40 w-60 items-center justify-center rounded-lg bg-slate-700">
-        <ImageOff className="h-8 w-8 text-slate-500" />
+      <div className="flex h-40 w-60 items-center justify-center rounded-lg bg-muted">
+        <ImageOff className="h-8 w-8 text-muted-foreground" />
       </div>
     );
   }
 
   if (loading) {
     return (
-      <div className="flex h-40 w-60 items-center justify-center rounded-lg bg-slate-700">
+      <div className="flex h-40 w-60 items-center justify-center rounded-lg bg-muted">
         <div className="h-5 w-5 animate-spin rounded-full border-2 border-primary border-t-transparent" />
       </div>
     );
@@ -438,9 +438,9 @@ function MessageContent({ message }: { message: Message }) {
           href={message.media_url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 rounded-lg bg-slate-700/50 px-3 py-2 text-sm hover:bg-slate-700"
+          className="flex items-center gap-2 rounded-lg bg-black/10 px-3 py-2 text-sm hover:bg-black/15 dark:bg-white/10 dark:hover:bg-white/15"
         >
-          <FileText className="h-5 w-5 shrink-0 text-slate-400" />
+          <FileText className="h-5 w-5 shrink-0 opacity-70" />
           <span className="truncate">
             {message.content_text || "Document"}
           </span>
@@ -465,7 +465,7 @@ function MessageContent({ message }: { message: Message }) {
     case "location":
       return (
         <div className="flex items-center gap-2 text-sm">
-          <MapPin className="h-4 w-4 shrink-0 text-slate-400" />
+          <MapPin className="h-4 w-4 shrink-0 opacity-70" />
           <span>{message.content_text || "Location shared"}</span>
         </div>
       );
@@ -478,7 +478,7 @@ function MessageContent({ message }: { message: Message }) {
       // tap rather than the customer typing the same words.
       return (
         <div className="flex flex-col gap-0.5">
-          <span className="inline-flex items-center gap-1 text-[10px] font-medium uppercase tracking-wide text-slate-400">
+          <span className="inline-flex items-center gap-1 text-[10px] font-medium uppercase tracking-wide opacity-70">
             <CornerDownLeft className="h-3 w-3" />
             Button reply
           </span>
@@ -525,14 +525,14 @@ export function MessageBubble({
         className={cn(
           "relative rounded-2xl px-3 py-2",
           message.is_internal
-            ? "border border-amber-550/20 bg-amber-500/10 text-amber-200 text-xs shadow-md p-4 max-w-[85%]"
+            ? "border border-amber-500/20 bg-amber-500/10 text-amber-800 dark:text-amber-200 text-xs shadow-md p-4 max-w-[85%]"
             : isAgent
               ? "rounded-br-md bg-primary text-primary-foreground"
-              : "rounded-bl-md bg-slate-800 text-slate-100",
+              : "rounded-bl-md bg-muted text-foreground",
         )}
       >
         {message.is_internal && (
-          <div className="mb-1 text-[10px] uppercase font-bold text-amber-400 tracking-wider">
+          <div className="mb-1 text-[10px] uppercase font-bold text-amber-600 dark:text-amber-400 tracking-wider">
             🔒 Private Internal Note
           </div>
         )}
@@ -550,7 +550,7 @@ export function MessageBubble({
                 : "justify-start",
           )}
         >
-          <span className="text-[10px] text-white/60">{time}</span>
+          <span className="text-[10px] text-current/60">{time}</span>
           {isAgent && !message.is_internal && <StatusIcon status={message.status} />}
         </div>
       </div>
