@@ -557,3 +557,75 @@ export async function downloadMedia(
   const buffer = Buffer.from(await response.arrayBuffer())
   return { buffer, contentType }
 }
+
+// ============================================================
+// Embedded Signup (Coexistence onboarding)
+// ============================================================
+//
+// Lets a business connect a number that's already active on the
+// WhatsApp Business app, via Meta's Embedded Signup "WhatsApp Business
+// app onboarding" flow, instead of pasting Cloud API credentials by
+// hand. See src/app/api/whatsapp/embedded-signup/exchange/route.ts for
+// where these are used together.
+
+export interface ExchangeEmbeddedSignupCodeArgs {
+  code: string
+  appId: string
+  appSecret: string
+}
+
+/**
+ * Exchange the short-lived authorization code returned by FB.login()
+ * (Embedded Signup) for a business access token. Meta expires the code
+ * in ~30 seconds, so this must be called immediately after receiving it.
+ */
+export async function exchangeEmbeddedSignupCode(
+  args: ExchangeEmbeddedSignupCodeArgs
+): Promise<{ accessToken: string }> {
+  const { code, appId, appSecret } = args
+  const url = new URL(`${META_API_BASE}/oauth/access_token`)
+  url.searchParams.set('client_id', appId)
+  url.searchParams.set('client_secret', appSecret)
+  url.searchParams.set('code', code)
+  const response = await fetch(url.toString())
+  if (!response.ok) {
+    await throwMetaError(response, `Embedded Signup code exchange failed: ${response.status}`)
+  }
+  const data = await response.json()
+  if (!data.access_token) throw new Error('Meta response missing access_token')
+  return { accessToken: data.access_token }
+}
+
+export interface WabaPhoneNumber {
+  id: string
+  display_phone_number: string
+  verified_name?: string
+  is_on_biz_app?: boolean
+  platform_type?: string
+}
+
+export interface GetWabaPhoneNumbersArgs {
+  wabaId: string
+  accessToken: string
+}
+
+/**
+ * List the phone numbers registered under a WhatsApp Business Account.
+ * Used right after the Coexistence flow: it only hands back the
+ * waba_id (not a phone_number_id), so the connected number is
+ * discovered here instead of asking the business to paste it in.
+ */
+export async function getWabaPhoneNumbers(
+  args: GetWabaPhoneNumbersArgs
+): Promise<WabaPhoneNumber[]> {
+  const { wabaId, accessToken } = args
+  const url = `${META_API_BASE}/${wabaId}/phone_numbers?fields=id,display_phone_number,verified_name,is_on_biz_app,platform_type`
+  const response = await fetch(url, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  })
+  if (!response.ok) {
+    await throwMetaError(response, `Failed to list WABA phone numbers: ${response.status}`)
+  }
+  const data = await response.json()
+  return data.data ?? []
+}

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { toast } from 'sonner';
 import {
   Eye,
@@ -33,7 +33,28 @@ import {
   AccordionContent,
 } from '@/components/ui/accordion';
 
-const MASKED_TOKEN = 'â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢';
+const MASKED_TOKEN = '••••••••••••••••';
+
+// Platform-level Meta Tech Provider credentials for WhatsApp Coexistence
+// (Embedded Signup). Set once by whoever runs this deployment; every
+// workspace's customers then connect their own WhatsApp number through
+// the same app — see handleCoexistenceSignup below. The "Conectar via
+// Coexistência" button stays hidden whenever these aren't set.
+const META_APP_ID = process.env.NEXT_PUBLIC_META_APP_ID;
+const META_CONFIG_ID = process.env.NEXT_PUBLIC_META_CONFIG_ID;
+
+declare global {
+  interface Window {
+    FB?: {
+      init: (params: Record<string, unknown>) => void;
+      login: (
+        callback: (response: { authResponse?: { code?: string } }) => void,
+        params: Record<string, unknown>
+      ) => void;
+    };
+    fbAsyncInit?: () => void;
+  }
+}
 
 interface ConnectedNumber {
   id: string;
@@ -57,7 +78,8 @@ export function WhatsAppConfig() {
   const [testingId, setTestingId] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [showToken, setShowToken] = useState(false);
-  
+  const [coexistenceLoading, setCoexistenceLoading] = useState(false);
+
   const [configs, setConfigs] = useState<ConnectedNumber[]>([]);
   const [selectedConfigId, setSelectedConfigId] = useState<string | null>(null);
 
@@ -68,6 +90,13 @@ export function WhatsAppConfig() {
   const [verifyToken, setVerifyToken] = useState('');
   const [customPhoneNumber, setCustomPhoneNumber] = useState('');
   const [tokenEdited, setTokenEdited] = useState(false);
+
+  // Coexistence's waba_id arrives via a postMessage event while the
+  // Meta popup is still open — separately from FB.login's own callback,
+  // which only carries the exchangeable `code`. Cached here so the
+  // login callback can read it once the code shows up.
+  const wabaIdRef = useRef<string | null>(null);
+  const fbSdkLoadedRef = useRef(false);
 
   const webhookUrl =
     typeof window !== 'undefined'
@@ -102,6 +131,66 @@ export function WhatsAppConfig() {
     fetchConfigs();
   }, [authLoading, user, fetchConfigs]);
 
+  // Loads Facebook's JS SDK once, only when Coexistence is configured
+  // for this deployment. Nothing else in this file depends on it, so
+  // it's skipped entirely when NEXT_PUBLIC_META_APP_ID is unset.
+  useEffect(() => {
+    if (!META_APP_ID || fbSdkLoadedRef.current) return;
+    if (typeof window === 'undefined') return;
+
+    window.fbAsyncInit = () => {
+      window.FB?.init({
+        appId: META_APP_ID,
+        autoLogAppEvents: true,
+        xfbml: true,
+        version: 'v21.0',
+      });
+      fbSdkLoadedRef.current = true;
+    };
+
+    if (document.getElementById('facebook-jssdk')) return;
+    const script = document.createElement('script');
+    script.id = 'facebook-jssdk';
+    script.src = 'https://connect.facebook.net/en_US/sdk.js';
+    script.async = true;
+    script.defer = true;
+    script.crossOrigin = 'anonymous';
+    document.body.appendChild(script);
+  }, []);
+
+  // Captures the WABA id Meta sends via postMessage during Coexistence
+  // signup (FB.login's callback only carries the code, not the WABA).
+  useEffect(() => {
+    if (!META_APP_ID) return;
+
+    function handleMessage(event: MessageEvent) {
+      if (!event.origin.endsWith('facebook.com')) return;
+      let data: Record<string, unknown>;
+      try {
+        data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+      } catch {
+        return;
+      }
+      if (data?.type !== 'WA_EMBEDDED_SIGNUP') return;
+
+      const eventName = data.event as string | undefined;
+      if (eventName === 'FINISH_WHATSAPP_BUSINESS_APP_ONBOARDING' || eventName === 'FINISH') {
+        const payload = data.data as { waba_id?: string } | undefined;
+        wabaIdRef.current = payload?.waba_id ?? null;
+      } else if (eventName === 'CANCEL') {
+        toast.info('Conexão via Coexistência cancelada.');
+        setCoexistenceLoading(false);
+      } else if (eventName === 'ERROR') {
+        const payload = data.data as { error_message?: string } | undefined;
+        toast.error(payload?.error_message || 'Erro no fluxo de Coexistência da Meta.');
+        setCoexistenceLoading(false);
+      }
+    }
+
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
+
   // Set fields for editing a specific connection
   const handleEditConfig = (config: ConnectedNumber) => {
     setSelectedConfigId(config.id);
@@ -111,7 +200,7 @@ export function WhatsAppConfig() {
     setAccessToken(MASKED_TOKEN);
     setVerifyToken(config.verify_token || '');
     setTokenEdited(false);
-    
+
     toast.info(`Editing configuration for ${config.phone_number}`);
   };
 
@@ -197,7 +286,7 @@ export function WhatsAppConfig() {
     try {
       setTestingId(configId);
       toast.info('Testing connection with Meta API...');
-      
+
       const config = configs.find(c => c.id === configId);
       if (!config) return;
 
@@ -252,13 +341,108 @@ export function WhatsAppConfig() {
 
   // Opens the Meta developer console for the user to create/configure their
   // WhatsApp app. The official embedded signup flow (FB.login with a
-  // config_id issued by Meta for this business) isn't wired up yet â€” it
+  // config_id issued by Meta for this business) isn't wired up yet — it
   // needs a Meta App reviewed for the embedded signup product. Until then
   // we send the user to fetch real credentials and paste them below, rather
   // than pretending to auto-fill a connection.
   function handleMetaEmbeddedSignup() {
     window.open("https://developers.facebook.com", "_blank");
     toast.info("Copy your Phone Number ID, WABA ID and Access Token from the Meta dashboard, then paste them below.", { duration: 5000 });
+  }
+
+  // Launches Meta's Embedded Signup with the WhatsApp Business App
+  // onboarding (Coexistence) variant: the business logs in with their
+  // own Meta Business account and keeps their existing number active on
+  // both the WhatsApp Business app and this CRM's Cloud API connection.
+  // Requires NEXT_PUBLIC_META_APP_ID / NEXT_PUBLIC_META_CONFIG_ID to be
+  // set for this deployment (the platform's own Meta Tech Provider app —
+  // every customer connects through it, nobody pastes credentials here).
+  function handleCoexistenceSignup() {
+    if (!META_APP_ID || !META_CONFIG_ID) {
+      toast.error('Conexão via Coexistência não está configurada neste ambiente.');
+      return;
+    }
+    if (!window.FB) {
+      toast.error('Ainda carregando o SDK da Meta, tente novamente em instantes.');
+      return;
+    }
+
+    wabaIdRef.current = null;
+    setCoexistenceLoading(true);
+
+    window.FB.login(
+      (response) => {
+        const code = response.authResponse?.code;
+        if (!code) {
+          // Popup closed without finishing — not an error the user needs
+          // to see, they just backed out.
+          setCoexistenceLoading(false);
+          return;
+        }
+        finishCoexistenceSignup(code);
+      },
+      {
+        config_id: META_CONFIG_ID,
+        response_type: 'code',
+        override_default_response_type: true,
+        extras: {
+          setup: {},
+          featureType: 'whatsapp_business_app_onboarding',
+          sessionInfoVersion: '3',
+        },
+      }
+    );
+  }
+
+  async function finishCoexistenceSignup(code: string) {
+    try {
+      const wabaId = wabaIdRef.current;
+      if (!wabaId) {
+        toast.error('Não recebemos o WABA ID da Meta. Tente novamente.');
+        return;
+      }
+
+      const exchangeRes = await fetch('/api/whatsapp/embedded-signup/exchange', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, waba_id: wabaId }),
+      });
+      const exchangeData = await exchangeRes.json();
+
+      if (!exchangeRes.ok) {
+        toast.error(exchangeData.error || 'Falha ao concluir a Coexistência com a Meta');
+        return;
+      }
+
+      const saveRes = await fetch('/api/whatsapp/config', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          phone_number_id: exchangeData.phone_number_id,
+          waba_id: exchangeData.waba_id,
+          access_token: exchangeData.access_token,
+          phone_number: exchangeData.display_phone_number,
+        }),
+      });
+      const saveData = await saveRes.json();
+
+      if (!saveRes.ok) {
+        toast.error(saveData.error || 'Falha ao salvar a conexão de Coexistência');
+        return;
+      }
+
+      toast.success(
+        exchangeData.verified_name
+          ? `Coexistência ativada: ${exchangeData.verified_name}`
+          : 'Coexistência ativada com sucesso!'
+      );
+      fetchConfigs();
+    } catch (err) {
+      console.error('Coexistence signup error:', err);
+      toast.error('Falha ao concluir a Coexistência');
+    } finally {
+      setCoexistenceLoading(false);
+    }
   }
 
   function handleCopyWebhookUrl() {
@@ -279,7 +463,7 @@ export function WhatsAppConfig() {
     <div className="grid gap-6 lg:grid-cols-[1fr_380px] mt-4">
       {/* Main config view */}
       <div className="space-y-6">
-        
+
         {/* Connected Numbers Grid List */}
         <Card className="bg-slate-900/40 backdrop-blur-md border-slate-800 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 h-32 w-32 bg-primary/5 blur-3xl rounded-full" />
@@ -358,7 +542,7 @@ export function WhatsAppConfig() {
                         )}
                         Test
                       </Button>
-                      
+
                       <Button
                         variant="ghost"
                         size="sm"
@@ -404,19 +588,37 @@ export function WhatsAppConfig() {
                 Enter your Meta WhatsApp API credentials manually or connect via Facebook.
               </CardDescription>
             </div>
-            
-            <Button
-              onClick={handleMetaEmbeddedSignup}
-              disabled={saving}
-              className="bg-[#1877F2] hover:bg-[#1877F2]/90 text-white font-semibold shrink-0 shadow-lg shadow-blue-900/20"
-            >
-              <svg className="size-4 mr-2 fill-current" viewBox="0 0 24 24">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-              </svg>
-              Open Meta Developers
-            </Button>
+
+            <div className="flex flex-col sm:flex-row gap-2 shrink-0">
+              {META_APP_ID && META_CONFIG_ID && (
+                <Button
+                  onClick={handleCoexistenceSignup}
+                  disabled={saving || coexistenceLoading}
+                  className="bg-emerald-600 hover:bg-emerald-600/90 text-white font-semibold shadow-lg shadow-emerald-900/20"
+                  title="Conecte um número que já está ativo no app WhatsApp Business, mantendo-o funcionando nos dois lugares"
+                >
+                  {coexistenceLoading ? (
+                    <Loader2 className="size-4 mr-2 animate-spin" />
+                  ) : (
+                    <Smartphone className="size-4 mr-2" />
+                  )}
+                  Conectar via Coexistência
+                </Button>
+              )}
+
+              <Button
+                onClick={handleMetaEmbeddedSignup}
+                disabled={saving}
+                className="bg-[#1877F2] hover:bg-[#1877F2]/90 text-white font-semibold shrink-0 shadow-lg shadow-blue-900/20"
+              >
+                <svg className="size-4 mr-2 fill-current" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                </svg>
+                Open Meta Developers
+              </Button>
+            </div>
           </CardHeader>
-          
+
           <CardContent className="space-y-4 pt-6">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-1.5">
