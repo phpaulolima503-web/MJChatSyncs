@@ -85,7 +85,17 @@ export function MessageActions({
       onContextMenu={handleContextMenu}
       onBlur={() => setTouchOpen(false)}
     >
-      <div className="group/actions relative max-w-[75%]">
+      {/*
+        min-w-0 is required here: this div is a flex ITEM (parent is the
+        `flex w-full` row above), and flex items default to min-width:auto,
+        which refuses to shrink below the content's intrinsic width — so a
+        long unbroken string (a URL, a stress-test paste with no spaces)
+        stretched this element past max-w-[75%] instead of wrapping inside
+        it, blowing out the whole thread's horizontal layout. min-w-0 lets
+        the item actually respect max-w-[75%], which is what lets
+        `break-words` on the text inside MessageBubble do its job.
+      */}
+      <div className="group/actions relative max-w-[75%] min-w-0">
         {children}
       <div
         data-touch-open={touchOpen || pickerOpen ? "true" : undefined}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 import type { Contact, Deal, ContactNote, Tag, Profile, Task, CustomerFile } from "@/types";
@@ -26,6 +26,8 @@ import {
   Calendar,
   Save,
   X as XIcon,
+  Camera,
+  Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -69,6 +71,8 @@ export function ContactSidebar({ contact, onContactUpdate }: ContactSidebarProps
   });
   const [newNote, setNewNote] = useState("");
   const [addingNote, setAddingNote] = useState(false);
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
+  const avatarInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (contact) {
@@ -179,6 +183,71 @@ export function ContactSidebar({ contact, onContactUpdate }: ContactSidebarProps
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }, [contact]);
+
+  // WhatsApp's Cloud API never exposes a customer's profile photo (it's
+  // withheld for privacy, unlike the consumer app), so this is a manual
+  // upload rather than something synced automatically from a webhook.
+  // Mirrors the pattern in src/components/settings/profile-form.tsx, but
+  // against the `contact-avatars` bucket (any authenticated teammate can
+  // write — there's no per-contact "owner" the way there is for a user's
+  // own avatar) instead of the user-scoped `avatars` bucket.
+  const ALLOWED_AVATAR_MIME = useMemo(
+    () => new Set(["image/png", "image/jpeg", "image/webp", "image/gif"]),
+    [],
+  );
+  const MAX_AVATAR_BYTES = 2 * 1024 * 1024;
+
+  const handleAvatarPick = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      e.target.value = ""; // allow re-picking the same file
+      if (!file || !contact) return;
+
+      if (!ALLOWED_AVATAR_MIME.has(file.type)) {
+        toast.error("Formato não suportado. Use PNG, JPG, WebP ou GIF.");
+        return;
+      }
+      if (file.size > MAX_AVATAR_BYTES) {
+        toast.error("Imagem muito grande. Máximo de 2MB.");
+        return;
+      }
+
+      setUploadingAvatar(true);
+      try {
+        const supabase = createClient();
+        const ext = file.name.split(".").pop()?.toLowerCase() || "png";
+        const path = `${contact.id}/avatar-${Date.now()}.${ext}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from("contact-avatars")
+          .upload(path, file, {
+            cacheControl: "3600",
+            upsert: true,
+            contentType: file.type,
+          });
+        if (uploadError) throw new Error(uploadError.message);
+
+        const {
+          data: { publicUrl },
+        } = supabase.storage.from("contact-avatars").getPublicUrl(path);
+
+        const { error: updateError } = await supabase
+          .from("contacts")
+          .update({ avatar_url: publicUrl })
+          .eq("id", contact.id);
+        if (updateError) throw new Error(updateError.message);
+
+        onContactUpdate?.({ ...contact, avatar_url: publicUrl });
+        toast.success("Foto do contato atualizada");
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : "Erro desconhecido";
+        toast.error(`Falha ao enviar foto: ${msg}`);
+      } finally {
+        setUploadingAvatar(false);
+      }
+    },
+    [contact, onContactUpdate, ALLOWED_AVATAR_MIME],
+  );
 
   const handleAddNote = useCallback(async () => {
     if (!contact || !newNote.trim()) return;
@@ -379,16 +448,39 @@ export function ContactSidebar({ contact, onContactUpdate }: ContactSidebarProps
         <div className="p-4 space-y-6">
           {/* Contact Profile */}
           <div className="flex flex-col items-center text-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-700 text-lg font-semibold text-white">
-              {contact.avatar_url ? (
-                <img
-                  src={contact.avatar_url}
-                  alt={displayName}
-                  className="h-16 w-16 rounded-full object-cover"
-                />
-              ) : (
-                initials
-              )}
+            <div className="relative">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-700 text-lg font-semibold text-white overflow-hidden">
+                {contact.avatar_url ? (
+                  <img
+                    src={contact.avatar_url}
+                    alt={displayName}
+                    className="h-16 w-16 rounded-full object-cover"
+                  />
+                ) : (
+                  initials
+                )}
+              </div>
+              <input
+                ref={avatarInputRef}
+                type="file"
+                accept="image/png,image/jpeg,image/webp,image/gif"
+                className="hidden"
+                onChange={handleAvatarPick}
+              />
+              <button
+                type="button"
+                onClick={() => avatarInputRef.current?.click()}
+                disabled={uploadingAvatar}
+                title="Alterar foto do contato"
+                aria-label="Alterar foto do contato"
+                className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full border-2 border-slate-900 bg-primary text-white transition-colors hover:bg-primary/90 disabled:opacity-60"
+              >
+                {uploadingAvatar ? (
+                  <Loader2 className="h-3 w-3 animate-spin" />
+                ) : (
+                  <Camera className="h-3 w-3" />
+                )}
+              </button>
             </div>
             <h3 className="mt-3 text-sm font-semibold text-white">
               {displayName}
