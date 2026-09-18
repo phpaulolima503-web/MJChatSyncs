@@ -47,6 +47,16 @@ interface WhatsAppMessage {
     button_reply?: { id: string; title: string }
     list_reply?: { id: string; title: string; description?: string }
   }
+  /**
+   * Set when the customer taps a Quick Reply button on an approved
+   * message TEMPLATE (not an interactive message we built ourselves —
+   * that's a separate webhook shape, `interactive.button_reply` above).
+   * `text` is the button's label; `payload` is whatever Meta echoes
+   * back (defaults to the button text for templates created without an
+   * explicit payload). Distinct from `interactive` because Meta reuses
+   * `type: "button"` at the top level for this, not `type: "interactive"`.
+   */
+  button?: { text: string; payload?: string }
   /** Present when the customer swipe-replies to one of our messages. */
   context?: { id: string }
 }
@@ -532,7 +542,11 @@ async function processMessage(
     ? message.type
     : message.type === 'sticker'
       ? 'image'   // stickers are images
-      : 'text'    // reaction, unknown â†’ text fallback
+      : message.type === 'button'
+        ? 'interactive' // quick-reply tap on an approved template â€” same
+                          // "button reply" bubble affordance as our own
+                          // interactive messages, see parseMessageContent
+        : 'text'    // reaction, unknown â†’ text fallback
 
   const priorCustomerMsgCount = await messageRepo.countCustomerMessages(conversation.id)
   const isFirstInboundMessage = priorCustomerMsgCount === 0
@@ -805,6 +819,25 @@ async function parseMessageContent(
         }
       }
       return { ...empty, contentText: '[Interactive reply]' }
+    }
+
+    case 'button': {
+      // The customer tapped a Quick Reply button on an approved message
+      // TEMPLATE we sent (not one of our own interactive messages, which
+      // arrive as `type: "interactive"` above with a different payload
+      // shape). Meta puts the button's label in `button.text` â€” previously
+      // unhandled here, this type fell through to the generic
+      // "[Unsupported message type]" default, and the content_type
+      // mapping above sent it down the plain-text fallback path.
+      const label = message.button?.text
+      if (label) {
+        return {
+          ...empty,
+          contentText: label,
+          interactiveReplyId: message.button?.payload || label,
+        }
+      }
+      return { ...empty, contentText: '[Button reply]' }
     }
 
     default:

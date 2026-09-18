@@ -34,10 +34,18 @@ import { normalizeCategory, normalizeStatus } from '@/lib/whatsapp/template-mapp
 const META_API_VERSION = 'v21.0'
 const META_API_BASE = `https://graph.facebook.com/${META_API_VERSION}`
 
+interface MetaTemplateButton {
+  type: string
+  text: string
+  url?: string
+  phone_number?: string
+}
+
 interface MetaTemplateComponent {
   type: string
   text?: string
   format?: string
+  buttons?: MetaTemplateButton[]
 }
 
 interface MetaTemplate {
@@ -137,6 +145,13 @@ export async function POST() {
       const body = (t.components ?? []).find((c) => c.type === 'BODY')
       const header = (t.components ?? []).find((c) => c.type === 'HEADER')
       const footer = (t.components ?? []).find((c) => c.type === 'FOOTER')
+      // Previously never read: without this, a template's buttons only
+      // ever existed on Meta's side. The CRM couldn't show what a sent
+      // template's buttons actually said, and the send path had no way
+      // to know a button needed a dynamic parameter (Meta rejects the
+      // send with #132012 "Parameter format does not match" when a URL
+      // button's variable is required but omitted).
+      const buttonsComponent = (t.components ?? []).find((c) => c.type === 'BUTTONS')
 
       const row = {
         user_id: user.id,
@@ -147,6 +162,7 @@ export async function POST() {
         header_content: header?.text ?? null,
         body_text: body?.text ?? '',
         footer_text: footer?.text ?? null,
+        buttons: buttonsComponent?.buttons ?? null,
         status: normalizeStatus(t.status),
         updated_at: new Date().toISOString(),
       }

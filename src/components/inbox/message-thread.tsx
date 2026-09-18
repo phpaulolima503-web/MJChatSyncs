@@ -175,6 +175,13 @@ export function MessageThread({
   const [templateModalOpen, setTemplateModalOpen] = useState(false);
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [reactions, setReactions] = useState<MessageReaction[]>([]);
+  // Template name -> its buttons, so a sent "template" bubble can show
+  // the same buttons the customer actually saw (display-only; the
+  // customer's tap comes back through the webhook as its own message,
+  // not by re-rendering these as clickable).
+  const [templateButtonsByName, setTemplateButtonsByName] = useState<
+    Record<string, { type: string; text: string }[]>
+  >({});
   // Purely visual spin state for the manual-refresh button. The actual
   // refetch is fire-and-forget through `onRefresh` (which bumps the
   // parent's resyncToken); the 700ms spin is just feedback so the click
@@ -310,6 +317,34 @@ export function MessageThread({
           return;
         }
         setProfiles((data as Profile[]) ?? []);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Template buttons, keyed by name, for rendering on sent "template"
+  // bubbles. Fetched once — templates change rarely enough that a
+  // realtime subscription would be overkill here.
+  useEffect(() => {
+    let cancelled = false;
+    const supabase = createClient();
+    supabase
+      .from("message_templates")
+      .select("name, buttons")
+      .then(({ data, error }) => {
+        if (cancelled) return;
+        if (error) {
+          console.error("Failed to fetch template buttons:", error);
+          return;
+        }
+        const map: Record<string, { type: string; text: string }[]> = {};
+        for (const row of (data as { name: string; buttons: { type: string; text: string }[] | null }[]) ?? []) {
+          if (row.buttons && row.buttons.length > 0) {
+            map[row.name] = row.buttons;
+          }
+        }
+        setTemplateButtonsByName(map);
       });
     return () => {
       cancelled = true;
@@ -1296,6 +1331,11 @@ export function MessageThread({
                           reactions={msgReactions}
                           currentUserId={user?.id}
                           onToggleReaction={handlePillToggle}
+                          templateButtons={
+                            msg.template_name
+                              ? templateButtonsByName[msg.template_name]
+                              : undefined
+                          }
                         />
                       </MessageActions>
                     );

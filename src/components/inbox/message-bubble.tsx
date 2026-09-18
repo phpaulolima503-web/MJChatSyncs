@@ -273,6 +273,14 @@ interface MessageBubbleProps {
   reactions?: MessageReaction[];
   currentUserId?: string;
   onToggleReaction?: (emoji: string) => void;
+  /**
+   * The sent template's buttons, when `message.content_type === "template"`
+   * and `message.template_name` matches one of the workspace's templates.
+   * Looked up by the caller (message-thread.tsx fetches the template
+   * catalog once) rather than here, so this component stays a pure
+   * presenter.
+   */
+  templateButtons?: TemplateButton[];
 }
 
 function StatusIcon({ status }: { status: Message["status"] }) {
@@ -364,7 +372,21 @@ function MediaImage({ url, alt }: { url: string; alt: string }) {
   );
 }
 
-function MessageContent({ message }: { message: Message }) {
+interface TemplateButton {
+  type: string;
+  text: string;
+}
+
+function MessageContent({
+  message,
+  templateButtons,
+}: {
+  message: Message;
+  /** The sent template's own buttons, looked up by name — display-only,
+   *  these mirror what the customer actually saw (WhatsApp itself shows
+   *  a business's own sent template with its buttons rendered). */
+  templateButtons?: TemplateButton[];
+}) {
   switch (message.content_type) {
     case "text":
       if (message.content_text?.includes("👉 *UPI Payment Request* 👈")) {
@@ -459,6 +481,18 @@ function MessageContent({ message }: { message: Message }) {
               {message.content_text}
             </p>
           )}
+          {templateButtons && templateButtons.length > 0 && (
+            <div className="mt-2 flex flex-col gap-1 border-t border-white/10 pt-2">
+              {templateButtons.map((btn, i) => (
+                <span
+                  key={i}
+                  className="rounded-md bg-black/10 px-2 py-1 text-center text-xs font-medium dark:bg-white/10"
+                >
+                  {btn.text}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       );
 
@@ -504,6 +538,7 @@ export function MessageBubble({
   reactions,
   currentUserId,
   onToggleReaction,
+  templateButtons,
 }: MessageBubbleProps) {
   const isAgent = message.sender_type === "agent" || message.sender_type === "bot";
   const time = format(new Date(message.created_at), "HH:mm");
@@ -539,7 +574,7 @@ export function MessageBubble({
         {reply && (
           <ReplyQuote authorLabel={reply.authorLabel} preview={reply.preview} />
         )}
-        <MessageContent message={message} />
+        <MessageContent message={message} templateButtons={templateButtons} />
         <div
           className={cn(
             "mt-1 flex items-center gap-1",
