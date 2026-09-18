@@ -97,55 +97,55 @@ export function QrCampaignManager() {
   // Draw a premium Canvas-based QR code representation
   const drawMockQR = (camp: QRQampaign) => {
     return (
-      <div className="relative flex flex-col items-center justify-center p-3 rounded-xl border border-slate-800 bg-slate-950 h-32 w-32 group hover:border-indigo-500/50 transition-all">
+      <div className="relative flex flex-col items-center justify-center p-3 rounded-xl border border-border bg-background h-32 w-32 group hover:border-indigo-500/50 transition-all">
         {/* Visual Mock QR Code Grid using beautiful absolute CSS dots/blocks */}
         <div className="grid grid-cols-5 gap-1.5 h-20 w-20 opacity-85 group-hover:opacity-100 transition-opacity">
           {/* Pos 1 */}
           <div className="bg-white rounded-[2px] flex items-center justify-center p-0.5">
-            <div className="bg-slate-950 h-full w-full rounded-[1px] flex items-center justify-center p-0.5">
+            <div className="bg-background h-full w-full rounded-[1px] flex items-center justify-center p-0.5">
               <div className="bg-white h-full w-full rounded-[0.5px]" />
             </div>
           </div>
           <div className="bg-white rounded-[2px]" />
-          <div className="bg-slate-800 rounded-[2px]" />
+          <div className="bg-muted rounded-[2px]" />
           <div className="bg-indigo-400 rounded-[2px]" />
           {/* Pos 2 */}
           <div className="bg-white rounded-[2px] flex items-center justify-center p-0.5">
-            <div className="bg-slate-950 h-full w-full rounded-[1px] flex items-center justify-center p-0.5">
+            <div className="bg-background h-full w-full rounded-[1px] flex items-center justify-center p-0.5">
               <div className="bg-white h-full w-full rounded-[0.5px]" />
             </div>
           </div>
 
-          <div className="bg-slate-900 rounded-[2px]" />
+          <div className="bg-card rounded-[2px]" />
           <div className="bg-white rounded-[2px]" />
-          <div className="bg-slate-800 rounded-[2px]" />
+          <div className="bg-muted rounded-[2px]" />
           <div className="bg-white rounded-[2px]" />
           <div className="bg-indigo-400 rounded-[2px]" />
 
           <div className="bg-indigo-400 rounded-[2px]" />
-          <div className="bg-slate-800 rounded-[2px]" />
+          <div className="bg-muted rounded-[2px]" />
           <div className="bg-white rounded-[2px] h-2 w-2 mx-auto mt-1" />
-          <div className="bg-slate-900 rounded-[2px]" />
+          <div className="bg-card rounded-[2px]" />
           <div className="bg-white rounded-[2px]" />
 
           <div className="bg-white rounded-[2px]" />
-          <div className="bg-slate-800 rounded-[2px]" />
+          <div className="bg-muted rounded-[2px]" />
           <div className="bg-indigo-400 rounded-[2px]" />
           <div className="bg-white rounded-[2px]" />
-          <div className="bg-slate-800 rounded-[2px]" />
+          <div className="bg-muted rounded-[2px]" />
 
           {/* Pos 3 */}
           <div className="bg-white rounded-[2px] flex items-center justify-center p-0.5">
-            <div className="bg-slate-950 h-full w-full rounded-[1px] flex items-center justify-center p-0.5">
+            <div className="bg-background h-full w-full rounded-[1px] flex items-center justify-center p-0.5">
               <div className="bg-white h-full w-full rounded-[0.5px]" />
             </div>
           </div>
           <div className="bg-white rounded-[2px]" />
-          <div className="bg-slate-800 rounded-[2px]" />
+          <div className="bg-muted rounded-[2px]" />
           <div className="bg-indigo-400 rounded-[2px]" />
-          <div className="bg-slate-900 rounded-[2px]" />
+          <div className="bg-card rounded-[2px]" />
         </div>
-        <div className="absolute inset-0 flex items-center justify-center bg-slate-950/85 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl">
+        <div className="absolute inset-0 flex items-center justify-center bg-background/85 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl">
           <ScanLine className="h-6 w-6 text-indigo-400 animate-pulse" />
         </div>
       </div>
@@ -153,14 +153,14 @@ export function QrCampaignManager() {
   }
 
   return (
-    <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6 backdrop-blur-xl">
-      <div className="mb-6 flex items-center justify-between border-b border-slate-800 pb-4">
+    <div className="rounded-2xl border border-border bg-card/70 p-6 backdrop-blur-xl">
+      <div className="mb-6 flex items-center justify-between border-b border-border pb-4">
         <div>
-          <h3 className="text-lg font-bold text-white flex items-center gap-2">
+          <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
             <QrCode className="h-5 w-5 text-indigo-400" />
             Offline QR Code & Scan Attribution Campaigns
           </h3>
-          <p className="text-xs text-slate-400">Generate tracking codes for banners, flyers, and print ads to capture WhatsApp leads</p>
+          <p className="text-xs text-muted-foreground">Generate tracking codes for banners, flyers, and print ads to capture WhatsApp leads</p>
         </div>
       </div>
 
@@ -172,23 +172,23 @@ export function QrCampaignManager() {
           </span>
 
           <div className="space-y-1">
-            <label className="text-[10px] font-medium text-slate-400">Campaign Name</label>
+            <label className="text-[10px] font-medium text-muted-foreground">Campaign Name</label>
             <input 
               type="text"
               placeholder="e.g Delhi Event Flyer"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full rounded-lg border border-slate-800 bg-slate-950 px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500"
+              className="w-full rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs text-foreground focus:outline-none focus:border-indigo-500"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-2">
             <div className="space-y-1">
-              <label className="text-[10px] font-medium text-slate-400">Source Tag</label>
+              <label className="text-[10px] font-medium text-muted-foreground">Source Tag</label>
               <select
                 value={source}
                 onChange={(e) => setSource(e.target.value)}
-                className="w-full rounded-lg border border-slate-800 bg-slate-950 px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500"
+                className="w-full rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs text-foreground focus:outline-none focus:border-indigo-500"
               >
                 <option value="Flyer">Flyer</option>
                 <option value="Billboard">Billboard</option>
@@ -198,31 +198,31 @@ export function QrCampaignManager() {
               </select>
             </div>
             <div className="space-y-1">
-              <label className="text-[10px] font-medium text-slate-400">Campaign Tag</label>
+              <label className="text-[10px] font-medium text-muted-foreground">Campaign Tag</label>
               <input 
                 type="text"
                 placeholder="delhi_flyer_2026"
                 value={campaign}
                 onChange={(e) => setCampaign(e.target.value)}
-                className="w-full rounded-lg border border-slate-800 bg-slate-950 px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500"
+                className="w-full rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs text-foreground focus:outline-none focus:border-indigo-500"
               />
             </div>
           </div>
 
           <div className="space-y-1">
-            <label className="text-[10px] font-medium text-slate-400">WhatsApp Auto-Text Template</label>
+            <label className="text-[10px] font-medium text-muted-foreground">WhatsApp Auto-Text Template</label>
             <textarea
               rows={3}
               placeholder="Pre-filled message when client scans QR..."
               value={waText}
               onChange={(e) => setWaText(e.target.value)}
-              className="w-full rounded-lg border border-slate-800 bg-slate-950 px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 resize-none"
+              className="w-full rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs text-foreground focus:outline-none focus:border-indigo-500 resize-none"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full rounded-lg bg-indigo-600 hover:bg-indigo-500 py-2 text-xs font-semibold text-white transition-all cursor-pointer"
+            className="w-full rounded-lg bg-indigo-600 hover:bg-indigo-500 py-2 text-xs font-semibold text-foreground transition-all cursor-pointer"
           >
             Create Tracking QR
           </button>
@@ -236,22 +236,22 @@ export function QrCampaignManager() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {campaigns.map((camp) => (
-              <div key={camp.id} className="rounded-xl border border-slate-800 bg-slate-950/40 p-4 flex gap-4 items-center justify-between hover:border-slate-750 transition-all">
+              <div key={camp.id} className="rounded-xl border border-border bg-muted/50 p-4 flex gap-4 items-center justify-between hover:border-border transition-all">
                 <div className="flex-1 space-y-2">
                   <div>
-                    <h4 className="text-xs font-bold text-white leading-tight">{camp.name}</h4>
+                    <h4 className="text-xs font-bold text-foreground leading-tight">{camp.name}</h4>
                     <p className="text-[10px] text-indigo-400 font-medium mt-0.5">utm_campaign={camp.campaign}</p>
                   </div>
-                  <div className="flex items-center gap-4 text-[10px] text-slate-400">
+                  <div className="flex items-center gap-4 text-[10px] text-muted-foreground">
                     <div>
-                      <span className="block text-[9px] uppercase font-bold text-slate-500">Scans</span>
-                      <span className="text-xs font-bold text-white flex items-center gap-1 mt-0.5">
+                      <span className="block text-[9px] uppercase font-bold text-muted-foreground">Scans</span>
+                      <span className="text-xs font-bold text-foreground flex items-center gap-1 mt-0.5">
                         <TrendingUp className="h-3 w-3 text-emerald-400" /> {camp.scans}
                       </span>
                     </div>
                     <div>
-                      <span className="block text-[9px] uppercase font-bold text-slate-500">Source</span>
-                      <span className="text-white font-medium block mt-0.5">{camp.source}</span>
+                      <span className="block text-[9px] uppercase font-bold text-muted-foreground">Source</span>
+                      <span className="text-foreground font-medium block mt-0.5">{camp.source}</span>
                     </div>
                   </div>
                   <div className="flex gap-2">
@@ -267,7 +267,7 @@ export function QrCampaignManager() {
                         navigator.clipboard.writeText(link)
                         toast.success('WhatsApp Deep Link copied!')
                       }}
-                      className="rounded bg-slate-900 hover:bg-slate-850 border border-slate-800 text-[10px] font-bold text-slate-300 px-2 py-1 transition-all cursor-pointer flex items-center gap-1"
+                      className="rounded bg-card hover:bg-muted border border-border text-[10px] font-bold text-foreground px-2 py-1 transition-all cursor-pointer flex items-center gap-1"
                     >
                       <Link2 className="h-3 w-3" /> Copy URL
                     </button>

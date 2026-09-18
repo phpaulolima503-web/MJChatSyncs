@@ -69,25 +69,25 @@ export default function SignupPage() {
 
   if (success) {
     return (
-      <div className="min-h-screen w-full bg-slate-950 text-slate-100 flex items-center justify-center px-4 relative overflow-hidden font-sans">
+      <div className="min-h-screen w-full bg-background text-foreground flex items-center justify-center px-4 relative overflow-hidden font-sans">
         {/* Subtle Grid Background */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-[0.15] pointer-events-none" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[250px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none" />
 
-        <div className="w-full max-w-md rounded-2xl border border-slate-900 bg-slate-900/20 p-8 backdrop-blur-xl shadow-2xl relative z-10 text-center space-y-6">
+        <div className="w-full max-w-md rounded-2xl border border-card bg-card/20 p-8 backdrop-blur-xl shadow-2xl relative z-10 text-center space-y-6">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600/10 border border-blue-500/15 text-blue-400">
             <CheckCircle className="h-6 w-6" />
           </div>
           <div className="space-y-2">
-            <h2 className="text-xl font-bold text-white">Check your email</h2>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              We&apos;ve sent a confirmation link to <span className="text-white font-semibold">{email}</span>. Please check your inbox and click the link to verify your account.
+            <h2 className="text-xl font-bold text-foreground">Check your email</h2>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              We&apos;ve sent a confirmation link to <span className="text-foreground font-semibold">{email}</span>. Please check your inbox and click the link to verify your account.
             </p>
           </div>
           <Link href="/login" className="block">
             <Button
               variant="outline"
-              className="w-full h-11 border-slate-900 bg-slate-950/60 text-slate-300 hover:bg-slate-900 hover:text-white transition-colors"
+              className="w-full h-11 border-card bg-background/60 text-foreground hover:bg-card hover:text-foreground transition-colors"
             >
               Back to sign in
             </Button>
@@ -98,7 +98,7 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-slate-950 text-slate-100 flex items-center justify-center relative overflow-hidden font-sans py-12 px-4 sm:px-8 lg:px-12">
+    <div className="min-h-screen w-full bg-background text-foreground flex items-center justify-center relative overflow-hidden font-sans py-12 px-4 sm:px-8 lg:px-12">
       {/* Subtle Grid Background */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-[0.15] pointer-events-none" />
       
@@ -115,17 +115,17 @@ export default function SignupPage() {
             {/* Logo */}
             <div className="flex items-center gap-2.5">
               <div className="h-10 w-10 rounded-xl bg-blue-600 flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.3)]">
-                <MessageSquare className="h-5.5 w-5.5 text-white" />
+                <MessageSquare className="h-5.5 w-5.5 text-foreground" />
               </div>
-              <span className="text-2xl font-extrabold text-white tracking-tight">MJChatSyncs</span>
+              <span className="text-2xl font-extrabold text-foreground tracking-tight">MJChatSyncs</span>
             </div>
 
             {/* Welcome Headers */}
             <div className="space-y-4">
-              <h1 className="text-4xl font-extrabold text-white tracking-tight">
+              <h1 className="text-4xl font-extrabold text-foreground tracking-tight">
                 Welcome to <span className="text-blue-500">MJChatSyncs</span>
               </h1>
-              <p className="text-slate-400 text-base leading-relaxed">
+              <p className="text-muted-foreground text-base leading-relaxed">
                 Supercharge your WhatsApp marketing with powerful automation tools
               </p>
             </div>
@@ -154,8 +154,8 @@ export default function SignupPage() {
                     <item.icon className="h-5 w-5" />
                   </div>
                   <div className="space-y-1 text-left">
-                    <h3 className="text-sm font-bold text-slate-200">{item.title}</h3>
-                    <p className="text-xs text-slate-500 leading-normal">{item.desc}</p>
+                    <h3 className="text-sm font-bold text-foreground">{item.title}</h3>
+                    <p className="text-xs text-muted-foreground leading-normal">{item.desc}</p>
                   </div>
                 </div>
               ))}
@@ -165,13 +165,13 @@ export default function SignupPage() {
 
         {/* Right Column: Glassmorphic Form */}
         <div className="md:col-span-6 lg:col-span-5 flex items-center justify-center md:justify-end w-full">
-          <div className="w-full max-w-md rounded-2xl border border-slate-900 bg-slate-900/20 p-8 backdrop-blur-xl shadow-2xl relative group">
+          <div className="w-full max-w-md rounded-2xl border border-card bg-card/20 p-8 backdrop-blur-xl shadow-2xl relative group">
             <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none" />
             
             <div className="space-y-6 relative z-10">
               <div className="space-y-2 text-center md:text-left">
-                <h2 className="text-2xl font-bold text-white tracking-tight">Create your account</h2>
-                <p className="text-xs text-slate-500">Enter your details to get started</p>
+                <h2 className="text-2xl font-bold text-foreground tracking-tight">Create your account</h2>
+                <p className="text-xs text-muted-foreground">Enter your details to get started</p>
               </div>
 
               <form onSubmit={handleSignup} className="space-y-4">
@@ -183,7 +183,7 @@ export default function SignupPage() {
 
                 {/* Full Name */}
                 <div className="space-y-1.5 text-left">
-                  <Label htmlFor="fullName" className="text-xs font-semibold text-slate-400">
+                  <Label htmlFor="fullName" className="text-xs font-semibold text-muted-foreground">
                     Full Name
                   </Label>
                   <Input
@@ -193,13 +193,13 @@ export default function SignupPage() {
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     required
-                    className="h-11 border-slate-900 bg-slate-950/60 text-slate-100 placeholder:text-slate-600 focus-visible:border-blue-500 focus-visible:ring-blue-500/10"
+                    className="h-11 border-card bg-background/60 text-foreground placeholder:text-muted-foreground focus-visible:border-blue-500 focus-visible:ring-blue-500/10"
                   />
                 </div>
 
                 {/* Email */}
                 <div className="space-y-1.5 text-left">
-                  <Label htmlFor="email" className="text-xs font-semibold text-slate-400">
+                  <Label htmlFor="email" className="text-xs font-semibold text-muted-foreground">
                     Email
                   </Label>
                   <Input
@@ -209,13 +209,13 @@ export default function SignupPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="h-11 border-slate-900 bg-slate-950/60 text-slate-100 placeholder:text-slate-600 focus-visible:border-blue-500 focus-visible:ring-blue-500/10"
+                    className="h-11 border-card bg-background/60 text-foreground placeholder:text-muted-foreground focus-visible:border-blue-500 focus-visible:ring-blue-500/10"
                   />
                 </div>
 
                 {/* Password */}
                 <div className="space-y-1.5 text-left">
-                  <Label htmlFor="password" className="text-xs font-semibold text-slate-400">
+                  <Label htmlFor="password" className="text-xs font-semibold text-muted-foreground">
                     Password
                   </Label>
                   <div className="relative">
@@ -226,12 +226,12 @@ export default function SignupPage() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
-                      className="h-11 pr-10 border-slate-900 bg-slate-950/60 text-slate-100 placeholder:text-slate-600 focus-visible:border-blue-500 focus-visible:ring-blue-500/10"
+                      className="h-11 pr-10 border-card bg-background/60 text-foreground placeholder:text-muted-foreground focus-visible:border-blue-500 focus-visible:ring-blue-500/10"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-550 hover:text-slate-400 transition-colors"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-550 hover:text-muted-foreground transition-colors"
                     >
                       {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
@@ -240,7 +240,7 @@ export default function SignupPage() {
 
                 {/* Phone Number */}
                 <div className="space-y-1.5 text-left">
-                  <Label htmlFor="phone" className="text-xs font-semibold text-slate-400">
+                  <Label htmlFor="phone" className="text-xs font-semibold text-muted-foreground">
                     Phone Number
                   </Label>
                   <div className="flex gap-2">
@@ -248,14 +248,14 @@ export default function SignupPage() {
                       <select
                         value={countryCode}
                         onChange={(e) => setCountryCode(e.target.value)}
-                        className="h-11 px-3 border border-slate-900 bg-slate-950/60 text-slate-200 text-xs rounded-lg focus:outline-none focus:border-blue-500 appearance-none cursor-pointer flex items-center pr-8"
+                        className="h-11 px-3 border border-card bg-background/60 text-foreground text-xs rounded-lg focus:outline-none focus:border-blue-500 appearance-none cursor-pointer flex items-center pr-8"
                       >
                         <option value="+91">🇮🇳 +91</option>
                         <option value="+1">🇺🇸 +1</option>
                         <option value="+44">🇬🇧 +44</option>
                         <option value="+971">🇦🇪 +971</option>
                       </select>
-                      <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+                      <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground">
                         <span className="text-[10px]">▼</span>
                       </div>
                     </div>
@@ -266,13 +266,13 @@ export default function SignupPage() {
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       required
-                      className="h-11 flex-1 border-slate-900 bg-slate-950/60 text-slate-100 placeholder:text-slate-600 focus-visible:border-blue-500 focus-visible:ring-blue-500/10"
+                      className="h-11 flex-1 border-card bg-background/60 text-foreground placeholder:text-muted-foreground focus-visible:border-blue-500 focus-visible:ring-blue-500/10"
                     />
                   </div>
                 </div>
 
                 {/* Terms Link */}
-                <p className="text-[11px] text-slate-500 text-left leading-normal pt-1">
+                <p className="text-[11px] text-muted-foreground text-left leading-normal pt-1">
                   By creating an account, you agree to our{" "}
                   <Link href="/terms" className="text-blue-500 hover:text-blue-400 transition-colors">
                     Terms and Conditions
@@ -283,14 +283,14 @@ export default function SignupPage() {
                 <Button
                   type="submit"
                   disabled={loading}
-                  className="h-11 w-full font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-xl transition-all shadow-[0_0_20px_rgba(37,99,235,0.25)] hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] disabled:opacity-50"
+                  className="h-11 w-full font-semibold text-foreground bg-blue-600 hover:bg-blue-500 rounded-xl transition-all shadow-[0_0_20px_rgba(37,99,235,0.25)] hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] disabled:opacity-50"
                 >
                   {loading ? "Creating Account..." : "Create Account"}
                 </Button>
               </form>
 
               {/* Bottom Link */}
-              <p className="text-center text-xs text-slate-500">
+              <p className="text-center text-xs text-muted-foreground">
                 Already have an account?{" "}
                 <Link
                   href="/login"

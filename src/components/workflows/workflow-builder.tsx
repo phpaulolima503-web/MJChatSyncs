@@ -83,7 +83,7 @@ const NODE_META: Record<WorkflowNodeType, NodeMeta> = {
   action: { label: "Action", icon: Target, color: "text-rose-400", bg: "bg-rose-500/10 border-rose-500/30", description: "Perform an action" },
   webhook: { label: "Webhook", icon: Webhook, color: "text-indigo-400", bg: "bg-indigo-500/10 border-indigo-500/30", description: "Call an external API" },
   ai_node: { label: "AI Agent", icon: Cpu, color: "text-violet-400", bg: "bg-violet-500/10 border-violet-500/30", description: "Run an AI agent" },
-  end: { label: "End", icon: XCircle, color: "text-slate-400", bg: "bg-slate-500/10 border-slate-500/30", description: "End the workflow" },
+  end: { label: "End", icon: XCircle, color: "text-muted-foreground", bg: "bg-slate-500/10 border-slate-500/30", description: "End the workflow" },
 }
 
 const TRIGGER_OPTIONS = [
@@ -229,27 +229,27 @@ export function WorkflowBuilder({ initial }: WorkflowBuilderProps) {
   // ─── Render ─────────────────────────────────
 
   return (
-    <div className="flex h-full flex-col bg-slate-950">
+    <div className="flex h-full flex-col bg-background">
       {/* Toolbar */}
-      <div className="flex items-center gap-3 border-b border-slate-800 bg-slate-900 px-4 py-3">
-        <Button variant="ghost" size="sm" onClick={() => router.push("/workflows")} className="text-slate-400">
+      <div className="flex items-center gap-3 border-b border-border bg-card px-4 py-3">
+        <Button variant="ghost" size="sm" onClick={() => router.push("/workflows")} className="text-muted-foreground">
           <ArrowLeft className="mr-1 h-4 w-4" />
           Workflows
         </Button>
 
-        <div className="h-5 w-px bg-slate-700" />
+        <div className="h-5 w-px bg-muted" />
 
         <Input
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Workflow name..."
-          className="h-8 w-56 border-slate-700 bg-slate-800 text-sm text-slate-100"
+          className="h-8 w-56 border-border bg-muted text-sm text-foreground"
         />
 
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value as WorkflowCategory)}
-          className="h-8 rounded-md border border-slate-700 bg-slate-800 px-2 text-xs text-slate-300"
+          className="h-8 rounded-md border border-border bg-muted px-2 text-xs text-foreground"
         >
           {["crm","lead","sales","marketing","support","ai","meeting","proposal","quotation","payment","retention","custom"].map((c) => (
             <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</option>
@@ -257,22 +257,22 @@ export function WorkflowBuilder({ initial }: WorkflowBuilderProps) {
         </select>
 
         <div className="ml-auto flex items-center gap-2">
-          <label className="flex items-center gap-2 text-xs text-slate-400">
+          <label className="flex items-center gap-2 text-xs text-muted-foreground">
             <Switch checked={isActive} onCheckedChange={setIsActive} />
             Active
           </label>
 
-          <Button variant="ghost" size="sm" onClick={handleTest} disabled={testing} className="text-slate-300">
+          <Button variant="ghost" size="sm" onClick={handleTest} disabled={testing} className="text-foreground">
             {testing ? <Loader2 className="mr-1 h-4 w-4 animate-spin" /> : <Play className="mr-1 h-4 w-4" />}
             Test
           </Button>
 
-          <Button variant="outline" size="sm" onClick={() => handleSave(false)} disabled={saving} className="border-slate-700 text-slate-300">
+          <Button variant="outline" size="sm" onClick={() => handleSave(false)} disabled={saving} className="border-border text-foreground">
             {saving ? <Loader2 className="mr-1 h-4 w-4 animate-spin" /> : <Save className="mr-1 h-4 w-4" />}
             Save Draft
           </Button>
 
-          <Button size="sm" onClick={() => handleSave(true)} disabled={saving} className="bg-primary text-white">
+          <Button size="sm" onClick={() => handleSave(true)} disabled={saving} className="bg-primary text-foreground">
             <Upload className="mr-1 h-4 w-4" />
             Publish
           </Button>
@@ -282,21 +282,21 @@ export function WorkflowBuilder({ initial }: WorkflowBuilderProps) {
       <div className="flex flex-1 overflow-hidden">
         {/* Node Palette */}
         {showPalette && (
-          <div className="w-56 flex-none overflow-y-auto border-r border-slate-800 bg-slate-900 p-3">
-            <p className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500">Trigger</p>
+          <div className="w-56 flex-none overflow-y-auto border-r border-border bg-card p-3">
+            <p className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Trigger</p>
             <PaletteItem type="trigger" onAdd={addNode} />
 
-            <p className="mt-4 mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500">Logic</p>
+            <p className="mt-4 mb-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Logic</p>
             {(["condition", "decision", "delay", "loop"] as WorkflowNodeType[]).map((t) => (
               <PaletteItem key={t} type={t} onAdd={addNode} />
             ))}
 
-            <p className="mt-4 mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500">Actions</p>
+            <p className="mt-4 mb-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Actions</p>
             {(["action", "approval", "webhook", "ai_node"] as WorkflowNodeType[]).map((t) => (
               <PaletteItem key={t} type={t} onAdd={addNode} />
             ))}
 
-            <p className="mt-4 mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500">End</p>
+            <p className="mt-4 mb-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">End</p>
             <PaletteItem type="end" onAdd={addNode} />
           </div>
         )}
@@ -313,7 +313,7 @@ export function WorkflowBuilder({ initial }: WorkflowBuilderProps) {
               className="border-0 bg-transparent text-xs text-yellow-200 outline-none"
             >
               {TRIGGER_OPTIONS.map((t) => (
-                <option key={t} value={t} className="bg-slate-900 text-slate-100">
+                <option key={t} value={t} className="bg-card text-foreground">
                   {t.replace(/_/g, " ")}
                 </option>
               ))}
@@ -322,7 +322,7 @@ export function WorkflowBuilder({ initial }: WorkflowBuilderProps) {
 
           {/* Empty state */}
           {nodes.length === 0 && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-slate-600">
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-muted-foreground">
               <Zap className="h-16 w-16 opacity-20" />
               <p className="text-lg font-medium">Add nodes from the palette</p>
               <p className="text-sm">Click a node type on the left to add it to the canvas</p>
@@ -376,7 +376,7 @@ export function WorkflowBuilder({ initial }: WorkflowBuilderProps) {
 
         {/* Config Panel */}
         {selectedNode && (
-          <div className="w-80 flex-none overflow-y-auto border-l border-slate-800 bg-slate-900 p-4">
+          <div className="w-80 flex-none overflow-y-auto border-l border-border bg-card p-4">
             <NodeConfigPanel
               node={selectedNode}
               onChange={(updates) => updateNode(selectedNode.id, updates)}
@@ -405,7 +405,7 @@ function PaletteItem({ type, onAdd }: { type: WorkflowNodeType; onAdd: (t: Workf
       )}
     >
       <Icon className={cn("h-3.5 w-3.5 flex-none", meta.color)} />
-      <span className="text-slate-200">{meta.label}</span>
+      <span className="text-foreground">{meta.label}</span>
     </button>
   )
 }
@@ -430,7 +430,7 @@ function NodeCard({ node, isSelected, onClick, onDelete, onConnect, allNodes }: 
   return (
     <div
       className={cn(
-        "absolute flex w-48 cursor-pointer flex-col rounded-xl border bg-slate-800 shadow-lg transition-all hover:shadow-xl",
+        "absolute flex w-48 cursor-pointer flex-col rounded-xl border bg-muted shadow-lg transition-all hover:shadow-xl",
         meta.bg,
         isSelected && "ring-2 ring-primary ring-offset-2 ring-offset-slate-900",
       )}
@@ -438,20 +438,20 @@ function NodeCard({ node, isSelected, onClick, onDelete, onConnect, allNodes }: 
       onClick={onClick}
     >
       <div className="flex items-center gap-2 rounded-t-xl px-3 py-2">
-        <div className={cn("flex h-6 w-6 items-center justify-center rounded-md bg-slate-900/50")}>
+        <div className={cn("flex h-6 w-6 items-center justify-center rounded-md bg-card/70")}>
           <Icon className={cn("h-3.5 w-3.5", meta.color)} />
         </div>
-        <span className="flex-1 text-xs font-semibold text-slate-100 truncate">{node.label}</span>
+        <span className="flex-1 text-xs font-semibold text-foreground truncate">{node.label}</span>
         <button
           onClick={(e) => { e.stopPropagation(); onDelete() }}
-          className="text-slate-600 hover:text-red-400 transition-colors"
+          className="text-muted-foreground hover:text-red-400 transition-colors"
         >
           <Trash2 className="h-3 w-3" />
         </button>
       </div>
 
       {/* Config preview */}
-      <div className="rounded-b-xl px-3 pb-2 text-[10px] text-slate-500 truncate">
+      <div className="rounded-b-xl px-3 pb-2 text-[10px] text-muted-foreground truncate">
         {getConfigPreview(node)}
       </div>
 
@@ -460,20 +460,20 @@ function NodeCard({ node, isSelected, onClick, onDelete, onConnect, allNodes }: 
         <DropdownMenu>
           <DropdownMenuTrigger
             onClick={(e) => e.stopPropagation()}
-            className="absolute -bottom-3 left-1/2 -translate-x-1/2 z-10 flex h-5 w-5 items-center justify-center rounded-full border border-slate-700 bg-slate-800 text-slate-400 hover:border-primary hover:text-primary transition-colors"
+            className="absolute -bottom-3 left-1/2 -translate-x-1/2 z-10 flex h-5 w-5 items-center justify-center rounded-full border border-border bg-muted text-muted-foreground hover:border-primary hover:text-primary transition-colors"
           >
             <Plus className="h-3 w-3" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="border-slate-700 bg-slate-800 text-slate-100 text-xs w-48">
-            <p className="px-2 py-1 text-[10px] text-slate-500">Connect to...</p>
+          <DropdownMenuContent className="border-border bg-muted text-foreground text-xs w-48">
+            <p className="px-2 py-1 text-[10px] text-muted-foreground">Connect to...</p>
             {["default","yes","no"].map((label) => (
-              <DropdownMenuSeparator key={`sep-${label}`} className="bg-slate-700" />
+              <DropdownMenuSeparator key={`sep-${label}`} className="bg-muted" />
             ))}
             {allNodes.filter((n) => n.id !== node.id).map((target) => (
               <DropdownMenuItem
                 key={target.id}
                 onClick={() => onConnect(target.id, node.node_type === "condition" ? "yes" : "default")}
-                className="cursor-pointer hover:bg-slate-700"
+                className="cursor-pointer hover:bg-muted"
               >
                 <ChevronRight className="mr-1 h-3 w-3 text-primary" />
                 {target.label}
@@ -511,30 +511,30 @@ function NodeConfigPanel({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Icon className={cn("h-4 w-4", meta.color)} />
-          <span className="text-sm font-semibold text-slate-100">{meta.label} Config</span>
+          <span className="text-sm font-semibold text-foreground">{meta.label} Config</span>
         </div>
-        <button onClick={onClose} className="text-slate-500 hover:text-slate-300">
+        <button onClick={onClose} className="text-muted-foreground hover:text-foreground">
           <XCircle className="h-4 w-4" />
         </button>
       </div>
 
       <div>
-        <label className="text-xs text-slate-400">Node Label</label>
+        <label className="text-xs text-muted-foreground">Node Label</label>
         <Input
           value={node.label}
           onChange={(e) => onChange({ label: e.target.value })}
-          className="mt-1 h-8 border-slate-700 bg-slate-800 text-xs text-slate-100"
+          className="mt-1 h-8 border-border bg-muted text-xs text-foreground"
         />
       </div>
 
       {/* Type-specific config */}
       {node.node_type === "action" && (
         <div>
-          <label className="text-xs text-slate-400">Action</label>
+          <label className="text-xs text-muted-foreground">Action</label>
           <select
             value={String(node.config.action ?? "send_message")}
             onChange={(e) => updateConfig("action", e.target.value)}
-            className="mt-1 w-full rounded-md border border-slate-700 bg-slate-800 px-2 py-1.5 text-xs text-slate-100"
+            className="mt-1 w-full rounded-md border border-border bg-muted px-2 py-1.5 text-xs text-foreground"
           >
             {ACTION_OPTIONS.map((a) => (
               <option key={a} value={a}>{a.replace(/_/g, " ")}</option>
@@ -546,7 +546,7 @@ function NodeConfigPanel({
               value={String(node.config.text ?? "")}
               onChange={(e) => updateConfig("text", e.target.value)}
               placeholder="Message text..."
-              className="mt-2 border-slate-700 bg-slate-800 text-xs text-slate-100"
+              className="mt-2 border-border bg-muted text-xs text-foreground"
               rows={3}
             />
           )}
@@ -556,20 +556,20 @@ function NodeConfigPanel({
       {node.node_type === "delay" && (
         <div className="flex gap-2">
           <div className="flex-1">
-            <label className="text-xs text-slate-400">Amount</label>
+            <label className="text-xs text-muted-foreground">Amount</label>
             <Input
               type="number"
               value={Number(node.config.amount ?? 1)}
               onChange={(e) => updateConfig("amount", parseInt(e.target.value))}
-              className="mt-1 h-8 border-slate-700 bg-slate-800 text-xs text-slate-100"
+              className="mt-1 h-8 border-border bg-muted text-xs text-foreground"
             />
           </div>
           <div className="flex-1">
-            <label className="text-xs text-slate-400">Unit</label>
+            <label className="text-xs text-muted-foreground">Unit</label>
             <select
               value={String(node.config.unit ?? "hours")}
               onChange={(e) => updateConfig("unit", e.target.value)}
-              className="mt-1 w-full rounded-md border border-slate-700 bg-slate-800 px-2 py-1.5 text-xs text-slate-100"
+              className="mt-1 w-full rounded-md border border-border bg-muted px-2 py-1.5 text-xs text-foreground"
             >
               {["minutes","hours","days","weeks"].map((u) => <option key={u} value={u}>{u}</option>)}
             </select>
@@ -580,11 +580,11 @@ function NodeConfigPanel({
       {node.node_type === "condition" && (
         <div className="space-y-2">
           <div>
-            <label className="text-xs text-slate-400">Condition Subject</label>
+            <label className="text-xs text-muted-foreground">Condition Subject</label>
             <select
               value={String(node.config.subject ?? "contact_field")}
               onChange={(e) => updateConfig("subject", e.target.value)}
-              className="mt-1 w-full rounded-md border border-slate-700 bg-slate-800 px-2 py-1.5 text-xs text-slate-100"
+              className="mt-1 w-full rounded-md border border-border bg-muted px-2 py-1.5 text-xs text-foreground"
             >
               {["contact_replied","payment_status","ai_resolved","customer_replied","lead_score","message_content","time_of_day","contact_field"].map((s) => (
                 <option key={s} value={s}>{s.replace(/_/g, " ")}</option>
@@ -592,12 +592,12 @@ function NodeConfigPanel({
             </select>
           </div>
           <div>
-            <label className="text-xs text-slate-400">Value</label>
+            <label className="text-xs text-muted-foreground">Value</label>
             <Input
               value={String(node.config.value ?? "")}
               onChange={(e) => updateConfig("value", e.target.value)}
               placeholder="Expected value..."
-              className="mt-1 h-8 border-slate-700 bg-slate-800 text-xs text-slate-100"
+              className="mt-1 h-8 border-border bg-muted text-xs text-foreground"
             />
           </div>
         </div>
@@ -606,16 +606,16 @@ function NodeConfigPanel({
       {node.node_type === "ai_node" && (
         <div className="space-y-2">
           <div>
-            <label className="text-xs text-slate-400">Agent Type</label>
+            <label className="text-xs text-muted-foreground">Agent Type</label>
             <select
               value={String(node.config.agent_type ?? "support")}
               onChange={(e) => updateConfig("agent_type", e.target.value)}
-              className="mt-1 w-full rounded-md border border-slate-700 bg-slate-800 px-2 py-1.5 text-xs text-slate-100"
+              className="mt-1 w-full rounded-md border border-border bg-muted px-2 py-1.5 text-xs text-foreground"
             >
               {["support","sales","marketing","seo","website","gst"].map((a) => <option key={a} value={a}>{a}</option>)}
             </select>
           </div>
-          <label className="flex items-center gap-2 text-xs text-slate-400">
+          <label className="flex items-center gap-2 text-xs text-muted-foreground">
             <input
               type="checkbox"
               checked={Boolean(node.config.search_knowledge)}
@@ -630,20 +630,20 @@ function NodeConfigPanel({
       {node.node_type === "webhook" && (
         <div className="space-y-2">
           <div>
-            <label className="text-xs text-slate-400">Target URL</label>
+            <label className="text-xs text-muted-foreground">Target URL</label>
             <Input
               value={String(node.config.url ?? "")}
               onChange={(e) => updateConfig("url", e.target.value)}
               placeholder="https://..."
-              className="mt-1 h-8 border-slate-700 bg-slate-800 text-xs text-slate-100"
+              className="mt-1 h-8 border-border bg-muted text-xs text-foreground"
             />
           </div>
           <div>
-            <label className="text-xs text-slate-400">Method</label>
+            <label className="text-xs text-muted-foreground">Method</label>
             <select
               value={String(node.config.method ?? "POST")}
               onChange={(e) => updateConfig("method", e.target.value)}
-              className="mt-1 w-full rounded-md border border-slate-700 bg-slate-800 px-2 py-1.5 text-xs text-slate-100"
+              className="mt-1 w-full rounded-md border border-border bg-muted px-2 py-1.5 text-xs text-foreground"
             >
               {["GET","POST","PUT","PATCH","DELETE"].map((m) => <option key={m} value={m}>{m}</option>)}
             </select>
@@ -654,20 +654,20 @@ function NodeConfigPanel({
       {node.node_type === "approval" && (
         <div className="space-y-2">
           <div>
-            <label className="text-xs text-slate-400">Title</label>
+            <label className="text-xs text-muted-foreground">Title</label>
             <Input
               value={String(node.config.title ?? "")}
               onChange={(e) => updateConfig("title", e.target.value)}
               placeholder="Approval title..."
-              className="mt-1 h-8 border-slate-700 bg-slate-800 text-xs text-slate-100"
+              className="mt-1 h-8 border-border bg-muted text-xs text-foreground"
             />
           </div>
           <div>
-            <label className="text-xs text-slate-400">Approval Mode</label>
+            <label className="text-xs text-muted-foreground">Approval Mode</label>
             <select
               value={String(node.config.approval_mode ?? "any_one")}
               onChange={(e) => updateConfig("approval_mode", e.target.value)}
-              className="mt-1 w-full rounded-md border border-slate-700 bg-slate-800 px-2 py-1.5 text-xs text-slate-100"
+              className="mt-1 w-full rounded-md border border-border bg-muted px-2 py-1.5 text-xs text-foreground"
             >
               <option value="any_one">Any One Approver</option>
               <option value="sequential">Sequential</option>
@@ -675,18 +675,18 @@ function NodeConfigPanel({
             </select>
           </div>
           <div>
-            <label className="text-xs text-slate-400">Escalation After (hours)</label>
+            <label className="text-xs text-muted-foreground">Escalation After (hours)</label>
             <Input
               type="number"
               value={Number(node.config.escalation_after_hours ?? 24)}
               onChange={(e) => updateConfig("escalation_after_hours", parseInt(e.target.value))}
-              className="mt-1 h-8 border-slate-700 bg-slate-800 text-xs text-slate-100"
+              className="mt-1 h-8 border-border bg-muted text-xs text-foreground"
             />
           </div>
         </div>
       )}
 
-      <div className="rounded-md bg-slate-800/50 p-2 text-[10px] text-slate-500">
+      <div className="rounded-md bg-accent/60 p-2 text-[10px] text-muted-foreground">
         {meta.description}
       </div>
     </div>

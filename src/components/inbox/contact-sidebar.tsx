@@ -433,8 +433,8 @@ export function ContactSidebar({ contact, onContactUpdate }: ContactSidebarProps
 
   if (!contact) {
     return (
-      <div className="flex h-full w-70 items-center justify-center border-l border-slate-800 bg-slate-900">
-        <p className="text-sm text-slate-500">Select a conversation</p>
+      <div className="flex h-full w-70 items-center justify-center border-l border-border bg-card">
+        <p className="text-sm text-muted-foreground">Select a conversation</p>
       </div>
     );
   }
@@ -443,13 +443,13 @@ export function ContactSidebar({ contact, onContactUpdate }: ContactSidebarProps
   const initials = displayName.charAt(0).toUpperCase();
 
   return (
-    <div className="flex h-full w-70 flex-col border-l border-slate-800 bg-slate-900">
+    <div className="flex h-full w-70 flex-col border-l border-border bg-card">
       <ScrollArea className="flex-1">
         <div className="p-4 space-y-6">
           {/* Contact Profile */}
           <div className="flex flex-col items-center text-center">
             <div className="relative">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-700 text-lg font-semibold text-white overflow-hidden">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-muted text-lg font-semibold text-foreground overflow-hidden">
                 {contact.avatar_url ? (
                   <img
                     src={contact.avatar_url}
@@ -473,7 +473,7 @@ export function ContactSidebar({ contact, onContactUpdate }: ContactSidebarProps
                 disabled={uploadingAvatar}
                 title="Alterar foto do contato"
                 aria-label="Alterar foto do contato"
-                className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full border-2 border-slate-900 bg-primary text-white transition-colors hover:bg-primary/90 disabled:opacity-60"
+                className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full border-2 border-card bg-primary text-foreground transition-colors hover:bg-primary/90 disabled:opacity-60"
               >
                 {uploadingAvatar ? (
                   <Loader2 className="h-3 w-3 animate-spin" />
@@ -482,11 +482,11 @@ export function ContactSidebar({ contact, onContactUpdate }: ContactSidebarProps
                 )}
               </button>
             </div>
-            <h3 className="mt-3 text-sm font-semibold text-white">
+            <h3 className="mt-3 text-sm font-semibold text-foreground">
               {displayName}
             </h3>
             {contact.company && (
-              <p className="text-xs text-slate-400">{contact.company}</p>
+              <p className="text-xs text-muted-foreground">{contact.company}</p>
             )}
           </div>
 
@@ -494,36 +494,36 @@ export function ContactSidebar({ contact, onContactUpdate }: ContactSidebarProps
           <div className="space-y-2">
             <button
               onClick={handleCopyPhone}
-              className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-xs text-slate-350 transition-colors hover:bg-slate-800"
+              className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-xs text-slate-350 transition-colors hover:bg-muted"
             >
-              <Phone className="h-4 w-4 text-slate-500" />
+              <Phone className="h-4 w-4 text-muted-foreground" />
               <span className="flex-1 text-left">{contact.phone}</span>
               {copied ? (
                 <Check className="h-3 w-3 text-primary" />
               ) : (
-                <Copy className="h-3 w-3 text-slate-600" />
+                <Copy className="h-3 w-3 text-muted-foreground" />
               )}
             </button>
 
             {contact.email && (
               <div className="flex items-center gap-2 rounded-lg px-3 py-2 text-xs text-slate-350">
-                <Mail className="h-4 w-4 text-slate-500" />
+                <Mail className="h-4 w-4 text-muted-foreground" />
                 <span className="truncate">{contact.email}</span>
               </div>
             )}
           </div>
 
-          <div className="border-t border-slate-850" />
+          <div className="border-t border-border" />
 
           {/* Extended Info Section */}
           {isEditing ? (
-            <div className="space-y-3 bg-slate-800/40 p-3 rounded-xl border border-slate-700/55">
-              <div className="flex items-center justify-between text-xs font-bold text-slate-400 border-b border-slate-800 pb-1.5 uppercase">
+            <div className="space-y-3 bg-accent/50 p-3 rounded-xl border border-border/55">
+              <div className="flex items-center justify-between text-xs font-bold text-muted-foreground border-b border-border pb-1.5 uppercase">
                 <span>Edit CRM Details</span>
                 <button
                   type="button"
                   onClick={() => setIsEditing(false)}
-                  className="text-slate-400 hover:text-white"
+                  className="text-muted-foreground hover:text-foreground"
                   title="Cancel"
                 >
                   <XIcon className="h-3.5 w-3.5" />
@@ -533,82 +533,82 @@ export function ContactSidebar({ contact, onContactUpdate }: ContactSidebarProps
               <div className="space-y-2 text-xs">
                 <div className="grid grid-cols-2 gap-2">
                   <div className="space-y-0.5">
-                    <label className="text-[10px] text-slate-500 font-semibold uppercase">Company</label>
+                    <label className="text-[10px] text-muted-foreground font-semibold uppercase">Company</label>
                     <input
                       value={editForm.company}
                       onChange={(e) => setEditForm(p => ({ ...p, company: e.target.value }))}
-                      className="w-full bg-slate-950 border border-slate-850 p-1.5 rounded text-white focus:border-indigo-500 focus:outline-none"
+                      className="w-full bg-background border border-border p-1.5 rounded text-foreground focus:border-indigo-500 focus:outline-none"
                     />
                   </div>
                   <div className="space-y-0.5">
-                    <label className="text-[10px] text-slate-500 font-semibold uppercase">Email</label>
+                    <label className="text-[10px] text-muted-foreground font-semibold uppercase">Email</label>
                     <input
                       type="email"
                       value={editForm.email}
                       onChange={(e) => setEditForm(p => ({ ...p, email: e.target.value }))}
-                      className="w-full bg-slate-950 border border-slate-850 p-1.5 rounded text-white focus:border-indigo-500 focus:outline-none"
+                      className="w-full bg-background border border-border p-1.5 rounded text-foreground focus:border-indigo-500 focus:outline-none"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2">
                   <div className="space-y-0.5">
-                    <label className="text-[10px] text-slate-500 font-semibold uppercase">Website</label>
+                    <label className="text-[10px] text-muted-foreground font-semibold uppercase">Website</label>
                     <input
                       value={editForm.website}
                       onChange={(e) => setEditForm(p => ({ ...p, website: e.target.value }))}
                       placeholder="e.g. example.com"
-                      className="w-full bg-slate-950 border border-slate-850 p-1.5 rounded text-white focus:border-indigo-500 focus:outline-none"
+                      className="w-full bg-background border border-border p-1.5 rounded text-foreground focus:border-indigo-500 focus:outline-none"
                     />
                   </div>
                   <div className="space-y-0.5">
-                    <label className="text-[10px] text-slate-500 font-semibold uppercase">Timezone</label>
+                    <label className="text-[10px] text-muted-foreground font-semibold uppercase">Timezone</label>
                     <input
                       value={editForm.timezone}
                       onChange={(e) => setEditForm(p => ({ ...p, timezone: e.target.value }))}
                       placeholder="e.g. Asia/Kolkata"
-                      className="w-full bg-slate-950 border border-slate-850 p-1.5 rounded text-white focus:border-indigo-500 focus:outline-none"
+                      className="w-full bg-background border border-border p-1.5 rounded text-foreground focus:border-indigo-500 focus:outline-none"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2">
                   <div className="space-y-0.5">
-                    <label className="text-[10px] text-slate-500 font-semibold uppercase">Lead Source</label>
+                    <label className="text-[10px] text-muted-foreground font-semibold uppercase">Lead Source</label>
                     <input
                       value={editForm.lead_source}
                       onChange={(e) => setEditForm(p => ({ ...p, lead_source: e.target.value }))}
                       placeholder="Google Ads, Website"
-                      className="w-full bg-slate-950 border border-slate-850 p-1.5 rounded text-white focus:border-indigo-500 focus:outline-none"
+                      className="w-full bg-background border border-border p-1.5 rounded text-foreground focus:border-indigo-500 focus:outline-none"
                     />
                   </div>
                   <div className="space-y-0.5">
-                    <label className="text-[10px] text-slate-500 font-semibold uppercase">Language</label>
+                    <label className="text-[10px] text-muted-foreground font-semibold uppercase">Language</label>
                     <input
                       value={editForm.preferred_language}
                       onChange={(e) => setEditForm(p => ({ ...p, preferred_language: e.target.value }))}
                       placeholder="en"
-                      className="w-full bg-slate-950 border border-slate-850 p-1.5 rounded text-white focus:border-indigo-500 focus:outline-none"
+                      className="w-full bg-background border border-border p-1.5 rounded text-foreground focus:border-indigo-500 focus:outline-none"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2">
                   <div className="space-y-0.5">
-                    <label className="text-[10px] text-slate-500 font-semibold uppercase">Industry</label>
+                    <label className="text-[10px] text-muted-foreground font-semibold uppercase">Industry</label>
                     <input
                       value={editForm.industry}
                       onChange={(e) => setEditForm(p => ({ ...p, industry: e.target.value }))}
                       placeholder="e.g. Tech, Finance"
-                      className="w-full bg-slate-950 border border-slate-850 p-1.5 rounded text-white focus:border-indigo-500 focus:outline-none"
+                      className="w-full bg-background border border-border p-1.5 rounded text-foreground focus:border-indigo-500 focus:outline-none"
                     />
                   </div>
                   <div className="space-y-0.5">
-                    <label className="text-[10px] text-slate-500 font-semibold uppercase">Owner</label>
+                    <label className="text-[10px] text-muted-foreground font-semibold uppercase">Owner</label>
                     <select
                       value={editForm.owner_id}
                       onChange={(e) => setEditForm(p => ({ ...p, owner_id: e.target.value }))}
-                      className="w-full bg-slate-950 border border-slate-850 p-1.5 rounded text-white focus:border-indigo-500 focus:outline-none text-xs"
+                      className="w-full bg-background border border-border p-1.5 rounded text-foreground focus:border-indigo-500 focus:outline-none text-xs"
                     >
                       <option value="">Unassigned</option>
                       {profiles.map(p => (
@@ -619,47 +619,47 @@ export function ContactSidebar({ contact, onContactUpdate }: ContactSidebarProps
                 </div>
 
                 <div className="space-y-0.5">
-                  <label className="text-[10px] text-slate-500 font-semibold uppercase">Business Type</label>
+                  <label className="text-[10px] text-muted-foreground font-semibold uppercase">Business Type</label>
                   <input
                     value={editForm.business_type}
                     onChange={(e) => setEditForm(p => ({ ...p, business_type: e.target.value }))}
                     placeholder="e.g. Agency, Enterprise"
-                    className="w-full bg-slate-950 border border-slate-850 p-1.5 rounded text-white focus:border-indigo-500 focus:outline-none"
+                    className="w-full bg-background border border-border p-1.5 rounded text-foreground focus:border-indigo-500 focus:outline-none"
                   />
                 </div>
 
                 <div className="space-y-0.5">
-                  <label className="text-[10px] text-slate-500 font-semibold uppercase">Street Address</label>
+                  <label className="text-[10px] text-muted-foreground font-semibold uppercase">Street Address</label>
                   <input
                     value={editForm.address}
                     onChange={(e) => setEditForm(p => ({ ...p, address: e.target.value }))}
-                    className="w-full bg-slate-950 border border-slate-850 p-1.5 rounded text-white focus:border-indigo-500 focus:outline-none"
+                    className="w-full bg-background border border-border p-1.5 rounded text-foreground focus:border-indigo-500 focus:outline-none"
                   />
                 </div>
 
                 <div className="grid grid-cols-3 gap-1">
                   <div className="space-y-0.5">
-                    <label className="text-[10px] text-slate-500 font-semibold uppercase">City</label>
+                    <label className="text-[10px] text-muted-foreground font-semibold uppercase">City</label>
                     <input
                       value={editForm.city}
                       onChange={(e) => setEditForm(p => ({ ...p, city: e.target.value }))}
-                      className="w-full bg-slate-950 border border-slate-850 p-1 rounded text-[11px] text-white focus:border-indigo-500 focus:outline-none"
+                      className="w-full bg-background border border-border p-1 rounded text-[11px] text-foreground focus:border-indigo-500 focus:outline-none"
                     />
                   </div>
                   <div className="space-y-0.5">
-                    <label className="text-[10px] text-slate-500 font-semibold uppercase">State</label>
+                    <label className="text-[10px] text-muted-foreground font-semibold uppercase">State</label>
                     <input
                       value={editForm.state}
                       onChange={(e) => setEditForm(p => ({ ...p, state: e.target.value }))}
-                      className="w-full bg-slate-950 border border-slate-850 p-1 rounded text-[11px] text-white focus:border-indigo-500 focus:outline-none"
+                      className="w-full bg-background border border-border p-1 rounded text-[11px] text-foreground focus:border-indigo-500 focus:outline-none"
                     />
                   </div>
                   <div className="space-y-0.5">
-                    <label className="text-[10px] text-slate-500 font-semibold uppercase">Country</label>
+                    <label className="text-[10px] text-muted-foreground font-semibold uppercase">Country</label>
                     <input
                       value={editForm.country}
                       onChange={(e) => setEditForm(p => ({ ...p, country: e.target.value }))}
-                      className="w-full bg-slate-950 border border-slate-850 p-1 rounded text-[11px] text-white focus:border-indigo-500 focus:outline-none"
+                      className="w-full bg-background border border-border p-1 rounded text-[11px] text-foreground focus:border-indigo-500 focus:outline-none"
                     />
                   </div>
                 </div>
@@ -669,14 +669,14 @@ export function ContactSidebar({ contact, onContactUpdate }: ContactSidebarProps
                 <Button
                   size="sm"
                   variant="outline"
-                  className="h-7 text-xs border-slate-700 bg-slate-950 text-slate-400 hover:text-white"
+                  className="h-7 text-xs border-border bg-background text-muted-foreground hover:text-foreground"
                   onClick={() => setIsEditing(false)}
                 >
                   Cancel
                 </Button>
                 <Button
                   size="sm"
-                  className="h-7 text-xs bg-indigo-600 hover:bg-indigo-700 text-white font-semibold flex items-center gap-1"
+                  className="h-7 text-xs bg-indigo-600 hover:bg-indigo-700 text-foreground font-semibold flex items-center gap-1"
                   onClick={handleSaveContactInfo}
                 >
                   <Save className="h-3 w-3" />
@@ -685,13 +685,13 @@ export function ContactSidebar({ contact, onContactUpdate }: ContactSidebarProps
               </div>
             </div>
           ) : (
-            <div className="space-y-3 bg-slate-800/20 p-3 rounded-xl border border-slate-800">
-              <div className="flex items-center justify-between text-xs font-bold text-slate-400 pb-1 uppercase">
+            <div className="space-y-3 bg-muted/20 p-3 rounded-xl border border-border">
+              <div className="flex items-center justify-between text-xs font-bold text-muted-foreground pb-1 uppercase">
                 <span>CRM Details</span>
                 <button
                   type="button"
                   onClick={() => setIsEditing(true)}
-                  className="text-slate-400 hover:text-white flex items-center gap-0.5 font-semibold text-[10px] tracking-wider"
+                  className="text-muted-foreground hover:text-foreground flex items-center gap-0.5 font-semibold text-[10px] tracking-wider"
                 >
                   <Edit2 className="h-3 w-3" />
                   Edit
@@ -700,15 +700,15 @@ export function ContactSidebar({ contact, onContactUpdate }: ContactSidebarProps
 
               <div className="space-y-2 text-[11px]">
                 {contact.company && (
-                  <div className="flex justify-between gap-2 border-b border-slate-850/40 pb-1">
-                    <span className="text-slate-500 font-medium">Company:</span>
-                    <span className="text-slate-300 text-right truncate max-w-[150px]">{contact.company}</span>
+                  <div className="flex justify-between gap-2 border-b border-border/40 pb-1">
+                    <span className="text-muted-foreground font-medium">Company:</span>
+                    <span className="text-foreground text-right truncate max-w-[150px]">{contact.company}</span>
                   </div>
                 )}
 
                 {contact.website && (
-                  <div className="flex justify-between gap-2 border-b border-slate-850/40 pb-1">
-                    <span className="text-slate-500 font-medium">Website:</span>
+                  <div className="flex justify-between gap-2 border-b border-border/40 pb-1">
+                    <span className="text-muted-foreground font-medium">Website:</span>
                     <a
                       href={contact.website.startsWith("http") ? contact.website : `https://${contact.website}`}
                       target="_blank"
@@ -720,52 +720,52 @@ export function ContactSidebar({ contact, onContactUpdate }: ContactSidebarProps
                   </div>
                 )}
 
-                <div className="flex justify-between gap-2 border-b border-slate-850/40 pb-1">
-                  <span className="text-slate-500 font-medium">Owner:</span>
+                <div className="flex justify-between gap-2 border-b border-border/40 pb-1">
+                  <span className="text-muted-foreground font-medium">Owner:</span>
                   <span className="text-slate-350">
                     {profiles.find(p => p.user_id === contact.owner_id)?.full_name || "Unassigned"}
                   </span>
                 </div>
 
                 {contact.timezone && (
-                  <div className="flex justify-between gap-2 border-b border-slate-850/40 pb-1">
-                    <span className="text-slate-500 font-medium">Timezone:</span>
+                  <div className="flex justify-between gap-2 border-b border-border/40 pb-1">
+                    <span className="text-muted-foreground font-medium">Timezone:</span>
                     <span className="text-slate-350">{contact.timezone}</span>
                   </div>
                 )}
 
                 {contact.lead_source && (
-                  <div className="flex justify-between gap-2 border-b border-slate-850/40 pb-1">
-                    <span className="text-slate-500 font-medium">Source:</span>
-                    <span className="text-slate-300 bg-indigo-500/10 px-1 py-0.2 rounded text-[10px]">
+                  <div className="flex justify-between gap-2 border-b border-border/40 pb-1">
+                    <span className="text-muted-foreground font-medium">Source:</span>
+                    <span className="text-foreground bg-indigo-500/10 px-1 py-0.2 rounded text-[10px]">
                       {contact.lead_source}
                     </span>
                   </div>
                 )}
 
-                <div className="flex justify-between gap-2 border-b border-slate-850/40 pb-1">
-                  <span className="text-slate-500 font-medium">Language:</span>
+                <div className="flex justify-between gap-2 border-b border-border/40 pb-1">
+                  <span className="text-muted-foreground font-medium">Language:</span>
                   <span className="text-slate-350 uppercase">{contact.preferred_language || "en"}</span>
                 </div>
 
                 {contact.business_type && (
-                  <div className="flex justify-between gap-2 border-b border-slate-850/40 pb-1">
-                    <span className="text-slate-500 font-medium">Business:</span>
+                  <div className="flex justify-between gap-2 border-b border-border/40 pb-1">
+                    <span className="text-muted-foreground font-medium">Business:</span>
                     <span className="text-slate-350">{contact.business_type}</span>
                   </div>
                 )}
 
                 {contact.industry && (
-                  <div className="flex justify-between gap-2 border-b border-slate-850/40 pb-1">
-                    <span className="text-slate-500 font-medium">Industry:</span>
+                  <div className="flex justify-between gap-2 border-b border-border/40 pb-1">
+                    <span className="text-muted-foreground font-medium">Industry:</span>
                     <span className="text-slate-350">{contact.industry}</span>
                   </div>
                 )}
 
                 {(contact.address || contact.city || contact.country) && (
                   <div className="flex flex-col gap-0.5 pb-1">
-                    <span className="text-slate-500 font-medium">Address:</span>
-                    <span className="text-slate-400 text-left pl-1 leading-normal">
+                    <span className="text-muted-foreground font-medium">Address:</span>
+                    <span className="text-muted-foreground text-left pl-1 leading-normal">
                       {contact.address && `${contact.address}, `}
                       {contact.city && `${contact.city}, `}
                       {contact.state && `${contact.state}, `}
@@ -777,17 +777,17 @@ export function ContactSidebar({ contact, onContactUpdate }: ContactSidebarProps
             </div>
           )}
 
-          <div className="border-t border-slate-850" />
+          <div className="border-t border-border" />
 
           {/* Tags */}
           <div>
-            <div className="flex items-center gap-2 px-1 text-xs font-semibold uppercase tracking-wider text-slate-500">
+            <div className="flex items-center gap-2 px-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               <TagIcon className="h-3.5 w-3.5" />
               Tags & Labels
             </div>
             <div className="mt-2.5 flex flex-wrap gap-1">
               {tags.length === 0 ? (
-                <p className="px-1 text-xs text-slate-600 font-normal">No tags applied</p>
+                <p className="px-1 text-xs text-muted-foreground font-normal">No tags applied</p>
               ) : (
                 tags.map((tag) => (
                   <span
@@ -806,11 +806,11 @@ export function ContactSidebar({ contact, onContactUpdate }: ContactSidebarProps
             </div>
           </div>
 
-          <div className="border-t border-slate-850" />
+          <div className="border-t border-border" />
 
           {/* Unified CRM Timeline */}
           <div>
-            <div className="flex items-center gap-2 px-1 text-xs font-semibold uppercase tracking-wider text-slate-500 mb-3">
+            <div className="flex items-center gap-2 px-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
               <Clock className="h-3.5 w-3.5 text-indigo-400" />
               Customer Timeline
             </div>
@@ -828,7 +828,7 @@ export function ContactSidebar({ contact, onContactUpdate }: ContactSidebarProps
                       "px-1.5 py-0.5 rounded text-[9px] uppercase tracking-wider font-semibold border transition-all",
                       isActive
                         ? "bg-indigo-600/10 border-indigo-500/35 text-indigo-400 shadow-sm"
-                        : "border-slate-800 bg-slate-950/20 text-slate-400 hover:text-slate-200"
+                        : "border-border bg-muted/40 text-muted-foreground hover:text-foreground"
                     )}
                   >
                     {f}
@@ -844,11 +844,11 @@ export function ContactSidebar({ contact, onContactUpdate }: ContactSidebarProps
                 onChange={(e) => setNewNote(e.target.value)}
                 placeholder="Add internal note..."
                 rows={2}
-                className="flex-1 resize-none rounded-lg border border-slate-750 bg-slate-800/60 px-3 py-2 text-xs text-white placeholder-slate-500 outline-none focus:border-indigo-500/50"
+                className="flex-1 resize-none rounded-lg border border-border bg-muted/60 px-3 py-2 text-xs text-foreground placeholder:text-muted-foreground outline-none focus:border-indigo-500/50"
               />
               <Button
                 size="sm"
-                className="h-auto bg-indigo-650 hover:bg-indigo-700 px-2.5 rounded-lg text-white"
+                className="h-auto bg-indigo-650 hover:bg-indigo-700 px-2.5 rounded-lg text-foreground"
                 onClick={handleAddNote}
                 disabled={!newNote.trim() || addingNote}
               >
@@ -858,35 +858,35 @@ export function ContactSidebar({ contact, onContactUpdate }: ContactSidebarProps
 
             {/* Timeline Feed */}
             {filteredTimeline.length === 0 ? (
-              <p className="px-1 text-xs text-slate-600">No events logged</p>
+              <p className="px-1 text-xs text-muted-foreground">No events logged</p>
             ) : (
-              <div className="relative pl-4 border-l border-slate-800 space-y-4 ml-3 pt-1">
+              <div className="relative pl-4 border-l border-border space-y-4 ml-3 pt-1">
                 {filteredTimeline.map((event) => {
                   let icon = <Bot className="h-3 w-3 text-indigo-450" />;
                   if (event.type === "note") icon = <StickyNote className="h-3 w-3 text-amber-450" />;
                   if (event.type === "deal") icon = <DollarSign className="h-3 w-3 text-emerald-450" />;
                   if (event.type === "meeting") icon = <Clock className="h-3 w-3 text-sky-450" />;
                   if (event.type === "proposal" || event.type === "quote") icon = <FileText className="h-3 w-3 text-pink-450" />;
-                  if (event.type === "created") icon = <User className="h-3 w-3 text-slate-500" />;
+                  if (event.type === "created") icon = <User className="h-3 w-3 text-muted-foreground" />;
                   if (event.type === "task") icon = <Briefcase className="h-3 w-3 text-violet-450" />;
                   if (event.type === "file") icon = <Globe className="h-3 w-3 text-emerald-400" />;
 
                   return (
                     <div key={`${event.type}-${event.id}`} className="relative group">
                       {/* Timeline Bullet */}
-                      <span className="absolute -left-[22px] top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-slate-900 border border-slate-800 shadow-md">
+                      <span className="absolute -left-[22px] top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-card border border-border shadow-md">
                         {icon}
                       </span>
                       <div className="space-y-0.5">
                         <div className="flex items-center justify-between gap-2">
-                          <span className="text-[11px] font-bold text-slate-200 group-hover:text-indigo-400 transition-colors">
+                          <span className="text-[11px] font-bold text-foreground group-hover:text-indigo-400 transition-colors">
                             {event.title}
                           </span>
-                          <span className="text-[9px] text-slate-500">
+                          <span className="text-[9px] text-muted-foreground">
                             {format(event.timestamp, "MMM d, HH:mm")}
                           </span>
                         </div>
-                        <p className="text-[10px] text-slate-400 leading-relaxed whitespace-pre-wrap font-normal">
+                        <p className="text-[10px] text-muted-foreground leading-relaxed whitespace-pre-wrap font-normal">
                           {event.description}
                         </p>
                       </div>

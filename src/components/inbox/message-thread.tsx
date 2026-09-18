@@ -1097,7 +1097,7 @@ export function MessageThread({
               type="button"
               onClick={() => handleStatusChange("closed")}
               title="Concluir esta conversa"
-              className="inline-flex h-8 items-center justify-center gap-1.5 rounded-md bg-emerald-600 px-3 text-xs font-bold text-white shadow-sm transition-colors hover:bg-emerald-500"
+              className="inline-flex h-8 items-center justify-center gap-1.5 rounded-md bg-emerald-600 px-3 text-xs font-bold text-foreground shadow-sm transition-colors hover:bg-emerald-500"
             >
               <CheckCircle2 className="h-4 w-4" />
               Concluir
@@ -1135,7 +1135,7 @@ export function MessageThread({
               type="button"
               onClick={() => handleAssignChange(user?.id || null)}
               title="Assumir esta conversa"
-              className="inline-flex h-7 items-center justify-center gap-1 px-2.5 text-xs font-semibold rounded-md bg-indigo-600 hover:bg-indigo-700 text-white transition-colors"
+              className="inline-flex h-7 items-center justify-center gap-1 px-2.5 text-xs font-semibold rounded-md bg-indigo-600 hover:bg-indigo-700 text-foreground transition-colors"
             >
               <UserPlus className="h-3 w-3" />
               <span className="hidden md:inline">Assumir</span>

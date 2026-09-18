@@ -42,7 +42,7 @@ export function Header() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b",
           scrolled
-            ? "backdrop-blur-md bg-slate-950/75 border-slate-900 py-3 shadow-lg shadow-slate-950/20"
+            ? "backdrop-blur-md bg-background/75 border-card py-3 shadow-lg shadow-slate-950/20"
             : "bg-transparent border-transparent py-5"
         )}
       >
@@ -50,10 +50,10 @@ export function Header() {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white shadow-[0_0_15px_rgba(37,99,235,0.3)] transition-transform group-hover:scale-105">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-foreground shadow-[0_0_15px_rgba(37,99,235,0.3)] transition-transform group-hover:scale-105">
                 <Shield className="h-5 w-5" />
               </div>
-              <span className="text-lg font-bold tracking-tight text-white">
+              <span className="text-lg font-bold tracking-tight text-foreground">
                 MJChatSyncs
               </span>
             </Link>
@@ -64,7 +64,7 @@ export function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="text-sm font-medium text-slate-300 hover:text-white transition-colors"
+                  className="text-sm font-medium text-foreground hover:text-foreground transition-colors"
                 >
                   {item.label}
                 </Link>
@@ -75,13 +75,13 @@ export function Header() {
             <div className="hidden md:flex items-center gap-4">
               <Link
                 href="/login"
-                className="text-sm font-medium text-slate-300 hover:text-white px-4 py-2 rounded-lg border border-slate-800 hover:border-slate-700 hover:bg-slate-900/50 transition-all"
+                className="text-sm font-medium text-foreground hover:text-foreground px-4 py-2 rounded-lg border border-border hover:border-border hover:bg-card/70 transition-all"
               >
                 Log In
               </Link>
               <Link
                 href="/book-demo"
-                className="group flex items-center gap-1.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.45)] transition-all"
+                className="group flex items-center gap-1.5 text-sm font-semibold text-foreground bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.45)] transition-all"
               >
                 Book a Call
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -92,7 +92,7 @@ export function Header() {
             <button
               type="button"
               onClick={() => setIsOpen(!isOpen)}
-              className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-800 text-slate-400 hover:bg-slate-900 hover:text-white md:hidden"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground hover:bg-card hover:text-foreground md:hidden"
               aria-label="Toggle menu"
             >
               {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -104,7 +104,7 @@ export function Header() {
       {/* Mobile Drawer */}
       <div
         className={cn(
-          "fixed inset-0 z-40 bg-slate-950/95 backdrop-blur-md md:hidden transition-all duration-300 flex flex-col pt-24 px-6 space-y-6",
+          "fixed inset-0 z-40 bg-background/95 backdrop-blur-md md:hidden transition-all duration-300 flex flex-col pt-24 px-6 space-y-6",
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         )}
       >
@@ -113,7 +113,7 @@ export function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-lg font-medium text-slate-200 hover:text-white py-2 border-b border-slate-900"
+              className="text-lg font-medium text-foreground hover:text-foreground py-2 border-b border-card"
             >
               {item.label}
             </Link>
@@ -123,13 +123,13 @@ export function Header() {
         <div className="flex flex-col gap-4 mt-8">
           <Link
             href="/login"
-            className="w-full text-center font-medium text-slate-200 py-3 rounded-xl border border-slate-800 hover:bg-slate-900/50 transition-all"
+            className="w-full text-center font-medium text-foreground py-3 rounded-xl border border-border hover:bg-card/70 transition-all"
           >
             Log In
           </Link>
           <Link
             href="/book-demo"
-            className="w-full text-center font-semibold text-white bg-blue-600 hover:bg-blue-500 py-3 rounded-xl shadow-[0_0_20px_rgba(37,99,235,0.3)] transition-all"
+            className="w-full text-center font-semibold text-foreground bg-blue-600 hover:bg-blue-500 py-3 rounded-xl shadow-[0_0_20px_rgba(37,99,235,0.3)] transition-all"
           >
             Book a Call
           </Link>

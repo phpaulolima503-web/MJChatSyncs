@@ -66,39 +66,39 @@ export default function AdminRolesPage() {
   return (
     <div className="p-6 space-y-5">
       <div className="flex items-center justify-between">
-        <div><h1 className="text-2xl font-bold text-slate-100">Roles & Permissions</h1><p className="text-sm text-slate-500">Configure role-based access control</p></div>
-        <button onClick={load} className="rounded-lg border border-slate-700 p-2 text-slate-400 hover:text-white"><RefreshCw className={cn("h-4 w-4", loading && "animate-spin")} /></button>
+        <div><h1 className="text-2xl font-bold text-foreground">Roles & Permissions</h1><p className="text-sm text-muted-foreground">Configure role-based access control</p></div>
+        <button onClick={load} className="rounded-lg border border-border p-2 text-muted-foreground hover:text-foreground"><RefreshCw className={cn("h-4 w-4", loading && "animate-spin")} /></button>
       </div>
 
       <div className="flex gap-2 flex-wrap">
         {roles.map(r => (
           <button key={r.code} onClick={() => setActiveRole(r.code)}
-            className={cn("rounded-lg border px-3 py-1.5 text-xs transition-colors capitalize", activeRole === r.code ? "border-primary bg-primary/10 text-primary" : "border-slate-700 text-slate-400 hover:text-white")}>
-            {r.name} {r.is_system && <span className="text-[9px] text-slate-600 ml-1">system</span>}
+            className={cn("rounded-lg border px-3 py-1.5 text-xs transition-colors capitalize", activeRole === r.code ? "border-primary bg-primary/10 text-primary" : "border-border text-muted-foreground hover:text-foreground")}>
+            {r.name} {r.is_system && <span className="text-[9px] text-muted-foreground ml-1">system</span>}
           </button>
         ))}
       </div>
 
       {activeRoleData && (
-        <div className="rounded-xl border border-slate-800 bg-slate-900 overflow-x-auto">
-          <div className="border-b border-slate-800 px-4 py-3 flex items-center justify-between">
+        <div className="rounded-xl border border-border bg-card overflow-x-auto">
+          <div className="border-b border-border px-4 py-3 flex items-center justify-between">
             <div>
-              <h2 className="font-semibold text-slate-200">{activeRoleData.name}</h2>
-              <p className="text-xs text-slate-500">Click a cell to toggle. Changes save instantly.</p>
+              <h2 className="font-semibold text-foreground">{activeRoleData.name}</h2>
+              <p className="text-xs text-muted-foreground">Click a cell to toggle. Changes save instantly.</p>
             </div>
             <p className="text-xs text-emerald-400">{Object.values(grantedMap).filter(Boolean).length} permissions granted</p>
           </div>
           <table className="w-full text-xs">
             <thead>
-              <tr className="border-b border-slate-800 text-slate-500">
-                <th className="px-4 py-2.5 text-left sticky left-0 bg-slate-900 min-w-32">Module</th>
+              <tr className="border-b border-border text-muted-foreground">
+                <th className="px-4 py-2.5 text-left sticky left-0 bg-card min-w-32">Module</th>
                 {ACTIONS.map(a => <th key={a} className="px-3 py-2.5 text-center capitalize">{a}</th>)}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/50">
+            <tbody className="divide-y divide-border/50">
               {MODULES.map(module => (
-                <tr key={module} className="hover:bg-slate-800/30">
-                  <td className="px-4 py-2 font-medium text-slate-300 capitalize sticky left-0 bg-slate-900">{module.replace('_', ' ')}</td>
+                <tr key={module} className="hover:bg-muted/30">
+                  <td className="px-4 py-2 font-medium text-foreground capitalize sticky left-0 bg-card">{module.replace('_', ' ')}</td>
                   {ACTIONS.map(action => {
                     const code = `${module}.${action}`
                     const granted = grantedMap[code] ?? false
@@ -110,7 +110,7 @@ export default function AdminRolesPage() {
                             ? <Loader2 className="h-4 w-4 animate-spin text-primary mx-auto" />
                             : granted
                               ? <CheckCircle2 className="h-4 w-4 text-emerald-400 mx-auto" />
-                              : <XCircle className="h-4 w-4 text-slate-700 mx-auto" />}
+                              : <XCircle className="h-4 w-4 text-muted-foreground mx-auto" />}
                         </button>
                       </td>
                     )

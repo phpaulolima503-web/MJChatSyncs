@@ -77,7 +77,7 @@ export default function DevelopersPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans relative overflow-hidden text-left">
+    <div className="min-h-screen bg-background text-foreground font-sans relative overflow-hidden text-left">
       {/* Subtle Grid Background */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-[0.05] pointer-events-none" />
       
@@ -86,47 +86,47 @@ export default function DevelopersPage() {
         {/* Page Header */}
         <div className="space-y-4 max-w-3xl">
           <span className="text-xs font-bold text-blue-500 uppercase tracking-widest block">Developer Hub</span>
-          <h1 className="text-4xl font-extrabold text-white tracking-tight">
+          <h1 className="text-4xl font-extrabold text-foreground tracking-tight">
             Build on the MJChatSyncs Platform
           </h1>
-          <p className="text-slate-400 text-base leading-relaxed">
+          <p className="text-muted-foreground text-base leading-relaxed">
             Integrate WhatsApp messaging into your own applications. Connect workflows, receive inbound messages in real-time, and leverage our Model Context Protocol (MCP) server.
           </p>
         </div>
 
         {/* 3 Columns Features */}
         <div className="grid md:grid-cols-3 gap-6">
-          <div className="p-6 rounded-2xl border border-slate-900 bg-slate-950/40 space-y-3">
+          <div className="p-6 rounded-2xl border border-card bg-muted/50 space-y-3">
             <div className="h-10 w-10 rounded-xl bg-blue-600/10 border border-blue-500/15 flex items-center justify-center text-blue-400">
               <Code className="h-5 w-5" />
             </div>
-            <h3 className="text-sm font-bold text-slate-200">REST API</h3>
-            <p className="text-xs text-slate-500 leading-relaxed">
+            <h3 className="text-sm font-bold text-foreground">REST API</h3>
+            <p className="text-xs text-muted-foreground leading-relaxed">
               Send text, media, interactive template messages, and manage contacts using simple, clean JSON payloads over HTTPS.
             </p>
           </div>
-          <div className="p-6 rounded-2xl border border-slate-900 bg-slate-950/40 space-y-3">
+          <div className="p-6 rounded-2xl border border-card bg-muted/50 space-y-3">
             <div className="h-10 w-10 rounded-xl bg-purple-600/10 border border-purple-500/15 flex items-center justify-center text-purple-400">
               <Webhook className="h-5 w-5" />
             </div>
-            <h3 className="text-sm font-bold text-slate-200">Webhooks</h3>
-            <p className="text-xs text-slate-500 leading-relaxed">
+            <h3 className="text-sm font-bold text-foreground">Webhooks</h3>
+            <p className="text-xs text-muted-foreground leading-relaxed">
               Subscribe to real-time events. Get notified instantly when a message is delivered, read, or when a customer replies.
             </p>
           </div>
-          <div className="p-6 rounded-2xl border border-slate-900 bg-slate-950/40 space-y-3">
+          <div className="p-6 rounded-2xl border border-card bg-muted/50 space-y-3">
             <div className="h-10 w-10 rounded-xl bg-emerald-600/10 border border-emerald-500/15 flex items-center justify-center text-emerald-400">
               <Server className="h-5 w-5" />
             </div>
-            <h3 className="text-sm font-bold text-slate-200">MCP Server</h3>
-            <p className="text-xs text-slate-500 leading-relaxed">
+            <h3 className="text-sm font-bold text-foreground">MCP Server</h3>
+            <p className="text-xs text-muted-foreground leading-relaxed">
               Connect your AI agents (Claude, Cursor, etc.) directly to your WhatsApp channel using our official Model Context Protocol server.
             </p>
           </div>
         </div>
 
         {/* Code Playground */}
-        <div className="border border-slate-900 bg-slate-900/10 rounded-2xl p-6 sm:p-8 backdrop-blur-sm grid lg:grid-cols-12 gap-8 items-start">
+        <div className="border border-card bg-card/10 rounded-2xl p-6 sm:p-8 backdrop-blur-sm grid lg:grid-cols-12 gap-8 items-start">
           
           {/* Left: Tab selectors */}
           <div className="lg:col-span-4 space-y-2">
@@ -144,27 +144,27 @@ export default function DevelopersPage() {
                 className={cn(
                   "w-full text-left p-4 rounded-xl border transition-all flex items-start gap-4",
                   activeTab === tab.id
-                    ? "bg-blue-600/10 border-blue-500/20 text-white shadow-sm"
-                    : "bg-slate-950/40 border-slate-900 text-slate-450 hover:border-slate-800 hover:text-slate-200"
+                    ? "bg-blue-600/10 border-blue-500/20 text-foreground shadow-sm"
+                    : "bg-muted/50 border-card text-slate-450 hover:border-border hover:text-foreground"
                 )}
               >
                 <tab.icon className="h-5 w-5 shrink-0 mt-0.5" />
                 <div className="space-y-0.5">
                   <h4 className="text-xs font-bold">{tab.title}</h4>
-                  <p className="text-[10px] text-slate-500 leading-tight">{tab.desc}</p>
+                  <p className="text-[10px] text-muted-foreground leading-tight">{tab.desc}</p>
                 </div>
               </button>
             ))}
           </div>
 
           {/* Right: Code Block */}
-          <div className="lg:col-span-8 border border-slate-900 bg-slate-950 rounded-xl overflow-hidden flex flex-col h-[340px]">
+          <div className="lg:col-span-8 border border-card bg-background rounded-xl overflow-hidden flex flex-col h-[340px]">
             {/* Window bar */}
-            <div className="h-10 border-b border-slate-900 flex items-center justify-between px-4 bg-slate-950">
-              <span className="text-[10px] text-slate-500 font-mono">{CODE_EXAMPLES[activeTab].title}</span>
+            <div className="h-10 border-b border-card flex items-center justify-between px-4 bg-background">
+              <span className="text-[10px] text-muted-foreground font-mono">{CODE_EXAMPLES[activeTab].title}</span>
               <button
                 onClick={handleCopy}
-                className="flex items-center gap-1.5 text-[10px] text-slate-455 hover:text-slate-200 transition-colors"
+                className="flex items-center gap-1.5 text-[10px] text-slate-455 hover:text-foreground transition-colors"
               >
                 {copied ? (
                   <>
@@ -180,7 +180,7 @@ export default function DevelopersPage() {
               </button>
             </div>
             {/* Code Textarea */}
-            <div className="flex-1 p-4 overflow-auto font-mono text-[11px] leading-relaxed text-slate-350 bg-slate-950/80">
+            <div className="flex-1 p-4 overflow-auto font-mono text-[11px] leading-relaxed text-slate-350 bg-background/80">
               <pre>{CODE_EXAMPLES[activeTab].code}</pre>
             </div>
           </div>

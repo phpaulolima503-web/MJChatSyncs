@@ -28,7 +28,7 @@ const STATUS_COLS = [
 ]
 
 const PRIORITY_COLORS: Record<string, string> = {
-  low: "text-slate-400", medium: "text-blue-400", high: "text-orange-400", urgent: "text-red-400", critical: "text-red-500 font-bold",
+  low: "text-muted-foreground", medium: "text-blue-400", high: "text-orange-400", urgent: "text-red-400", critical: "text-red-500 font-bold",
 }
 
 function SLABadge({ dueAt, breached }: { dueAt: string | null; breached: boolean }) {
@@ -37,7 +37,7 @@ function SLABadge({ dueAt, breached }: { dueAt: string | null; breached: boolean
   const hours = Math.floor(remaining / 3_600_000)
   if (breached || remaining < 0) return <span className="text-[10px] text-red-400 flex items-center gap-0.5"><AlertTriangle className="h-2.5 w-2.5" /> Breached</span>
   if (hours < 2) return <span className="text-[10px] text-orange-400">{hours}h left</span>
-  return <span className="text-[10px] text-slate-600">{hours}h</span>
+  return <span className="text-[10px] text-muted-foreground">{hours}h</span>
 }
 
 export default function SupportPage() {
@@ -69,28 +69,28 @@ export default function SupportPage() {
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-100">Customer Support</h1>
-          <p className="text-sm text-slate-500 mt-1">Ticket board with SLA tracking</p>
+          <h1 className="text-2xl font-bold text-foreground">Customer Support</h1>
+          <p className="text-sm text-muted-foreground mt-1">Ticket board with SLA tracking</p>
         </div>
         <div className="flex gap-2">
-          <button onClick={load} className="flex items-center gap-2 rounded-lg border border-slate-700 px-3 py-2 text-sm text-slate-400 hover:text-white">
+          <button onClick={load} className="flex items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm text-muted-foreground hover:text-foreground">
             <RefreshCw className={cn("h-4 w-4", loading && "animate-spin")} />
           </button>
-          <Link href="/support/new" className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90">+ New Ticket</Link>
+          <Link href="/support/new" className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-foreground hover:bg-primary/90">+ New Ticket</Link>
         </div>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {[
-          { label: "Total Tickets", value: stats.total ?? 0, color: "text-slate-100" },
+          { label: "Total Tickets", value: stats.total ?? 0, color: "text-foreground" },
           { label: "Open", value: stats.open ?? 0, color: "text-blue-400" },
           { label: "Escalated", value: stats.escalated ?? 0, color: "text-red-400" },
           { label: "SLA Breached", value: stats.sla_breached ?? 0, color: "text-orange-400" },
         ].map(s => (
-          <div key={s.label} className="rounded-xl border border-slate-800 bg-slate-900 p-4">
+          <div key={s.label} className="rounded-xl border border-border bg-card p-4">
             <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
-            <p className="text-xs text-slate-500 mt-1">{s.label}</p>
+            <p className="text-xs text-muted-foreground mt-1">{s.label}</p>
           </div>
         ))}
       </div>
@@ -104,19 +104,19 @@ export default function SupportPage() {
             {STATUS_COLS.map(col => (
               <div key={col.key} className={`w-72 rounded-xl border p-3 ${col.color}`}>
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-wider">{col.label}</h3>
-                  <span className="rounded-full bg-slate-800 px-2 py-0.5 text-xs text-slate-400">{byStatus(col.key).length}</span>
+                  <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider">{col.label}</h3>
+                  <span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">{byStatus(col.key).length}</span>
                 </div>
                 <div className="space-y-2 max-h-[60vh] overflow-y-auto">
                   {byStatus(col.key).map(ticket => (
                     <Link key={ticket.id} href={`/support/${ticket.id}`}
-                      className="block rounded-lg border border-slate-800 bg-slate-900 p-3 hover:border-slate-700 transition-colors">
+                      className="block rounded-lg border border-border bg-card p-3 hover:border-border transition-colors">
                       <div className="flex items-start justify-between gap-2">
-                        <p className="text-xs font-medium text-slate-200 leading-snug flex-1">{ticket.title}</p>
+                        <p className="text-xs font-medium text-foreground leading-snug flex-1">{ticket.title}</p>
                         {ticket.sla_breached && <AlertTriangle className="h-3 w-3 text-red-400 flex-none mt-0.5" />}
                       </div>
-                      <p className="mt-1 text-[10px] font-mono text-slate-600">{ticket.ticket_number}</p>
-                      {ticket.contacts && <p className="text-[10px] text-slate-500 mt-1">{ticket.contacts.name}</p>}
+                      <p className="mt-1 text-[10px] font-mono text-muted-foreground">{ticket.ticket_number}</p>
+                      {ticket.contacts && <p className="text-[10px] text-muted-foreground mt-1">{ticket.contacts.name}</p>}
                       <div className="mt-2 flex items-center justify-between">
                         <span className={`text-[10px] capitalize ${PRIORITY_COLORS[ticket.priority]}`}>{ticket.priority}</span>
                         <SLABadge dueAt={ticket.resolution_due_at} breached={ticket.sla_breached} />
@@ -124,7 +124,7 @@ export default function SupportPage() {
                     </Link>
                   ))}
                   {byStatus(col.key).length === 0 && (
-                    <div className="py-8 text-center text-[10px] text-slate-700">No tickets</div>
+                    <div className="py-8 text-center text-[10px] text-muted-foreground">No tickets</div>
                   )}
                 </div>
               </div>

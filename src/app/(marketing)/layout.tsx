@@ -53,7 +53,7 @@ export default function MarketingLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans antialiased flex flex-col selection:bg-blue-500/30 selection:text-white">
+    <div className="min-h-screen bg-background text-foreground font-sans antialiased flex flex-col selection:bg-blue-500/30 selection:text-foreground">
       {/* Sticky Header */}
       <Header />
 
@@ -63,24 +63,24 @@ export default function MarketingLayout({
       </div>
 
       {/* Footer */}
-      <footer className="bg-slate-950 border-t border-slate-900">
+      <footer className="bg-background border-t border-card">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
           <div className="xl:grid xl:grid-cols-3 xl:gap-8">
             {/* Branding */}
             <div className="space-y-6 xl:col-span-1">
               <Link href="/" className="flex items-center gap-2">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white shadow-[0_0_15px_rgba(37,99,235,0.3)]">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-foreground shadow-[0_0_15px_rgba(37,99,235,0.3)]">
                   <Shield className="h-5 w-5" />
                 </div>
-                <span className="text-lg font-bold tracking-tight text-white">
+                <span className="text-lg font-bold tracking-tight text-foreground">
                   MJChatSyncs
                 </span>
               </Link>
-              <p className="text-sm text-slate-400 max-w-xs leading-relaxed">
+              <p className="text-sm text-muted-foreground max-w-xs leading-relaxed">
                 Empowering growing businesses to scale sales, support, and marketing campaigns natively on the WhatsApp Business Cloud API.
               </p>
-              <div className="flex items-center gap-4 text-xs text-slate-500">
-                <Mail className="h-4 w-4 text-slate-400" />
+              <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                <Mail className="h-4 w-4 text-muted-foreground" />
                 <span>support@mjchatsyncs.com</span>
               </div>
             </div>
@@ -89,7 +89,7 @@ export default function MarketingLayout({
             <div className="mt-12 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0 sm:grid-cols-4">
               {FOOTER_LINKS.map((group) => (
                 <div key={group.title}>
-                  <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-wider">
+                  <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider">
                     {group.title}
                   </h3>
                   <ul className="mt-4 space-y-2">
@@ -97,7 +97,7 @@ export default function MarketingLayout({
                       <li key={item.label}>
                         <Link
                           href={item.href}
-                          className="text-sm text-slate-400 hover:text-white transition-colors"
+                          className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                         >
                           {item.label}
                         </Link>
@@ -109,11 +109,11 @@ export default function MarketingLayout({
             </div>
           </div>
 
-          <div className="mt-12 border-t border-slate-900 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-xs text-slate-500">
+          <div className="mt-12 border-t border-card pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-xs text-muted-foreground">
               &copy; {new Date().getFullYear()} MJChatSyncs. All rights reserved.
             </p>
-            <p className="text-xs text-slate-500 flex items-center gap-1">
+            <p className="text-xs text-muted-foreground flex items-center gap-1">
               Built with <Heart className="h-3 w-3 text-red-500 fill-red-500" /> for Enterprise Scale.
             </p>
           </div>

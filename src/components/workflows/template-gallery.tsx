@@ -18,7 +18,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   proposal: 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400',
   meeting: 'bg-teal-500/10 border-teal-500/20 text-teal-400',
   crm: 'bg-indigo-500/10 border-indigo-500/20 text-indigo-400',
-  custom: 'bg-slate-700/50 border-slate-600 text-slate-400',
+  custom: 'bg-muted/70 border-border text-muted-foreground',
 }
 
 export function TemplateGallery() {
@@ -69,10 +69,10 @@ export function TemplateGallery() {
             onClick={() => setActiveCategory(cat)}
             className={cn(
               "rounded-full border px-3 py-1 text-xs font-medium capitalize transition-colors",
-              activeCategory === cat ? "border-primary bg-primary/10 text-primary" : "border-slate-700 text-slate-400 hover:text-slate-200",
+              activeCategory === cat ? "border-primary bg-primary/10 text-primary" : "border-border text-muted-foreground hover:text-foreground",
             )}
           >
-            {cat} {cat !== 'all' && <span className="ml-1 text-slate-600">({(grouped[cat] ?? []).length})</span>}
+            {cat} {cat !== 'all' && <span className="ml-1 text-muted-foreground">({(grouped[cat] ?? []).length})</span>}
           </button>
         ))}
       </div>
@@ -80,25 +80,25 @@ export function TemplateGallery() {
       {/* Template Grid */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {shown.map(t => (
-          <div key={t.slug} className="group relative flex flex-col rounded-xl border border-slate-800 bg-slate-900 p-5 transition-all hover:border-slate-700 hover:shadow-lg hover:shadow-black/20">
+          <div key={t.slug} className="group relative flex flex-col rounded-xl border border-border bg-card p-5 transition-all hover:border-border hover:shadow-lg hover:shadow-black/20">
             <div className="flex items-start justify-between">
               <div className={cn("rounded-lg border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide", CATEGORY_COLORS[t.category] ?? CATEGORY_COLORS.custom)}>
                 {t.category}
               </div>
-              <div className="text-[10px] text-slate-600">{t.nodes.length} nodes</div>
+              <div className="text-[10px] text-muted-foreground">{t.nodes.length} nodes</div>
             </div>
 
-            <h3 className="mt-3 text-sm font-semibold text-slate-200">{t.name}</h3>
-            <p className="mt-1 flex-1 text-xs text-slate-500 line-clamp-2">{t.description}</p>
+            <h3 className="mt-3 text-sm font-semibold text-foreground">{t.name}</h3>
+            <p className="mt-1 flex-1 text-xs text-muted-foreground line-clamp-2">{t.description}</p>
 
             <div className="mt-3 flex flex-wrap gap-1">
               {t.tags.map(tag => (
-                <span key={tag} className="rounded-full bg-slate-800 px-2 py-0.5 text-[10px] text-slate-500">{tag}</span>
+                <span key={tag} className="rounded-full bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">{tag}</span>
               ))}
             </div>
 
             <div className="mt-4 flex items-center gap-2">
-              <span className="text-[10px] text-slate-600">Trigger: <span className="text-slate-500">{t.trigger_type.replace(/_/g, ' ')}</span></span>
+              <span className="text-[10px] text-muted-foreground">Trigger: <span className="text-muted-foreground">{t.trigger_type.replace(/_/g, ' ')}</span></span>
               <button
                 onClick={() => importTemplate(t)}
                 disabled={importing === t.slug}

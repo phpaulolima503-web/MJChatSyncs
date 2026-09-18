@@ -159,8 +159,8 @@ export default function DashboardPage() {
     <div className="space-y-5">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-white">Dashboard</h1>
-        <p className="mt-1 text-sm text-slate-400">
+        <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
           Live analytics across conversations, contacts, deals, broadcasts, and automations.
         </p>
       </div>
@@ -223,7 +223,7 @@ export default function DashboardPage() {
       <div className="space-y-3 pt-2">
         <div className="flex items-center gap-2">
           <Sparkles className="h-4.5 w-4.5 text-indigo-400" />
-          <h2 className="text-base font-bold text-white tracking-tight">Enterprise AI & Lead Intelligence</h2>
+          <h2 className="text-base font-bold text-foreground tracking-tight">Enterprise AI & Lead Intelligence</h2>
           <Badge className="bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-2 py-0">v2.0</Badge>
         </div>
         

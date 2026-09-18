@@ -557,35 +557,35 @@ export default function ContactProfilePage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[80vh] bg-slate-950">
+      <div className="flex items-center justify-center min-h-[80vh] bg-background">
         <div className="text-center space-y-3">
           <Loader2 className="size-10 animate-spin text-primary mx-auto" />
-          <p className="text-sm text-slate-400">Loading Enterprise Customer Profile...</p>
+          <p className="text-sm text-muted-foreground">Loading Enterprise Customer Profile...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="p-4 sm:p-6 bg-slate-950 min-h-screen text-slate-200 space-y-6">
+    <div className="p-4 sm:p-6 bg-background min-h-screen text-foreground space-y-6">
       {/* Top Header Navigation */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-850 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-border pb-5">
         <div className="flex items-center gap-3">
           <Link href="/contacts">
-            <Button variant="ghost" size="sm" className="h-9 w-9 p-0 rounded-lg hover:bg-slate-900 border border-slate-800">
-              <ArrowLeft className="size-4 text-slate-400 hover:text-white" />
+            <Button variant="ghost" size="sm" className="h-9 w-9 p-0 rounded-lg hover:bg-card border border-border">
+              <ArrowLeft className="size-4 text-muted-foreground hover:text-foreground" />
             </Button>
           </Link>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-xl font-extrabold tracking-tight text-white sm:text-2xl">
+              <h1 className="text-xl font-extrabold tracking-tight text-foreground sm:text-2xl">
                 {contact?.name || 'Unknown Profile'}
               </h1>
               <Badge className="bg-primary/10 text-primary border-primary/20 text-xs px-2.5 font-bold uppercase">
                 {contact?.status || 'New'}
               </Badge>
               {contact?.preferred_language && (
-                <Badge variant="outline" className="text-slate-400 border-slate-800 text-[10px] flex items-center gap-1">
+                <Badge variant="outline" className="text-muted-foreground border-border text-[10px] flex items-center gap-1">
                   <Languages className="size-2.5" />
                   {contact.preferred_language}
                 </Badge>
@@ -601,7 +601,7 @@ export default function ContactProfilePage() {
             onClick={() => setIsEditing(!isEditing)}
             variant="outline"
             size="sm"
-            className="text-xs font-bold border-slate-800 bg-slate-900 hover:bg-slate-850 h-9 rounded-lg flex items-center gap-1.5"
+            className="text-xs font-bold border-border bg-card hover:bg-muted h-9 rounded-lg flex items-center gap-1.5"
           >
             <Edit className="size-3.5 text-primary" />
             {isEditing ? 'Cancel Editing' : 'Edit Profile'}
@@ -623,10 +623,10 @@ export default function ContactProfilePage() {
         {/* LEFT COLUMN: Metadata Card & CRM Details */}
         <div className="lg:col-span-4 space-y-6">
           {/* Main Info Card */}
-          <div className="bg-slate-900/40 rounded-2xl border border-slate-850 p-5 space-y-5 shadow-lg relative overflow-hidden">
+          <div className="bg-card/60 rounded-2xl border border-border p-5 space-y-5 shadow-lg relative overflow-hidden">
             <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full filter blur-xl" />
             
-            <h3 className="text-sm font-extrabold text-white uppercase tracking-wider border-b border-slate-800/60 pb-2">
+            <h3 className="text-sm font-extrabold text-foreground uppercase tracking-wider border-b border-border/60 pb-2">
               Customer Details
             </h3>
 
@@ -637,7 +637,7 @@ export default function ContactProfilePage() {
                   <Input
                     value={editForm.name}
                     onChange={e => setEditForm({ ...editForm, name: e.target.value })}
-                    className="bg-slate-950 border-slate-800 h-8 text-xs text-white"
+                    className="bg-background border-border h-8 text-xs text-foreground"
                   />
                 </div>
                 <div className="space-y-1">
@@ -645,7 +645,7 @@ export default function ContactProfilePage() {
                   <Input
                     value={editForm.email}
                     onChange={e => setEditForm({ ...editForm, email: e.target.value })}
-                    className="bg-slate-950 border-slate-800 h-8 text-xs text-white"
+                    className="bg-background border-border h-8 text-xs text-foreground"
                   />
                 </div>
                 <div className="space-y-1">
@@ -653,7 +653,7 @@ export default function ContactProfilePage() {
                   <Input
                     value={editForm.phone}
                     onChange={e => setEditForm({ ...editForm, phone: e.target.value })}
-                    className="bg-slate-950 border-slate-800 h-8 text-xs text-white font-mono"
+                    className="bg-background border-border h-8 text-xs text-foreground font-mono"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-2">
@@ -662,7 +662,7 @@ export default function ContactProfilePage() {
                     <Input
                       value={editForm.company}
                       onChange={e => setEditForm({ ...editForm, company: e.target.value })}
-                      className="bg-slate-950 border-slate-800 h-8 text-xs text-white"
+                      className="bg-background border-border h-8 text-xs text-foreground"
                     />
                   </div>
                   <div className="space-y-1">
@@ -670,7 +670,7 @@ export default function ContactProfilePage() {
                     <Input
                       value={editForm.industry}
                       onChange={e => setEditForm({ ...editForm, industry: e.target.value })}
-                      className="bg-slate-950 border-slate-800 h-8 text-xs text-white"
+                      className="bg-background border-border h-8 text-xs text-foreground"
                     />
                   </div>
                 </div>
@@ -680,7 +680,7 @@ export default function ContactProfilePage() {
                     <Input
                       value={editForm.website}
                       onChange={e => setEditForm({ ...editForm, website: e.target.value })}
-                      className="bg-slate-950 border-slate-800 h-8 text-xs text-white"
+                      className="bg-background border-border h-8 text-xs text-foreground"
                     />
                   </div>
                   <div className="space-y-1">
@@ -689,7 +689,7 @@ export default function ContactProfilePage() {
                       value={editForm.timezone}
                       onChange={e => setEditForm({ ...editForm, timezone: e.target.value })}
                       placeholder="Asia/Kolkata"
-                      className="bg-slate-950 border-slate-800 h-8 text-xs text-white"
+                      className="bg-background border-border h-8 text-xs text-foreground"
                     />
                   </div>
                 </div>
@@ -699,7 +699,7 @@ export default function ContactProfilePage() {
                     <Input
                       value={editForm.lead_source}
                       onChange={e => setEditForm({ ...editForm, lead_source: e.target.value })}
-                      className="bg-slate-950 border-slate-800 h-8 text-xs text-white"
+                      className="bg-background border-border h-8 text-xs text-foreground"
                     />
                   </div>
                   <div className="space-y-1">
@@ -707,7 +707,7 @@ export default function ContactProfilePage() {
                     <Input
                       value={editForm.business_type}
                       onChange={e => setEditForm({ ...editForm, business_type: e.target.value })}
-                      className="bg-slate-950 border-slate-800 h-8 text-xs text-white"
+                      className="bg-background border-border h-8 text-xs text-foreground"
                     />
                   </div>
                 </div>
@@ -716,7 +716,7 @@ export default function ContactProfilePage() {
                   <Input
                     value={editForm.address}
                     onChange={e => setEditForm({ ...editForm, address: e.target.value })}
-                    className="bg-slate-950 border-slate-800 h-8 text-xs text-white"
+                    className="bg-background border-border h-8 text-xs text-foreground"
                   />
                 </div>
                 <div className="grid grid-cols-3 gap-1">
@@ -724,19 +724,19 @@ export default function ContactProfilePage() {
                     value={editForm.city}
                     onChange={e => setEditForm({ ...editForm, city: e.target.value })}
                     placeholder="City"
-                    className="bg-slate-950 border-slate-800 h-8 text-xs text-white"
+                    className="bg-background border-border h-8 text-xs text-foreground"
                   />
                   <Input
                     value={editForm.state}
                     onChange={e => setEditForm({ ...editForm, state: e.target.value })}
                     placeholder="State"
-                    className="bg-slate-950 border-slate-800 h-8 text-xs text-white"
+                    className="bg-background border-border h-8 text-xs text-foreground"
                   />
                   <Input
                     value={editForm.country}
                     onChange={e => setEditForm({ ...editForm, country: e.target.value })}
                     placeholder="Country"
-                    className="bg-slate-950 border-slate-800 h-8 text-xs text-white"
+                    className="bg-background border-border h-8 text-xs text-foreground"
                   />
                 </div>
                 <Button type="submit" className="w-full bg-primary text-slate-950 text-xs h-8 font-extrabold mt-3">
@@ -748,59 +748,59 @@ export default function ContactProfilePage() {
                 {/* General Metadata */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <p className="text-[10px] text-slate-500 uppercase font-extrabold">Phone Number</p>
-                    <p className="font-semibold font-mono text-white flex items-center gap-1">
-                      <Phone className="size-3 text-slate-400" />
+                    <p className="text-[10px] text-muted-foreground uppercase font-extrabold">Phone Number</p>
+                    <p className="font-semibold font-mono text-foreground flex items-center gap-1">
+                      <Phone className="size-3 text-muted-foreground" />
                       {contact?.phone}
                     </p>
                   </div>
                   <div className="space-y-1">
-                    <p className="text-[10px] text-slate-500 uppercase font-extrabold">Email Address</p>
-                    <p className="font-semibold text-white truncate flex items-center gap-1">
-                      <Mail className="size-3 text-slate-400" />
+                    <p className="text-[10px] text-muted-foreground uppercase font-extrabold">Email Address</p>
+                    <p className="font-semibold text-foreground truncate flex items-center gap-1">
+                      <Mail className="size-3 text-muted-foreground" />
                       {contact?.email || 'N/A'}
                     </p>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 border-t border-slate-850 pt-3">
+                <div className="grid grid-cols-2 gap-4 border-t border-border pt-3">
                   <div className="space-y-1">
-                    <p className="text-[10px] text-slate-500 uppercase font-extrabold">Company</p>
-                    <p className="font-semibold text-white flex items-center gap-1">
-                      <Building2 className="size-3 text-slate-400" />
+                    <p className="text-[10px] text-muted-foreground uppercase font-extrabold">Company</p>
+                    <p className="font-semibold text-foreground flex items-center gap-1">
+                      <Building2 className="size-3 text-muted-foreground" />
                       {contact?.company || 'N/A'}
                     </p>
                   </div>
                   <div className="space-y-1">
-                    <p className="text-[10px] text-slate-500 uppercase font-extrabold">Industry</p>
-                    <p className="font-semibold text-white flex items-center gap-1">
-                      <Globe className="size-3 text-slate-400" />
+                    <p className="text-[10px] text-muted-foreground uppercase font-extrabold">Industry</p>
+                    <p className="font-semibold text-foreground flex items-center gap-1">
+                      <Globe className="size-3 text-muted-foreground" />
                       {contact?.industry || 'N/A'}
                     </p>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 border-t border-slate-850 pt-3">
+                <div className="grid grid-cols-2 gap-4 border-t border-border pt-3">
                   <div className="space-y-1">
-                    <p className="text-[10px] text-slate-500 uppercase font-extrabold">Timezone</p>
-                    <p className="font-semibold text-white flex items-center gap-1">
-                      <Clock className="size-3 text-slate-400" />
+                    <p className="text-[10px] text-muted-foreground uppercase font-extrabold">Timezone</p>
+                    <p className="font-semibold text-foreground flex items-center gap-1">
+                      <Clock className="size-3 text-muted-foreground" />
                       {contact?.timezone || 'Asia/Kolkata'}
                     </p>
                   </div>
                   <div className="space-y-1">
-                    <p className="text-[10px] text-slate-500 uppercase font-extrabold">Lead Source</p>
-                    <p className="font-semibold text-white">
+                    <p className="text-[10px] text-muted-foreground uppercase font-extrabold">Lead Source</p>
+                    <p className="font-semibold text-foreground">
                       {contact?.lead_source || 'WhatsApp Direct'}
                     </p>
                   </div>
                 </div>
 
                 {contact?.address && (
-                  <div className="border-t border-slate-850 pt-3 space-y-1">
-                    <p className="text-[10px] text-slate-500 uppercase font-extrabold">Office Location</p>
-                    <p className="font-semibold text-white flex items-start gap-1.5 leading-relaxed">
-                      <MapPin className="size-3.5 text-slate-400 mt-0.5 shrink-0" />
+                  <div className="border-t border-border pt-3 space-y-1">
+                    <p className="text-[10px] text-muted-foreground uppercase font-extrabold">Office Location</p>
+                    <p className="font-semibold text-foreground flex items-start gap-1.5 leading-relaxed">
+                      <MapPin className="size-3.5 text-muted-foreground mt-0.5 shrink-0" />
                       {contact.address}
                       {contact.city && `, ${contact.city}`}
                       {contact.state && `, ${contact.state}`}
@@ -813,8 +813,8 @@ export default function ContactProfilePage() {
           </div>
 
           {/* AI Memory & Facts Panel */}
-          <div className="bg-slate-900/40 rounded-2xl border border-slate-850 p-5 space-y-4 shadow-lg">
-            <h3 className="text-sm font-extrabold text-white uppercase tracking-wider border-b border-slate-800/60 pb-2 flex items-center gap-1.5">
+          <div className="bg-card/60 rounded-2xl border border-border p-5 space-y-4 shadow-lg">
+            <h3 className="text-sm font-extrabold text-foreground uppercase tracking-wider border-b border-border/60 pb-2 flex items-center gap-1.5">
               <Sparkles className="size-4 text-amber-450" />
               AI Customer Memory
             </h3>
@@ -825,21 +825,21 @@ export default function ContactProfilePage() {
               </div>
             ) : aiIntelligence?.memory?.facts && Object.keys(aiIntelligence.memory.facts).length > 0 ? (
               <div className="space-y-3">
-                <p className="text-[10px] text-slate-400 italic">
+                <p className="text-[10px] text-muted-foreground italic">
                   Extracted customer insights saved in MongoDB long-term memory:
                 </p>
                 <div className="space-y-2 max-h-52 overflow-y-auto pr-1">
                   {Object.entries(aiIntelligence.memory.facts).map(([key, val]: any) => (
-                    <div key={key} className="bg-slate-950/60 p-2.5 rounded-lg border border-slate-850 text-xs">
+                    <div key={key} className="bg-background/60 p-2.5 rounded-lg border border-border text-xs">
                       <p className="font-bold text-primary capitalize text-[10px]">{key.replace(/_/g, ' ')}</p>
-                      <p className="text-slate-300 mt-0.5 leading-relaxed">{val}</p>
+                      <p className="text-foreground mt-0.5 leading-relaxed">{val}</p>
                     </div>
                   ))}
                 </div>
               </div>
             ) : (
-              <div className="text-slate-500 text-xs text-center py-4 space-y-2">
-                <AlertCircle className="size-5 text-slate-600 mx-auto" />
+              <div className="text-muted-foreground text-xs text-center py-4 space-y-2">
+                <AlertCircle className="size-5 text-muted-foreground mx-auto" />
                 <p>No active memory facts yet. The AI automatically extracts facts as you chat with this customer.</p>
               </div>
             )}
@@ -849,26 +849,26 @@ export default function ContactProfilePage() {
         {/* MIDDLE COLUMN: Tabbed Workspace */}
         <div className="lg:col-span-5 space-y-6">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid grid-cols-3 bg-slate-900/70 border border-slate-850 p-1 rounded-xl h-11">
-              <TabsTrigger value="timeline" className="rounded-lg text-xs font-bold transition-all data-active:bg-slate-800 data-active:text-primary">
+            <TabsList className="grid grid-cols-3 bg-card/70 border border-border p-1 rounded-xl h-11">
+              <TabsTrigger value="timeline" className="rounded-lg text-xs font-bold transition-all data-active:bg-muted data-active:text-primary">
                 Activity Timeline
               </TabsTrigger>
-              <TabsTrigger value="billing" className="rounded-lg text-xs font-bold transition-all data-active:bg-slate-800 data-active:text-primary">
+              <TabsTrigger value="billing" className="rounded-lg text-xs font-bold transition-all data-active:bg-muted data-active:text-primary">
                 Billing & Deals
               </TabsTrigger>
-              <TabsTrigger value="tasks" className="rounded-lg text-xs font-bold transition-all data-active:bg-slate-800 data-active:text-primary">
+              <TabsTrigger value="tasks" className="rounded-lg text-xs font-bold transition-all data-active:bg-muted data-active:text-primary">
                 Tasks & Calls
               </TabsTrigger>
             </TabsList>
 
             {/* TAB CONTENT: Unified Activity Timeline */}
-            <TabsContent value="timeline" className="mt-4 bg-slate-900/20 border border-slate-850 rounded-2xl p-5 shadow-lg min-h-[60vh]">
+            <TabsContent value="timeline" className="mt-4 bg-card/20 border border-border rounded-2xl p-5 shadow-lg min-h-[60vh]">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-extrabold text-white uppercase tracking-wider">
+                  <h3 className="text-sm font-extrabold text-foreground uppercase tracking-wider">
                     Customer Timeline
                   </h3>
-                  <Badge variant="outline" className="border-slate-850 text-[9px] font-mono text-slate-500 px-2 py-0.5">
+                  <Badge variant="outline" className="border-border text-[9px] font-mono text-muted-foreground px-2 py-0.5">
                     {messages.length + notes.length + tasks.length + invoices.length + meetings.length} Events
                   </Badge>
                 </div>
@@ -891,27 +891,27 @@ export default function ContactProfilePage() {
             {/* TAB CONTENT: Billing, Invoices & Deals */}
             <TabsContent value="billing" className="mt-4 space-y-6">
               {/* Deals Subpanel */}
-              <div className="bg-slate-900/40 border border-slate-850 rounded-2xl p-5 shadow-lg">
-                <div className="flex items-center justify-between border-b border-slate-850 pb-3 mb-4">
-                  <h3 className="text-xs font-extrabold text-white uppercase tracking-wider flex items-center gap-1.5">
+              <div className="bg-card/60 border border-border rounded-2xl p-5 shadow-lg">
+                <div className="flex items-center justify-between border-b border-border pb-3 mb-4">
+                  <h3 className="text-xs font-extrabold text-foreground uppercase tracking-wider flex items-center gap-1.5">
                     <TrendingUp className="size-4 text-emerald-450" />
                     Active Deals ({deals.length})
                   </h3>
                 </div>
                 
                 {deals.length === 0 ? (
-                  <p className="text-slate-500 text-xs text-center py-4">No active deals found for this client.</p>
+                  <p className="text-muted-foreground text-xs text-center py-4">No active deals found for this client.</p>
                 ) : (
                   <div className="space-y-2">
                     {deals.map(d => (
-                      <div key={d.id} className="bg-slate-950 border border-slate-850 p-3 rounded-xl flex items-center justify-between text-xs">
+                      <div key={d.id} className="bg-background border border-border p-3 rounded-xl flex items-center justify-between text-xs">
                         <div>
-                          <p className="font-bold text-white text-xs">{d.title}</p>
-                          <p className="text-[10px] text-slate-500 mt-0.5">Stage: {d.stage?.name || 'Active'} | Probability: {d.probability || 50}%</p>
+                          <p className="font-bold text-foreground text-xs">{d.title}</p>
+                          <p className="text-[10px] text-muted-foreground mt-0.5">Stage: {d.stage?.name || 'Active'} | Probability: {d.probability || 50}%</p>
                         </div>
                         <div className="text-right">
                           <p className="font-extrabold text-emerald-400 text-xs">${d.value.toLocaleString()}</p>
-                          <p className="text-[9px] text-slate-600 font-mono mt-0.5">Closing: {d.closing_date ? new Date(d.closing_date).toLocaleDateString() : 'N/A'}</p>
+                          <p className="text-[9px] text-muted-foreground font-mono mt-0.5">Closing: {d.closing_date ? new Date(d.closing_date).toLocaleDateString() : 'N/A'}</p>
                         </div>
                       </div>
                     ))}
@@ -920,9 +920,9 @@ export default function ContactProfilePage() {
               </div>
 
               {/* AI Proposals & Commercial Quotations Module */}
-              <div className="bg-slate-900/40 border border-slate-850 rounded-2xl p-5 shadow-lg space-y-5">
-                <div className="flex items-center justify-between border-b border-slate-850 pb-3">
-                  <h3 className="text-xs font-extrabold text-white uppercase tracking-wider flex items-center gap-1.5">
+              <div className="bg-card/60 border border-border rounded-2xl p-5 shadow-lg space-y-5">
+                <div className="flex items-center justify-between border-b border-border pb-3">
+                  <h3 className="text-xs font-extrabold text-foreground uppercase tracking-wider flex items-center gap-1.5">
                     <FileCheck className="size-4 text-purple-450" />
                     AI Proposals & Quotations ({proposals.length + quotations.length})
                   </h3>
@@ -931,25 +931,25 @@ export default function ContactProfilePage() {
                 {/* AI Document Generation Controls */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {/* Proposal Generator Form */}
-                  <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-850 space-y-3 flex flex-col justify-between">
+                  <div className="bg-background/60 p-4 rounded-xl border border-border space-y-3 flex flex-col justify-between">
                     <div>
                       <p className="text-[10px] text-purple-400 font-extrabold uppercase tracking-wider flex items-center gap-1">
                         <Sparkles className="size-3 text-amber-450" />
                         Draft B2B Agency Proposal
                       </p>
-                      <p className="text-[9px] text-slate-500 mt-0.5">NVIDIA AI will write a comprehensive, professional agency proposal.</p>
+                      <p className="text-[9px] text-muted-foreground mt-0.5">NVIDIA AI will write a comprehensive, professional agency proposal.</p>
                       <textarea
                         placeholder="Custom instructions (e.g., Focus on Next.js, list Shopify details)..."
                         value={proposalInstructions}
                         onChange={e => setProposalInstructions(e.target.value)}
                         rows={2}
-                        className="w-full mt-2.5 bg-slate-905 border border-slate-800 rounded-lg p-2.5 text-xs text-white resize-none outline-none focus:border-primary/40"
+                        className="w-full mt-2.5 bg-slate-905 border border-border rounded-lg p-2.5 text-xs text-foreground resize-none outline-none focus:border-primary/40"
                       />
                     </div>
                     <Button
                       onClick={handleGenerateProposal}
                       disabled={isGeneratingProposal}
-                      className="w-full bg-purple-650 hover:bg-purple-600 text-white text-xs h-8 font-bold mt-2 rounded-lg"
+                      className="w-full bg-purple-650 hover:bg-purple-600 text-foreground text-xs h-8 font-bold mt-2 rounded-lg"
                     >
                       {isGeneratingProposal ? (
                         <>
@@ -961,25 +961,25 @@ export default function ContactProfilePage() {
                   </div>
 
                   {/* Quotation Generator Form */}
-                  <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-850 space-y-3 flex flex-col justify-between">
+                  <div className="bg-background/60 p-4 rounded-xl border border-border space-y-3 flex flex-col justify-between">
                     <div>
                       <p className="text-[10px] text-fuchsia-400 font-extrabold uppercase tracking-wider flex items-center gap-1">
                         <Signature className="size-3 text-amber-450" />
                         Compile Commercial Quotation
                       </p>
-                      <p className="text-[9px] text-slate-500 mt-0.5">Bound strictly to company catalog rates. Never invents pricing.</p>
+                      <p className="text-[9px] text-muted-foreground mt-0.5">Bound strictly to company catalog rates. Never invents pricing.</p>
                       <textarea
                         placeholder="Quotation instructions (e.g., Include dynamic plan, apply ₹5,000 discount)..."
                         value={quotationInstructions}
                         onChange={e => setQuotationInstructions(e.target.value)}
                         rows={2}
-                        className="w-full mt-2.5 bg-slate-905 border border-slate-800 rounded-lg p-2.5 text-xs text-white resize-none outline-none focus:border-primary/40"
+                        className="w-full mt-2.5 bg-slate-905 border border-border rounded-lg p-2.5 text-xs text-foreground resize-none outline-none focus:border-primary/40"
                       />
                     </div>
                     <Button
                       onClick={handleGenerateQuotation}
                       disabled={isGeneratingQuotation}
-                      className="w-full bg-fuchsia-650 hover:bg-fuchsia-600 text-white text-xs h-8 font-bold mt-2 rounded-lg"
+                      className="w-full bg-fuchsia-650 hover:bg-fuchsia-600 text-foreground text-xs h-8 font-bold mt-2 rounded-lg"
                     >
                       {isGeneratingQuotation ? (
                         <>
@@ -993,16 +993,16 @@ export default function ContactProfilePage() {
 
                 {/* Document List */}
                 {proposals.length === 0 && quotations.length === 0 ? (
-                  <p className="text-slate-500 text-xs text-center py-2 italic">No commercial documents drafted yet.</p>
+                  <p className="text-muted-foreground text-xs text-center py-2 italic">No commercial documents drafted yet.</p>
                 ) : (
                   <div className="space-y-3.5 max-h-80 overflow-y-auto pr-1">
                     {/* Render Proposals */}
                     {proposals.map(p => (
-                      <div key={p.id} className="bg-slate-955 border border-slate-850 p-3.5 rounded-xl flex items-center justify-between gap-4 text-xs">
+                      <div key={p.id} className="bg-slate-955 border border-border p-3.5 rounded-xl flex items-center justify-between gap-4 text-xs">
                         <div className="space-y-1">
                           <div className="flex items-center gap-2">
                             <FileCheck className="size-3.5 text-purple-400 shrink-0" />
-                            <p className="font-bold text-white text-xs">B2B Proposal: {p.service_required}</p>
+                            <p className="font-bold text-foreground text-xs">B2B Proposal: {p.service_required}</p>
                           </div>
                           <div className="flex items-center gap-2 flex-wrap">
                             <Badge className="bg-purple-500/10 text-purple-450 border-purple-500/20 text-[8px] h-4 font-bold uppercase">
@@ -1011,11 +1011,11 @@ export default function ContactProfilePage() {
                             <Badge className={cn(
                               'text-[8px] h-4 font-bold border uppercase',
                               p.status === 'signed' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25' :
-                              'bg-slate-800 text-slate-450 border-slate-700'
+                              'bg-muted text-slate-450 border-border'
                             )}>
                               {p.status}
                             </Badge>
-                            <span className="text-[10px] text-slate-500 font-mono">Date: {new Date(p.created_at).toLocaleDateString()}</span>
+                            <span className="text-[10px] text-muted-foreground font-mono">Date: {new Date(p.created_at).toLocaleDateString()}</span>
                           </div>
                         </div>
                         <div className="flex items-center gap-1.5 shrink-0">
@@ -1027,7 +1027,7 @@ export default function ContactProfilePage() {
                                   setEditingProposalId(p.id);
                                   setProposalDraftDetails(p.details);
                                 }}
-                                className="h-7 text-[10px] font-bold bg-slate-900 border border-slate-800 text-slate-300 hover:text-white"
+                                className="h-7 text-[10px] font-bold bg-card border border-border text-foreground hover:text-foreground"
                               >
                                 Edit
                               </Button>
@@ -1053,11 +1053,11 @@ export default function ContactProfilePage() {
 
                     {/* Render Quotations */}
                     {quotations.map(q => (
-                      <div key={q.id} className="bg-slate-955 border border-slate-850 p-3.5 rounded-xl flex items-center justify-between gap-4 text-xs">
+                      <div key={q.id} className="bg-slate-955 border border-border p-3.5 rounded-xl flex items-center justify-between gap-4 text-xs">
                         <div className="space-y-1">
                           <div className="flex items-center gap-2">
                             <Signature className="size-3.5 text-fuchsia-400 shrink-0" />
-                            <p className="font-bold text-white text-xs">Quotation: {q.service_required}</p>
+                            <p className="font-bold text-foreground text-xs">Quotation: {q.service_required}</p>
                           </div>
                           <div className="flex items-center gap-2 flex-wrap">
                             <Badge className="bg-fuchsia-500/10 text-fuchsia-450 border-fuchsia-500/20 text-[8px] h-4 font-bold uppercase">
@@ -1066,12 +1066,12 @@ export default function ContactProfilePage() {
                             <Badge className={cn(
                               'text-[8px] h-4 font-bold border uppercase',
                               q.status === 'paid' ? 'bg-emerald-500/10 text-emerald-450 border-emerald-500/25' :
-                              'bg-slate-800 text-slate-450 border-slate-700'
+                              'bg-muted text-slate-450 border-border'
                             )}>
                               {q.status}
                             </Badge>
                             <span className="text-[10px] text-emerald-450 font-bold">INR {Number(q.total_amount).toLocaleString()}</span>
-                            <span className="text-[10px] text-slate-500 font-mono">Date: {new Date(q.created_at).toLocaleDateString()}</span>
+                            <span className="text-[10px] text-muted-foreground font-mono">Date: {new Date(q.created_at).toLocaleDateString()}</span>
                           </div>
                         </div>
                         <div className="flex items-center gap-1.5 shrink-0">
@@ -1089,7 +1089,7 @@ export default function ContactProfilePage() {
                                     discount: 0,
                                   });
                                 }}
-                                className="h-7 text-[10px] font-bold bg-slate-900 border border-slate-800 text-slate-300 hover:text-white"
+                                className="h-7 text-[10px] font-bold bg-card border border-border text-foreground hover:text-foreground"
                               >
                                 Edit
                               </Button>
@@ -1117,23 +1117,23 @@ export default function ContactProfilePage() {
               </div>
 
               {/* Invoices Subpanel */}
-              <div className="bg-slate-900/40 border border-slate-850 rounded-2xl p-5 shadow-lg space-y-4">
-                <div className="flex items-center justify-between border-b border-slate-850 pb-3">
-                  <h3 className="text-xs font-extrabold text-white uppercase tracking-wider flex items-center gap-1.5">
+              <div className="bg-card/60 border border-border rounded-2xl p-5 shadow-lg space-y-4">
+                <div className="flex items-center justify-between border-b border-border pb-3">
+                  <h3 className="text-xs font-extrabold text-foreground uppercase tracking-wider flex items-center gap-1.5">
                     <Receipt className="size-4 text-amber-500" />
                     Invoices & Invoicing ({invoices.length})
                   </h3>
                 </div>
 
                 {/* Log New Invoice Form */}
-                <form onSubmit={handleAddInvoice} className="bg-slate-950/60 p-3.5 rounded-xl border border-slate-850 space-y-3">
-                  <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-wide">Generate New Invoice</p>
+                <form onSubmit={handleAddInvoice} className="bg-background/60 p-3.5 rounded-xl border border-border space-y-3">
+                  <p className="text-[10px] text-muted-foreground font-extrabold uppercase tracking-wide">Generate New Invoice</p>
                   <div className="grid grid-cols-2 gap-2">
                     <Input
                       placeholder="Inv No. (e.g. INV-2026-01)"
                       value={newInvoice.invoice_number}
                       onChange={e => setNewInvoice({ ...newInvoice, invoice_number: e.target.value })}
-                      className="bg-slate-900 border-slate-800 h-8 text-xs text-white"
+                      className="bg-card border-border h-8 text-xs text-foreground"
                       required
                     />
                     <Input
@@ -1141,7 +1141,7 @@ export default function ContactProfilePage() {
                       placeholder="Amount ($)"
                       value={newInvoice.amount}
                       onChange={e => setNewInvoice({ ...newInvoice, amount: e.target.value })}
-                      className="bg-slate-900 border-slate-800 h-8 text-xs text-white"
+                      className="bg-card border-border h-8 text-xs text-foreground"
                       required
                     />
                   </div>
@@ -1150,42 +1150,42 @@ export default function ContactProfilePage() {
                       type="date"
                       value={newInvoice.due_date}
                       onChange={e => setNewInvoice({ ...newInvoice, due_date: e.target.value })}
-                      className="bg-slate-900 border-slate-800 h-8 text-xs text-white"
+                      className="bg-card border-border h-8 text-xs text-foreground"
                     />
                     <Input
                       placeholder="Services (comma separated)"
                       value={newInvoice.services}
                       onChange={e => setNewInvoice({ ...newInvoice, services: e.target.value })}
-                      className="bg-slate-900 border-slate-800 h-8 text-xs text-white"
+                      className="bg-card border-border h-8 text-xs text-foreground"
                     />
                   </div>
-                  <Button type="submit" disabled={submittingInvoice} className="w-full bg-slate-905 hover:bg-slate-800 border border-slate-800 text-white text-xs h-8 font-semibold">
+                  <Button type="submit" disabled={submittingInvoice} className="w-full bg-slate-905 hover:bg-muted border border-border text-foreground text-xs h-8 font-semibold">
                     {submittingInvoice ? 'Generating...' : 'Issue Invoice & Notify via WhatsApp'}
                   </Button>
                 </form>
 
                 {invoices.length === 0 ? (
-                  <p className="text-slate-500 text-xs text-center py-4">No billing invoices raised yet.</p>
+                  <p className="text-muted-foreground text-xs text-center py-4">No billing invoices raised yet.</p>
                 ) : (
                   <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
                     {invoices.map(inv => (
-                      <div key={inv.id} className="bg-slate-955 border border-slate-850 p-3 rounded-xl flex items-center justify-between text-xs">
+                      <div key={inv.id} className="bg-slate-955 border border-border p-3 rounded-xl flex items-center justify-between text-xs">
                         <div className="space-y-1">
-                          <p className="font-bold text-white text-xs">Invoice #{inv.invoice_number}</p>
+                          <p className="font-bold text-foreground text-xs">Invoice #{inv.invoice_number}</p>
                           <div className="flex items-center gap-1.5 flex-wrap">
                             <Badge className={
                               inv.status === 'paid' ? 'bg-emerald-500/10 text-emerald-450 border-emerald-500/20 text-[9px] h-4 font-semibold uppercase' :
                               inv.status === 'overdue' ? 'bg-rose-500/10 text-rose-450 border-rose-500/20 text-[9px] h-4 font-semibold uppercase' :
-                              'bg-slate-800 text-slate-400 border-slate-700 text-[9px] h-4 font-semibold uppercase'
+                              'bg-muted text-muted-foreground border-border text-[9px] h-4 font-semibold uppercase'
                             }>
                               {inv.status}
                             </Badge>
                             {inv.due_date && (
-                              <span className="text-[10px] text-slate-500 font-mono">Due: {new Date(inv.due_date).toLocaleDateString()}</span>
+                              <span className="text-[10px] text-muted-foreground font-mono">Due: {new Date(inv.due_date).toLocaleDateString()}</span>
                             )}
                           </div>
                         </div>
-                        <p className="font-extrabold text-slate-200">${inv.amount.toLocaleString()}</p>
+                        <p className="font-extrabold text-foreground">${inv.amount.toLocaleString()}</p>
                       </div>
                     ))}
                   </div>
@@ -1196,33 +1196,33 @@ export default function ContactProfilePage() {
             {/* TAB CONTENT: Tasks & Meetings */}
             <TabsContent value="tasks" className="mt-4 space-y-6">
               {/* Task Planner Card */}
-              <div className="bg-slate-900/40 border border-slate-850 rounded-2xl p-5 shadow-lg space-y-4">
-                <h3 className="text-xs font-extrabold text-white uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-850 pb-3">
+              <div className="bg-card/60 border border-border rounded-2xl p-5 shadow-lg space-y-4">
+                <h3 className="text-xs font-extrabold text-foreground uppercase tracking-wider flex items-center gap-1.5 border-b border-border pb-3">
                   <CheckSquare className="size-4 text-rose-450" />
                   Task Planner & Checklists
                 </h3>
 
                 {/* Create Task Form */}
-                <form onSubmit={handleAddTask} className="bg-slate-950/60 p-3.5 rounded-xl border border-slate-850 space-y-3">
-                  <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-wide">Add New CRM Action Task</p>
+                <form onSubmit={handleAddTask} className="bg-background/60 p-3.5 rounded-xl border border-border space-y-3">
+                  <p className="text-[10px] text-muted-foreground font-extrabold uppercase tracking-wide">Add New CRM Action Task</p>
                   <Input
                     placeholder="Task Title (e.g. Schedule Follow-up Call)"
                     value={newTask.title}
                     onChange={e => setNewTask({ ...newTask, title: e.target.value })}
-                    className="bg-slate-900 border-slate-800 h-8 text-xs text-white"
+                    className="bg-card border-border h-8 text-xs text-foreground"
                     required
                   />
                   <Input
                     placeholder="Short Description..."
                     value={newTask.description}
                     onChange={e => setNewTask({ ...newTask, description: e.target.value })}
-                    className="bg-slate-900 border-slate-800 h-8 text-xs text-white"
+                    className="bg-card border-border h-8 text-xs text-foreground"
                   />
                   <div className="grid grid-cols-2 gap-2">
                     <select
                       value={newTask.priority}
                       onChange={e => setNewTask({ ...newTask, priority: e.target.value })}
-                      className="bg-slate-900 border border-slate-800 px-3 h-8 text-xs text-slate-300 rounded-lg outline-none focus:border-primary/50"
+                      className="bg-card border border-border px-3 h-8 text-xs text-foreground rounded-lg outline-none focus:border-primary/50"
                     >
                       <option value="low">Low Priority</option>
                       <option value="medium">Medium Priority</option>
@@ -1232,7 +1232,7 @@ export default function ContactProfilePage() {
                       type="date"
                       value={newTask.due_date}
                       onChange={e => setNewTask({ ...newTask, due_date: e.target.value })}
-                      className="bg-slate-900 border-slate-800 h-8 text-xs text-white"
+                      className="bg-card border-border h-8 text-xs text-foreground"
                     />
                   </div>
                   <Button type="submit" disabled={submittingTask} className="w-full bg-primary hover:bg-primary/90 text-slate-950 text-xs h-8 font-extrabold">
@@ -1242,11 +1242,11 @@ export default function ContactProfilePage() {
 
                 {/* Tasks List */}
                 {tasks.length === 0 ? (
-                  <p className="text-slate-500 text-xs text-center py-4">No tasks pending for this customer.</p>
+                  <p className="text-muted-foreground text-xs text-center py-4">No tasks pending for this customer.</p>
                 ) : (
                   <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
                     {tasks.map(t => (
-                      <div key={t.id} className="bg-slate-955 border border-slate-850 p-3 rounded-xl flex items-start justify-between gap-3 text-xs">
+                      <div key={t.id} className="bg-slate-955 border border-border p-3 rounded-xl flex items-start justify-between gap-3 text-xs">
                         <div className="flex items-start gap-2">
                           <button
                             type="button"
@@ -1256,11 +1256,11 @@ export default function ContactProfilePage() {
                             <CheckCircle2 className={`size-4.5 ${t.status === 'completed' ? 'text-primary' : 'text-slate-750'}`} />
                           </button>
                           <div>
-                            <p className={`font-bold ${t.status === 'completed' ? 'line-through text-slate-500' : 'text-white'}`}>
+                            <p className={`font-bold ${t.status === 'completed' ? 'line-through text-muted-foreground' : 'text-foreground'}`}>
                               {t.title}
                             </p>
                             {t.description && (
-                              <p className="text-[10px] text-slate-500 mt-0.5">{t.description}</p>
+                              <p className="text-[10px] text-muted-foreground mt-0.5">{t.description}</p>
                             )}
                             {t.due_date && (
                               <p className="text-[9px] text-slate-650 font-mono mt-1">Due: {new Date(t.due_date).toLocaleDateString()}</p>
@@ -1270,7 +1270,7 @@ export default function ContactProfilePage() {
                         <Badge className={
                           t.priority === 'high' ? 'bg-rose-500/10 text-rose-450 border-rose-500/20 text-[9px] font-semibold h-4 uppercase' :
                           t.priority === 'medium' ? 'bg-amber-500/10 text-amber-450 border-amber-500/20 text-[9px] font-semibold h-4 uppercase' :
-                          'bg-slate-800 text-slate-400 border-slate-700 text-[9px] font-semibold h-4 uppercase'
+                          'bg-muted text-muted-foreground border-border text-[9px] font-semibold h-4 uppercase'
                         }>
                           {t.priority}
                         </Badge>
@@ -1290,9 +1290,9 @@ export default function ContactProfilePage() {
           </Tabs>
 
           {/* Quick Notes Form */}
-          <div className="bg-slate-900/40 border border-slate-850 rounded-2xl p-5 shadow-lg space-y-3">
-            <h3 className="text-xs font-extrabold text-white uppercase tracking-wider flex items-center gap-1.5">
-              <FileText className="size-4 text-slate-400" />
+          <div className="bg-card/60 border border-border rounded-2xl p-5 shadow-lg space-y-3">
+            <h3 className="text-xs font-extrabold text-foreground uppercase tracking-wider flex items-center gap-1.5">
+              <FileText className="size-4 text-muted-foreground" />
               Write Internal Staff Note
             </h3>
             <form onSubmit={handleAddNote} className="space-y-2">
@@ -1301,10 +1301,10 @@ export default function ContactProfilePage() {
                 onChange={e => setNewNote(e.target.value)}
                 placeholder="Log customer request, project update, or sales notes..."
                 rows={2}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 placeholder-slate-600 outline-none focus:border-primary/50 resize-none leading-relaxed"
+                className="w-full bg-background border border-border rounded-xl p-3 text-xs text-foreground placeholder:text-muted-foreground outline-none focus:border-primary/50 resize-none leading-relaxed"
                 required
               />
-              <Button type="submit" disabled={submittingNote} className="w-full bg-slate-800 hover:bg-slate-750 text-white text-xs h-8 font-semibold">
+              <Button type="submit" disabled={submittingNote} className="w-full bg-muted hover:bg-accent text-foreground text-xs h-8 font-semibold">
                 {submittingNote ? 'Saving Note...' : 'Save Private Note'}
               </Button>
             </form>
@@ -1324,34 +1324,34 @@ export default function ContactProfilePage() {
 
         {/* RIGHT COLUMN: AI Scoring, Sentiment, Intent & Predictions */}
         <div className="lg:col-span-3 space-y-6">
-          <div className="bg-slate-900/45 border border-slate-850 rounded-2xl p-5 space-y-5 shadow-lg relative overflow-hidden">
+          <div className="bg-card/45 border border-border rounded-2xl p-5 space-y-5 shadow-lg relative overflow-hidden">
             {/* Header */}
-            <div className="flex items-center gap-2 border-b border-slate-800 pb-3">
+            <div className="flex items-center gap-2 border-b border-border pb-3">
               <Sparkles className="size-5 text-indigo-400 animate-pulse" />
               <div>
-                <h3 className="text-sm font-extrabold text-white uppercase tracking-wider">
+                <h3 className="text-sm font-extrabold text-foreground uppercase tracking-wider">
                   NVIDIA AI Insights
                 </h3>
-                <p className="text-[9px] text-slate-500">Real-time Lead Scoring & Recommendations</p>
+                <p className="text-[9px] text-muted-foreground">Real-time Lead Scoring & Recommendations</p>
               </div>
             </div>
 
             {aiLoading ? (
               <div className="flex flex-col items-center justify-center py-12 space-y-2">
                 <Loader2 className="size-6 animate-spin text-primary" />
-                <p className="text-[11px] text-slate-500">Analyzing client communications...</p>
+                <p className="text-[11px] text-muted-foreground">Analyzing client communications...</p>
               </div>
             ) : aiIntelligence?.intelligence ? (
               <div className="space-y-5">
                 {/* Scoring Meters */}
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-slate-955 border border-slate-850 p-3.5 rounded-2xl text-center">
-                    <p className="text-[9px] text-slate-500 font-extrabold uppercase">Lead Score</p>
+                  <div className="bg-slate-955 border border-border p-3.5 rounded-2xl text-center">
+                    <p className="text-[9px] text-muted-foreground font-extrabold uppercase">Lead Score</p>
                     <div className="text-2xl font-black text-indigo-400 mt-1 font-mono">
                       {aiIntelligence.intelligence.leadScore}
-                      <span className="text-slate-600 text-xs">/100</span>
+                      <span className="text-muted-foreground text-xs">/100</span>
                     </div>
-                    <div className="w-full bg-slate-900 rounded-full h-1 mt-2 overflow-hidden">
+                    <div className="w-full bg-card rounded-full h-1 mt-2 overflow-hidden">
                       <div 
                         className="bg-indigo-400 h-full rounded-full transition-all duration-500" 
                         style={{ width: `${aiIntelligence.intelligence.leadScore}%` }}
@@ -1359,12 +1359,12 @@ export default function ContactProfilePage() {
                     </div>
                   </div>
 
-                  <div className="bg-slate-955 border border-slate-850 p-3.5 rounded-2xl text-center">
-                    <p className="text-[9px] text-slate-500 font-extrabold uppercase">Win Probability</p>
+                  <div className="bg-slate-955 border border-border p-3.5 rounded-2xl text-center">
+                    <p className="text-[9px] text-muted-foreground font-extrabold uppercase">Win Probability</p>
                     <div className="text-2xl font-black text-emerald-400 mt-1 font-mono">
                       {aiIntelligence.intelligence.conversionProbability}%
                     </div>
-                    <div className="w-full bg-slate-900 rounded-full h-1 mt-2 overflow-hidden">
+                    <div className="w-full bg-card rounded-full h-1 mt-2 overflow-hidden">
                       <div 
                         className="bg-emerald-400 h-full rounded-full transition-all duration-500" 
                         style={{ width: `${aiIntelligence.intelligence.conversionProbability}%` }}
@@ -1374,17 +1374,17 @@ export default function ContactProfilePage() {
                 </div>
 
                 {/* Intent & Sentiment */}
-                <div className="bg-slate-950 p-3.5 rounded-2xl border border-slate-850 space-y-2.5 text-xs">
+                <div className="bg-background p-3.5 rounded-2xl border border-border space-y-2.5 text-xs">
                   <div>
-                    <p className="text-[9px] text-slate-500 uppercase font-extrabold">Buying Intent</p>
-                    <p className="font-semibold text-slate-200 mt-0.5 leading-relaxed">{aiIntelligence.intelligence.intent}</p>
+                    <p className="text-[9px] text-muted-foreground uppercase font-extrabold">Buying Intent</p>
+                    <p className="font-semibold text-foreground mt-0.5 leading-relaxed">{aiIntelligence.intelligence.intent}</p>
                   </div>
-                  <div className="flex justify-between items-center border-t border-slate-850 pt-2.5">
-                    <span className="text-[10px] text-slate-500 uppercase font-extrabold">Sentiment Status</span>
+                  <div className="flex justify-between items-center border-t border-border pt-2.5">
+                    <span className="text-[10px] text-muted-foreground uppercase font-extrabold">Sentiment Status</span>
                     <Badge className={
                       aiIntelligence.intelligence.sentiment === 'Positive' ? 'bg-emerald-550/10 text-emerald-450 border-emerald-500/20 text-[9px] font-bold' :
                       aiIntelligence.intelligence.sentiment === 'Negative' ? 'bg-rose-500/10 text-rose-450 border-rose-500/20 text-[9px] font-bold' :
-                      'bg-slate-800 text-slate-400 border-slate-750 text-[9px] font-bold'
+                      'bg-muted text-muted-foreground border-border text-[9px] font-bold'
                     }>
                       {aiIntelligence.intelligence.sentiment}
                     </Badge>
@@ -1394,10 +1394,10 @@ export default function ContactProfilePage() {
                 {/* Buying Signals */}
                 {aiIntelligence.intelligence.buyingSignals?.length > 0 && (
                   <div className="space-y-2">
-                    <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-wide">Key Buying Signals</p>
+                    <p className="text-[10px] text-muted-foreground font-extrabold uppercase tracking-wide">Key Buying Signals</p>
                     <div className="space-y-1.5">
                       {aiIntelligence.intelligence.buyingSignals.map((sig: string, idx: number) => (
-                        <div key={idx} className="flex items-center gap-2 text-xs text-slate-300">
+                        <div key={idx} className="flex items-center gap-2 text-xs text-foreground">
                           <div className="size-1.5 rounded-full bg-emerald-500 shrink-0" />
                           <p>{sig}</p>
                         </div>
@@ -1408,13 +1408,13 @@ export default function ContactProfilePage() {
 
                 {/* AI Recommendations */}
                 {aiIntelligence.intelligence.recommendations?.length > 0 && (
-                  <div className="space-y-2 border-t border-slate-850 pt-3.5">
-                    <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-wide">Next Best Recommendations</p>
+                  <div className="space-y-2 border-t border-border pt-3.5">
+                    <p className="text-[10px] text-muted-foreground font-extrabold uppercase tracking-wide">Next Best Recommendations</p>
                     <div className="space-y-2">
                       {aiIntelligence.intelligence.recommendations.map((rec: string, idx: number) => (
-                        <div key={idx} className="bg-slate-950 p-2.5 rounded-xl border border-slate-850 text-xs flex gap-2 items-start">
+                        <div key={idx} className="bg-background p-2.5 rounded-xl border border-border text-xs flex gap-2 items-start">
                           <Sparkles className="size-3.5 text-indigo-400 mt-0.5 shrink-0" />
-                          <p className="text-slate-300 leading-relaxed">{rec}</p>
+                          <p className="text-foreground leading-relaxed">{rec}</p>
                         </div>
                       ))}
                     </div>
@@ -1423,21 +1423,21 @@ export default function ContactProfilePage() {
 
                 {/* Customer Intelligence */}
                 {aiIntelligence.intelligence.customerIntelligence && (
-                  <div className="space-y-2 border-t border-slate-850 pt-3.5 text-xs">
-                    <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-wide">Customer Intelligence</p>
-                    <div className="bg-slate-950 p-3 rounded-xl border border-slate-850 space-y-2.5">
+                  <div className="space-y-2 border-t border-border pt-3.5 text-xs">
+                    <p className="text-[10px] text-muted-foreground font-extrabold uppercase tracking-wide">Customer Intelligence</p>
+                    <div className="bg-background p-3 rounded-xl border border-border space-y-2.5">
                       {aiIntelligence.intelligence.customerIntelligence.painPoints?.length > 0 && (
                         <div>
-                          <span className="text-[9px] text-slate-500 uppercase font-bold block">Pain Points</span>
-                          <span className="text-slate-300 mt-0.5 block">{aiIntelligence.intelligence.customerIntelligence.painPoints.join(', ')}</span>
+                          <span className="text-[9px] text-muted-foreground uppercase font-bold block">Pain Points</span>
+                          <span className="text-foreground mt-0.5 block">{aiIntelligence.intelligence.customerIntelligence.painPoints.join(', ')}</span>
                         </div>
                       )}
                       {aiIntelligence.intelligence.customerIntelligence.interestedServices?.length > 0 && (
-                        <div className="border-t border-slate-850 pt-2">
-                          <span className="text-[9px] text-slate-500 uppercase font-bold block">Interested Services</span>
+                        <div className="border-t border-border pt-2">
+                          <span className="text-[9px] text-muted-foreground uppercase font-bold block">Interested Services</span>
                           <div className="flex flex-wrap gap-1 mt-1">
                             {aiIntelligence.intelligence.customerIntelligence.interestedServices.map((srv: string, idx: number) => (
-                              <Badge key={idx} variant="secondary" className="bg-slate-800 text-slate-300 border-slate-700 text-[9px] px-1.5">
+                              <Badge key={idx} variant="secondary" className="bg-muted text-foreground border-border text-[9px] px-1.5">
                                 {srv}
                               </Badge>
                             ))}
@@ -1445,8 +1445,8 @@ export default function ContactProfilePage() {
                         </div>
                       )}
                       {aiIntelligence.intelligence.customerIntelligence.estimatedBudget && (
-                        <div className="border-t border-slate-850 pt-2">
-                          <span className="text-[9px] text-slate-500 uppercase font-bold block">Estimated Budget</span>
+                        <div className="border-t border-border pt-2">
+                          <span className="text-[9px] text-muted-foreground uppercase font-bold block">Estimated Budget</span>
                           <span className="text-emerald-400 font-bold mt-0.5 block">{aiIntelligence.intelligence.customerIntelligence.estimatedBudget}</span>
                         </div>
                       )}
@@ -1480,25 +1480,25 @@ export default function ContactProfilePage() {
       {/* AI Proposal Customizer Modal Drawer */}
       {editingProposalId && proposalDraftDetails && (
         <div className="fixed inset-0 bg-slate-955/85 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+          <div className="bg-card border border-border rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
             {/* Header */}
-            <div className="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/40">
+            <div className="p-4 border-b border-border flex items-center justify-between bg-muted/50">
               <div className="flex items-center gap-2">
                 <FileCheck className="size-4 text-purple-400" />
-                <h3 className="text-sm font-bold text-white uppercase tracking-wider">Review & Customize B2B Proposal</h3>
+                <h3 className="text-sm font-bold text-foreground uppercase tracking-wider">Review & Customize B2B Proposal</h3>
               </div>
-              <button onClick={() => setEditingProposalId(null)} className="text-slate-500 hover:text-white font-bold">✕</button>
+              <button onClick={() => setEditingProposalId(null)} className="text-muted-foreground hover:text-foreground font-bold">✕</button>
             </div>
             
             {/* Body */}
-            <div className="p-5 overflow-y-auto space-y-4 flex-1 text-xs text-slate-300">
+            <div className="p-5 overflow-y-auto space-y-4 flex-1 text-xs text-foreground">
               <div className="space-y-1.5">
                 <label className="text-[10px] font-bold text-slate-450 uppercase">Company Introduction</label>
                 <textarea
                   value={proposalDraftDetails.companyIntroduction || ''}
                   onChange={e => setProposalDraftDetails({ ...proposalDraftDetails, companyIntroduction: e.target.value })}
                   rows={2}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-white resize-none outline-none focus:border-primary/50"
+                  className="w-full bg-background border border-border rounded-lg p-2.5 text-xs text-foreground resize-none outline-none focus:border-primary/50"
                 />
               </div>
               <div className="space-y-1.5">
@@ -1507,7 +1507,7 @@ export default function ContactProfilePage() {
                   value={proposalDraftDetails.problemStatement || ''}
                   onChange={e => setProposalDraftDetails({ ...proposalDraftDetails, problemStatement: e.target.value })}
                   rows={3}
-                  className="w-full bg-slate-955 border border-slate-800 rounded-lg p-2.5 text-xs text-white resize-none outline-none focus:border-primary/50"
+                  className="w-full bg-slate-955 border border-border rounded-lg p-2.5 text-xs text-foreground resize-none outline-none focus:border-primary/50"
                 />
               </div>
               <div className="space-y-1.5">
@@ -1516,7 +1516,7 @@ export default function ContactProfilePage() {
                   value={proposalDraftDetails.solution || ''}
                   onChange={e => setProposalDraftDetails({ ...proposalDraftDetails, solution: e.target.value })}
                   rows={4}
-                  className="w-full bg-slate-955 border border-slate-800 rounded-lg p-2.5 text-xs text-white resize-none outline-none focus:border-primary/50"
+                  className="w-full bg-slate-955 border border-border rounded-lg p-2.5 text-xs text-foreground resize-none outline-none focus:border-primary/50"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -1526,7 +1526,7 @@ export default function ContactProfilePage() {
                     type="text"
                     value={proposalDraftDetails.pricing || ''}
                     onChange={e => setProposalDraftDetails({ ...proposalDraftDetails, pricing: e.target.value })}
-                    className="w-full bg-slate-955 border border-slate-800 rounded-lg h-9 px-2.5 text-xs text-white outline-none focus:border-primary/50"
+                    className="w-full bg-slate-955 border border-border rounded-lg h-9 px-2.5 text-xs text-foreground outline-none focus:border-primary/50"
                   />
                 </div>
                 <div className="space-y-1.5">
@@ -1535,15 +1535,15 @@ export default function ContactProfilePage() {
                     type="text"
                     value={proposalDraftDetails.timeline || ''}
                     onChange={e => setProposalDraftDetails({ ...proposalDraftDetails, timeline: e.target.value })}
-                    className="w-full bg-slate-955 border border-slate-800 rounded-lg h-9 px-2.5 text-xs text-white outline-none focus:border-primary/50"
+                    className="w-full bg-slate-955 border border-border rounded-lg h-9 px-2.5 text-xs text-foreground outline-none focus:border-primary/50"
                   />
                 </div>
               </div>
             </div>
 
             {/* Footer */}
-            <div className="p-4 border-t border-slate-800 flex justify-end gap-2 bg-slate-950/40">
-              <Button onClick={() => setEditingProposalId(null)} variant="ghost" className="text-xs text-slate-400 h-8">Cancel</Button>
+            <div className="p-4 border-t border-border flex justify-end gap-2 bg-muted/50">
+              <Button onClick={() => setEditingProposalId(null)} variant="ghost" className="text-xs text-muted-foreground h-8">Cancel</Button>
               <Button onClick={handleSaveProposalEdit} disabled={isSavingProposal} className="bg-primary hover:bg-primary/90 text-slate-955 text-xs font-bold h-8 px-4 rounded-lg">
                 {isSavingProposal ? 'Saving...' : 'Save & Issue Proposal'}
               </Button>
@@ -1555,23 +1555,23 @@ export default function ContactProfilePage() {
       {/* AI Quotation Customizer Modal Drawer */}
       {editingQuotationId && quotationDraftDetails && (
         <div className="fixed inset-0 bg-slate-955/85 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+          <div className="bg-card border border-border rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
             {/* Header */}
-            <div className="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/40">
+            <div className="p-4 border-b border-border flex items-center justify-between bg-muted/50">
               <div className="flex items-center gap-2">
                 <Signature className="size-4 text-fuchsia-400" />
-                <h3 className="text-sm font-bold text-white uppercase tracking-wider">Review & Edit Commercial Quotation</h3>
+                <h3 className="text-sm font-bold text-foreground uppercase tracking-wider">Review & Edit Commercial Quotation</h3>
               </div>
-              <button onClick={() => setEditingQuotationId(null)} className="text-slate-500 hover:text-white font-bold">✕</button>
+              <button onClick={() => setEditingQuotationId(null)} className="text-muted-foreground hover:text-foreground font-bold">✕</button>
             </div>
             
             {/* Body */}
-            <div className="p-5 overflow-y-auto space-y-4 flex-1 text-xs text-slate-300">
+            <div className="p-5 overflow-y-auto space-y-4 flex-1 text-xs text-foreground">
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-slate-450 uppercase block">Line Items (RAG Catalog rates applied)</label>
                 <div className="space-y-2">
                   {quotationDraftDetails.items?.map((item: any, idx: number) => (
-                    <div key={idx} className="flex gap-2 items-center bg-slate-955/45 p-2.5 rounded-lg border border-slate-800">
+                    <div key={idx} className="flex gap-2 items-center bg-slate-955/45 p-2.5 rounded-lg border border-border">
                       <input
                         type="text"
                         value={item.description}
@@ -1580,7 +1580,7 @@ export default function ContactProfilePage() {
                           newItems[idx].description = e.target.value;
                           setQuotationDraftDetails({ ...quotationDraftDetails, items: newItems });
                         }}
-                        className="flex-1 bg-slate-900 border border-slate-800 rounded px-2 h-7 text-xs text-white"
+                        className="flex-1 bg-card border border-border rounded px-2 h-7 text-xs text-foreground"
                       />
                       <input
                         type="number"
@@ -1598,7 +1598,7 @@ export default function ContactProfilePage() {
                             totalAmount: subtotal - (quotationDraftDetails.discount || 0) + taxAmount
                           });
                         }}
-                        className="w-12 bg-slate-900 border border-slate-800 rounded px-2 h-7 text-center text-xs text-white"
+                        className="w-12 bg-card border border-border rounded px-2 h-7 text-center text-xs text-foreground"
                       />
                       <input
                         type="number"
@@ -1616,14 +1616,14 @@ export default function ContactProfilePage() {
                             totalAmount: subtotal - (quotationDraftDetails.discount || 0) + taxAmount
                           });
                         }}
-                        className="w-24 bg-slate-900 border border-slate-800 rounded px-2 h-7 text-right text-xs text-white"
+                        className="w-24 bg-card border border-border rounded px-2 h-7 text-right text-xs text-foreground"
                       />
                     </div>
                   ))}
                 </div>
               </div>
               
-              <div className="grid grid-cols-2 gap-4 border-t border-slate-800 pt-3">
+              <div className="grid grid-cols-2 gap-4 border-t border-border pt-3">
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-bold text-slate-450 uppercase">Package Discount (INR)</label>
                   <input
@@ -1640,22 +1640,22 @@ export default function ContactProfilePage() {
                         totalAmount: subtotal - discount + taxAmount
                       });
                     }}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg h-9 px-2.5 text-xs text-white outline-none focus:border-primary/50"
+                    className="w-full bg-background border border-border rounded-lg h-9 px-2.5 text-xs text-foreground outline-none focus:border-primary/50"
                   />
                 </div>
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-bold text-slate-450 uppercase">Grand Total (including 18% GST)</label>
-                  <div className="w-full bg-slate-950 border border-slate-800 rounded-lg h-9 px-2.5 text-xs text-emerald-450 font-bold flex items-center justify-between">
+                  <div className="w-full bg-background border border-border rounded-lg h-9 px-2.5 text-xs text-emerald-450 font-bold flex items-center justify-between">
                     <span>INR {Number(quotationDraftDetails.totalAmount).toLocaleString()}</span>
-                    <span className="text-[9px] text-slate-500 font-mono">(Tax: INR {Number(quotationDraftDetails.taxAmount).toLocaleString()})</span>
+                    <span className="text-[9px] text-muted-foreground font-mono">(Tax: INR {Number(quotationDraftDetails.taxAmount).toLocaleString()})</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Footer */}
-            <div className="p-4 border-t border-slate-800 flex justify-end gap-2 bg-slate-950/40">
-              <Button onClick={() => setEditingQuotationId(null)} variant="ghost" className="text-xs text-slate-400 h-8">Cancel</Button>
+            <div className="p-4 border-t border-border flex justify-end gap-2 bg-muted/50">
+              <Button onClick={() => setEditingQuotationId(null)} variant="ghost" className="text-xs text-muted-foreground h-8">Cancel</Button>
               <Button onClick={handleSaveQuotationEdit} disabled={isSavingQuotation} className="bg-primary hover:bg-primary/90 text-slate-955 text-xs font-bold h-8 px-4 rounded-lg">
                 {isSavingQuotation ? 'Saving...' : 'Save & Issue Quotation'}
               </Button>

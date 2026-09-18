@@ -39,30 +39,30 @@ export default function BookDemoPage() {
         {/* Left Side: Information */}
         <div className="lg:col-span-5 space-y-8 text-left">
           <div className="space-y-4">
-            <Link href="/" className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-white transition-colors">
+            <Link href="/" className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors">
               <ArrowLeft className="h-3 w-3" /> Back to Home
             </Link>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-white leading-tight">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground leading-tight">
               Book a <span className="text-blue-500">Strategy Call</span>
             </h1>
-            <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
+            <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
               Schedule a 30-minute business audit with our automation architects. We'll map out your flows, audit your current setups, and show you how WaCRM can scale your operations.
             </p>
           </div>
 
-          <div className="border-t border-slate-900 pt-6 space-y-6">
+          <div className="border-t border-card pt-6 space-y-6">
             {[
               { icon: <Clock className="h-5 w-5 text-blue-400" />, title: "30-Minute Business Audit", desc: "We'll analyze your current customer acquisition and support channels." },
               { icon: <MessageSquare className="h-5 w-5 text-emerald-400" />, title: "Interactive AI Demo", desc: "We'll show you how the RAG AI chatbot interacts with your website data live." },
               { icon: <Calendar className="h-5 w-5 text-purple-400" />, title: "Custom Automation Roadmap", desc: "We'll map out the exact sequences and integrations needed for your business." },
             ].map((item, idx) => (
               <div key={idx} className="flex gap-4">
-                <div className="shrink-0 p-2.5 h-10 w-10 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center">
+                <div className="shrink-0 p-2.5 h-10 w-10 rounded-lg bg-card border border-border flex items-center justify-center">
                   {item.icon}
                 </div>
                 <div>
-                  <h4 className="text-sm font-semibold text-slate-200">{item.title}</h4>
-                  <p className="text-xs text-slate-500 leading-relaxed mt-0.5">{item.desc}</p>
+                  <h4 className="text-sm font-semibold text-foreground">{item.title}</h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -71,7 +71,7 @@ export default function BookDemoPage() {
 
         {/* Right Side: Form / Success State */}
         <div className="lg:col-span-7">
-          <div className="rounded-3xl border border-slate-900 bg-slate-900/10 p-8 sm:p-10 backdrop-blur-sm relative">
+          <div className="rounded-3xl border border-card bg-card/10 p-8 sm:p-10 backdrop-blur-sm relative">
             <div className="absolute inset-0 bg-blue-600/5 blur-[60px] rounded-full pointer-events-none -z-10" />
 
             {!submitted ? (
@@ -79,7 +79,7 @@ export default function BookDemoPage() {
                 <div className="grid sm:grid-cols-2 gap-6">
                   {/* Full Name */}
                   <div className="space-y-2">
-                    <label htmlFor="name" className="text-xs font-semibold text-slate-400">Full Name</label>
+                    <label htmlFor="name" className="text-xs font-semibold text-muted-foreground">Full Name</label>
                     <input
                       required
                       type="text"
@@ -88,13 +88,13 @@ export default function BookDemoPage() {
                       value={formData.name}
                       onChange={handleInputChange}
                       placeholder="Ashish Kumar"
-                      className="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-slate-200 placeholder-slate-6550 focus:border-blue-500 focus:outline-none transition-colors"
+                      className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground placeholder-slate-6550 focus:border-blue-500 focus:outline-none transition-colors"
                     />
                   </div>
 
                   {/* Business Name */}
                   <div className="space-y-2">
-                    <label htmlFor="businessName" className="text-xs font-semibold text-slate-400">Business Name</label>
+                    <label htmlFor="businessName" className="text-xs font-semibold text-muted-foreground">Business Name</label>
                     <input
                       required
                       type="text"
@@ -103,7 +103,7 @@ export default function BookDemoPage() {
                       value={formData.businessName}
                       onChange={handleInputChange}
                       placeholder="My Enterprise"
-                      className="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-slate-200 placeholder-slate-6550 focus:border-blue-500 focus:outline-none transition-colors"
+                      className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground placeholder-slate-6550 focus:border-blue-500 focus:outline-none transition-colors"
                     />
                   </div>
                 </div>
@@ -111,7 +111,7 @@ export default function BookDemoPage() {
                 <div className="grid sm:grid-cols-2 gap-6">
                   {/* WhatsApp Number */}
                   <div className="space-y-2">
-                    <label htmlFor="phone" className="text-xs font-semibold text-slate-400">WhatsApp Number (with country code)</label>
+                    <label htmlFor="phone" className="text-xs font-semibold text-muted-foreground">WhatsApp Number (with country code)</label>
                     <input
                       required
                       type="tel"
@@ -120,13 +120,13 @@ export default function BookDemoPage() {
                       value={formData.phone}
                       onChange={handleInputChange}
                       placeholder="+91 98765 43210"
-                      className="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-slate-200 placeholder-slate-6550 focus:border-blue-500 focus:outline-none transition-colors"
+                      className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground placeholder-slate-6550 focus:border-blue-500 focus:outline-none transition-colors"
                     />
                   </div>
 
                   {/* Business Email */}
                   <div className="space-y-2">
-                    <label htmlFor="email" className="text-xs font-semibold text-slate-400">Business Email</label>
+                    <label htmlFor="email" className="text-xs font-semibold text-muted-foreground">Business Email</label>
                     <input
                       required
                       type="email"
@@ -135,7 +135,7 @@ export default function BookDemoPage() {
                       value={formData.email}
                       onChange={handleInputChange}
                       placeholder="ashish@business.com"
-                      className="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-slate-200 placeholder-slate-6550 focus:border-blue-500 focus:outline-none transition-colors"
+                      className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground placeholder-slate-6550 focus:border-blue-500 focus:outline-none transition-colors"
                     />
                   </div>
                 </div>
@@ -143,14 +143,14 @@ export default function BookDemoPage() {
                 <div className="grid sm:grid-cols-2 gap-6">
                   {/* Business Model */}
                   <div className="space-y-2">
-                    <label htmlFor="businessModel" className="text-xs font-semibold text-slate-400">Business Model</label>
+                    <label htmlFor="businessModel" className="text-xs font-semibold text-muted-foreground">Business Model</label>
                     <select
                       required
                       id="businessModel"
                       name="businessModel"
                       value={formData.businessModel}
                       onChange={handleInputChange}
-                      className="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-slate-300 focus:border-blue-500 focus:outline-none transition-colors appearance-none"
+                      className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground focus:border-blue-500 focus:outline-none transition-colors appearance-none"
                     >
                       <option value="" disabled>Select business model</option>
                       <option value="d2c">D2C E-commerce</option>
@@ -163,14 +163,14 @@ export default function BookDemoPage() {
 
                   {/* Primary Goal */}
                   <div className="space-y-2">
-                    <label htmlFor="primaryGoal" className="text-xs font-semibold text-slate-400">Primary Goal</label>
+                    <label htmlFor="primaryGoal" className="text-xs font-semibold text-muted-foreground">Primary Goal</label>
                     <select
                       required
                       id="primaryGoal"
                       name="primaryGoal"
                       value={formData.primaryGoal}
                       onChange={handleInputChange}
-                      className="w-full rounded-xl border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-slate-300 focus:border-blue-500 focus:outline-none transition-colors appearance-none"
+                      className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground focus:border-blue-500 focus:outline-none transition-colors appearance-none"
                     >
                       <option value="" disabled>Select primary goal</option>
                       <option value="leads">Lead Generation / Qualification</option>
@@ -185,7 +185,7 @@ export default function BookDemoPage() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full font-semibold text-white bg-blue-600 hover:bg-blue-500 py-4 rounded-xl shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.45)] disabled:opacity-50 transition-all flex items-center justify-center gap-2 group"
+                  className="w-full font-semibold text-foreground bg-blue-600 hover:bg-blue-500 py-4 rounded-xl shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.45)] disabled:opacity-50 transition-all flex items-center justify-center gap-2 group"
                 >
                   {submitting ? (
                     <>
@@ -206,12 +206,12 @@ export default function BookDemoPage() {
                   <CheckCircle2 className="h-8 w-8" />
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-2xl font-bold text-white">Call Requested Successfully!</h3>
-                  <p className="text-sm text-slate-400 max-w-sm leading-relaxed">
-                    Thank you, <span className="text-white font-semibold">{formData.name}</span>. We have received your details for <span className="text-white font-semibold">{formData.businessName}</span>.
+                  <h3 className="text-2xl font-bold text-foreground">Call Requested Successfully!</h3>
+                  <p className="text-sm text-muted-foreground max-w-sm leading-relaxed">
+                    Thank you, <span className="text-foreground font-semibold">{formData.name}</span>. We have received your details for <span className="text-foreground font-semibold">{formData.businessName}</span>.
                   </p>
                 </div>
-                <div className="rounded-xl border border-slate-900 bg-slate-950 p-4 w-full max-w-sm text-xs text-slate-400 leading-relaxed">
+                <div className="rounded-xl border border-card bg-background p-4 w-full max-w-sm text-xs text-muted-foreground leading-relaxed">
                   Our automation architect will reach out to you on WhatsApp at <span className="text-blue-400 font-semibold">{formData.phone}</span> within the next 2 hours to confirm your meeting slot.
                 </div>
                 <Link

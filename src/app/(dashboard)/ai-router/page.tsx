@@ -367,9 +367,9 @@ export default function AiRouterPage() {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center py-24 bg-slate-900/10 border border-slate-800 rounded-xl">
+      <div className="flex flex-col items-center justify-center py-24 bg-card/10 border border-border rounded-xl">
         <Loader2 className="h-10 w-10 animate-spin text-indigo-500 mb-4" />
-        <p className="text-slate-400 text-sm">Fetching AI configuration parameters...</p>
+        <p className="text-muted-foreground text-sm">Fetching AI configuration parameters...</p>
       </div>
     );
   }
@@ -377,12 +377,12 @@ export default function AiRouterPage() {
   return (
     <div className="space-y-8 max-w-4xl mx-auto pb-10 mt-4">
       {/* Header Panel */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-6 relative overflow-hidden">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-border/80 pb-6 relative overflow-hidden">
         <div className="absolute top-0 right-0 h-40 w-40 bg-indigo-500/5 blur-3xl rounded-full -z-10" />
         
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
+            <h1 className="text-2xl font-bold text-foreground tracking-tight flex items-center gap-2">
               Enterprise AI Router
             </h1>
             <span className="flex items-center gap-1 text-[11px] font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">
@@ -390,7 +390,7 @@ export default function AiRouterPage() {
               v2.0 Native Agent
             </span>
           </div>
-          <p className="text-sm text-slate-400 mt-2 max-w-xl leading-relaxed">
+          <p className="text-sm text-muted-foreground mt-2 max-w-xl leading-relaxed">
             Configure your native AI Agent. Enable semantic RAG knowledge lookup, auto-replies, and intelligent confidence-based human handoff.
           </p>
         </div>
@@ -398,19 +398,19 @@ export default function AiRouterPage() {
         {/* Action Quick Navigation Links */}
         <div className="flex items-center gap-2 shrink-0 self-start md:self-center">
           <Link href="/ai-agents">
-            <Button variant="outline" size="sm" className="bg-slate-900 border-slate-800 hover:bg-slate-800 hover:text-white flex items-center gap-1.5 text-xs text-slate-300">
+            <Button variant="outline" size="sm" className="bg-card border-border hover:bg-muted hover:text-foreground flex items-center gap-1.5 text-xs text-foreground">
               <Bot className="h-3.5 w-3.5" />
               AI Agents
             </Button>
           </Link>
           <Link href="/ai-knowledge">
-            <Button variant="outline" size="sm" className="bg-slate-900 border-slate-800 hover:bg-slate-800 hover:text-white flex items-center gap-1.5 text-xs text-slate-300">
+            <Button variant="outline" size="sm" className="bg-card border-border hover:bg-muted hover:text-foreground flex items-center gap-1.5 text-xs text-foreground">
               <BookOpen className="h-3.5 w-3.5" />
               Knowledge Base
             </Button>
           </Link>
           <Link href="/ai-conversations">
-            <Button variant="outline" size="sm" className="bg-slate-900 border-slate-800 hover:bg-slate-800 hover:text-white flex items-center gap-1.5 text-xs text-slate-300">
+            <Button variant="outline" size="sm" className="bg-card border-border hover:bg-muted hover:text-foreground flex items-center gap-1.5 text-xs text-foreground">
               <MessageSquare className="h-3.5 w-3.5" />
               AI Logs
             </Button>
@@ -420,10 +420,10 @@ export default function AiRouterPage() {
 
       {/* Main Core Toggles */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="flex items-center justify-between bg-slate-950/40 border border-slate-800/80 px-5 py-4 rounded-xl shadow-lg">
+        <div className="flex items-center justify-between bg-muted/50 border border-border/80 px-5 py-4 rounded-xl shadow-lg">
           <div className="space-y-0.5">
-            <span className="text-sm font-semibold text-slate-200 block">AI Agent Enabled</span>
-            <span className="text-xs text-slate-500">Run core AI intent and memory modules</span>
+            <span className="text-sm font-semibold text-foreground block">AI Agent Enabled</span>
+            <span className="text-xs text-muted-foreground">Run core AI intent and memory modules</span>
           </div>
           <button
             type="button"
@@ -432,7 +432,7 @@ export default function AiRouterPage() {
             onClick={() => setEnabled(!enabled)}
             className={cn(
               "relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2",
-              enabled ? "bg-indigo-600 shadow-[0_0_10px_rgba(99,102,241,0.4)]" : "bg-slate-700"
+              enabled ? "bg-indigo-600 shadow-[0_0_10px_rgba(99,102,241,0.4)]" : "bg-muted"
             )}
           >
             <span
@@ -445,12 +445,12 @@ export default function AiRouterPage() {
         </div>
 
         <div className={cn(
-          "flex items-center justify-between bg-slate-950/40 border border-slate-800/80 px-5 py-4 rounded-xl shadow-lg transition-all duration-300",
+          "flex items-center justify-between bg-muted/50 border border-border/80 px-5 py-4 rounded-xl shadow-lg transition-all duration-300",
           !enabled && "opacity-40 pointer-events-none"
         )}>
           <div className="space-y-0.5">
-            <span className="text-sm font-semibold text-slate-200 block">WhatsApp Auto-Reply</span>
-            <span className="text-xs text-slate-500">Respond automatically to customer texts</span>
+            <span className="text-sm font-semibold text-foreground block">WhatsApp Auto-Reply</span>
+            <span className="text-xs text-muted-foreground">Respond automatically to customer texts</span>
           </div>
           <button
             type="button"
@@ -460,7 +460,7 @@ export default function AiRouterPage() {
             onClick={() => setAutoReply(!autoReply)}
             className={cn(
               "relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2",
-              autoReply ? "bg-emerald-600 shadow-[0_0_10px_rgba(16,185,129,0.4)]" : "bg-slate-700"
+              autoReply ? "bg-emerald-600 shadow-[0_0_10px_rgba(16,185,129,0.4)]" : "bg-muted"
             )}
           >
             <span
@@ -479,43 +479,43 @@ export default function AiRouterPage() {
       )}>
         
         {/* Provider Settings */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900/40 backdrop-blur-md shadow-xl overflow-hidden">
-          <div className="border-b border-slate-850 bg-slate-950/40 p-4 flex items-center gap-2">
+        <div className="rounded-xl border border-border bg-card/60 backdrop-blur-md shadow-xl overflow-hidden">
+          <div className="border-b border-border bg-muted/50 p-4 flex items-center gap-2">
             <Bot className="h-5 w-5 text-indigo-400" />
-            <h3 className="font-semibold text-white">AI Provider Integration</h3>
+            <h3 className="font-semibold text-foreground">AI Provider Integration</h3>
           </div>
           
           <div className="p-6 space-y-5">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label className="text-slate-300">Active Provider</Label>
+                <Label className="text-foreground">Active Provider</Label>
                 <div className="relative">
                   <select
                     value={aiProvider}
                     onChange={(e) => handleProviderChange(e.target.value)}
-                    className="w-full bg-slate-800 border border-slate-700 text-white rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 appearance-none"
+                    className="w-full bg-muted border border-border text-foreground rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 appearance-none"
                   >
                     {PROVIDERS.map(p => (
                       <option key={p.id} value={p.id}>{p.name}</option>
                     ))}
                   </select>
-                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none" />
+                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
                 </div>
-                <p className="text-[10px] text-slate-500 flex items-center gap-1">
+                <p className="text-[10px] text-muted-foreground flex items-center gap-1">
                   <Info className="h-3 w-3" />
                   Ensure the environment keys are set for your chosen provider.
                 </p>
               </div>
 
               <div className="space-y-2">
-                <Label className="text-slate-300">Model Name</Label>
+                <Label className="text-foreground">Model Name</Label>
                 <Input
                   value={model}
                   onChange={(e) => setModel(e.target.value)}
                   placeholder="e.g. nvidia/llama-3.1-nemotron-70b-instruct"
-                  className="bg-slate-800 border-slate-700 text-white text-sm"
+                  className="bg-muted border-border text-foreground text-sm"
                 />
-                <p className="text-[10px] text-slate-500">
+                <p className="text-[10px] text-muted-foreground">
                   Must be supported by the active provider.
                 </p>
               </div>
@@ -524,43 +524,43 @@ export default function AiRouterPage() {
         </div>
 
         {/* AI Behavior Prompt */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900/40 backdrop-blur-md shadow-xl overflow-hidden">
-          <div className="border-b border-slate-850 bg-slate-950/40 p-4 flex items-center gap-2">
+        <div className="rounded-xl border border-border bg-card/60 backdrop-blur-md shadow-xl overflow-hidden">
+          <div className="border-b border-border bg-muted/50 p-4 flex items-center gap-2">
             <Sliders className="h-5 w-5 text-indigo-400" />
-            <h3 className="font-semibold text-white">Agent Settings & Personality</h3>
+            <h3 className="font-semibold text-foreground">Agent Settings & Personality</h3>
           </div>
           
           <div className="p-6 space-y-6">
             <div className="space-y-2">
-              <Label className="text-slate-300">Base System Prompt</Label>
+              <Label className="text-foreground">Base System Prompt</Label>
               <Textarea
                 value={systemPrompt}
                 onChange={(e) => setSystemPrompt(e.target.value)}
                 rows={4}
                 placeholder="Give details about your company, products, and rules..."
-                className="bg-slate-800 border-slate-700 text-white resize-none text-sm leading-relaxed"
+                className="bg-muted border-border text-foreground resize-none text-sm leading-relaxed"
               />
-              <p className="text-[10px] text-slate-500">
+              <p className="text-[10px] text-muted-foreground">
                 Determines how the AI structures its replies and treats your brand identity.
               </p>
             </div>
 
             <div className="space-y-2">
-              <Label className="text-slate-300">Human Handoff Message</Label>
+              <Label className="text-foreground">Human Handoff Message</Label>
               <Input
                 value={humanHandoffMessage}
                 onChange={(e) => setHumanHandoffMessage(e.target.value)}
                 placeholder="e.g. A human will take over shortly..."
-                className="bg-slate-800 border-slate-700 text-white text-sm"
+                className="bg-muted border-border text-foreground text-sm"
               />
-              <p className="text-[10px] text-slate-500">
+              <p className="text-[10px] text-muted-foreground">
                 Sent to the customer when the AI confidence falls below the threshold or the user asks for a human.
               </p>
             </div>
 
             <div className="space-y-3 pt-2">
               <div className="flex justify-between items-center">
-                <Label className="text-slate-300">Confidence Threshold for Auto-Reply</Label>
+                <Label className="text-foreground">Confidence Threshold for Auto-Reply</Label>
                 <span className="text-xs font-semibold text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded">
                   {(confidenceThreshold * 100).toFixed(0)}%
                 </span>
@@ -573,10 +573,10 @@ export default function AiRouterPage() {
                   step="0.05"
                   value={confidenceThreshold}
                   onChange={(e) => setConfidenceThreshold(parseFloat(e.target.value))}
-                  className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                  className="w-full h-1.5 bg-muted rounded-lg appearance-none cursor-pointer accent-indigo-600"
                 />
               </div>
-              <p className="text-[10px] text-slate-500">
+              <p className="text-[10px] text-muted-foreground">
                 Lower allows more responses but increases hallucination risk. Higher limits replies to high-confidence matches, handing off more chats.
               </p>
             </div>
@@ -584,11 +584,11 @@ export default function AiRouterPage() {
         </div>
 
         {/* AI Prompt Templates Manager */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900/40 backdrop-blur-md shadow-xl overflow-hidden">
-          <div className="border-b border-slate-850 bg-slate-950/40 p-4 flex items-center justify-between">
+        <div className="rounded-xl border border-border bg-card/60 backdrop-blur-md shadow-xl overflow-hidden">
+          <div className="border-b border-border bg-muted/50 p-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <FileText className="h-5 w-5 text-indigo-400" />
-              <h3 className="font-semibold text-white">System Prompt Templates</h3>
+              <h3 className="font-semibold text-foreground">System Prompt Templates</h3>
             </div>
             <Button
               type="button"
@@ -600,7 +600,7 @@ export default function AiRouterPage() {
                 setIsTemplateModalOpen(true);
               }}
               size="sm"
-              className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs gap-1"
+              className="bg-indigo-600 hover:bg-indigo-700 text-foreground font-semibold text-xs gap-1"
             >
               <Plus className="h-3.5 w-3.5" />
               Add Template
@@ -609,12 +609,12 @@ export default function AiRouterPage() {
 
           <div className="p-6">
             {templatesLoading ? (
-              <div className="flex items-center justify-center py-6 text-slate-500 text-xs">
+              <div className="flex items-center justify-center py-6 text-muted-foreground text-xs">
                 <Loader2 className="h-4 w-4 animate-spin mr-2" />
                 Loading saved templates...
               </div>
             ) : templates.length === 0 ? (
-              <div className="text-center py-6 border border-dashed border-slate-800 rounded-lg bg-slate-950/20 text-xs text-slate-400">
+              <div className="text-center py-6 border border-dashed border-border rounded-lg bg-muted/40 text-xs text-muted-foreground">
                 No custom templates created yet. Save your active prompt as a template.
               </div>
             ) : (
@@ -623,13 +623,13 @@ export default function AiRouterPage() {
                   <div
                     key={tmpl.id}
                     className={cn(
-                      "p-4 rounded-xl border bg-slate-950/20 flex flex-col justify-between transition-colors",
-                      tmpl.is_default ? "border-indigo-500/50 bg-indigo-500/5" : "border-slate-850"
+                      "p-4 rounded-xl border bg-muted/40 flex flex-col justify-between transition-colors",
+                      tmpl.is_default ? "border-indigo-500/50 bg-indigo-500/5" : "border-border"
                     )}
                   >
                     <div>
                       <div className="flex items-start justify-between gap-2">
-                        <span className="font-semibold text-slate-200 text-xs truncate max-w-[150px]">
+                        <span className="font-semibold text-foreground text-xs truncate max-w-[150px]">
                           {tmpl.name}
                         </span>
                         {tmpl.is_default ? (
@@ -640,27 +640,27 @@ export default function AiRouterPage() {
                           <button
                             type="button"
                             onClick={() => handleSetActiveTemplate(tmpl)}
-                            className="text-[10px] text-slate-400 hover:text-indigo-400 transition-colors font-semibold"
+                            className="text-[10px] text-muted-foreground hover:text-indigo-400 transition-colors font-semibold"
                           >
                             Set Active
                           </button>
                         )}
                       </div>
-                      <p className="text-[10px] text-slate-500 mt-1 line-clamp-1">
+                      <p className="text-[10px] text-muted-foreground mt-1 line-clamp-1">
                         {tmpl.description || "No description"}
                       </p>
-                      <p className="text-[10px] text-slate-400 mt-2 line-clamp-3 font-mono bg-slate-950/40 p-2 rounded border border-slate-850">
+                      <p className="text-[10px] text-muted-foreground mt-2 line-clamp-3 font-mono bg-muted/50 p-2 rounded border border-border">
                         {tmpl.content}
                       </p>
                     </div>
 
-                    <div className="flex justify-end gap-2 mt-4 pt-3 border-t border-slate-850/60">
+                    <div className="flex justify-end gap-2 mt-4 pt-3 border-t border-border/60">
                       <Button
                         type="button"
                         variant="ghost"
                         size="icon"
                         onClick={() => handleOpenEditTemplate(tmpl)}
-                        className="h-7 w-7 text-slate-400 hover:text-white"
+                        className="h-7 w-7 text-muted-foreground hover:text-foreground"
                       >
                         <Edit2 className="h-3.5 w-3.5" />
                       </Button>
@@ -682,49 +682,49 @@ export default function AiRouterPage() {
         </div>
 
         {/* Legacy external connection section */}
-        <div className="rounded-xl border border-slate-800 bg-slate-950/20 shadow-lg overflow-hidden">
+        <div className="rounded-xl border border-border bg-muted/40 shadow-lg overflow-hidden">
           <button 
             type="button" 
             onClick={() => setShowLegacy(!showLegacy)}
-            className="w-full flex items-center justify-between p-4 bg-slate-950/40 text-left text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-900/40 transition-colors"
+            className="w-full flex items-center justify-between p-4 bg-muted/50 text-left text-xs font-semibold text-muted-foreground hover:text-foreground hover:bg-card/60 transition-colors"
           >
             <span className="flex items-center gap-1.5">
-              <Network className="h-4 w-4 text-slate-500" />
+              <Network className="h-4 w-4 text-muted-foreground" />
               Legacy External Router Settings
             </span>
-            <ChevronDown className={cn("h-4 w-4 text-slate-500 transition-transform duration-200", showLegacy && "transform rotate-180")} />
+            <ChevronDown className={cn("h-4 w-4 text-muted-foreground transition-transform duration-200", showLegacy && "transform rotate-180")} />
           </button>
           
           {showLegacy && (
-            <div className="p-5 border-t border-slate-850 space-y-4 bg-slate-950/30">
-              <p className="text-[11px] text-slate-400 leading-relaxed">
+            <div className="p-5 border-t border-border space-y-4 bg-background/30">
+              <p className="text-[11px] text-muted-foreground leading-relaxed">
                 If you connect an external webhook router, WaCRM will POST incoming messages to your external server rather than running the native provider models configured above.
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <Label className="text-[11px] text-slate-300">API Endpoint URL</Label>
+                  <Label className="text-[11px] text-foreground">API Endpoint URL</Label>
                   <div className="relative">
-                    <LinkIcon className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-500" />
+                    <LinkIcon className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
                     <Input
                       value={endpoint}
                       onChange={(e) => setEndpoint(e.target.value)}
                       placeholder="https://api.yourdomain.com/v1/chat"
-                      className="pl-8 bg-slate-800/80 border-slate-700 text-white font-mono text-xs focus-visible:ring-indigo-500/30"
+                      className="pl-8 bg-muted/80 border-border text-foreground font-mono text-xs focus-visible:ring-indigo-500/30"
                     />
                   </div>
                 </div>
                 
                 <div className="space-y-1">
-                  <Label className="text-[11px] text-slate-300">API Authentication Token</Label>
+                  <Label className="text-[11px] text-foreground">API Authentication Token</Label>
                   <div className="relative">
-                    <Key className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-500" />
+                    <Key className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
                     <Input
                       type="password"
                       value={apiKey}
                       onChange={(e) => setApiKey(e.target.value)}
                       placeholder="Token string"
-                      className="pl-8 bg-slate-800/80 border-slate-700 text-white font-mono text-xs focus-visible:ring-indigo-500/30"
+                      className="pl-8 bg-muted/80 border-border text-foreground font-mono text-xs focus-visible:ring-indigo-500/30"
                     />
                   </div>
                 </div>
@@ -735,9 +735,9 @@ export default function AiRouterPage() {
       </div>
 
       {/* Save Trigger Button */}
-      <div className="flex justify-between items-center pt-4 border-t border-slate-800/40">
+      <div className="flex justify-between items-center pt-4 border-t border-border/40">
         {/* Database Connection indicator */}
-        <div className="flex items-center gap-1.5 text-[11px] text-slate-500">
+        <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
           {dbMode === "supabase" ? (
             <>
               <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
@@ -754,7 +754,7 @@ export default function AiRouterPage() {
         <Button 
           onClick={handleSave} 
           disabled={saving} 
-          className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-8 shadow-lg shadow-indigo-900/10"
+          className="bg-indigo-600 hover:bg-indigo-700 text-foreground font-semibold px-8 shadow-lg shadow-indigo-900/10"
         >
           {saving ? (
             <>
@@ -769,49 +769,49 @@ export default function AiRouterPage() {
 
       {/* Prompt Template Modal */}
       {isTemplateModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
-          <div className="w-full max-w-lg border border-slate-800 bg-slate-900 text-white rounded-xl overflow-hidden shadow-2xl animate-in fade-in-50 zoom-in-95">
-            <div className="flex items-center justify-between border-b border-slate-800 px-6 py-4 bg-slate-950/20">
-              <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm p-4">
+          <div className="w-full max-w-lg border border-border bg-card text-foreground rounded-xl overflow-hidden shadow-2xl animate-in fade-in-50 zoom-in-95">
+            <div className="flex items-center justify-between border-b border-border px-6 py-4 bg-muted/40">
+              <h3 className="text-sm font-bold text-foreground flex items-center gap-1.5">
                 <FileText className="h-4.5 w-4.5 text-indigo-400" />
                 {editingTemplate ? "Edit Prompt Template" : "Create Prompt Template"}
               </h3>
               <button
                 type="button"
                 onClick={() => setIsTemplateModalOpen(false)}
-                className="text-slate-400 hover:text-white"
+                className="text-muted-foreground hover:text-foreground"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
             <form onSubmit={handleSaveTemplate} className="p-6 space-y-4">
               <div className="space-y-1">
-                <Label htmlFor="template-name" className="text-xs text-slate-400">Template Name</Label>
+                <Label htmlFor="template-name" className="text-xs text-muted-foreground">Template Name</Label>
                 <Input
                   id="template-name"
                   placeholder="e.g. FAQ Support Assistant"
                   value={templateName}
                   onChange={(e) => setTemplateName(e.target.value)}
-                  className="bg-slate-950 border-slate-800 text-white placeholder:text-slate-600"
+                  className="bg-background border-border text-foreground placeholder:text-muted-foreground"
                   required
                 />
               </div>
 
               <div className="space-y-1">
-                <Label htmlFor="template-desc" className="text-xs text-slate-400">Description</Label>
+                <Label htmlFor="template-desc" className="text-xs text-muted-foreground">Description</Label>
                 <Input
                   id="template-desc"
                   placeholder="e.g. Used for routing general inquiries"
                   value={templateDesc}
                   onChange={(e) => setTemplateDesc(e.target.value)}
-                  className="bg-slate-950 border-slate-800 text-white placeholder:text-slate-600"
+                  className="bg-background border-border text-foreground placeholder:text-muted-foreground"
                 />
               </div>
 
               <div className="space-y-1">
                 <div className="flex justify-between items-center">
-                  <Label htmlFor="template-content" className="text-xs text-slate-400">System Instructions (Prompt)</Label>
-                  <span className="text-[10px] text-slate-500">Supports variable interpolation</span>
+                  <Label htmlFor="template-content" className="text-xs text-muted-foreground">System Instructions (Prompt)</Label>
+                  <span className="text-[10px] text-muted-foreground">Supports variable interpolation</span>
                 </div>
                 <Textarea
                   id="template-content"
@@ -819,7 +819,7 @@ export default function AiRouterPage() {
                   placeholder="Act as a sales agent... You can use variables like {{company_name}} and {{agent_name}}."
                   value={templateContent}
                   onChange={(e) => setTemplateContent(e.target.value)}
-                  className="bg-slate-950 border-slate-800 text-white resize-none text-xs leading-relaxed"
+                  className="bg-background border-border text-foreground resize-none text-xs leading-relaxed"
                   required
                 />
                 <div className="flex flex-wrap gap-1.5 pt-1.5">
@@ -828,7 +828,7 @@ export default function AiRouterPage() {
                       key={placeholder}
                       type="button"
                       onClick={() => setTemplateContent(prev => prev + placeholder)}
-                      className="text-[9px] bg-slate-800 hover:bg-slate-750 text-slate-300 font-mono px-2 py-0.5 rounded border border-slate-700/60"
+                      className="text-[9px] bg-muted hover:bg-accent text-foreground font-mono px-2 py-0.5 rounded border border-border/60"
                     >
                       {placeholder}
                     </button>
@@ -836,18 +836,18 @@ export default function AiRouterPage() {
                 </div>
               </div>
 
-              <div className="flex gap-2 justify-end pt-4 border-t border-slate-800">
+              <div className="flex gap-2 justify-end pt-4 border-t border-border">
                 <Button
                   type="button"
                   variant="outline"
                   onClick={() => setIsTemplateModalOpen(false)}
-                  className="border-slate-800 bg-slate-950 text-slate-400 hover:text-white text-xs h-9 px-3"
+                  className="border-border bg-background text-muted-foreground hover:text-foreground text-xs h-9 px-3"
                 >
                   Cancel
                 </Button>
                 <Button
                   type="submit"
-                  className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs h-9 px-4 font-semibold"
+                  className="bg-indigo-600 hover:bg-indigo-700 text-foreground text-xs h-9 px-4 font-semibold"
                 >
                   {editingTemplate ? "Save Changes" : "Create Template"}
                 </Button>

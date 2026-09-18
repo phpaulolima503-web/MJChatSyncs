@@ -165,13 +165,13 @@ export function NewConversationModal({
   return (
     <>
       <Dialog open={open && step === "contact"} onOpenChange={handleClose}>
-        <DialogContent className="border-slate-700 bg-slate-900 sm:max-w-md">
+        <DialogContent className="border-border bg-card sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-white">
+            <DialogTitle className="flex items-center gap-2 text-foreground">
               <MessageSquarePlus className="h-4 w-4 text-primary" />
               Nova Conversa
             </DialogTitle>
-            <DialogDescription className="text-slate-400">
+            <DialogDescription className="text-muted-foreground">
               A Meta exige um modelo aprovado para iniciar uma conversa com
               um contato novo. No próximo passo você escolhe o modelo.
             </DialogDescription>
@@ -179,25 +179,25 @@ export function NewConversationModal({
 
           <div className="space-y-4 py-2">
             <div className="space-y-2">
-              <Label className="text-slate-300">Número de telefone</Label>
+              <Label className="text-foreground">Número de telefone</Label>
               <Input
                 placeholder="+55 11 99999-9999"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="border-slate-700 bg-slate-800 text-white placeholder:text-slate-500"
+                className="border-border bg-muted text-foreground placeholder:text-muted-foreground"
               />
-              <p className="text-[11px] text-slate-500">
+              <p className="text-[11px] text-muted-foreground">
                 Inclua o código do país (ex: 55 para Brasil).
               </p>
             </div>
 
             <div className="space-y-2">
-              <Label className="text-slate-300">Nome do contato (opcional)</Label>
+              <Label className="text-foreground">Nome do contato (opcional)</Label>
               <Input
                 placeholder="Ex: João Silva"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="border-slate-700 bg-slate-800 text-white placeholder:text-slate-500"
+                className="border-border bg-muted text-foreground placeholder:text-muted-foreground"
               />
             </div>
           </div>
@@ -206,7 +206,7 @@ export function NewConversationModal({
             <Button
               variant="outline"
               onClick={() => handleClose(false)}
-              className="border-slate-700 text-slate-300 hover:bg-slate-800"
+              className="border-border text-foreground hover:bg-muted"
             >
               Cancelar
             </Button>
@@ -231,10 +231,10 @@ export function NewConversationModal({
 
       {submitting && (
         <Dialog open onOpenChange={() => {}}>
-          <DialogContent className="border-slate-700 bg-slate-900 sm:max-w-xs">
+          <DialogContent className="border-border bg-card sm:max-w-xs">
             <div className="flex flex-col items-center gap-3 py-6">
               <Loader2 className="h-6 w-6 animate-spin text-primary" />
-              <p className="text-sm text-slate-300">Enviando modelo e criando a conversa...</p>
+              <p className="text-sm text-foreground">Enviando modelo e criando a conversa...</p>
             </div>
           </DialogContent>
         </Dialog>

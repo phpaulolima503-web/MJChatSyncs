@@ -146,8 +146,8 @@ export function FollowUpEngine({
         type: 'no_response',
         title: 'Gentle Nudge Check-in',
         description: 'Keep client warm. Draft a helpful, low-friction check-in message asking if they need any technical assistance.',
-        icon: <MessageSquare className="size-4 text-slate-400" />,
-        badgeColor: 'bg-slate-800 text-slate-400 border-slate-700',
+        icon: <MessageSquare className="size-4 text-muted-foreground" />,
+        badgeColor: 'bg-muted text-muted-foreground border-border',
         urgency: 'low',
       });
     }
@@ -193,14 +193,14 @@ export function FollowUpEngine({
   };
 
   return (
-    <div className="bg-slate-950 border border-slate-850 rounded-2xl p-5 shadow-xl space-y-4">
+    <div className="bg-background border border-border rounded-2xl p-5 shadow-xl space-y-4">
       <div className="flex items-center gap-2">
         <div className="p-1.5 bg-indigo-950/20 border border-indigo-500/25 rounded-xl">
           <Bell className="size-4 text-indigo-400" />
         </div>
         <div>
-          <h3 className="text-xs font-bold text-slate-200 tracking-wide uppercase">AI Follow-up Automation</h3>
-          <p className="text-[10px] text-slate-500 leading-none">Contextual trigger alerts & auto-drafting</p>
+          <h3 className="text-xs font-bold text-foreground tracking-wide uppercase">AI Follow-up Automation</h3>
+          <p className="text-[10px] text-muted-foreground leading-none">Contextual trigger alerts & auto-drafting</p>
         </div>
       </div>
 
@@ -214,21 +214,21 @@ export function FollowUpEngine({
           return (
             <div
               key={trigger.id}
-              className="bg-slate-900/15 border border-slate-850 p-4 rounded-xl space-y-3 hover:bg-slate-900/30 transition-all animate-in fade-in-40 duration-200"
+              className="bg-card/15 border border-border p-4 rounded-xl space-y-3 hover:bg-card/30 transition-all animate-in fade-in-40 duration-200"
             >
               <div className="flex items-start justify-between gap-1.5">
                 <div className="flex items-start gap-2.5">
-                  <div className="p-2 bg-slate-950 border border-slate-800 rounded-lg shrink-0 mt-0.5">
+                  <div className="p-2 bg-background border border-border rounded-lg shrink-0 mt-0.5">
                     {trigger.icon}
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-slate-200 leading-tight flex items-center gap-2">
+                    <h4 className="text-xs font-bold text-foreground leading-tight flex items-center gap-2">
                       {trigger.title}
                       <Badge className={cn('text-[8px] font-bold tracking-wider uppercase px-1.5 border leading-none', trigger.badgeColor)}>
                         {trigger.urgency}
                       </Badge>
                     </h4>
-                    <p className="text-[11px] text-slate-400 leading-relaxed mt-0.5">{trigger.description}</p>
+                    <p className="text-[11px] text-muted-foreground leading-relaxed mt-0.5">{trigger.description}</p>
                   </div>
                 </div>
               </div>
@@ -240,13 +240,13 @@ export function FollowUpEngine({
                     value={draftText}
                     onChange={e => setDraftedTexts(prev => ({ ...prev, [trigger.id]: e.target.value }))}
                     rows={4}
-                    className="w-full bg-slate-950 border border-slate-850 rounded-lg p-3 text-[11px] font-mono text-slate-300 leading-relaxed focus:outline-none focus:border-primary resize-none"
+                    className="w-full bg-background border border-border rounded-lg p-3 text-[11px] font-mono text-foreground leading-relaxed focus:outline-none focus:border-primary resize-none"
                   />
                   <div className="flex items-center gap-2">
                     <Button
                       size="sm"
                       onClick={() => handleCopy(draftText, trigger.id)}
-                      className="bg-slate-900 hover:bg-slate-850 text-white text-[10px] font-bold h-7 rounded-lg flex items-center gap-1 border border-slate-800"
+                      className="bg-card hover:bg-muted text-foreground text-[10px] font-bold h-7 rounded-lg flex items-center gap-1 border border-border"
                     >
                       {isCopied ? (
                         <>
@@ -255,7 +255,7 @@ export function FollowUpEngine({
                         </>
                       ) : (
                         <>
-                          <Copy className="size-3 text-slate-400" />
+                          <Copy className="size-3 text-muted-foreground" />
                           Copy Copy
                         </>
                       )}
@@ -263,7 +263,7 @@ export function FollowUpEngine({
                     <Button
                       size="sm"
                       onClick={() => handleSendWhatsApp(draftText)}
-                      className="bg-emerald-650 hover:bg-emerald-600 text-white text-[10px] font-bold h-7 rounded-lg flex items-center gap-1 shadow-lg shadow-emerald-950/20"
+                      className="bg-emerald-650 hover:bg-emerald-600 text-foreground text-[10px] font-bold h-7 rounded-lg flex items-center gap-1 shadow-lg shadow-emerald-950/20"
                     >
                       <Send className="size-3" />
                       Send WhatsApp

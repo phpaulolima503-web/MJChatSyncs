@@ -193,7 +193,7 @@ export function GlobalSearchModal({ isOpen, onOpenChange }: GlobalSearchModalPro
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center bg-slate-950/85 backdrop-blur-sm p-4 pt-[12vh]">
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-background/85 backdrop-blur-sm p-4 pt-[12vh]">
       {/* Backdrop click closer */}
       <div className="fixed inset-0" onClick={() => onOpenChange(false)} />
 
@@ -201,23 +201,23 @@ export function GlobalSearchModal({ isOpen, onOpenChange }: GlobalSearchModalPro
       <div
         ref={modalRef}
         onKeyDown={handleListKeyDown}
-        className="relative w-full max-w-xl rounded-2xl border border-slate-800 bg-slate-900/95 shadow-2xl overflow-hidden flex flex-col max-h-[70vh] animate-in fade-in-50 zoom-in-95 duration-150"
+        className="relative w-full max-w-xl rounded-2xl border border-border bg-card/95 shadow-2xl overflow-hidden flex flex-col max-h-[70vh] animate-in fade-in-50 zoom-in-95 duration-150"
       >
         {/* Input Bar */}
-        <div className="flex items-center gap-3 border-b border-slate-800 px-4 py-3.5 bg-slate-950/20">
-          <Search className="size-5 text-slate-500 shrink-0" />
+        <div className="flex items-center gap-3 border-b border-border px-4 py-3.5 bg-muted/40">
+          <Search className="size-5 text-muted-foreground shrink-0" />
           <input
             ref={inputRef}
             type="text"
             placeholder="Type to search contacts, chats, billing invoices, tasks..."
             value={query}
             onChange={e => setQuery(e.target.value)}
-            className="w-full bg-transparent text-sm text-white placeholder-slate-550 outline-none border-0 focus:ring-0"
+            className="w-full bg-transparent text-sm text-foreground placeholder-slate-550 outline-none border-0 focus:ring-0"
           />
           {searching ? (
             <Loader2 className="size-4 animate-spin text-primary shrink-0" />
           ) : (
-            <kbd className="hidden sm:flex h-5 items-center gap-0.5 rounded border border-slate-800 bg-slate-950 px-1.5 font-mono text-[9px] font-bold text-slate-500 shrink-0">
+            <kbd className="hidden sm:flex h-5 items-center gap-0.5 rounded border border-border bg-background px-1.5 font-mono text-[9px] font-bold text-muted-foreground shrink-0">
               <Command className="h-2.5 w-2.5" />
               <span>K</span>
             </kbd>
@@ -225,7 +225,7 @@ export function GlobalSearchModal({ isOpen, onOpenChange }: GlobalSearchModalPro
           <button
             type="button"
             onClick={() => onOpenChange(false)}
-            className="text-slate-550 hover:text-white shrink-0 outline-none"
+            className="text-slate-550 hover:text-foreground shrink-0 outline-none"
           >
             <X className="size-4.5" />
           </button>
@@ -234,10 +234,10 @@ export function GlobalSearchModal({ isOpen, onOpenChange }: GlobalSearchModalPro
         {/* Results Pane */}
         <div className="flex-1 overflow-y-auto p-2 scrollbar-thin">
           {query.trim() === '' ? (
-            <div className="text-center py-10 text-slate-500 text-xs space-y-2">
-              <Command className="size-6 text-slate-700 mx-auto" />
-              <p className="font-bold text-slate-400">Enterprise AI Omni-Search</p>
-              <p className="text-[10px] text-slate-600">Search for customers, billing data, private discussions or action tasks.</p>
+            <div className="text-center py-10 text-muted-foreground text-xs space-y-2">
+              <Command className="size-6 text-muted-foreground mx-auto" />
+              <p className="font-bold text-muted-foreground">Enterprise AI Omni-Search</p>
+              <p className="text-[10px] text-muted-foreground">Search for customers, billing data, private discussions or action tasks.</p>
             </div>
           ) : flatResults.length === 0 && !searching ? (
             <div className="text-center py-10 text-slate-550 text-xs">
@@ -256,8 +256,8 @@ export function GlobalSearchModal({ isOpen, onOpenChange }: GlobalSearchModalPro
                     className={cn(
                       'w-full flex items-start gap-3 text-left px-3.5 py-3 rounded-xl transition-all cursor-pointer border border-transparent',
                       isActive
-                        ? 'bg-slate-800/80 border-slate-700/50'
-                        : 'hover:bg-slate-800/30'
+                        ? 'bg-muted/80 border-border/50'
+                        : 'hover:bg-muted/30'
                     )}
                   >
                     {/* Bullet icon by category */}
@@ -278,11 +278,11 @@ export function GlobalSearchModal({ isOpen, onOpenChange }: GlobalSearchModalPro
                       <div className="flex items-center justify-between">
                         <p className={cn(
                           'text-xs font-bold truncate',
-                          isActive ? 'text-primary' : 'text-white'
+                          isActive ? 'text-primary' : 'text-foreground'
                         )}>
                           {item.title}
                         </p>
-                        <span className="text-[9px] uppercase font-extrabold text-slate-500 tracking-wider font-mono">
+                        <span className="text-[9px] uppercase font-extrabold text-muted-foreground tracking-wider font-mono">
                           {item.type}
                         </span>
                       </div>
@@ -298,7 +298,7 @@ export function GlobalSearchModal({ isOpen, onOpenChange }: GlobalSearchModalPro
         </div>
 
         {/* Footer Navigation Hints */}
-        <div className="border-t border-slate-800 px-4 py-2 bg-slate-950/50 flex items-center justify-between text-[10px] text-slate-650 font-semibold font-sans">
+        <div className="border-t border-border px-4 py-2 bg-background/50 flex items-center justify-between text-[10px] text-slate-650 font-semibold font-sans">
           <div className="flex items-center gap-3">
             <span>↑↓ to navigate</span>
             <span>↵ to open</span>

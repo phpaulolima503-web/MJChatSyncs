@@ -10,16 +10,16 @@ export default function SupportTicketPage() {
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
           <Ticket className="h-6 w-6 text-primary" />
           Submit a Support Ticket
         </h1>
-        <p className="text-sm text-slate-400 mt-1">
+        <p className="text-sm text-muted-foreground mt-1">
           Describe your issue below and our support team will get back to you.
         </p>
       </div>
 
-      <Card className="border-slate-800 bg-slate-900/50">
+      <Card className="border-border bg-card/70">
         <CardHeader>
           <CardTitle>Issue Details</CardTitle>
           <CardDescription>
@@ -28,17 +28,17 @@ export default function SupportTicketPage() {
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-200">Subject</label>
+            <label className="text-sm font-medium text-foreground">Subject</label>
             <Input 
               placeholder="Brief summary of the issue" 
-              className="bg-slate-950 border-slate-800"
+              className="bg-background border-border"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-200">Category</label>
-              <select className="flex h-10 w-full items-center justify-between rounded-md border border-slate-800 bg-slate-950 px-3 py-2 text-sm text-slate-300 outline-none focus:ring-1 focus:ring-primary/50">
+              <label className="text-sm font-medium text-foreground">Category</label>
+              <select className="flex h-10 w-full items-center justify-between rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground outline-none focus:ring-1 focus:ring-primary/50">
                 <option>Technical Issue (Bugs)</option>
                 <option>API & Integrations</option>
                 <option>WhatsApp Setup</option>
@@ -46,8 +46,8 @@ export default function SupportTicketPage() {
               </select>
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-200">Priority</label>
-              <select className="flex h-10 w-full items-center justify-between rounded-md border border-slate-800 bg-slate-950 px-3 py-2 text-sm text-slate-300 outline-none focus:ring-1 focus:ring-primary/50">
+              <label className="text-sm font-medium text-foreground">Priority</label>
+              <select className="flex h-10 w-full items-center justify-between rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground outline-none focus:ring-1 focus:ring-primary/50">
                 <option>Low (General Query)</option>
                 <option>Normal</option>
                 <option>High (Impacting workflow)</option>
@@ -57,28 +57,28 @@ export default function SupportTicketPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-200">Description</label>
+            <label className="text-sm font-medium text-foreground">Description</label>
             <Textarea 
               placeholder="Please describe what you were trying to do and what went wrong..."
-              className="min-h-[150px] bg-slate-950 border-slate-800"
+              className="min-h-[150px] bg-background border-border"
             />
           </div>
 
           <div className="pt-2">
-            <div className="border-2 border-dashed border-slate-800 rounded-lg p-6 flex flex-col items-center justify-center text-center bg-slate-950 hover:bg-slate-900 transition-colors cursor-pointer">
-              <Paperclip className="h-8 w-8 text-slate-500 mb-2" />
-              <p className="text-sm font-medium text-slate-300">Attach screenshots or logs</p>
-              <p className="text-xs text-slate-500 mt-1">Drag and drop files here or click to browse</p>
+            <div className="border-2 border-dashed border-border rounded-lg p-6 flex flex-col items-center justify-center text-center bg-background hover:bg-card transition-colors cursor-pointer">
+              <Paperclip className="h-8 w-8 text-muted-foreground mb-2" />
+              <p className="text-sm font-medium text-foreground">Attach screenshots or logs</p>
+              <p className="text-xs text-muted-foreground mt-1">Drag and drop files here or click to browse</p>
             </div>
           </div>
         </CardContent>
-        <CardFooter className="flex justify-between border-t border-slate-800 pt-6">
-          <div className="flex items-center gap-2 text-xs text-slate-500">
+        <CardFooter className="flex justify-between border-t border-border pt-6">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <AlertCircle className="h-4 w-4" />
             Typical response time: 24-48 hours
           </div>
           <div className="flex gap-3">
-            <Button variant="outline" className="border-slate-700 text-slate-300">
+            <Button variant="outline" className="border-border text-foreground">
               Cancel
             </Button>
             <Button className="gap-2">

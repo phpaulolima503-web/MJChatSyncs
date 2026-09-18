@@ -138,11 +138,11 @@ export function QuickRepliesManager() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-slate-800 bg-slate-900/50 p-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-border bg-card/70 p-6">
         <div>
-          <h2 className="text-lg font-semibold text-white">Quick Replies</h2>
-          <p className="text-sm text-slate-400 mt-1">
-            Create canned responses to reply faster. Type <kbd className="px-1 py-0.5 bg-slate-800 rounded font-mono text-xs">/shortcut</kbd> in the chat input.
+          <h2 className="text-lg font-semibold text-foreground">Quick Replies</h2>
+          <p className="text-sm text-muted-foreground mt-1">
+            Create canned responses to reply faster. Type <kbd className="px-1 py-0.5 bg-muted rounded font-mono text-xs">/shortcut</kbd> in the chat input.
           </p>
         </div>
         <Button
@@ -155,14 +155,14 @@ export function QuickRepliesManager() {
       </div>
 
       {/* Category Filter Tabs */}
-      <div className="flex overflow-x-auto gap-1 border-b border-slate-800 pb-2 scrollbar-none">
+      <div className="flex overflow-x-auto gap-1 border-b border-border pb-2 scrollbar-none">
         <button
           onClick={() => setSelectedCategoryFilter("all")}
           className={cn(
             "h-8 shrink-0 px-3.5 text-xs font-semibold rounded-lg transition-all",
             selectedCategoryFilter === "all"
-              ? "bg-slate-800 text-white shadow-sm ring-1 ring-slate-700"
-              : "text-slate-400 hover:text-white"
+              ? "bg-muted text-foreground shadow-sm ring-1 ring-border"
+              : "text-muted-foreground hover:text-foreground"
           )}
         >
           All Categories
@@ -174,8 +174,8 @@ export function QuickRepliesManager() {
             className={cn(
               "h-8 shrink-0 px-3.5 text-xs font-semibold rounded-lg transition-all",
               selectedCategoryFilter === cat.value
-                ? "bg-slate-800 text-white shadow-sm ring-1 ring-slate-700"
-                : "text-slate-450 hover:text-white"
+                ? "bg-muted text-foreground shadow-sm ring-1 ring-border"
+                : "text-slate-450 hover:text-foreground"
             )}
           >
             {cat.label}
@@ -184,81 +184,81 @@ export function QuickRepliesManager() {
       </div>
 
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
           placeholder="Search shortcuts or messages..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-9 bg-slate-900 border-slate-800 text-white"
+          className="pl-9 bg-card border-border text-foreground"
         />
       </div>
 
       {loading ? (
         <div className="space-y-3">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-20 animate-pulse rounded-xl bg-slate-800" />
+            <div key={i} className="h-20 animate-pulse rounded-xl bg-muted" />
           ))}
         </div>
       ) : filteredReplies.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-16 rounded-xl border border-dashed border-slate-800 bg-slate-900/20">
-          <MessageSquareDashed className="h-10 w-10 text-slate-600 mb-4" />
-          <p className="text-sm font-medium text-white">No quick replies found</p>
-          <p className="text-xs text-slate-500 mt-1 mb-4">Create your first canned response to save time.</p>
-          <Button variant="outline" onClick={() => handleOpenDialog()} className="border-slate-700">
+        <div className="flex flex-col items-center justify-center py-16 rounded-xl border border-dashed border-border bg-card/20">
+          <MessageSquareDashed className="h-10 w-10 text-muted-foreground mb-4" />
+          <p className="text-sm font-medium text-foreground">No quick replies found</p>
+          <p className="text-xs text-muted-foreground mt-1 mb-4">Create your first canned response to save time.</p>
+          <Button variant="outline" onClick={() => handleOpenDialog()} className="border-border">
             Create Quick Reply
           </Button>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {filteredReplies.map((reply) => (
-            <div key={reply.id} className="flex flex-col rounded-xl border border-slate-800 bg-slate-900 p-5 group hover:border-slate-700 transition-colors">
+            <div key={reply.id} className="flex flex-col rounded-xl border border-border bg-card p-5 group hover:border-border transition-colors">
                 <div className="flex items-start justify-between gap-4 mb-3">
                   <div className="flex flex-wrap gap-2 items-center">
-                    <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-slate-800 border border-slate-700 text-xs font-mono font-semibold text-primary">
+                    <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-muted border border-border text-xs font-mono font-semibold text-primary">
                       {reply.shortcut}
                     </span>
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-slate-800 border border-slate-700 text-[10px] font-semibold text-slate-400 capitalize">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-muted border border-border text-[10px] font-semibold text-muted-foreground capitalize">
                       {reply.category || "general"}
                     </span>
                   </div>
                   <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-white" onClick={() => handleOpenDialog(reply)}>
+                    <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground" onClick={() => handleOpenDialog(reply)}>
                       <Pencil className="h-3.5 w-3.5" />
                     </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-red-400 hover:bg-red-400/10" onClick={() => handleDelete(reply.id)}>
+                    <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-red-400 hover:bg-red-400/10" onClick={() => handleDelete(reply.id)}>
                       <Trash2 className="h-3.5 w-3.5" />
                     </Button>
                   </div>
                 </div>
-                <p className="text-sm text-slate-300 line-clamp-3">{reply.message_text}</p>
+                <p className="text-sm text-foreground line-clamp-3">{reply.message_text}</p>
               </div>
           ))}
         </div>
       )}
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="sm:max-w-md bg-slate-900 border-slate-700">
+        <DialogContent className="sm:max-w-md bg-card border-border">
           <DialogHeader>
-            <DialogTitle className="text-white">
+            <DialogTitle className="text-foreground">
               {editingId ? "Edit Quick Reply" : "New Quick Reply"}
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label className="text-slate-300">Shortcut</Label>
+              <Label className="text-foreground">Shortcut</Label>
               <Input
                 value={shortcut}
                 onChange={(e) => setShortcut(e.target.value)}
                 placeholder="/hello"
-                className="bg-slate-800 border-slate-700 text-white font-mono"
+                className="bg-muted border-border text-foreground font-mono"
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-slate-300">Category</Label>
+              <Label className="text-foreground">Category</Label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full h-10 px-3 rounded-lg border border-slate-700 bg-slate-800 text-white text-sm focus:border-primary focus:outline-none"
+                className="w-full h-10 px-3 rounded-lg border border-border bg-muted text-foreground text-sm focus:border-primary focus:outline-none"
               >
                 {CATEGORIES.map((cat) => (
                   <option key={cat.value} value={cat.value}>
@@ -268,17 +268,17 @@ export function QuickRepliesManager() {
               </select>
             </div>
             <div className="space-y-2">
-              <Label className="text-slate-300">Message Content</Label>
+              <Label className="text-foreground">Message Content</Label>
               <Textarea
                 value={messageText}
                 onChange={(e) => setMessageText(e.target.value)}
                 placeholder="Hi there! How can we help you today?"
-                className="bg-slate-800 border-slate-700 text-white min-h-[120px]"
+                className="bg-muted border-border text-foreground min-h-[120px]"
               />
             </div>
           </div>
-          <DialogFooter className="bg-slate-900/50 border-slate-700">
-            <Button variant="outline" onClick={() => setDialogOpen(false)} className="border-slate-700 text-slate-300">
+          <DialogFooter className="bg-card/70 border-border">
+            <Button variant="outline" onClick={() => setDialogOpen(false)} className="border-border text-foreground">
               Cancel
             </Button>
             <Button onClick={handleSave} disabled={saving} className="bg-primary text-primary-foreground">

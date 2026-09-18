@@ -23,10 +23,10 @@ export default async function KnowledgePage() {
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-100">Knowledge Base</h1>
-          <p className="text-sm text-slate-500 mt-1">AI-powered articles and contact memory system</p>
+          <h1 className="text-2xl font-bold text-foreground">Knowledge Base</h1>
+          <p className="text-sm text-muted-foreground mt-1">AI-powered articles and contact memory system</p>
         </div>
-        <Link href="/knowledge/new" className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90">
+        <Link href="/knowledge/new" className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-foreground hover:bg-primary/90">
           <Plus className="h-4 w-4" /> New Article
         </Link>
       </div>
@@ -39,41 +39,41 @@ export default async function KnowledgePage() {
           { label: 'Categories', value: categories?.length ?? 0, icon: TrendingUp, color: 'text-blue-400' },
           { label: 'Top AI Used', value: (topArticles?.[0]?.ai_use_count ?? 0) + ' times', icon: Brain, color: 'text-purple-400' },
         ].map(s => (
-          <div key={s.label} className="rounded-xl border border-slate-800 bg-slate-900 p-4">
+          <div key={s.label} className="rounded-xl border border-border bg-card p-4">
             <s.icon className={`h-5 w-5 ${s.color}`} />
-            <p className="mt-2 text-2xl font-bold text-slate-100">{s.value}</p>
-            <p className="text-xs text-slate-500 mt-1">{s.label}</p>
+            <p className="mt-2 text-2xl font-bold text-foreground">{s.value}</p>
+            <p className="text-xs text-muted-foreground mt-1">{s.label}</p>
           </div>
         ))}
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Categories */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900 p-5">
-          <h2 className="text-sm font-semibold text-slate-300 mb-4">Categories</h2>
+        <div className="rounded-xl border border-border bg-card p-5">
+          <h2 className="text-sm font-semibold text-foreground mb-4">Categories</h2>
           <div className="space-y-2">
             {(categories ?? []).map(cat => (
               <Link key={cat.id} href={`/knowledge?category=${cat.slug}`}
-                className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-900/50 px-3 py-2 hover:border-slate-700 transition-colors group">
+                className="flex items-center justify-between rounded-lg border border-border bg-card/70 px-3 py-2 hover:border-border transition-colors group">
                 <div className="flex items-center gap-2">
                   <div className="h-2 w-2 rounded-full" style={{ backgroundColor: cat.color }} />
-                  <span className="text-sm text-slate-300 group-hover:text-white transition-colors">{cat.name}</span>
+                  <span className="text-sm text-foreground group-hover:text-foreground transition-colors">{cat.name}</span>
                 </div>
-                <span className="text-xs text-slate-600">{cat.article_count} articles</span>
+                <span className="text-xs text-muted-foreground">{cat.article_count} articles</span>
               </Link>
             ))}
           </div>
         </div>
 
         {/* Top AI-Used Articles */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900 p-5">
-          <h2 className="text-sm font-semibold text-slate-300 mb-4">Most Used by AI</h2>
+        <div className="rounded-xl border border-border bg-card p-5">
+          <h2 className="text-sm font-semibold text-foreground mb-4">Most Used by AI</h2>
           <div className="space-y-3">
             {(topArticles ?? []).map(a => (
               <Link key={a.id} href={`/knowledge/${a.id}`}
                 className="flex items-center justify-between hover:opacity-80 transition-opacity">
-                <span className="text-sm text-slate-300 truncate flex-1">{a.title}</span>
-                <div className="flex items-center gap-3 text-xs text-slate-500 flex-none ml-3">
+                <span className="text-sm text-foreground truncate flex-1">{a.title}</span>
+                <div className="flex items-center gap-3 text-xs text-muted-foreground flex-none ml-3">
                   <span className="flex items-center gap-1"><Brain className="h-3 w-3" /> {a.ai_use_count}</span>
                   <span className="flex items-center gap-1"><Search className="h-3 w-3" /> {a.view_count}</span>
                 </div>
@@ -84,20 +84,20 @@ export default async function KnowledgePage() {
       </div>
 
       {/* Recent Articles */}
-      <div className="rounded-xl border border-slate-800 bg-slate-900 p-5">
+      <div className="rounded-xl border border-border bg-card p-5">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-sm font-semibold text-slate-300">Recent Articles</h2>
+          <h2 className="text-sm font-semibold text-foreground">Recent Articles</h2>
           <Link href="/knowledge/all" className="text-xs text-primary hover:underline">View All</Link>
         </div>
         <div className="space-y-2">
           {(articles ?? []).map(a => (
             <Link key={a.id} href={`/knowledge/${a.id}`}
-              className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-900/50 px-4 py-3 hover:border-slate-700 transition-colors">
+              className="flex items-center justify-between rounded-lg border border-border bg-card/70 px-4 py-3 hover:border-border transition-colors">
               <div>
-                <p className="text-sm font-medium text-slate-200">{a.title}</p>
-                <p className="text-xs text-slate-600 capitalize">{a.article_type} · {a.status}</p>
+                <p className="text-sm font-medium text-foreground">{a.title}</p>
+                <p className="text-xs text-muted-foreground capitalize">{a.article_type} · {a.status}</p>
               </div>
-              <span className="text-[10px] text-slate-600">{new Date(a.updated_at).toLocaleDateString()}</span>
+              <span className="text-[10px] text-muted-foreground">{new Date(a.updated_at).toLocaleDateString()}</span>
             </Link>
           ))}
         </div>

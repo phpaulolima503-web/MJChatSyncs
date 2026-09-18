@@ -42,24 +42,24 @@ export function ApprovalManager() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-slate-300">Pending Approvals</h3>
+        <h3 className="text-sm font-semibold text-foreground">Pending Approvals</h3>
         <span className="rounded-full bg-orange-500/20 px-2 py-0.5 text-xs font-medium text-orange-400">{approvals.length}</span>
       </div>
 
       {approvals.length === 0 && (
-        <div className="rounded-xl border border-slate-800 bg-slate-900 p-8 text-center">
+        <div className="rounded-xl border border-border bg-card p-8 text-center">
           <CheckCircle2 className="mx-auto h-8 w-8 text-emerald-500/50" />
-          <p className="mt-2 text-sm text-slate-500">No pending approvals</p>
+          <p className="mt-2 text-sm text-muted-foreground">No pending approvals</p>
         </div>
       )}
 
       {approvals.map(ap => (
-        <div key={ap.id} className="rounded-xl border border-orange-500/20 bg-slate-900 p-4">
+        <div key={ap.id} className="rounded-xl border border-orange-500/20 bg-card p-4">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-sm font-semibold text-slate-200">{ap.title}</p>
-              {ap.description && <p className="mt-1 text-xs text-slate-500">{ap.description}</p>}
-              <div className="mt-2 flex items-center gap-3 text-[10px] text-slate-600">
+              <p className="text-sm font-semibold text-foreground">{ap.title}</p>
+              {ap.description && <p className="mt-1 text-xs text-muted-foreground">{ap.description}</p>}
+              <div className="mt-2 flex items-center gap-3 text-[10px] text-muted-foreground">
                 <span className="flex items-center gap-1"><User className="h-3 w-3" /> {ap.approvers.length} approver(s)</span>
                 <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> {new Date(ap.created_at).toLocaleDateString()}</span>
                 <span className="capitalize">{ap.approval_mode.replace('_', ' ')}</span>
@@ -70,7 +70,7 @@ export function ApprovalManager() {
 
           {/* Context preview */}
           {Object.keys(ap.context).length > 0 && (
-            <div className="mt-3 rounded-lg bg-slate-800/50 px-3 py-2 text-[10px] text-slate-500 font-mono">
+            <div className="mt-3 rounded-lg bg-accent/60 px-3 py-2 text-[10px] text-muted-foreground font-mono">
               {JSON.stringify(ap.context).slice(0, 120)}...
             </div>
           )}

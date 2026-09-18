@@ -352,9 +352,9 @@ export function ContactTimeline({
       case 'campaign':
         return <Send className="size-4 text-teal-450" />;
       case 'note':
-        return <FileText className="size-4 text-slate-400" />;
+        return <FileText className="size-4 text-muted-foreground" />;
       default:
-        return <Clock className="size-4 text-slate-400" />;
+        return <Clock className="size-4 text-muted-foreground" />;
     }
   };
 
@@ -382,17 +382,17 @@ export function ContactTimeline({
       case 'campaign':
         return 'bg-teal-500/10 text-teal-450 border-teal-500/20';
       case 'note':
-        return 'bg-slate-850 text-slate-300 border-slate-700';
+        return 'bg-muted text-foreground border-border';
       default:
-        return 'bg-slate-800 text-slate-400 border-slate-700';
+        return 'bg-muted text-muted-foreground border-border';
     }
   };
 
   return (
     <div className="space-y-6">
       {/* Dynamic Customer Decision Timeline Stepper */}
-      <div className="bg-slate-900/35 border border-slate-850 p-5 rounded-2xl shadow-xl">
-        <h3 className="text-xs font-bold text-slate-300 mb-4 tracking-wider uppercase">Customer Decision Timeline</h3>
+      <div className="bg-card/35 border border-border p-5 rounded-2xl shadow-xl">
+        <h3 className="text-xs font-bold text-foreground mb-4 tracking-wider uppercase">Customer Decision Timeline</h3>
         
         {/* Mobile stepper list */}
         <div className="block md:hidden space-y-2">
@@ -405,13 +405,13 @@ export function ContactTimeline({
                   'size-5 rounded-full flex items-center justify-center border text-[9px] font-bold shrink-0',
                   isCompleted ? 'bg-indigo-950 border-indigo-500 text-indigo-400' :
                   isActive ? 'bg-primary/20 border-primary text-primary animate-pulse' :
-                  'bg-slate-950 border-slate-800 text-slate-600'
+                  'bg-background border-border text-muted-foreground'
                 )}>
                   {isCompleted ? <Check className="size-2.5" /> : idx + 1}
                 </div>
                 <div className="flex flex-col">
-                  <span className={cn('text-xs font-bold', isActive ? 'text-white' : isCompleted ? 'text-slate-300' : 'text-slate-500')}>{stage.label}</span>
-                  <span className="text-[10px] text-slate-500 leading-none">{stage.desc}</span>
+                  <span className={cn('text-xs font-bold', isActive ? 'text-foreground' : isCompleted ? 'text-foreground' : 'text-muted-foreground')}>{stage.label}</span>
+                  <span className="text-[10px] text-muted-foreground leading-none">{stage.desc}</span>
                 </div>
               </div>
             );
@@ -421,7 +421,7 @@ export function ContactTimeline({
         {/* Desktop Horizontal Stepper */}
         <div className="hidden md:block relative px-2">
           {/* Connector Line */}
-          <div className="absolute top-3.5 left-6 right-6 h-[2px] bg-slate-850 z-0">
+          <div className="absolute top-3.5 left-6 right-6 h-[2px] bg-muted z-0">
             <div 
               className="h-full bg-gradient-to-r from-indigo-500 to-primary transition-all duration-500" 
               style={{ width: `${(currentStageIndex / 7) * 100}%` }}
@@ -438,17 +438,17 @@ export function ContactTimeline({
                     'size-8 rounded-full flex items-center justify-center border shadow-md transition-all duration-300',
                     isCompleted ? 'bg-indigo-950 border-indigo-500 text-indigo-400 hover:scale-105' :
                     isActive ? 'bg-primary/20 border-primary text-primary shadow-[0_0_12px_rgba(var(--primary-rgb),0.3)] animate-pulse scale-110' :
-                    'bg-slate-950 border-slate-850 text-slate-600'
+                    'bg-background border-border text-muted-foreground'
                   )}>
                     {isCompleted ? <Check className="size-4" /> : <span className="text-[10px] font-bold font-mono">{idx + 1}</span>}
                   </div>
                   <span className={cn(
                     'text-[10px] font-bold mt-2.5 transition-all leading-tight max-w-[80px]',
-                    isActive ? 'text-primary' : isCompleted ? 'text-slate-300' : 'text-slate-500'
+                    isActive ? 'text-primary' : isCompleted ? 'text-foreground' : 'text-muted-foreground'
                   )}>
                     {stage.label}
                   </span>
-                  <span className="text-[8px] text-slate-500 leading-none mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute -bottom-4 bg-slate-950 border border-slate-800 px-1.5 py-0.5 rounded shadow-lg whitespace-nowrap z-50">
+                  <span className="text-[8px] text-muted-foreground leading-none mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute -bottom-4 bg-background border border-border px-1.5 py-0.5 rounded shadow-lg whitespace-nowrap z-50">
                     {stage.desc}
                   </span>
                 </div>
@@ -460,8 +460,8 @@ export function ContactTimeline({
       </div>
 
       {/* Timeline Filter Controls */}
-      <div className="flex flex-wrap items-center gap-1.5 border-b border-slate-850 pb-4">
-        <Filter className="size-3.5 text-slate-400 mr-2 shrink-0" />
+      <div className="flex flex-wrap items-center gap-1.5 border-b border-border pb-4">
+        <Filter className="size-3.5 text-muted-foreground mr-2 shrink-0" />
         {([
           { key: 'all', label: 'All Activities' },
           { key: 'messages', label: 'Messages' },
@@ -479,7 +479,7 @@ export function ContactTimeline({
               'h-8 text-[11px] font-bold rounded-xl transition-all border border-transparent px-3',
               filter === f.key
                 ? 'bg-primary/10 text-primary border-primary/20'
-                : 'text-slate-400 hover:text-white hover:bg-slate-900/50'
+                : 'text-muted-foreground hover:text-foreground hover:bg-card/70'
             )}
           >
             {f.label}
@@ -489,11 +489,11 @@ export function ContactTimeline({
 
       {/* Timeline List */}
       {filteredItems.length === 0 ? (
-        <div className="text-center py-10 text-slate-500 text-xs">
+        <div className="text-center py-10 text-muted-foreground text-xs">
           No activities found matching the selected filter.
         </div>
       ) : (
-        <div className="relative border-l border-slate-850 ml-3 pl-6 space-y-5 py-2">
+        <div className="relative border-l border-border ml-3 pl-6 space-y-5 py-2">
           {filteredItems.map(item => {
             const isExpanded = !!expandedItems[item.id];
             const hasDetails = item.type === 'proposal' || item.type === 'quote' || item.meta?.notes || item.meta?.summary || item.description.length > 150;
@@ -511,35 +511,35 @@ export function ContactTimeline({
                   item.type === 'payment' ? 'bg-emerald-955 border-emerald-500/30' :
                   item.type === 'task' ? 'bg-rose-955 border-rose-500/30' :
                   item.type === 'campaign' ? 'bg-teal-955 border-teal-500/30' :
-                  'bg-slate-950 border-slate-800'
+                  'bg-background border-border'
                 )}>
                   {getIcon(item.type, item.meta)}
                 </div>
 
                 {/* Body Card */}
-                <div className="bg-slate-950/40 hover:bg-slate-900/20 transition-all p-4 rounded-xl border border-slate-850 space-y-2.5">
+                <div className="bg-muted/50 hover:bg-card/20 transition-all p-4 rounded-xl border border-border space-y-2.5">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-xs font-bold text-white tracking-wide">
+                      <span className="text-xs font-bold text-foreground tracking-wide">
                         {item.title}
                       </span>
                       <Badge className={cn('text-[9px] uppercase px-1.5 py-0.5 border font-semibold tracking-wider', getBadgeColor(item.type, item.meta))}>
                         {item.type}
                       </Badge>
                       {item.meta?.sender && (
-                        <span className="text-[10px] text-slate-500 flex items-center gap-1">
+                        <span className="text-[10px] text-muted-foreground flex items-center gap-1">
                           <User className="size-2.5" />
                           {item.meta.sender}
                         </span>
                       )}
                     </div>
-                    <span className="text-[10px] text-slate-500 font-mono">
+                    <span className="text-[10px] text-muted-foreground font-mono">
                       {format(item.timestamp, 'MMM dd, yyyy HH:mm')}
                     </span>
                   </div>
 
                   <p className={cn(
-                    'text-xs text-slate-300 leading-relaxed break-words',
+                    'text-xs text-foreground leading-relaxed break-words',
                     !isExpanded && !hasDetails ? '' : !isExpanded ? 'line-clamp-2' : ''
                   )}>
                     {item.description}
@@ -554,25 +554,25 @@ export function ContactTimeline({
 
                   {/* Expanded Custom Detail Cards */}
                   {isExpanded && (
-                    <div className="mt-3 pt-3 border-t border-slate-850 text-xs text-slate-400 leading-relaxed space-y-3 animate-in fade-in-40 duration-250">
+                    <div className="mt-3 pt-3 border-t border-border text-xs text-muted-foreground leading-relaxed space-y-3 animate-in fade-in-40 duration-250">
                       
                       {/* Meeting Notes and Summaries */}
                       {item.type === 'meeting' && (
-                        <div className="space-y-2 bg-slate-900/30 border border-slate-850 p-3 rounded-lg">
+                        <div className="space-y-2 bg-card/30 border border-border p-3 rounded-lg">
                           {item.meta?.notes && (
                             <div>
-                              <h4 className="font-bold text-slate-300 text-[10px] uppercase tracking-wider mb-0.5">Meeting Agenda/Notes:</h4>
-                              <p className="text-[11px] text-slate-400">{item.meta.notes}</p>
+                              <h4 className="font-bold text-foreground text-[10px] uppercase tracking-wider mb-0.5">Meeting Agenda/Notes:</h4>
+                              <p className="text-[11px] text-muted-foreground">{item.meta.notes}</p>
                             </div>
                           )}
                           {item.meta?.summary && (
-                            <div className="border-t border-slate-850/50 pt-2">
+                            <div className="border-t border-border/50 pt-2">
                               <h4 className="font-bold text-indigo-400 text-[10px] uppercase tracking-wider mb-0.5">AI Meeting Summary:</h4>
-                              <p className="text-[11px] text-slate-300 whitespace-pre-wrap">{item.meta.summary}</p>
+                              <p className="text-[11px] text-foreground whitespace-pre-wrap">{item.meta.summary}</p>
                             </div>
                           )}
                           {item.meta?.recordingLink && (
-                            <div className="border-t border-slate-850/50 pt-2 text-[10px] font-semibold text-sky-400">
+                            <div className="border-t border-border/50 pt-2 text-[10px] font-semibold text-sky-400">
                               Recording: <a href={item.meta.recordingLink} target="_blank" rel="noreferrer" className="hover:underline">{item.meta.recordingLink}</a>
                             </div>
                           )}
@@ -581,38 +581,38 @@ export function ContactTimeline({
 
                       {/* B2B Proposal Details */}
                       {item.type === 'proposal' && item.meta?.details && (
-                        <div className="bg-slate-900/45 border border-slate-850 p-4 rounded-lg space-y-3 shadow-inner">
+                        <div className="bg-card/45 border border-border p-4 rounded-lg space-y-3 shadow-inner">
                           <div>
                             <h4 className="font-bold text-purple-400 text-[10px] uppercase tracking-wider">Problem Statement</h4>
-                            <p className="text-[11px] text-slate-300 mt-0.5">{item.meta.details.problemStatement}</p>
+                            <p className="text-[11px] text-foreground mt-0.5">{item.meta.details.problemStatement}</p>
                           </div>
                           <div>
                             <h4 className="font-bold text-purple-400 text-[10px] uppercase tracking-wider">Proposed Solution</h4>
-                            <p className="text-[11px] text-slate-300 mt-0.5">{item.meta.details.solution}</p>
+                            <p className="text-[11px] text-foreground mt-0.5">{item.meta.details.solution}</p>
                           </div>
                           {item.meta.details.deliverables && (
                             <div>
                               <h4 className="font-bold text-purple-400 text-[10px] uppercase tracking-wider">Core Deliverables</h4>
-                              <ul className="list-disc list-inside text-[11px] text-slate-300 mt-1 space-y-0.5">
+                              <ul className="list-disc list-inside text-[11px] text-foreground mt-1 space-y-0.5">
                                 {item.meta.details.deliverables.map((d: string, i: number) => (
                                   <li key={i}>{d}</li>
                                 ))}
                               </ul>
                             </div>
                           )}
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 border-t border-slate-800 pt-2.5">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 border-t border-border pt-2.5">
                             <div>
-                              <h4 className="font-bold text-slate-400 text-[10px] uppercase tracking-wider">Timeline</h4>
-                              <p className="text-[11px] text-slate-300 mt-0.5">{item.meta.details.timeline}</p>
+                              <h4 className="font-bold text-muted-foreground text-[10px] uppercase tracking-wider">Timeline</h4>
+                              <p className="text-[11px] text-foreground mt-0.5">{item.meta.details.timeline}</p>
                             </div>
                             <div>
-                              <h4 className="font-bold text-slate-400 text-[10px] uppercase tracking-wider">Pricing Budget</h4>
+                              <h4 className="font-bold text-muted-foreground text-[10px] uppercase tracking-wider">Pricing Budget</h4>
                               <p className="text-[11px] text-emerald-450 font-bold mt-0.5">{item.meta.details.pricing}</p>
                             </div>
                           </div>
                           {item.meta.clientSignature && (
-                            <div className="border-t border-slate-800 pt-2 flex items-center justify-between text-[10px] text-slate-500">
-                              <span>Signed digitally: <span className="font-mono text-slate-400 font-bold">{item.meta.clientSignature}</span></span>
+                            <div className="border-t border-border pt-2 flex items-center justify-between text-[10px] text-muted-foreground">
+                              <span>Signed digitally: <span className="font-mono text-muted-foreground font-bold">{item.meta.clientSignature}</span></span>
                               <span>Signed at: {item.meta.signedAt ? format(new Date(item.meta.signedAt), 'MMM dd, yyyy') : 'N/A'}</span>
                             </div>
                           )}
@@ -621,20 +621,20 @@ export function ContactTimeline({
 
                       {/* Commercial Quotation Details */}
                       {item.type === 'quote' && item.meta?.items && (
-                        <div className="bg-slate-900/45 border border-slate-850 p-4 rounded-lg space-y-3 shadow-inner">
+                        <div className="bg-card/45 border border-border p-4 rounded-lg space-y-3 shadow-inner">
                           <h4 className="font-bold text-fuchsia-400 text-[10px] uppercase tracking-wider">Itemized Commercial Breakdown</h4>
-                          <div className="border border-slate-800 rounded-lg overflow-hidden">
+                          <div className="border border-border rounded-lg overflow-hidden">
                             <table className="w-full text-left border-collapse text-[10px]">
                               <thead>
-                                <tr className="bg-slate-950 border-b border-slate-800 text-slate-400">
+                                <tr className="bg-background border-b border-border text-muted-foreground">
                                   <th className="p-2">Description</th>
                                   <th className="p-2 text-center">Qty</th>
                                   <th className="p-2 text-right">Price</th>
                                 </tr>
                               </thead>
-                              <tbody className="divide-y divide-slate-800 text-slate-300">
+                              <tbody className="divide-y divide-border text-foreground">
                                 {Array.isArray(item.meta.items) && item.meta.items.map((it: any, idx: number) => (
-                                  <tr key={idx} className="hover:bg-slate-850/20">
+                                  <tr key={idx} className="hover:bg-muted/20">
                                     <td className="p-2 font-medium">{it.description}</td>
                                     <td className="p-2 text-center">{it.quantity}</td>
                                     <td className="p-2 text-right">INR {Number(it.price).toLocaleString()}</td>
@@ -644,8 +644,8 @@ export function ContactTimeline({
                             </table>
                           </div>
                           {item.meta.clientSignature && (
-                            <div className="border-t border-slate-800 pt-2 flex items-center justify-between text-[10px] text-slate-500">
-                              <span>Signed digitally: <span className="font-mono text-slate-400 font-bold">{item.meta.clientSignature}</span></span>
+                            <div className="border-t border-border pt-2 flex items-center justify-between text-[10px] text-muted-foreground">
+                              <span>Signed digitally: <span className="font-mono text-muted-foreground font-bold">{item.meta.clientSignature}</span></span>
                               <span>Signed at: {item.meta.signedAt ? format(new Date(item.meta.signedAt), 'MMM dd, yyyy') : 'N/A'}</span>
                             </div>
                           )}

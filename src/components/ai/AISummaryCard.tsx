@@ -17,7 +17,7 @@ export function AISummaryCard({ summary, messageCount, createdAt }: AISummaryCar
   };
 
   return (
-    <Card className="bg-gradient-to-br from-indigo-950/20 to-slate-900/60 border-slate-800 shadow-md relative overflow-hidden group">
+    <Card className="bg-gradient-to-br from-indigo-950/20 to-card/60 border-border shadow-md relative overflow-hidden group">
       <div className="absolute top-0 right-0 h-24 w-24 bg-indigo-500/5 blur-xl rounded-full pointer-events-none" />
       
       <CardHeader className="p-4 pb-2 flex flex-row items-center justify-between space-y-0">
@@ -26,14 +26,14 @@ export function AISummaryCard({ summary, messageCount, createdAt }: AISummaryCar
             <Sparkles className="h-3.5 w-3.5 text-indigo-400" />
             AI Conversation Summary
           </CardTitle>
-          <CardDescription className="text-[10px] text-slate-500 mt-0.5">
+          <CardDescription className="text-[10px] text-muted-foreground mt-0.5">
             Quick brief derived from chat history
           </CardDescription>
         </div>
         
         <button
           onClick={handleCopy}
-          className="text-slate-500 hover:text-indigo-400 p-1.5 rounded-lg hover:bg-slate-800/50 transition-colors"
+          className="text-muted-foreground hover:text-indigo-400 p-1.5 rounded-lg hover:bg-accent/60 transition-colors"
           title="Copy Summary"
         >
           <ClipboardCopy className="h-3.5 w-3.5" />
@@ -41,12 +41,12 @@ export function AISummaryCard({ summary, messageCount, createdAt }: AISummaryCar
       </CardHeader>
       
       <CardContent className="p-4 pt-2 space-y-3">
-        <p className="text-xs text-slate-300 leading-relaxed font-medium">
+        <p className="text-xs text-foreground leading-relaxed font-medium">
           {summary}
         </p>
         
         {(messageCount || createdAt) && (
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[10px] text-slate-500 pt-2 border-t border-slate-850/50">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[10px] text-muted-foreground pt-2 border-t border-border/50">
             {messageCount && (
               <span className="flex items-center gap-1">
                 <strong>{messageCount}</strong> messages summarized

@@ -29,61 +29,61 @@ export default function AIUsageAnalyticsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-white">AI Usage & Cost Analytics</h1>
-        <p className="text-slate-400 text-sm">Monitor LLM provider distribution, token consumption, latencies, and operational budgets.</p>
+        <h1 className="text-2xl font-bold text-foreground">AI Usage & Cost Analytics</h1>
+        <p className="text-muted-foreground text-sm">Monitor LLM provider distribution, token consumption, latencies, and operational budgets.</p>
       </div>
 
       {/* Overview metrics */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Total Requests</span>
-          <div className="mt-2 text-2xl font-bold text-white">
+        <div className="rounded-xl border border-border bg-card/70 p-5">
+          <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Total Requests</span>
+          <div className="mt-2 text-2xl font-bold text-foreground">
             {metrics.totalRequests.toLocaleString()}
           </div>
-          <span className="text-xs text-slate-500">Across all AI agents</span>
+          <span className="text-xs text-muted-foreground">Across all AI agents</span>
         </div>
 
-        <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Average Latency</span>
-          <div className="mt-2 text-2xl font-bold text-white">
+        <div className="rounded-xl border border-border bg-card/70 p-5">
+          <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Average Latency</span>
+          <div className="mt-2 text-2xl font-bold text-foreground">
             {metrics.avgLatencyMs}ms
           </div>
           <span className="text-xs text-emerald-500">Optimal response speed</span>
         </div>
 
-        <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Tokens Consumed</span>
-          <div className="mt-2 text-2xl font-bold text-white">
+        <div className="rounded-xl border border-border bg-card/70 p-5">
+          <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Tokens Consumed</span>
+          <div className="mt-2 text-2xl font-bold text-foreground">
             {(metrics.totalTokens / 1000000).toFixed(1)}M
           </div>
-          <span className="text-xs text-slate-500">Prompt & completion tokens</span>
+          <span className="text-xs text-muted-foreground">Prompt & completion tokens</span>
         </div>
 
-        <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-5">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Total Cost (USD)</span>
-          <div className="mt-2 text-2xl font-bold text-white">
+        <div className="rounded-xl border border-border bg-card/70 p-5">
+          <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Total Cost (USD)</span>
+          <div className="mt-2 text-2xl font-bold text-foreground">
             ${metrics.totalCostUSD.toFixed(2)}
           </div>
-          <span className="text-xs text-slate-500">Accumulated this month</span>
+          <span className="text-xs text-muted-foreground">Accumulated this month</span>
         </div>
       </div>
 
       {/* Provider distribution & token breakdown */}
       <div className="grid gap-6 md:grid-cols-2">
         {/* Provider Share */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-6 space-y-6">
-          <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+        <div className="rounded-xl border border-border bg-card/70 p-6 space-y-6">
+          <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
             <Cpu className="h-5 w-5 text-amber-550" /> LLM Provider Distribution
           </h2>
 
           <div className="space-y-4">
             {providerShare.map(provider => (
               <div key={provider.name} className="space-y-2">
-                <div className="flex justify-between text-sm text-slate-300">
+                <div className="flex justify-between text-sm text-foreground">
                   <span>{provider.name}</span>
-                  <span className="font-semibold text-white">{provider.share}%</span>
+                  <span className="font-semibold text-foreground">{provider.share}%</span>
                 </div>
-                <div className="h-2.5 w-full rounded-full bg-slate-800 overflow-hidden">
+                <div className="h-2.5 w-full rounded-full bg-muted overflow-hidden">
                   <div className="h-full bg-amber-500" style={{ width: `${provider.share}%` }} />
                 </div>
               </div>
@@ -92,25 +92,25 @@ export default function AIUsageAnalyticsPage() {
         </div>
 
         {/* Token and Fallback Performance */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-6 space-y-6">
-          <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+        <div className="rounded-xl border border-border bg-card/70 p-6 space-y-6">
+          <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
             <Activity className="h-5 w-5 text-amber-550" /> Reliability & Fallbacks
           </h2>
 
           <div className="space-y-4">
-            <div className="flex justify-between items-center py-2 border-b border-slate-850">
-              <span className="text-sm text-slate-300">Fallback Redirection Events</span>
-              <span className="text-sm font-semibold text-white">{metrics.fallbackEvents}</span>
+            <div className="flex justify-between items-center py-2 border-b border-border">
+              <span className="text-sm text-foreground">Fallback Redirection Events</span>
+              <span className="text-sm font-semibold text-foreground">{metrics.fallbackEvents}</span>
             </div>
 
-            <div className="flex justify-between items-center py-2 border-b border-slate-850">
-              <span className="text-sm text-slate-300">Service Level Agreement (SLA)</span>
+            <div className="flex justify-between items-center py-2 border-b border-border">
+              <span className="text-sm text-foreground">Service Level Agreement (SLA)</span>
               <span className="text-sm font-semibold text-emerald-400">99.95%</span>
             </div>
 
             <div className="flex justify-between items-center py-2">
-              <span className="text-sm text-slate-300">Average Token Generation Rate</span>
-              <span className="text-sm font-semibold text-white">45 tokens/sec</span>
+              <span className="text-sm text-foreground">Average Token Generation Rate</span>
+              <span className="text-sm font-semibold text-foreground">45 tokens/sec</span>
             </div>
           </div>
         </div>
