@@ -187,10 +187,10 @@ export default function AnalyticsPage() {
 
   if (loading) {
     return (
-      <div className="flex h-[calc(100vh-80px)] items-center justify-center bg-background">
+      <div className="flex h-[calc(100vh-80px)] items-center justify-center bg-slate-950">
         <div className="flex flex-col items-center gap-3">
           <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-          <p className="text-sm text-muted-foreground">Compiling enterprise analytics charts...</p>
+          <p className="text-sm text-slate-400">Compiling enterprise analytics charts...</p>
         </div>
       </div>
     );
@@ -221,11 +221,11 @@ export default function AnalyticsPage() {
   const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
 
   return (
-    <div className="space-y-6 pb-10 bg-background text-foreground">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-border pb-5">
+    <div className="space-y-6 pb-10 bg-slate-950 text-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-850 pb-5">
         <div>
-          <h1 className="text-2xl font-extrabold text-foreground tracking-tight sm:text-3xl">Enterprise CRM Analytics</h1>
-          <p className="text-xs text-muted-foreground mt-1">
+          <h1 className="text-2xl font-extrabold text-white tracking-tight sm:text-3xl">Enterprise CRM Analytics</h1>
+          <p className="text-xs text-slate-400 mt-1">
             Real-time KPIs, sales conversion predictions, employee productivity, and support SLA tracking.
           </p>
         </div>
@@ -237,7 +237,7 @@ export default function AnalyticsPage() {
       {/* Upgraded Top Level KPIs */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {/* KPI 1: Total Contacts */}
-        <Card className="bg-card/70 border-border shadow-md hover:border-border transition-all relative overflow-hidden group">
+        <Card className="bg-slate-900/50 border-slate-850 shadow-md hover:border-slate-800 transition-all relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-16 h-16 bg-blue-500/5 rounded-full filter blur-xl" />
           <CardContent className="p-5">
             <div className="flex items-center justify-between">
@@ -247,17 +247,17 @@ export default function AnalyticsPage() {
               </div>
             </div>
             <div className="mt-4 flex items-baseline gap-2">
-              <h2 className="text-3xl font-black text-foreground tracking-tight">{s.totalContacts}</h2>
+              <h2 className="text-3xl font-black text-white tracking-tight">{s.totalContacts}</h2>
               <span className="text-[10px] font-extrabold text-emerald-400 flex items-center bg-emerald-500/10 px-1.5 py-0.5 rounded-full">
                 <TrendingUp className="h-2.5 w-2.5 mr-0.5"/>+14.2%
               </span>
             </div>
-            <p className="text-[10px] text-muted-foreground mt-2">Active business contacts</p>
+            <p className="text-[10px] text-slate-500 mt-2">Active business contacts</p>
           </CardContent>
         </Card>
 
         {/* KPI 2: Active Conversations */}
-        <Card className="bg-card/70 border-border shadow-md hover:border-border transition-all relative overflow-hidden group">
+        <Card className="bg-slate-900/50 border-slate-850 shadow-md hover:border-slate-800 transition-all relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-16 h-16 bg-emerald-500/5 rounded-full filter blur-xl" />
           <CardContent className="p-5">
             <div className="flex items-center justify-between">
@@ -267,15 +267,15 @@ export default function AnalyticsPage() {
               </div>
             </div>
             <div className="mt-4 flex items-baseline gap-2">
-              <h2 className="text-3xl font-black text-foreground tracking-tight">{s.totalConversations}</h2>
-              <span className="text-[10px] font-bold text-muted-foreground">inbox queues</span>
+              <h2 className="text-3xl font-black text-white tracking-tight">{s.totalConversations}</h2>
+              <span className="text-[10px] font-bold text-slate-400">inbox queues</span>
             </div>
-            <p className="text-[10px] text-muted-foreground mt-2">Currently being managed</p>
+            <p className="text-[10px] text-slate-500 mt-2">Currently being managed</p>
           </CardContent>
         </Card>
 
         {/* KPI 3: Pipeline Value */}
-        <Card className="bg-card/70 border-border shadow-md hover:border-border transition-all relative overflow-hidden group">
+        <Card className="bg-slate-900/50 border-slate-850 shadow-md hover:border-slate-800 transition-all relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-16 h-16 bg-amber-500/5 rounded-full filter blur-xl" />
           <CardContent className="p-5">
             <div className="flex items-center justify-between">
@@ -285,7 +285,7 @@ export default function AnalyticsPage() {
               </div>
             </div>
             <div className="mt-4 flex flex-col justify-start">
-              <h2 className="text-3xl font-black text-foreground tracking-tight">{formatter.format(s.openDealsValue)}</h2>
+              <h2 className="text-3xl font-black text-white tracking-tight">{formatter.format(s.openDealsValue)}</h2>
               <div className="flex items-center gap-1.5 mt-1">
                 <span className="text-[10.5px] font-extrabold text-emerald-450" title="Weighted Expected Revenue (Value * Probability)">
                   Weighted: {formatter.format(s.weightedDealsValue)}
@@ -299,7 +299,7 @@ export default function AnalyticsPage() {
         </Card>
 
         {/* KPI 4: Closed Revenue Won */}
-        <Card className="bg-card/70 border-border shadow-md hover:border-border transition-all relative overflow-hidden group">
+        <Card className="bg-slate-900/50 border-slate-850 shadow-md hover:border-slate-800 transition-all relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-16 h-16 bg-primary/5 rounded-full filter blur-xl" />
           <CardContent className="p-5">
             <div className="flex items-center justify-between">
@@ -309,12 +309,12 @@ export default function AnalyticsPage() {
               </div>
             </div>
             <div className="mt-4 flex items-baseline gap-2">
-              <h2 className="text-3xl font-black text-foreground tracking-tight">{formatter.format(s.wonDealsValue)}</h2>
+              <h2 className="text-3xl font-black text-white tracking-tight">{formatter.format(s.wonDealsValue)}</h2>
               <span className="text-[10px] font-extrabold text-primary flex items-center bg-primary/10 px-1.5 py-0.5 rounded-full">
                 <ArrowUpRight className="h-2.5 w-2.5 mr-0.5"/>{dealWinRate}% Win
               </span>
             </div>
-            <p className="text-[10px] text-muted-foreground mt-2">Total closed-won deal value</p>
+            <p className="text-[10px] text-slate-500 mt-2">Total closed-won deal value</p>
           </CardContent>
         </Card>
       </div>
@@ -323,11 +323,11 @@ export default function AnalyticsPage() {
         {/* Engagement, SLA & Messages */}
         <div className="lg:col-span-8 space-y-6">
           {/* Engagement Card */}
-          <Card className="bg-card/60 border-border p-5 shadow-lg">
-            <CardHeader className="p-0 pb-4 border-b border-border/60 flex flex-row items-center justify-between">
+          <Card className="bg-slate-900/40 border-slate-850 p-5 shadow-lg">
+            <CardHeader className="p-0 pb-4 border-b border-slate-800/60 flex flex-row items-center justify-between">
               <div>
-                <CardTitle className="text-foreground text-sm font-extrabold uppercase tracking-wide">Communication Volume & SLA Compliance</CardTitle>
-                <CardDescription className="text-muted-foreground text-xs">Analysis of inbound vs outbound engagement metrics</CardDescription>
+                <CardTitle className="text-white text-sm font-extrabold uppercase tracking-wide">Communication Volume & SLA Compliance</CardTitle>
+                <CardDescription className="text-slate-400 text-xs">Analysis of inbound vs outbound engagement metrics</CardDescription>
               </div>
               <Badge className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold uppercase text-[9px]">
                 SLA Compliance: {slaComplianceRate}%
@@ -335,13 +335,13 @@ export default function AnalyticsPage() {
             </CardHeader>
             <CardContent className="pt-5 p-0 space-y-5">
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-background/60 p-4 rounded-xl border border-border">
-                  <p className="text-[10px] text-muted-foreground uppercase font-extrabold">Total Message Volume</p>
-                  <h3 className="text-2xl font-black text-foreground mt-1">{s.totalMessages}</h3>
+                <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-850">
+                  <p className="text-[10px] text-slate-500 uppercase font-extrabold">Total Message Volume</p>
+                  <h3 className="text-2xl font-black text-white mt-1">{s.totalMessages}</h3>
                   <p className="text-[9px] text-slate-550 mt-1">WhatsApp messages synced</p>
                 </div>
-                <div className="bg-background/60 p-4 rounded-xl border border-border">
-                  <p className="text-[10px] text-muted-foreground uppercase font-extrabold">Agent Response Rate</p>
+                <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-850">
+                  <p className="text-[10px] text-slate-500 uppercase font-extrabold">Agent Response Rate</p>
                   <h3 className="text-2xl font-black text-primary mt-1">{responseRate}%</h3>
                   <p className="text-[9px] text-slate-550 mt-1">Outbound ratio to customer inquiries</p>
                 </div>
@@ -351,9 +351,9 @@ export default function AnalyticsPage() {
                 <div className="space-y-1">
                   <div className="flex items-center justify-between text-xs font-semibold">
                     <span className="text-emerald-400">Inbound Customer Inquiries</span>
-                    <span className="text-foreground font-mono">{s.customerMessages} messages</span>
+                    <span className="text-slate-300 font-mono">{s.customerMessages} messages</span>
                   </div>
-                  <div className="h-2.5 w-full bg-background border border-border rounded-full overflow-hidden">
+                  <div className="h-2.5 w-full bg-slate-950 border border-slate-800 rounded-full overflow-hidden">
                     <div 
                       className="h-full bg-emerald-500 rounded-full transition-all duration-1000" 
                       style={{ width: `${Math.max(10, (s.customerMessages / Math.max(1, s.totalMessages)) * 100)}%` }}
@@ -364,9 +364,9 @@ export default function AnalyticsPage() {
                 <div className="space-y-1">
                   <div className="flex items-center justify-between text-xs font-semibold">
                     <span className="text-blue-400">Outbound Agent & Bot Replies</span>
-                    <span className="text-foreground font-mono">{s.agentMessages} messages</span>
+                    <span className="text-slate-300 font-mono">{s.agentMessages} messages</span>
                   </div>
-                  <div className="h-2.5 w-full bg-background border border-border rounded-full overflow-hidden">
+                  <div className="h-2.5 w-full bg-slate-950 border border-slate-800 rounded-full overflow-hidden">
                     <div 
                       className="h-full bg-blue-500 rounded-full transition-all duration-1000" 
                       style={{ width: `${Math.max(10, (s.agentMessages / Math.max(1, s.totalMessages)) * 100)}%` }}
@@ -378,13 +378,13 @@ export default function AnalyticsPage() {
           </Card>
 
           {/* Agent Productivity Table */}
-          <Card className="bg-card/60 border-border p-5 shadow-lg">
-            <CardHeader className="p-0 pb-4 border-b border-border/60">
-              <CardTitle className="text-foreground text-sm font-extrabold uppercase tracking-wide flex items-center gap-2">
+          <Card className="bg-slate-900/40 border-slate-850 p-5 shadow-lg">
+            <CardHeader className="p-0 pb-4 border-b border-slate-800/60">
+              <CardTitle className="text-white text-sm font-extrabold uppercase tracking-wide flex items-center gap-2">
                 <UserCheck className="size-4 text-primary" />
                 Employee Productivity Ledger
               </CardTitle>
-              <CardDescription className="text-muted-foreground text-xs">
+              <CardDescription className="text-slate-400 text-xs">
                 Real-time tracking of active chat loads, deals closed, and average response ratings.
               </CardDescription>
             </CardHeader>
@@ -395,7 +395,7 @@ export default function AnalyticsPage() {
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-xs border-collapse">
                     <thead>
-                      <tr className="border-b border-border text-[10px] uppercase font-bold text-muted-foreground tracking-wider">
+                      <tr className="border-b border-slate-800 text-[10px] uppercase font-bold text-slate-500 tracking-wider">
                         <th className="py-2.5 px-3">Agent</th>
                         <th className="py-2.5 px-3">System Role</th>
                         <th className="py-2.5 px-3 text-center">Chats Managed</th>
@@ -406,22 +406,22 @@ export default function AnalyticsPage() {
                     </thead>
                     <tbody className="divide-y divide-slate-850">
                       {agents.map(agent => (
-                        <tr key={agent.id} className="hover:bg-muted/50 transition-colors">
-                          <td className="py-3 px-3 font-bold text-foreground flex items-center gap-1.5">
+                        <tr key={agent.id} className="hover:bg-slate-950/40 transition-colors">
+                          <td className="py-3 px-3 font-bold text-white flex items-center gap-1.5">
                             <div className="size-6 bg-primary/10 rounded-full flex items-center justify-center text-[10px] font-bold text-primary shrink-0">
                               {agent.name.charAt(0).toUpperCase()}
                             </div>
                             <span className="truncate max-w-[120px]">{agent.name}</span>
                           </td>
                           <td className="py-3 px-3">
-                            <Badge variant="outline" className="border-border text-slate-450 text-[9px] font-semibold capitalize px-1.5 py-0">
+                            <Badge variant="outline" className="border-slate-800 text-slate-450 text-[9px] font-semibold capitalize px-1.5 py-0">
                               {agent.role.replace('_', ' ')}
                             </Badge>
                           </td>
-                          <td className="py-3 px-3 text-center font-bold text-foreground">{agent.chatsHandled}</td>
-                          <td className="py-3 px-3 text-center font-bold text-foreground">{agent.dealsWonCount}</td>
+                          <td className="py-3 px-3 text-center font-bold text-slate-200">{agent.chatsHandled}</td>
+                          <td className="py-3 px-3 text-center font-bold text-slate-200">{agent.dealsWonCount}</td>
                           <td className="py-3 px-3 text-right font-extrabold text-emerald-400">{formatter.format(agent.dealsWonValue)}</td>
-                          <td className="py-3 px-3 text-right font-mono text-muted-foreground text-[10px]">{agent.avgResponseText}</td>
+                          <td className="py-3 px-3 text-right font-mono text-slate-500 text-[10px]">{agent.avgResponseText}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -435,34 +435,34 @@ export default function AnalyticsPage() {
         {/* RIGHT COLUMN: SLAs & Pipeline Conversion */}
         <div className="lg:col-span-4 space-y-6">
           {/* SLA Performance Tracker */}
-          <Card className="bg-card/60 border-border p-5 shadow-lg space-y-5">
-            <h3 className="text-sm font-extrabold text-foreground uppercase tracking-wider border-b border-border/60 pb-2 flex items-center gap-1.5">
+          <Card className="bg-slate-900/40 border-slate-850 p-5 shadow-lg space-y-5">
+            <h3 className="text-sm font-extrabold text-white uppercase tracking-wider border-b border-slate-800/60 pb-2 flex items-center gap-1.5">
               <Clock className="size-4 text-indigo-400" />
               SLA Compliance
             </h3>
             
             <div className="space-y-4">
-              <div className="bg-background/60 p-4 rounded-xl border border-border text-center">
-                <p className="text-[9px] text-muted-foreground uppercase font-extrabold">Support Quality Index</p>
+              <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-850 text-center">
+                <p className="text-[9px] text-slate-500 uppercase font-extrabold">Support Quality Index</p>
                 <div className="text-3xl font-black text-indigo-400 mt-1 font-mono">
                   {slaComplianceRate}%
                 </div>
-                <p className="text-[9px] text-muted-foreground mt-1">of first responses complied with SLA</p>
+                <p className="text-[9px] text-slate-500 mt-1">of first responses complied with SLA</p>
               </div>
 
               <div className="grid grid-cols-2 gap-2 text-xs">
-                <div className="bg-background p-3 rounded-xl border border-border">
+                <div className="bg-slate-950 p-3 rounded-xl border border-slate-850">
                   <span className="text-[9px] text-slate-550 uppercase font-bold block">Compliant Chats</span>
                   <span className="text-emerald-450 font-bold text-base mt-0.5 block">{s.slaCompliantCount}</span>
                 </div>
-                <div className="bg-background p-3 rounded-xl border border-border">
+                <div className="bg-slate-950 p-3 rounded-xl border border-slate-850">
                   <span className="text-[9px] text-slate-550 uppercase font-bold block">SLA Violations</span>
                   <span className="text-rose-450 font-bold text-base mt-0.5 block">{s.slaBreachedCount}</span>
                 </div>
               </div>
               
-              <div className="bg-background p-3.5 rounded-xl border border-border text-[11px] leading-relaxed text-muted-foreground space-y-2">
-                <p className="font-extrabold text-foreground text-xs flex items-center gap-1">
+              <div className="bg-slate-950 p-3.5 rounded-xl border border-slate-850 text-[11px] leading-relaxed text-slate-400 space-y-2">
+                <p className="font-extrabold text-white text-xs flex items-center gap-1">
                   <ShieldCheck className="size-3 text-indigo-400" />
                   SLA Threshold Warnings:
                 </p>
@@ -472,25 +472,25 @@ export default function AnalyticsPage() {
           </Card>
 
           {/* Deal Conversion & Pipeline Health */}
-          <Card className="bg-card/60 border-border p-5 shadow-lg space-y-4">
-            <h3 className="text-sm font-extrabold text-foreground uppercase tracking-wider border-b border-border/60 pb-2 flex items-center gap-1.5">
+          <Card className="bg-slate-900/40 border-slate-850 p-5 shadow-lg space-y-4">
+            <h3 className="text-sm font-extrabold text-white uppercase tracking-wider border-b border-slate-800/60 pb-2 flex items-center gap-1.5">
               <Activity className="size-4 text-emerald-450" />
               Pipeline Health
             </h3>
 
             <div className="space-y-4 text-xs">
-              <div className="space-y-1 border-b border-border pb-3">
+              <div className="space-y-1 border-b border-slate-850 pb-3">
                 <div className="flex justify-between items-center text-slate-450">
                   <span>Total Opportunities</span>
-                  <span className="font-bold text-foreground">{s.totalDealsCount}</span>
+                  <span className="font-bold text-white">{s.totalDealsCount}</span>
                 </div>
               </div>
 
               <div className="space-y-1.5">
-                <span className="text-[10px] text-muted-foreground uppercase font-extrabold block">Deal Stage Win Ratio</span>
+                <span className="text-[10px] text-slate-500 uppercase font-extrabold block">Deal Stage Win Ratio</span>
                 
                 <div className="flex items-center gap-2">
-                  <div className="flex-1 bg-background rounded-full h-2 border border-border overflow-hidden">
+                  <div className="flex-1 bg-slate-950 rounded-full h-2 border border-slate-850 overflow-hidden">
                     <div 
                       className="bg-emerald-500 h-full rounded-full transition-all duration-1000" 
                       style={{ width: `${dealWinRate}%` }}
@@ -500,17 +500,17 @@ export default function AnalyticsPage() {
                 </div>
               </div>
 
-              <div className="bg-background p-3.5 rounded-xl border border-border space-y-3.5 mt-2">
+              <div className="bg-slate-950 p-3.5 rounded-xl border border-slate-850 space-y-3.5 mt-2">
                 <div className="flex justify-between items-center">
-                  <div className="flex items-center gap-1 text-muted-foreground">
+                  <div className="flex items-center gap-1 text-slate-400">
                     <div className="size-2 rounded-full bg-emerald-555" />
                     <span>Closed Won</span>
                   </div>
                   <span className="font-extrabold text-emerald-400">{formatter.format(s.wonDealsValue)}</span>
                 </div>
                 
-                <div className="flex justify-between items-center border-t border-border pt-2.5">
-                  <div className="flex items-center gap-1 text-muted-foreground">
+                <div className="flex justify-between items-center border-t border-slate-850 pt-2.5">
+                  <div className="flex items-center gap-1 text-slate-400">
                     <div className="size-2 rounded-full bg-rose-555" />
                     <span>Closed Lost</span>
                   </div>

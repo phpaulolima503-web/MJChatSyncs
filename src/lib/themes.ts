@@ -23,7 +23,7 @@ export const THEME_IDS = [
 
 export type ThemeId = (typeof THEME_IDS)[number];
 
-export const DEFAULT_THEME: ThemeId = "violet";
+export const DEFAULT_THEME: ThemeId = "whatsapp";
 
 export const STORAGE_KEY = "wacrm.theme";
 
@@ -77,27 +77,5 @@ export function isThemeId(value: unknown): value is ThemeId {
   return (
     typeof value === "string" &&
     (THEME_IDS as ReadonlyArray<string>).includes(value)
-  );
-}
-
-/**
- * Light/dark mode — orthogonal to the 5 accent themes above. Each
- * theme has both a light and a dark CSS block in globals.css,
- * selected by `[data-theme][data-mode]` together. Kept as a
- * separate axis (rather than folding into THEME_IDS) so switching
- * mode never loses the user's accent-color pick, and vice versa.
- */
-export const MODE_IDS = ["light", "dark"] as const;
-
-export type ModeId = (typeof MODE_IDS)[number];
-
-export const DEFAULT_MODE: ModeId = "light";
-
-export const MODE_STORAGE_KEY = "wacrm.mode";
-
-export function isModeId(value: unknown): value is ModeId {
-  return (
-    typeof value === "string" &&
-    (MODE_IDS as ReadonlyArray<string>).includes(value)
   );
 }

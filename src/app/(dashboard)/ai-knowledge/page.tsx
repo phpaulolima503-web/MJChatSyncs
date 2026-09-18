@@ -263,7 +263,7 @@ export default function AiKnowledgePage() {
         );
       default:
         return (
-          <Badge className="bg-slate-500/10 text-muted-foreground border border-slate-500/20 hover:bg-slate-500/10 flex items-center gap-1 w-fit">
+          <Badge className="bg-slate-500/10 text-slate-400 border border-slate-500/20 hover:bg-slate-500/10 flex items-center gap-1 w-fit">
             <Clock className="h-3 w-3" />
             Pending
           </Badge>
@@ -274,16 +274,16 @@ export default function AiKnowledgePage() {
   return (
     <div className="space-y-6 max-w-5xl mx-auto pb-10 mt-4">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
         <div>
           <Link href="/ai-router" className="inline-flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 font-semibold mb-2 transition-colors">
             <ArrowLeft className="h-3.5 w-3.5" />
             Back to AI Settings
           </Link>
-          <h1 className="text-2xl font-bold text-foreground tracking-tight flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
             RAG Knowledge Base
           </h1>
-          <p className="text-sm text-muted-foreground mt-1">
+          <p className="text-sm text-slate-400 mt-1">
             Feed document uploads or website links into the AI Agent. They will be chunked, embedded, and searched for context during WhatsApp auto-replies.
           </p>
         </div>
@@ -292,7 +292,7 @@ export default function AiKnowledgePage() {
           variant="outline" 
           onClick={fetchDocuments}
           disabled={loading}
-          className="bg-card border-border text-foreground hover:bg-muted hover:text-foreground"
+          className="bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white"
         >
           <RefreshCw className={`h-4 w-4 mr-2 ${loading && "animate-spin"}`} />
           Refresh
@@ -303,20 +303,20 @@ export default function AiKnowledgePage() {
         {/* Left Column - Import Forms */}
         <div className="lg:col-span-1 space-y-6">
           {/* File Upload card */}
-          <Card className="bg-card/60 border-border">
+          <Card className="bg-slate-900/40 border-slate-800">
             <CardHeader className="p-5 pb-3">
-              <CardTitle className="text-base text-foreground flex items-center gap-2">
+              <CardTitle className="text-base text-white flex items-center gap-2">
                 <UploadCloud className="h-4.5 w-4.5 text-indigo-400" />
                 Upload Documents
               </CardTitle>
-              <CardDescription className="text-muted-foreground text-xs">
+              <CardDescription className="text-slate-400 text-xs">
                 Upload local files containing text context. PDF, DOCX, or plain TXT files.
               </CardDescription>
             </CardHeader>
             <CardContent className="p-5 pt-0">
               <form onSubmit={handleFileUpload} className="space-y-4">
                 <div className="space-y-2">
-                  <div className="border border-dashed border-border/80 rounded-lg p-5 flex flex-col items-center justify-center bg-muted/40 hover:bg-muted/50 transition-colors cursor-pointer relative">
+                  <div className="border border-dashed border-slate-700/80 rounded-lg p-5 flex flex-col items-center justify-center bg-slate-950/20 hover:bg-slate-950/40 transition-colors cursor-pointer relative">
                     <input
                       type="file"
                       id="file-upload"
@@ -324,23 +324,23 @@ export default function AiKnowledgePage() {
                       onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
                       className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                     />
-                    <FileText className="h-8 w-8 text-muted-foreground mb-2" />
-                    <span className="text-xs text-foreground text-center font-medium block">
+                    <FileText className="h-8 w-8 text-slate-500 mb-2" />
+                    <span className="text-xs text-slate-300 text-center font-medium block">
                       {selectedFile ? selectedFile.name : "Choose TXT, PDF, or DOCX"}
                     </span>
-                    <span className="text-[10px] text-muted-foreground mt-1 block">
+                    <span className="text-[10px] text-slate-500 mt-1 block">
                       {selectedFile ? `${(selectedFile.size / 1024).toFixed(1)} KB` : "Max size 10MB"}
                     </span>
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <Label htmlFor="file-category" className="text-xs text-foreground">Category</Label>
+                  <Label htmlFor="file-category" className="text-xs text-slate-300">Category</Label>
                   <select
                     id="file-category"
                     value={fileCategory}
                     onChange={(e) => setFileCategory(e.target.value)}
-                    className="w-full rounded-md border border-border bg-muted text-foreground text-xs px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                    className="w-full rounded-md border border-slate-700 bg-slate-800 text-white text-xs px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                   >
                     {CATEGORIES.map((cat) => (
                       <option key={cat} value={cat}>
@@ -351,20 +351,20 @@ export default function AiKnowledgePage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <Label htmlFor="file-tags" className="text-xs text-foreground">Tags (comma separated)</Label>
+                  <Label htmlFor="file-tags" className="text-xs text-slate-300">Tags (comma separated)</Label>
                   <Input
                     id="file-tags"
                     placeholder="e.g. documentation, sales"
                     value={fileTags}
                     onChange={(e) => setFileTags(e.target.value)}
-                    className="bg-muted border-border text-foreground text-xs"
+                    className="bg-slate-800 border-slate-700 text-white text-xs"
                   />
                 </div>
 
                 <Button 
                   type="submit" 
                   disabled={!selectedFile || uploading} 
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-foreground text-xs font-semibold"
+                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold"
                 >
                   {uploading ? (
                     <>
@@ -380,30 +380,30 @@ export default function AiKnowledgePage() {
           </Card>
 
           {/* Website Link Crawler card */}
-          <Card className="bg-card/60 border-border">
+          <Card className="bg-slate-900/40 border-slate-800">
             <CardHeader className="p-5 pb-3">
-              <CardTitle className="text-base text-foreground flex items-center gap-2">
+              <CardTitle className="text-base text-white flex items-center gap-2">
                 <Globe className="h-4.5 w-4.5 text-indigo-400" />
                 Scrape Website URL
               </CardTitle>
-              <CardDescription className="text-muted-foreground text-xs">
+              <CardDescription className="text-slate-400 text-xs">
                 Fetch and parse the readable text content of any public web page.
               </CardDescription>
             </CardHeader>
             <CardContent className="p-5 pt-0">
               <form onSubmit={handleAddUrl} className="space-y-4">
                 <div className="space-y-1.5">
-                  <Label htmlFor="web-title" className="text-xs text-foreground">Document Label</Label>
+                  <Label htmlFor="web-title" className="text-xs text-slate-300">Document Label</Label>
                   <Input
                     id="web-title"
                     placeholder="e.g. FAQ or Pricing Page"
                     value={websiteTitle}
                     onChange={(e) => setWebsiteTitle(e.target.value)}
-                    className="bg-muted border-border text-foreground text-xs"
+                    className="bg-slate-800 border-slate-700 text-white text-xs"
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <Label htmlFor="web-url" className="text-xs text-foreground">URL</Label>
+                  <Label htmlFor="web-url" className="text-xs text-slate-300">URL</Label>
                   <Input
                     id="web-url"
                     type="url"
@@ -411,17 +411,17 @@ export default function AiKnowledgePage() {
                     value={websiteUrl}
                     onChange={(e) => setWebsiteUrl(e.target.value)}
                     required
-                    className="bg-muted border-border text-foreground text-xs font-mono"
+                    className="bg-slate-800 border-slate-700 text-white text-xs font-mono"
                   />
                 </div>
 
                 <div className="space-y-1.5">
-                  <Label htmlFor="web-category" className="text-xs text-foreground">Category</Label>
+                  <Label htmlFor="web-category" className="text-xs text-slate-300">Category</Label>
                   <select
                     id="web-category"
                     value={webCategory}
                     onChange={(e) => setWebCategory(e.target.value)}
-                    className="w-full rounded-md border border-border bg-muted text-foreground text-xs px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                    className="w-full rounded-md border border-slate-700 bg-slate-800 text-white text-xs px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                   >
                     {CATEGORIES.map((cat) => (
                       <option key={cat} value={cat}>
@@ -432,24 +432,24 @@ export default function AiKnowledgePage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <Label htmlFor="web-tags" className="text-xs text-foreground">Tags (comma separated)</Label>
+                  <Label htmlFor="web-tags" className="text-xs text-slate-300">Tags (comma separated)</Label>
                   <Input
                     id="web-tags"
                     placeholder="e.g. pricing, website"
                     value={webTags}
                     onChange={(e) => setWebTags(e.target.value)}
-                    className="bg-muted border-border text-foreground text-xs"
+                    className="bg-slate-800 border-slate-700 text-white text-xs"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 pt-1">
                   <div className="space-y-1.5">
-                    <Label htmlFor="crawl-depth" className="text-xs text-foreground">Crawl Depth</Label>
+                    <Label htmlFor="crawl-depth" className="text-xs text-slate-300">Crawl Depth</Label>
                     <select
                       id="crawl-depth"
                       value={crawlDepth}
                       onChange={(e) => setCrawlDepth(Number(e.target.value))}
-                      className="w-full rounded-md border border-border bg-muted text-foreground text-xs px-3.5 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                      className="w-full rounded-md border border-slate-700 bg-slate-800 text-white text-xs px-3.5 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                     >
                       <option value={1}>1 (Single page)</option>
                       <option value={2}>2 (Depth 2)</option>
@@ -457,7 +457,7 @@ export default function AiKnowledgePage() {
                     </select>
                   </div>
                   <div className="space-y-1.5">
-                    <Label htmlFor="max-pages" className="text-xs text-foreground">Max Pages</Label>
+                    <Label htmlFor="max-pages" className="text-xs text-slate-300">Max Pages</Label>
                     <Input
                       id="max-pages"
                       type="number"
@@ -465,7 +465,7 @@ export default function AiKnowledgePage() {
                       max={20}
                       value={maxPages}
                       onChange={(e) => setMaxPages(Number(e.target.value))}
-                      className="bg-muted border-border text-foreground text-xs"
+                      className="bg-slate-800 border-slate-700 text-white text-xs"
                     />
                   </div>
                 </div>
@@ -473,7 +473,7 @@ export default function AiKnowledgePage() {
                 <Button 
                   type="submit" 
                   disabled={!websiteUrl || fetching}
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-foreground text-xs font-semibold"
+                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold"
                 >
                   {fetching ? (
                     <>
@@ -491,40 +491,40 @@ export default function AiKnowledgePage() {
 
         {/* Right Column - Documents Table */}
         <div className="lg:col-span-2">
-          <Card className="bg-card/60 border-border h-full">
+          <Card className="bg-slate-900/40 border-slate-800 h-full">
             <CardHeader className="p-5 pb-3 flex flex-row items-center justify-between">
               <div>
-                <CardTitle className="text-base text-foreground flex items-center gap-2">
+                <CardTitle className="text-base text-white flex items-center gap-2">
                   <BookOpen className="h-4.5 w-4.5 text-indigo-400" />
                   Ingested Documents
                 </CardTitle>
-                <CardDescription className="text-muted-foreground text-xs">
+                <CardDescription className="text-slate-400 text-xs">
                   A list of files and URLs indexed in your vector database.
                 </CardDescription>
               </div>
-              <Badge variant="outline" className="bg-background border-border text-muted-foreground font-semibold px-2.5 py-0.5 text-xs">
+              <Badge variant="outline" className="bg-slate-950 border-slate-800 text-slate-400 font-semibold px-2.5 py-0.5 text-xs">
                 {documents.length} Total
               </Badge>
             </CardHeader>
             <CardContent className="p-5 pt-0">
               {loading ? (
-                <div className="flex flex-col items-center justify-center py-20 text-muted-foreground">
+                <div className="flex flex-col items-center justify-center py-20 text-slate-500">
                   <Loader2 className="h-8 w-8 animate-spin text-indigo-500 mb-3" />
                   <span className="text-xs">Loading files...</span>
                 </div>
               ) : documents.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-20 border border-dashed border-border rounded-xl bg-background/10 text-muted-foreground">
-                  <BookOpen className="h-10 w-10 text-muted-foreground mb-3" />
-                  <span className="text-sm font-semibold text-muted-foreground">No documents ingested</span>
-                  <span className="text-xs text-muted-foreground mt-1 max-w-xs text-center leading-relaxed">
+                <div className="flex flex-col items-center justify-center py-20 border border-dashed border-slate-850 rounded-xl bg-slate-950/10 text-slate-500">
+                  <BookOpen className="h-10 w-10 text-slate-700 mb-3" />
+                  <span className="text-sm font-semibold text-slate-400">No documents ingested</span>
+                  <span className="text-xs text-slate-500 mt-1 max-w-xs text-center leading-relaxed">
                     Upload your first document or scrape a URL to build your AI's custom context.
                   </span>
                 </div>
               ) : (
-                <div className="overflow-x-auto border border-border rounded-xl bg-muted/40 shadow-inner">
-                  <table className="w-full text-left text-foreground text-xs">
+                <div className="overflow-x-auto border border-slate-850 rounded-xl bg-slate-950/20 shadow-inner">
+                  <table className="w-full text-left text-slate-300 text-xs">
                     <thead>
-                      <tr className="border-b border-border bg-background/30 text-muted-foreground font-medium">
+                      <tr className="border-b border-slate-850 bg-slate-950/30 text-slate-400 font-medium">
                         <th className="px-4 py-3">Title / Source</th>
                         <th className="px-4 py-3">Type</th>
                         <th className="px-4 py-3">Status</th>
@@ -534,9 +534,9 @@ export default function AiKnowledgePage() {
                     </thead>
                     <tbody className="divide-y divide-slate-850/60">
                       {documents.map((doc) => (
-                        <tr key={doc.id} className="hover:bg-card/20 transition-colors">
+                        <tr key={doc.id} className="hover:bg-slate-900/20 transition-colors">
                           <td className="px-4 py-3.5 max-w-[240px]">
-                            <span className="font-semibold text-foreground block truncate" title={doc.title}>{doc.title}</span>
+                            <span className="font-semibold text-slate-200 block truncate" title={doc.title}>{doc.title}</span>
                             {doc.source_url && (
                               <a 
                                 href={doc.source_url} 
@@ -548,7 +548,7 @@ export default function AiKnowledgePage() {
                               </a>
                             )}
                             <div className="flex flex-wrap gap-1 mt-1.5">
-                              <Badge className="bg-muted text-foreground border border-border/50 hover:bg-muted text-[9px] px-1.5 py-0">
+                              <Badge className="bg-slate-800 text-slate-300 border border-slate-700/50 hover:bg-slate-800 text-[9px] px-1.5 py-0">
                                 {doc.category || "General"}
                               </Badge>
                               {doc.tags && doc.tags.map((tag) => (
@@ -557,7 +557,7 @@ export default function AiKnowledgePage() {
                                 </Badge>
                               ))}
                             </div>
-                            <span className="text-[9px] text-muted-foreground block mt-1.5">
+                            <span className="text-[9px] text-slate-500 block mt-1.5">
                               Added {new Date(doc.created_at).toLocaleDateString()}
                             </span>
                             {doc.status === "failed" && doc.error_message && (
@@ -566,13 +566,13 @@ export default function AiKnowledgePage() {
                               </span>
                             )}
                           </td>
-                          <td className="px-4 py-3.5 font-medium uppercase text-muted-foreground text-[10px]">
+                          <td className="px-4 py-3.5 font-medium uppercase text-slate-400 text-[10px]">
                             {doc.doc_type}
                           </td>
                           <td className="px-4 py-3.5">
                             {getStatusBadge(doc.status)}
                           </td>
-                          <td className="px-4 py-3.5 font-mono text-muted-foreground">
+                          <td className="px-4 py-3.5 font-mono text-slate-400">
                             {doc.status === "ready" ? doc.chunk_count : "-"}
                           </td>
                           <td className="px-4 py-3.5 text-right">
@@ -580,7 +580,7 @@ export default function AiKnowledgePage() {
                               variant="ghost" 
                               size="icon" 
                               onClick={() => handleDelete(doc.id, doc.title)}
-                              className="text-muted-foreground hover:text-rose-400 hover:bg-rose-500/10 h-7 w-7 rounded-lg transition-colors"
+                              className="text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 h-7 w-7 rounded-lg transition-colors"
                             >
                               <Trash2 className="h-4 w-4" />
                             </Button>

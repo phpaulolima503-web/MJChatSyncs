@@ -134,13 +134,13 @@ export function TemplatePicker({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="border-border bg-card sm:max-w-lg">
+      <DialogContent className="border-slate-700 bg-slate-900 sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-foreground">
+          <DialogTitle className="flex items-center gap-2 text-white">
             <LayoutTemplate className="h-4 w-4 text-primary" />
             {selected ? selected.name : "Enviar modelo"}
           </DialogTitle>
-          <DialogDescription className="text-muted-foreground">
+          <DialogDescription className="text-slate-400">
             {selected
               ? "Preencha os campos para montar este modelo. A Meta exige que toda variável seja preenchida."
               : "Escolha um modelo aprovado do WhatsApp para enviar a este contato."}
@@ -154,9 +154,9 @@ export function TemplatePicker({
                 <Loader2 className="h-5 w-5 animate-spin text-primary" />
               </div>
             ) : templates.length === 0 ? (
-              <div className="rounded-md border border-border bg-background/50 p-6 text-center">
-                <p className="text-sm text-foreground">Nenhum modelo aprovado</p>
-                <p className="mt-1 text-xs text-muted-foreground">
+              <div className="rounded-md border border-slate-800 bg-slate-950/50 p-6 text-center">
+                <p className="text-sm text-slate-300">Nenhum modelo aprovado</p>
+                <p className="mt-1 text-xs text-slate-500">
                   Aprove um modelo no Gerenciador do WhatsApp da Meta e depois
                   sincronize em Configurações → Modelos.
                 </p>
@@ -167,28 +167,28 @@ export function TemplatePicker({
                   key={t.id}
                   type="button"
                   onClick={() => pickTemplate(t)}
-                  className="w-full rounded-md border border-border bg-background/50 p-3 text-left transition-colors hover:border-primary/40 hover:bg-card"
+                  className="w-full rounded-md border border-slate-800 bg-slate-950/50 p-3 text-left transition-colors hover:border-primary/40 hover:bg-slate-900"
                 >
                   <div className="flex items-start gap-2">
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2">
-                        <p className="truncate text-sm font-medium text-foreground">
+                        <p className="truncate text-sm font-medium text-white">
                           {t.name}
                         </p>
                         <Badge className="border border-primary/30 bg-primary/20 text-[10px] text-primary">
                           {t.category}
                         </Badge>
                         {t.language && (
-                          <span className="text-[10px] uppercase text-muted-foreground">
+                          <span className="text-[10px] uppercase text-slate-500">
                             {t.language}
                           </span>
                         )}
                       </div>
-                      <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">
+                      <p className="mt-1 line-clamp-2 text-xs text-slate-400">
                         {t.body_text}
                       </p>
                     </div>
-                    <ChevronRight className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
+                    <ChevronRight className="h-4 w-4 flex-shrink-0 text-slate-500" />
                   </div>
                 </button>
               ))
@@ -196,20 +196,20 @@ export function TemplatePicker({
           </div>
         ) : (
           <div className="space-y-3">
-            <div className="rounded-md border border-border bg-background/50 p-3">
-              <p className="mb-1 text-xs text-muted-foreground">Pré-visualização</p>
-              <p className="whitespace-pre-wrap text-sm text-foreground">
+            <div className="rounded-md border border-slate-800 bg-slate-950/50 p-3">
+              <p className="mb-1 text-xs text-slate-400">Pré-visualização</p>
+              <p className="whitespace-pre-wrap text-sm text-slate-200">
                 {renderBodyPreview(selected.body_text, params)}
               </p>
               {selected.footer_text && (
-                <p className="mt-2 text-xs italic text-muted-foreground">
+                <p className="mt-2 text-xs italic text-slate-500">
                   {selected.footer_text}
                 </p>
               )}
             </div>
             {variables.map((v, i) => (
               <div key={v} className="space-y-1">
-                <Label className="text-xs text-foreground">{`Variável {{${v}}}`}</Label>
+                <Label className="text-xs text-slate-300">{`Variável {{${v}}}`}</Label>
                 <Input
                   value={params[i] ?? ""}
                   onChange={(e) => {
@@ -218,7 +218,7 @@ export function TemplatePicker({
                     setParams(next);
                   }}
                   placeholder={`Valor para {{${v}}}`}
-                  className="border-border bg-muted text-foreground placeholder:text-muted-foreground"
+                  className="border-slate-700 bg-slate-800 text-white placeholder:text-slate-500"
                 />
               </div>
             ))}
@@ -234,7 +234,7 @@ export function TemplatePicker({
                   setSelected(null);
                   setParams([]);
                 }}
-                className="border-border text-foreground hover:bg-muted"
+                className="border-slate-700 text-slate-300 hover:bg-slate-800"
               >
                 <ArrowLeft className="h-4 w-4" />
                 Voltar
@@ -251,7 +251,7 @@ export function TemplatePicker({
             <Button
               variant="outline"
               onClick={() => handleOpenChange(false)}
-              className="border-border text-foreground hover:bg-muted"
+              className="border-slate-700 text-slate-300 hover:bg-slate-800"
             >
               Cancelar
             </Button>

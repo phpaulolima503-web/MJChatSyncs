@@ -352,8 +352,8 @@ export default function ContactsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Contatos</h1>
-          <p className="text-sm text-muted-foreground mt-1">
+          <h1 className="text-2xl font-bold text-white">Contatos</h1>
+          <p className="text-sm text-slate-400 mt-1">
             Gerencie sua lista de contatos. {totalCount > 0 && `${totalCount} contatos no total.`}
           </p>
         </div>
@@ -361,7 +361,7 @@ export default function ContactsPage() {
           <Button
             variant="outline"
             onClick={() => setImportOpen(true)}
-            className="border-border text-foreground hover:bg-muted"
+            className="border-slate-700 text-slate-300 hover:bg-slate-800"
           >
             <Upload className="size-4" />
             Importar
@@ -378,7 +378,7 @@ export default function ContactsPage() {
 
       {/* Search */}
       <div className="relative max-w-sm">
-        <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+        <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-slate-500" />
         <Input
           value={search}
           onChange={(e) => {
@@ -388,48 +388,48 @@ export default function ContactsPage() {
             setPage(0);
           }}
           placeholder="Buscar por nome, telefone ou email..."
-          className="pl-8 bg-card border-border text-foreground placeholder:text-muted-foreground"
+          className="pl-8 bg-slate-900 border-slate-700 text-white placeholder:text-slate-500"
         />
       </div>
 
       {/* Table */}
-      <div className="rounded-lg border border-border overflow-hidden">
+      <div className="rounded-lg border border-slate-800 overflow-hidden">
         <Table>
           <TableHeader>
-            <TableRow className="border-border hover:bg-transparent">
-              <TableHead className="w-12 text-muted-foreground text-center">
+            <TableRow className="border-slate-800 hover:bg-transparent">
+              <TableHead className="w-12 text-slate-400 text-center">
                 <input
                   type="checkbox"
                   checked={contacts.length > 0 && contacts.every(c => selectedIds.includes(c.id))}
                   onChange={toggleSelectAll}
-                  className="rounded bg-background border-border text-primary focus:ring-primary/40 size-3.5 cursor-pointer"
+                  className="rounded bg-slate-950 border-slate-800 text-primary focus:ring-primary/40 size-3.5 cursor-pointer"
                 />
               </TableHead>
-              <TableHead className="text-muted-foreground">Nome</TableHead>
-              <TableHead className="text-muted-foreground">Telefone</TableHead>
-              <TableHead className="text-muted-foreground hidden md:table-cell">Email</TableHead>
-              <TableHead className="text-muted-foreground hidden lg:table-cell">Empresa</TableHead>
-              <TableHead className="text-muted-foreground hidden md:table-cell">Etiquetas</TableHead>
-              <TableHead className="text-muted-foreground hidden lg:table-cell">Criado</TableHead>
-              <TableHead className="text-muted-foreground w-12" />
+              <TableHead className="text-slate-400">Nome</TableHead>
+              <TableHead className="text-slate-400">Telefone</TableHead>
+              <TableHead className="text-slate-400 hidden md:table-cell">Email</TableHead>
+              <TableHead className="text-slate-400 hidden lg:table-cell">Empresa</TableHead>
+              <TableHead className="text-slate-400 hidden md:table-cell">Etiquetas</TableHead>
+              <TableHead className="text-slate-400 hidden lg:table-cell">Criado</TableHead>
+              <TableHead className="text-slate-400 w-12" />
             </TableRow>
           </TableHeader>
           <TableBody>
             {loading ? (
-              <TableRow className="border-border">
+              <TableRow className="border-slate-800">
                 <TableCell colSpan={8} className="text-center py-12">
                   <div className="flex flex-col items-center gap-2">
                     <Loader2 className="size-6 animate-spin text-primary" />
-                    <p className="text-sm text-muted-foreground">Carregando contatos...</p>
+                    <p className="text-sm text-slate-500">Carregando contatos...</p>
                   </div>
                 </TableCell>
               </TableRow>
             ) : contacts.length === 0 ? (
-              <TableRow className="border-border">
+              <TableRow className="border-slate-800">
                 <TableCell colSpan={8} className="text-center py-12">
                   <div className="flex flex-col items-center gap-2 flex-1">
-                    <Users className="size-8 text-muted-foreground" />
-                    <p className="text-sm text-muted-foreground">
+                    <Users className="size-8 text-slate-600" />
+                    <p className="text-sm text-slate-500">
                       {search ? 'Nenhum contato encontrado na busca.' : 'Nenhum contato ainda.'}
                     </p>
                     {!search && (
@@ -437,7 +437,7 @@ export default function ContactsPage() {
                         variant="outline"
                         size="sm"
                         onClick={openAddForm}
-                        className="mt-2 border-border text-foreground hover:bg-muted"
+                        className="mt-2 border-slate-700 text-slate-300 hover:bg-slate-800"
                       >
                         <Plus className="size-3.5" />
                         Adicionar seu primeiro contato
@@ -451,8 +451,8 @@ export default function ContactsPage() {
                 <TableRow
                   key={contact.id}
                   className={cn(
-                    "border-border hover:bg-card/70 cursor-pointer transition-colors",
-                    selectedIds.includes(contact.id) && "bg-card/30 border-l-2 border-primary"
+                    "border-slate-800 hover:bg-slate-900/50 cursor-pointer transition-colors",
+                    selectedIds.includes(contact.id) && "bg-slate-900/30 border-l-2 border-primary"
                   )}
                   onClick={() => openDetail(contact.id)}
                 >
@@ -461,20 +461,20 @@ export default function ContactsPage() {
                       type="checkbox"
                       checked={selectedIds.includes(contact.id)}
                       onChange={e => toggleSelect(contact.id, e as any)}
-                      className="rounded bg-slate-955 border-border text-primary focus:ring-primary/40 size-3.5 cursor-pointer"
+                      className="rounded bg-slate-955 border-slate-800 text-primary focus:ring-primary/40 size-3.5 cursor-pointer"
                     />
                   </TableCell>
-                  <TableCell className="text-foreground font-medium">
-                    {contact.name || <span className="text-muted-foreground italic">Sem nome</span>}
+                  <TableCell className="text-white font-medium">
+                    {contact.name || <span className="text-slate-500 italic">Sem nome</span>}
                   </TableCell>
-                  <TableCell className="text-foreground font-mono text-xs">
+                  <TableCell className="text-slate-300 font-mono text-xs">
                     {contact.phone}
                   </TableCell>
-                  <TableCell className="text-muted-foreground hidden md:table-cell text-sm">
-                    {contact.email || <span className="text-muted-foreground">-</span>}
+                  <TableCell className="text-slate-400 hidden md:table-cell text-sm">
+                    {contact.email || <span className="text-slate-600">-</span>}
                   </TableCell>
-                  <TableCell className="text-muted-foreground hidden lg:table-cell text-sm">
-                    {contact.company || <span className="text-muted-foreground">-</span>}
+                  <TableCell className="text-slate-400 hidden lg:table-cell text-sm">
+                    {contact.company || <span className="text-slate-600">-</span>}
                   </TableCell>
                   <TableCell className="hidden md:table-cell">
                     <div className="flex flex-wrap gap-1">
@@ -492,16 +492,16 @@ export default function ContactsPage() {
                           </span>
                         ))
                       ) : (
-                        <span className="text-muted-foreground text-xs">-</span>
+                        <span className="text-slate-600 text-xs">-</span>
                       )}
                       {contact.tags && contact.tags.length > 3 && (
-                        <span className="text-[10px] text-muted-foreground">
+                        <span className="text-[10px] text-slate-500">
                           +{contact.tags.length - 3}
                         </span>
                       )}
                     </div>
                   </TableCell>
-                  <TableCell className="text-muted-foreground text-xs hidden lg:table-cell">
+                  <TableCell className="text-slate-500 text-xs hidden lg:table-cell">
                     {new Date(contact.created_at).toLocaleDateString('pt-BR', {
                       month: 'short',
                       day: 'numeric',
@@ -515,7 +515,7 @@ export default function ContactsPage() {
                           <Button
                             variant="ghost"
                             size="icon-sm"
-                            className="text-muted-foreground hover:text-foreground"
+                            className="text-slate-400 hover:text-white"
                             onClick={(e) => e.stopPropagation()}
                           />
                         }
@@ -524,19 +524,19 @@ export default function ContactsPage() {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent
                         align="end"
-                        className="bg-card border-border"
+                        className="bg-slate-900 border-slate-700"
                       >
                         <DropdownMenuItem
                           onClick={(e) => {
                             e.stopPropagation();
                             openEditForm(contact);
                           }}
-                          className="text-foreground focus:bg-muted focus:text-foreground"
+                          className="text-slate-300 focus:bg-slate-800 focus:text-white"
                         >
                           <Pencil className="size-4" />
                           Editar
                         </DropdownMenuItem>
-                        <DropdownMenuSeparator className="bg-muted" />
+                        <DropdownMenuSeparator className="bg-slate-700" />
                         <DropdownMenuItem
                           variant="destructive"
                           onClick={(e) => {
@@ -560,7 +560,7 @@ export default function ContactsPage() {
       {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex items-center justify-between">
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-slate-500">
             Mostrando {page * PAGE_SIZE + 1}-{Math.min((page + 1) * PAGE_SIZE, totalCount)} de{' '}
             {totalCount}
           </p>
@@ -570,11 +570,11 @@ export default function ContactsPage() {
               size="icon-sm"
               disabled={!hasPrev}
               onClick={() => setPage((p) => p - 1)}
-              className="border-border text-muted-foreground hover:bg-muted hover:text-foreground disabled:opacity-30"
+              className="border-slate-700 text-slate-400 hover:bg-slate-800 hover:text-white disabled:opacity-30"
             >
               <ChevronLeft className="size-4" />
             </Button>
-            <span className="text-xs text-muted-foreground px-2">
+            <span className="text-xs text-slate-400 px-2">
               Página {page + 1} de {totalPages}
             </span>
             <Button
@@ -582,7 +582,7 @@ export default function ContactsPage() {
               size="icon-sm"
               disabled={!hasNext}
               onClick={() => setPage((p) => p + 1)}
-              className="border-border text-muted-foreground hover:bg-muted hover:text-foreground disabled:opacity-30"
+              className="border-slate-700 text-slate-400 hover:bg-slate-800 hover:text-white disabled:opacity-30"
             >
               <ChevronRight className="size-4" />
             </Button>
@@ -619,22 +619,22 @@ export default function ContactsPage() {
 
       {/* Delete Confirmation */}
       <Dialog open={deleteConfirmOpen} onOpenChange={setDeleteConfirmOpen}>
-        <DialogContent className="bg-card border-border text-foreground sm:max-w-sm">
+        <DialogContent className="bg-slate-900 border-slate-700 text-slate-200 sm:max-w-sm">
           <DialogHeader>
-            <DialogTitle className="text-foreground">Excluir Contato</DialogTitle>
-            <DialogDescription className="text-muted-foreground">
+            <DialogTitle className="text-white">Excluir Contato</DialogTitle>
+            <DialogDescription className="text-slate-400">
               Tem certeza que deseja excluir{' '}
-              <span className="text-foreground font-medium">
+              <span className="text-slate-200 font-medium">
                 {deleteTarget?.name || deleteTarget?.phone}
               </span>
               ? Essa ação não pode ser desfeita.
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter className="bg-card border-border">
+          <DialogFooter className="bg-slate-900 border-slate-700">
             <Button
               variant="outline"
               onClick={() => setDeleteConfirmOpen(false)}
-              className="border-border text-foreground hover:bg-muted"
+              className="border-slate-700 text-slate-300 hover:bg-slate-800"
             >
               Cancelar
             </Button>
@@ -652,12 +652,12 @@ export default function ContactsPage() {
 
       {/* Floating Bulk Action Bar */}
       {selectedIds.length > 0 && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-full max-w-2xl bg-card border border-primary/35 shadow-2xl rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 animate-in slide-in-from-bottom-5 duration-300 text-xs">
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-full max-w-2xl bg-slate-900 border border-primary/35 shadow-2xl rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 animate-in slide-in-from-bottom-5 duration-300 text-xs">
           <div className="flex items-center gap-2">
             <Badge className="bg-primary/20 text-primary border border-primary/30 text-xs font-black">
               {selectedIds.length} Selecionado{selectedIds.length === 1 ? '' : 's'}
             </Badge>
-            <span className="text-[11px] text-muted-foreground font-semibold hidden sm:inline">Ações em Massa</span>
+            <span className="text-[11px] text-slate-400 font-semibold hidden sm:inline">Ações em Massa</span>
           </div>
 
           <div className="flex items-center gap-2 flex-wrap text-xs">
@@ -667,7 +667,7 @@ export default function ContactsPage() {
                 handleBulkAssignOwner(e.target.value);
                 e.target.value = '';
               }}
-              className="bg-background border border-border text-foreground rounded px-2.5 py-1 outline-none text-[11px] font-semibold focus:border-primary/50 cursor-pointer"
+              className="bg-slate-950 border border-slate-800 text-slate-300 rounded px-2.5 py-1 outline-none text-[11px] font-semibold focus:border-primary/50 cursor-pointer"
             >
               <option value="">Atribuir Responsável...</option>
               {agents.map(a => (
@@ -681,7 +681,7 @@ export default function ContactsPage() {
                 handleBulkAddTag(e.target.value);
                 e.target.value = '';
               }}
-              className="bg-slate-955 border border-border text-foreground rounded px-2.5 py-1 outline-none text-[11px] font-semibold focus:border-primary/50 cursor-pointer"
+              className="bg-slate-955 border border-slate-800 text-slate-300 rounded px-2.5 py-1 outline-none text-[11px] font-semibold focus:border-primary/50 cursor-pointer"
             >
               <option value="">Atribuir Etiqueta...</option>
               {Object.values(tagsMap).map(t => (
@@ -693,14 +693,14 @@ export default function ContactsPage() {
             <DropdownMenu>
               <DropdownMenuTrigger
                 render={
-                  <Button variant="outline" size="sm" className="h-7 border-border bg-background hover:bg-muted hover:text-foreground text-foreground text-[11px] px-2.5 rounded">
+                  <Button variant="outline" size="sm" className="h-7 border-slate-800 bg-slate-950 hover:bg-slate-850 hover:text-white text-slate-300 text-[11px] px-2.5 rounded">
                     Exportar...
                   </Button>
                 }
               />
-              <DropdownMenuContent className="bg-background border-border text-slate-205">
-                <DropdownMenuItem onClick={handleBulkExportCSV} className="focus:bg-muted cursor-pointer">CSV</DropdownMenuItem>
-                <DropdownMenuItem onClick={handleBulkExportJSON} className="focus:bg-muted cursor-pointer">JSON</DropdownMenuItem>
+              <DropdownMenuContent className="bg-slate-950 border-slate-800 text-slate-205">
+                <DropdownMenuItem onClick={handleBulkExportCSV} className="focus:bg-slate-850 cursor-pointer">CSV</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleBulkExportJSON} className="focus:bg-slate-850 cursor-pointer">JSON</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
@@ -716,7 +716,7 @@ export default function ContactsPage() {
 
             <button
               onClick={() => setSelectedIds([])}
-              className="text-slate-450 hover:text-foreground text-xs pl-2 border-l border-border cursor-pointer"
+              className="text-slate-450 hover:text-white text-xs pl-2 border-l border-slate-800 cursor-pointer"
             >
               Limpar
             </button>

@@ -32,7 +32,7 @@ export function SalesAnalytics() {
       <div className="flex items-center gap-2">
         {[7, 30, 90].map(r => (
           <button key={r} onClick={() => setRange(r)}
-            className={`rounded-lg px-3 py-1 text-xs font-medium transition-colors ${range === r ? 'bg-primary text-foreground' : 'border border-border text-muted-foreground hover:text-foreground'}`}>
+            className={`rounded-lg px-3 py-1 text-xs font-medium transition-colors ${range === r ? 'bg-primary text-white' : 'border border-slate-700 text-slate-400 hover:text-slate-200'}`}>
             {r}D
           </button>
         ))}
@@ -46,18 +46,18 @@ export function SalesAnalytics() {
           { label: "Avg Deal Size", value: `₹${(sales.avg_deal_size || 0).toLocaleString('en-IN')}`, icon: BarChart2, color: "text-violet-400" },
           { label: "Conversion", value: `${((sales.conversion_rate || 0) * 100).toFixed(1)}%`, icon: Package, color: "text-orange-400" },
         ].map(item => (
-          <div key={item.label} className="rounded-xl border border-border bg-card p-4">
+          <div key={item.label} className="rounded-xl border border-slate-800 bg-slate-900 p-4">
             <item.icon className={`h-5 w-5 ${item.color}`} />
-            <p className="mt-2 text-xl font-bold text-foreground">{item.value}</p>
-            <p className="text-xs text-muted-foreground">{item.label}</p>
+            <p className="mt-2 text-xl font-bold text-slate-100">{item.value}</p>
+            <p className="text-xs text-slate-500">{item.label}</p>
           </div>
         ))}
       </div>
 
       {/* Pipeline by Stage */}
       {(sales.deals_by_stage || []).length > 0 && (
-        <div className="rounded-xl border border-border bg-card p-4">
-          <h3 className="mb-4 text-sm font-semibold text-foreground">Pipeline by Stage</h3>
+        <div className="rounded-xl border border-slate-800 bg-slate-900 p-4">
+          <h3 className="mb-4 text-sm font-semibold text-slate-300">Pipeline by Stage</h3>
           <div className="space-y-3">
             {(sales.deals_by_stage || []).map(stage => {
               const maxVal = Math.max(...(sales.deals_by_stage || []).map(s => s.value), 1)
@@ -65,10 +65,10 @@ export function SalesAnalytics() {
               return (
                 <div key={stage.stage}>
                   <div className="flex justify-between text-xs mb-1">
-                    <span className="text-muted-foreground">{stage.stage}</span>
-                    <span className="text-foreground">₹{stage.value.toLocaleString('en-IN')} ({stage.count})</span>
+                    <span className="text-slate-400">{stage.stage}</span>
+                    <span className="text-slate-300">₹{stage.value.toLocaleString('en-IN')} ({stage.count})</span>
                   </div>
-                  <div className="h-2 rounded-full bg-muted">
+                  <div className="h-2 rounded-full bg-slate-800">
                     <div className="h-2 rounded-full bg-primary transition-all" style={{ width: `${pct}%` }} />
                   </div>
                 </div>
@@ -80,24 +80,24 @@ export function SalesAnalytics() {
 
       {/* Top Services + Lead Sources */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <div className="rounded-xl border border-border bg-card p-4">
-          <h3 className="mb-4 text-sm font-semibold text-foreground">Top Services by Revenue</h3>
+        <div className="rounded-xl border border-slate-800 bg-slate-900 p-4">
+          <h3 className="mb-4 text-sm font-semibold text-slate-300">Top Services by Revenue</h3>
           <div className="space-y-2">
             {(sales.top_services || []).slice(0, 8).map(s => (
               <div key={s.service} className="flex justify-between text-xs">
-                <span className="text-muted-foreground capitalize">{s.service.replace(/_/g, ' ')}</span>
-                <span className="text-foreground font-medium">₹{s.value.toLocaleString('en-IN')}</span>
+                <span className="text-slate-400 capitalize">{s.service.replace(/_/g, ' ')}</span>
+                <span className="text-slate-200 font-medium">₹{s.value.toLocaleString('en-IN')}</span>
               </div>
             ))}
           </div>
         </div>
-        <div className="rounded-xl border border-border bg-card p-4">
-          <h3 className="mb-4 text-sm font-semibold text-foreground">Lead Sources</h3>
+        <div className="rounded-xl border border-slate-800 bg-slate-900 p-4">
+          <h3 className="mb-4 text-sm font-semibold text-slate-300">Lead Sources</h3>
           <div className="space-y-2">
             {(sales.lead_sources || []).map(s => (
               <div key={s.source} className="flex justify-between text-xs">
-                <span className="text-muted-foreground">{s.source}</span>
-                <span className="text-foreground font-medium">{s.count} leads</span>
+                <span className="text-slate-400">{s.source}</span>
+                <span className="text-slate-200 font-medium">{s.count} leads</span>
               </div>
             ))}
           </div>

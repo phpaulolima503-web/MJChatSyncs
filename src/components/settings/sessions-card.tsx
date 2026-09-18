@@ -49,13 +49,13 @@ export function SessionsCard() {
 
   return (
     <>
-      <Card className="bg-card/60 border-border">
+      <Card className="bg-slate-900/40 border-slate-800">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-foreground">
+          <CardTitle className="flex items-center gap-2 text-white">
             <LogOut className="size-4 text-primary" />
             Active sessions
           </CardTitle>
-          <CardDescription className="text-muted-foreground">
+          <CardDescription className="text-slate-400">
             Sign out of every device where you&apos;re logged in — including
             this one. Useful if you lost a laptop or shared your password.
           </CardDescription>

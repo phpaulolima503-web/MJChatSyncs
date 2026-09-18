@@ -146,7 +146,7 @@ export function MeetingScheduler({ contactId, meetings = [], onRefresh }: Meetin
       case 'teams':
         return <Video className="size-3.5 text-indigo-400" />;
       default:
-        return <Calendar className="size-3.5 text-muted-foreground" />;
+        return <Calendar className="size-3.5 text-slate-400" />;
     }
   };
 
@@ -158,16 +158,16 @@ export function MeetingScheduler({ contactId, meetings = [], onRefresh }: Meetin
   };
 
   return (
-    <div className="bg-background border border-border rounded-2xl shadow-xl overflow-hidden">
+    <div className="bg-slate-950 border border-slate-850 rounded-2xl shadow-xl overflow-hidden">
       {/* Header Tabs */}
-      <div className="flex border-b border-border bg-card/60">
+      <div className="flex border-b border-slate-850 bg-slate-900/40">
         <button
           onClick={() => setActiveTab('schedule')}
           className={cn(
             'flex-1 py-3.5 px-4 text-xs font-bold transition-all border-b-2 flex items-center justify-center gap-2',
             activeTab === 'schedule'
-              ? 'border-primary text-foreground bg-muted/40'
-              : 'border-transparent text-muted-foreground hover:text-foreground'
+              ? 'border-primary text-white bg-slate-950/20'
+              : 'border-transparent text-slate-400 hover:text-slate-200'
           )}
         >
           <Calendar className="size-4" />
@@ -178,8 +178,8 @@ export function MeetingScheduler({ contactId, meetings = [], onRefresh }: Meetin
           className={cn(
             'flex-1 py-3.5 px-4 text-xs font-bold transition-all border-b-2 flex items-center justify-center gap-2',
             activeTab === 'summarize'
-              ? 'border-primary text-foreground bg-muted/40'
-              : 'border-transparent text-muted-foreground hover:text-foreground'
+              ? 'border-primary text-white bg-slate-950/20'
+              : 'border-transparent text-slate-400 hover:text-slate-200'
           )}
         >
           <Sparkles className="size-4 text-indigo-450" />
@@ -201,36 +201,36 @@ export function MeetingScheduler({ contactId, meetings = [], onRefresh }: Meetin
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Meeting Title</label>
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Meeting Title</label>
                   <input
                     type="text"
                     required
                     placeholder="e.g., Requirements Kickoff Call"
                     value={title}
                     onChange={e => setTitle(e.target.value)}
-                    className="w-full h-9 bg-card/70 border border-border rounded-lg px-3 text-xs text-foreground focus:outline-none focus:border-primary transition-all"
+                    className="w-full h-9 bg-slate-900/50 border border-slate-800 rounded-lg px-3 text-xs text-white focus:outline-none focus:border-primary transition-all"
                   />
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Date & Time</label>
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Date & Time</label>
                   <input
                     type="datetime-local"
                     required
                     value={startTime}
                     onChange={e => setStartTime(e.target.value)}
-                    className="w-full h-9 bg-card/70 border border-border rounded-lg px-3 text-xs text-foreground focus:outline-none focus:border-primary transition-all"
+                    className="w-full h-9 bg-slate-900/50 border border-slate-800 rounded-lg px-3 text-xs text-white focus:outline-none focus:border-primary transition-all"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Platform</label>
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Platform</label>
                   <select
                     value={platform}
                     onChange={e => setPlatform(e.target.value as any)}
-                    className="w-full h-9 bg-card/70 border border-border rounded-lg px-3 text-xs text-foreground focus:outline-none focus:border-primary transition-all"
+                    className="w-full h-9 bg-slate-900/50 border border-slate-800 rounded-lg px-3 text-xs text-white focus:outline-none focus:border-primary transition-all"
                   >
                     <option value="google_meet">Google Meet</option>
                     <option value="zoom">Zoom Video</option>
@@ -240,32 +240,32 @@ export function MeetingScheduler({ contactId, meetings = [], onRefresh }: Meetin
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Meeting Link (Optional)</label>
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Meeting Link (Optional)</label>
                   <input
                     type="url"
                     placeholder="https://meet.google.com/..."
                     value={meetingLink}
                     onChange={e => setMeetingLink(e.target.value)}
-                    className="w-full h-9 bg-card/70 border border-border rounded-lg px-3 text-xs text-foreground focus:outline-none focus:border-primary transition-all"
+                    className="w-full h-9 bg-slate-900/50 border border-slate-800 rounded-lg px-3 text-xs text-white focus:outline-none focus:border-primary transition-all"
                   />
                 </div>
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Consultation Agenda</label>
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Consultation Agenda</label>
                 <textarea
                   placeholder="Describe the objective and topics to be discussed..."
                   rows={2}
                   value={agenda}
                   onChange={e => setAgenda(e.target.value)}
-                  className="w-full bg-card/70 border border-border rounded-lg p-3 text-xs text-foreground focus:outline-none focus:border-primary transition-all resize-none"
+                  className="w-full bg-slate-900/50 border border-slate-800 rounded-lg p-3 text-xs text-white focus:outline-none focus:border-primary transition-all resize-none"
                 />
               </div>
 
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-9 bg-primary hover:bg-primary/90 text-foreground text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-2"
+                className="w-full h-9 bg-primary hover:bg-primary/90 text-white text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
                   <>
@@ -282,10 +282,10 @@ export function MeetingScheduler({ contactId, meetings = [], onRefresh }: Meetin
             </form>
 
             {/* Meetings List */}
-            <div className="border-t border-border pt-5 space-y-3">
-              <h4 className="text-xs font-bold text-foreground tracking-wide">Upcoming & Past Meetings ({meetings.length})</h4>
+            <div className="border-t border-slate-850 pt-5 space-y-3">
+              <h4 className="text-xs font-bold text-slate-300 tracking-wide">Upcoming & Past Meetings ({meetings.length})</h4>
               {meetings.length === 0 ? (
-                <p className="text-xs text-muted-foreground italic py-2">No consultations scheduled yet.</p>
+                <p className="text-xs text-slate-500 italic py-2">No consultations scheduled yet.</p>
               ) : (
                 <div className="space-y-2.5 max-h-64 overflow-y-auto pr-1">
                   {meetings.map(m => {
@@ -293,16 +293,16 @@ export function MeetingScheduler({ contactId, meetings = [], onRefresh }: Meetin
                     return (
                       <div
                         key={m.id}
-                        className="bg-card/20 border border-border p-3 rounded-xl space-y-2 hover:bg-card/60 transition-all"
+                        className="bg-slate-900/20 border border-slate-850 p-3 rounded-xl space-y-2 hover:bg-slate-900/40 transition-all"
                       >
                         <div className="flex items-center justify-between gap-1.5">
                           <div className="flex items-center gap-2">
-                            <div className="p-1.5 bg-background border border-border rounded-lg">
+                            <div className="p-1.5 bg-slate-950 border border-slate-800 rounded-lg">
                               {getPlatformIcon(m.platform)}
                             </div>
                             <div>
-                              <p className="text-xs font-bold text-foreground leading-tight">{m.title}</p>
-                              <span className="text-[10px] text-muted-foreground flex items-center gap-1">
+                              <p className="text-xs font-bold text-white leading-tight">{m.title}</p>
+                              <span className="text-[10px] text-slate-500 flex items-center gap-1">
                                 <Clock className="size-2.5" />
                                 {format(new Date(m.start_time), 'MMM dd, yyyy HH:mm')}
                               </span>
@@ -311,14 +311,14 @@ export function MeetingScheduler({ contactId, meetings = [], onRefresh }: Meetin
                           <Badge className={cn(
                             'text-[9px] font-bold border uppercase',
                             m.status === 'completed' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25' :
-                            m.status === 'cancelled' ? 'bg-card text-muted-foreground border-border' :
+                            m.status === 'cancelled' ? 'bg-slate-900 text-slate-500 border-slate-800' :
                             'bg-indigo-500/10 text-indigo-400 border-indigo-500/25 animate-pulse'
                           )}>
                             {m.status}
                           </Badge>
                         </div>
 
-                        {m.agenda && <p className="text-[11px] text-muted-foreground italic line-clamp-1">Agenda: {m.agenda}</p>}
+                        {m.agenda && <p className="text-[11px] text-slate-400 italic line-clamp-1">Agenda: {m.agenda}</p>}
                         
                         {m.meeting_link && (
                           <a
@@ -333,7 +333,7 @@ export function MeetingScheduler({ contactId, meetings = [], onRefresh }: Meetin
                         )}
 
                         {m.summary && (
-                          <div className="mt-1 pt-1.5 border-t border-border/50 space-y-1">
+                          <div className="mt-1 pt-1.5 border-t border-slate-850/50 space-y-1">
                             <button
                               onClick={() => setExpandedNotes(prev => ({ ...prev, [m.id]: !isNotesExpanded }))}
                               className="text-[9px] font-bold text-indigo-450 hover:text-indigo-400 uppercase tracking-wider flex items-center gap-0.5"
@@ -342,7 +342,7 @@ export function MeetingScheduler({ contactId, meetings = [], onRefresh }: Meetin
                               AI Meeting Intelligence
                             </button>
                             {isNotesExpanded && (
-                              <p className="text-[11px] text-foreground leading-relaxed bg-muted/50 p-2 rounded border border-border font-sans mt-1">
+                              <p className="text-[11px] text-slate-300 leading-relaxed bg-slate-950/40 p-2 rounded border border-slate-850 font-sans mt-1">
                                 {m.summary}
                               </p>
                             )}
@@ -375,12 +375,12 @@ export function MeetingScheduler({ contactId, meetings = [], onRefresh }: Meetin
             )}
 
             <div className="space-y-1.5">
-              <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Select Scheduled Meeting</label>
+              <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Select Scheduled Meeting</label>
               <select
                 required
                 value={selectedMeetingId}
                 onChange={e => setSelectedMeetingId(e.target.value)}
-                className="w-full h-9 bg-card/70 border border-border rounded-lg px-3 text-xs text-foreground focus:outline-none focus:border-primary transition-all"
+                className="w-full h-9 bg-slate-900/50 border border-slate-800 rounded-lg px-3 text-xs text-white focus:outline-none focus:border-primary transition-all"
               >
                 <option value="">-- Choose a scheduled meeting --</option>
                 {meetings
@@ -395,7 +395,7 @@ export function MeetingScheduler({ contactId, meetings = [], onRefresh }: Meetin
 
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
-                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Meeting Transcript or Call Notes</label>
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Meeting Transcript or Call Notes</label>
                 <Badge className="bg-indigo-500/10 text-indigo-400 border-indigo-500/20 text-[9px] uppercase px-1.5 py-0.5">
                   Premium NVIDIA AI
                 </Badge>
@@ -406,18 +406,18 @@ export function MeetingScheduler({ contactId, meetings = [], onRefresh }: Meetin
                 rows={6}
                 value={transcript}
                 onChange={e => setTranscript(e.target.value)}
-                className="w-full bg-card/70 border border-border rounded-lg p-3 text-xs text-foreground focus:outline-none focus:border-primary transition-all font-mono leading-relaxed"
+                className="w-full bg-slate-900/50 border border-slate-800 rounded-lg p-3 text-xs text-white focus:outline-none focus:border-primary transition-all font-mono leading-relaxed"
               />
             </div>
 
             <Button
               type="submit"
               disabled={isSummarizing || !selectedMeetingId || !transcript}
-              className="w-full h-9 bg-indigo-650 hover:bg-indigo-600 disabled:bg-indigo-950/35 text-foreground text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-950/30"
+              className="w-full h-9 bg-indigo-650 hover:bg-indigo-600 disabled:bg-indigo-950/35 text-white text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-950/30"
             >
               {isSummarizing ? (
                 <>
-                  <Loader2 className="size-3.5 animate-spin text-foreground" />
+                  <Loader2 className="size-3.5 animate-spin text-white" />
                   AI Writing Summary & Extracting Actions...
                 </>
               ) : (

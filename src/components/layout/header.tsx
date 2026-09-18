@@ -4,15 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/use-auth";
-import { useTotalUnread } from "@/hooks/use-total-unread";
-import {
-  LogOut, Menu, Settings as SettingsIcon, User, Building2, ChevronDown,
-  Sparkles, Plus, Check, Search, Bell, MessageSquare, LayoutGrid, BarChart3,
-  Users, GitBranch, Settings2, Tag, ListFilter, History, CheckSquare, Zap,
-  Workflow, Radio, Bot, BookOpen, ShoppingCart, MessageCircle, Webhook,
-  Receipt, FileText, CreditCard, Globe, Palette, HelpCircle, Headphones,
-  Shield,
-} from "lucide-react";
+import { LogOut, Menu, Settings as SettingsIcon, User, Building2, ChevronDown, Sparkles, Plus, PlusCircle, Check, Search, Bell } from "lucide-react";
 import {
   Avatar,
   AvatarFallback,
@@ -31,93 +23,6 @@ import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { GlobalSearchModal } from "./global-search-modal";
 import { cn } from "@/lib/utils";
-
-// Top nav groups — Papervines-style: a few primary tabs, the long tail of
-// features tucked into dropdowns instead of a full-height side list.
-// Every href here also exists in Sidebar's navItems; that list stays as
-// the mobile drawer / full menu, this is just a second, grouped way in.
-interface TopNavLeaf {
-  href: string;
-  label: string;
-  icon: typeof MessageSquare;
-}
-interface TopNavGroup {
-  key: string;
-  label: string;
-  icon: typeof MessageSquare;
-  /** Single link (Atendimentos) vs a dropdown of sub-items. */
-  href?: string;
-  items?: TopNavLeaf[];
-}
-
-const TOP_NAV_GROUPS: TopNavGroup[] = [
-  { key: "inbox", label: "Atendimentos", icon: MessageSquare, href: "/inbox" },
-  {
-    key: "crm",
-    label: "CRM",
-    icon: Users,
-    items: [
-      { href: "/contacts", label: "Contatos", icon: Users },
-      { href: "/pipelines", label: "Funis", icon: GitBranch },
-      { href: "/pipeline-manager", label: "Gerenciador de Funis", icon: Settings2 },
-      { href: "/conversation-history", label: "Histórico de Atendimentos", icon: History },
-      { href: "/tasks", label: "Tarefas", icon: CheckSquare },
-      { href: "/tags", label: "Etiquetas", icon: Tag },
-      { href: "/segments", label: "Segmentos", icon: ListFilter },
-      { href: "/team", label: "Equipe", icon: Users },
-    ],
-  },
-  {
-    key: "apps",
-    label: "Apps",
-    icon: LayoutGrid,
-    items: [
-      { href: "/automations", label: "Automações", icon: Zap },
-      { href: "/workflows", label: "Fluxos de Trabalho", icon: Workflow },
-      { href: "/workflows/templates", label: "Modelos de Fluxo", icon: Sparkles },
-      { href: "/flows", label: "Fluxos", icon: Workflow },
-      { href: "/broadcasts", label: "Transmissões", icon: Radio },
-      { href: "/templates", label: "Modelos de Mensagem", icon: MessageSquare },
-      { href: "/quick-replies", label: "Respostas Rápidas", icon: MessageSquare },
-      { href: "/ai-router", label: "Roteador de IA", icon: Bot },
-      { href: "/knowledge", label: "Base de Conhecimento", icon: BookOpen },
-      { href: "/commerce", label: "Comércio", icon: ShoppingCart },
-      { href: "/widgets", label: "Widget de Chat", icon: MessageCircle },
-      { href: "/integrations", label: "Integrações", icon: Webhook },
-    ],
-  },
-  {
-    key: "reports",
-    label: "Relatórios",
-    icon: BarChart3,
-    items: [
-      { href: "/analytics/executive", label: "BI Executivo", icon: BarChart3 },
-      { href: "/analytics/sales", label: "Análise de Vendas", icon: BarChart3 },
-      { href: "/analytics/ai-usage", label: "Uso de IA", icon: Bot },
-      { href: "/analytics/reports", label: "Relatórios e Alertas", icon: ListFilter },
-      { href: "/analytics", label: "Análises (Legado)", icon: BarChart3 },
-      { href: "/billing", label: "Faturamento GST", icon: Receipt },
-      { href: "/billing/new", label: "Nova Fatura", icon: FileText },
-      { href: "/gst-reports", label: "Declarações GST", icon: BarChart3 },
-      { href: "/payment-history", label: "Histórico de Pagamentos", icon: CreditCard },
-      { href: "/seo", label: "SEO e Marketing", icon: Globe },
-    ],
-  },
-  {
-    key: "settings",
-    label: "Ajustes",
-    icon: SettingsIcon,
-    items: [
-      { href: "/settings", label: "Configurações", icon: SettingsIcon },
-      { href: "/workspace", label: "Workspace e Marca", icon: Building2 },
-      { href: "/appearance", label: "Aparência", icon: Palette },
-      { href: "/support", label: "Chamados de Suporte", icon: Headphones },
-      { href: "/support/settings", label: "Configurações de Suporte", icon: Settings2 },
-      { href: "/admin", label: "Painel Admin", icon: Shield },
-      { href: "/docs", label: "Ajuda e Documentação", icon: HelpCircle },
-    ],
-  },
-];
 
 const pageTitles: Record<string, string> = {
   "/dashboard": "Painel",
@@ -338,142 +243,52 @@ export function Header({ onOpenSidebar }: HeaderProps) {
     }
   };
 
-  const totalUnread = useTotalUnread();
-
   return (
-    <header className="flex h-14 shrink-0 items-center justify-between gap-3 border-b border-border bg-card px-3 lg:px-4">
-      <div className="flex min-w-0 flex-1 items-center gap-1">
-        {/* Hamburger — opens the full menu (every nav item). Visible on
-            all sizes: on mobile it's the only way in, on desktop it's
-            the "everything else" fallback next to the grouped tabs. */}
+    <header className="flex h-14 shrink-0 items-center justify-between gap-3 border-b border-slate-800 bg-slate-950 px-4 lg:px-6">
+      <div className="flex min-w-0 items-center gap-3">
+        {/* Hamburger — mobile only */}
         <button
           type="button"
           onClick={onOpenSidebar}
-          aria-label="Abrir menu completo"
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-foreground transition-colors hover:bg-muted hover:text-foreground"
+          aria-label="Abrir menu"
+          className="flex h-10 w-10 items-center justify-center rounded-md text-slate-300 transition-colors hover:bg-slate-800 hover:text-white lg:hidden"
         >
           <Menu className="h-5 w-5" />
         </button>
+        
+        <h1 className="hidden sm:block truncate text-base font-semibold text-white sm:text-lg mr-2">
+          {title}
+        </h1>
 
-        {/* Brand */}
-        <Link href="/dashboard" className="mr-1 hidden shrink-0 items-center gap-2 pl-1 pr-2 sm:flex">
-          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <MessageSquare className="h-3.5 w-3.5" />
-          </div>
-          <span className="text-sm font-bold text-foreground">CRM</span>
-        </Link>
-
-        {/* Grouped top nav — Papervines-style tabs. Overflow-x scrolls on
-            narrow desktop widths rather than wrapping, so the row never
-            grows past one line. */}
-        <nav
-          aria-label="Navegação principal"
-          className="flex min-w-0 items-center gap-0.5 overflow-x-auto scrollbar-none"
-        >
-          {TOP_NAV_GROUPS.map((group) => {
-            const isSingleLink = !!group.href;
-            const isActive = isSingleLink
-              ? pathname === group.href || pathname.startsWith(group.href!)
-              : (group.items ?? []).some(
-                  (it) => pathname === it.href || pathname.startsWith(it.href),
-                );
-            const showUnreadDot = group.key === "inbox" && totalUnread > 0 && !isActive;
-
-            if (isSingleLink) {
-              return (
-                <Link
-                  key={group.key}
-                  href={group.href!}
-                  className={cn(
-                    "flex shrink-0 items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-medium transition-colors",
-                    isActive
-                      ? "bg-primary/10 text-primary"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground",
-                  )}
-                >
-                  <group.icon className="h-3.5 w-3.5" />
-                  <span className="hidden md:inline">{group.label}</span>
-                  {showUnreadDot && (
-                    <span className="relative flex h-1.5 w-1.5">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
-                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
-                    </span>
-                  )}
-                </Link>
-              );
-            }
-
-            return (
-              <DropdownMenu key={group.key}>
-                <DropdownMenuTrigger
-                  className={cn(
-                    "flex shrink-0 items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-medium transition-colors focus:outline-none",
-                    isActive
-                      ? "bg-primary/10 text-primary"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground",
-                  )}
-                >
-                  <group.icon className="h-3.5 w-3.5" />
-                  <span className="hidden md:inline">{group.label}</span>
-                  <ChevronDown className="h-3 w-3 opacity-60" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-64 bg-card border-border text-foreground">
-                  {(group.items ?? []).map((item) => {
-                    const itemActive = pathname === item.href || pathname.startsWith(item.href);
-                    return (
-                      <DropdownMenuItem
-                        key={item.href}
-                        render={
-                          <Link
-                            href={item.href}
-                            className={cn(
-                              "flex items-center gap-2",
-                              itemActive
-                                ? "text-primary"
-                                : "text-foreground focus:bg-muted focus:text-foreground",
-                            )}
-                          />
-                        }
-                      >
-                        <item.icon className="h-3.5 w-3.5" />
-                        {item.label}
-                      </DropdownMenuItem>
-                    );
-                  })}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            );
-          })}
-        </nav>
-      </div>
-
-      <div className="hidden min-w-0 shrink-0 items-center lg:flex">
+        {/* Workspace Switcher */}
+        <div className="h-4 w-px bg-slate-800 hidden sm:block mr-2" />
+        
         <DropdownMenu>
           <DropdownMenuTrigger
-            className="flex items-center gap-2 rounded-lg border border-border bg-card/70 px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-muted hover:text-foreground focus:outline-none"
+            className="flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-900/50 px-3 py-1.5 text-xs font-medium text-slate-200 transition-colors hover:bg-slate-800 hover:text-white focus:outline-none"
           >
-            <Building2 className="h-3.5 w-3.5 text-muted-foreground" />
+            <Building2 className="h-3.5 w-3.5 text-slate-400" />
             <span className="truncate max-w-[120px] sm:max-w-[180px]">
               {activeWorkspace?.name || "Selecionar Workspace..."}
             </span>
-            <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
+            <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" className="w-56 bg-card border-border text-foreground">
+          <DropdownMenuContent align="start" className="w-56 bg-slate-900 border-slate-800 text-slate-200">
             <>
-              <div className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+              <div className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500">
                   Espaços de Trabalho
                 </div>
                 {workspaces.map((ws) => (
                   <DropdownMenuItem
                     key={ws.id}
                     onClick={() => handleSwitchWorkspace(ws)}
-                    className="flex items-center justify-between cursor-pointer focus:bg-muted focus:text-foreground"
+                    className="flex items-center justify-between cursor-pointer focus:bg-slate-800 focus:text-white"
                   >
                     <span className="truncate">{ws.name}</span>
                     {activeWorkspace?.id === ws.id && <Check className="h-3.5 w-3.5 text-emerald-500" />}
                   </DropdownMenuItem>
                 ))}
-                <DropdownMenuSeparator className="bg-muted" />
+                <DropdownMenuSeparator className="bg-slate-800" />
                 {isAddingWorkspace ? (
                   <form onSubmit={handleAddWorkspace} className="p-2 flex gap-1.5">
                     <input
@@ -481,17 +296,17 @@ export function Header({ onOpenSidebar }: HeaderProps) {
                       placeholder="Nome do workspace..."
                       value={newWorkspaceName}
                       onChange={(e) => setNewWorkspaceName(e.target.value)}
-                      className="flex h-7 w-full rounded border border-border bg-background px-2 py-1 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+                      className="flex h-7 w-full rounded border border-slate-800 bg-slate-950 px-2 py-1 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-primary"
                       autoFocus
                     />
-                    <Button type="submit" size="sm" className="h-7 px-2 bg-primary text-foreground text-xs">
+                    <Button type="submit" size="sm" className="h-7 px-2 bg-primary text-white text-xs">
                       Adicionar
                     </Button>
                   </form>
                 ) : (
                   <DropdownMenuItem
                     onClick={() => setIsAddingWorkspace(true)}
-                    className="flex items-center gap-1.5 text-xs text-primary focus:bg-muted focus:text-primary cursor-pointer"
+                    className="flex items-center gap-1.5 text-xs text-primary focus:bg-slate-800 focus:text-primary cursor-pointer"
                   >
                     <Plus className="h-3.5 w-3.5" />
                     Novo Workspace
@@ -507,11 +322,11 @@ export function Header({ onOpenSidebar }: HeaderProps) {
         <button
           type="button"
           onClick={() => setIsSearchOpen(true)}
-          className="hidden md:flex items-center gap-2.5 w-60 rounded-xl border border-border bg-muted/50 hover:bg-card/70 px-3 py-1.5 text-xs text-slate-450 hover:text-foreground transition-all focus:outline-none cursor-pointer"
+          className="hidden md:flex items-center gap-2.5 w-60 rounded-xl border border-slate-800 bg-slate-950/40 hover:bg-slate-900/50 px-3 py-1.5 text-xs text-slate-450 hover:text-slate-300 transition-all focus:outline-none cursor-pointer"
         >
-          <Search className="h-3.5 w-3.5 text-muted-foreground" />
+          <Search className="h-3.5 w-3.5 text-slate-500" />
           <span className="flex-1 text-left">Buscar qualquer coisa...</span>
-          <kbd className="flex h-4 items-center gap-0.5 rounded bg-card px-1 text-[8px] font-bold text-muted-foreground border border-border font-mono">
+          <kbd className="flex h-4 items-center gap-0.5 rounded bg-slate-900 px-1 text-[8px] font-bold text-slate-600 border border-slate-800 font-mono">
             <span>⌘</span>
             <span>K</span>
           </kbd>
@@ -521,7 +336,7 @@ export function Header({ onOpenSidebar }: HeaderProps) {
         <button
           type="button"
           onClick={() => setIsSearchOpen(true)}
-          className="flex md:hidden h-8 w-8 items-center justify-center rounded-xl border border-border bg-card/60 hover:bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer"
+          className="flex md:hidden h-8 w-8 items-center justify-center rounded-xl border border-slate-800 bg-slate-900/40 hover:bg-slate-800 text-slate-400 hover:text-white transition-all cursor-pointer"
         >
           <Search className="h-3.5 w-3.5" />
         </button>
@@ -532,20 +347,20 @@ export function Header({ onOpenSidebar }: HeaderProps) {
             render={
               <button
                 type="button"
-                className="relative h-8 w-8 flex items-center justify-center rounded-xl border border-border bg-card/60 hover:bg-muted text-muted-foreground hover:text-foreground transition-all cursor-pointer"
+                className="relative h-8 w-8 flex items-center justify-center rounded-xl border border-slate-800 bg-slate-900/40 hover:bg-slate-800 text-slate-400 hover:text-white transition-all cursor-pointer"
               >
                 <Bell className="h-3.5 w-3.5" />
                 {notifications.length > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-rose-550 text-[8px] font-bold text-foreground animate-pulse">
+                  <span className="absolute -top-0.5 -right-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-rose-550 text-[8px] font-bold text-white animate-pulse">
                     {notifications.length}
                   </span>
                 )}
               </button>
             }
           />
-          <DropdownMenuContent align="end" className="w-72 bg-slate-905 border-border text-slate-250 p-2 space-y-2">
-            <div className="flex items-center justify-between px-2 py-1 border-b border-border">
-              <span className="text-[10px] font-extrabold text-foreground uppercase tracking-wider">Alertas e Ações</span>
+          <DropdownMenuContent align="end" className="w-72 bg-slate-905 border-slate-800 text-slate-250 p-2 space-y-2">
+            <div className="flex items-center justify-between px-2 py-1 border-b border-slate-800">
+              <span className="text-[10px] font-extrabold text-white uppercase tracking-wider">Alertas e Ações</span>
               {notifications.length > 0 && (
                 <button
                   onClick={() => setNotifications([])}
@@ -562,10 +377,10 @@ export function Header({ onOpenSidebar }: HeaderProps) {
             ) : (
               <div className="space-y-1 max-h-52 overflow-y-auto pr-1 scrollbar-thin">
                 {notifications.map(n => (
-                  <div key={n.id} className="bg-background/60 p-2 rounded-lg border border-border text-[11px] space-y-0.5">
+                  <div key={n.id} className="bg-slate-950/60 p-2 rounded-lg border border-slate-850 text-[11px] space-y-0.5">
                     <div className="flex justify-between items-start gap-1">
-                      <span className="font-bold text-foreground leading-snug">{n.title}</span>
-                      <span className="text-[8px] text-muted-foreground font-mono shrink-0">{n.time}</span>
+                      <span className="font-bold text-slate-200 leading-snug">{n.title}</span>
+                      <span className="text-[8px] text-slate-500 font-mono shrink-0">{n.time}</span>
                     </div>
                     <p className="text-[10px] text-slate-450 leading-normal">{n.body}</p>
                   </div>
@@ -578,7 +393,7 @@ export function Header({ onOpenSidebar }: HeaderProps) {
         {/* User Account Menu */}
         <DropdownMenu>
           <DropdownMenuTrigger
-            className="flex items-center gap-2 rounded-md px-1 py-1 transition-colors hover:bg-accent focus:bg-accent focus:outline-none data-popup-open:bg-accent sm:gap-3 sm:pl-1 sm:pr-3"
+            className="flex items-center gap-2 rounded-md px-1 py-1 transition-colors hover:bg-slate-800/70 focus:bg-slate-800/70 focus:outline-none data-popup-open:bg-slate-800/70 sm:gap-3 sm:pl-1 sm:pr-3"
             aria-label="Abrir menu da conta"
           >
             <div className="relative">
@@ -594,33 +409,33 @@ export function Header({ onOpenSidebar }: HeaderProps) {
                 </AvatarFallback>
               </Avatar>
               <span className={cn(
-                "absolute bottom-0 right-0 block h-2 w-2 rounded-full ring-1 ring-card",
+                "absolute bottom-0 right-0 block h-2 w-2 rounded-full ring-1 ring-slate-950",
                 profile?.availability === 'online' ? 'bg-emerald-555' :
                 profile?.availability === 'busy' ? 'bg-rose-555' :
                 profile?.availability === 'away' ? 'bg-amber-555' :
                 'bg-slate-500'
               )} />
             </div>
-            <span className="hidden text-sm font-medium text-foreground sm:inline">
+            <span className="hidden text-sm font-medium text-white sm:inline">
               {profile?.full_name ?? "Usuário"}
             </span>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             align="end"
             sideOffset={6}
-            className="min-w-56 bg-card text-foreground ring-border"
+            className="min-w-56 bg-slate-900 text-slate-100 ring-slate-700"
           >
             <div className="px-2 py-1.5">
-              <p className="truncate text-sm font-medium text-foreground">
+              <p className="truncate text-sm font-medium text-white">
                 {profile?.full_name ?? "Usuário"}
               </p>
-              <p className="truncate text-xs text-muted-foreground">
+              <p className="truncate text-xs text-slate-400">
                 {profile?.email ?? ""}
               </p>
             </div>
 
-            <div className="px-2 py-1.5 border-t border-b border-border my-1 bg-muted/40">
-              <span className="text-[9px] text-muted-foreground uppercase font-extrabold block mb-1 tracking-wider">Definir Disponibilidade</span>
+            <div className="px-2 py-1.5 border-t border-b border-slate-850 my-1 bg-slate-950/20">
+              <span className="text-[9px] text-slate-500 uppercase font-extrabold block mb-1 tracking-wider">Definir Disponibilidade</span>
               <div className="flex items-center gap-1">
                 {([
                   { key: 'online', label: 'Online', color: 'bg-emerald-500' },
@@ -634,8 +449,8 @@ export function Header({ onOpenSidebar }: HeaderProps) {
                     className={cn(
                       "flex-1 flex items-center justify-center gap-1 text-[10px] py-1 rounded border transition-all font-semibold cursor-pointer",
                       profile?.availability === status.key
-                        ? "bg-muted text-foreground border-border"
-                        : "bg-transparent text-muted-foreground border-transparent hover:bg-muted/45 hover:text-foreground"
+                        ? "bg-slate-800 text-white border-slate-700"
+                        : "bg-transparent text-slate-400 border-transparent hover:bg-slate-800/45 hover:text-slate-300"
                     )}
                   >
                     <span className={cn("size-1.5 rounded-full shrink-0", status.color)} />
@@ -645,12 +460,12 @@ export function Header({ onOpenSidebar }: HeaderProps) {
               </div>
             </div>
 
-            <DropdownMenuSeparator className="bg-muted" />
+            <DropdownMenuSeparator className="bg-slate-800" />
             <DropdownMenuItem
               render={
                 <Link
                   href="/settings?tab=profile"
-                  className="flex items-center gap-2 text-foreground focus:bg-muted focus:text-foreground"
+                  className="flex items-center gap-2 text-slate-200 focus:bg-slate-800 focus:text-white"
                 />
               }
             >
@@ -661,7 +476,7 @@ export function Header({ onOpenSidebar }: HeaderProps) {
               render={
                 <Link
                   href="/settings?tab=whatsapp"
-                  className="flex items-center gap-2 text-foreground focus:bg-muted focus:text-foreground"
+                  className="flex items-center gap-2 text-slate-200 focus:bg-slate-800 focus:text-white"
                 />
               }
             >
@@ -673,7 +488,7 @@ export function Header({ onOpenSidebar }: HeaderProps) {
                 render={
                   <Link
                     href="/admin"
-                    className="flex items-center gap-2 text-foreground focus:bg-muted focus:text-foreground font-semibold text-amber-300"
+                    className="flex items-center gap-2 text-slate-200 focus:bg-slate-800 focus:text-white font-semibold text-amber-300"
                   />
                 }
               >
@@ -681,10 +496,10 @@ export function Header({ onOpenSidebar }: HeaderProps) {
                 Painel Admin
               </DropdownMenuItem>
             )}
-            <DropdownMenuSeparator className="bg-muted" />
+            <DropdownMenuSeparator className="bg-slate-800" />
             <DropdownMenuItem
               onClick={signOut}
-              className="text-foreground focus:bg-muted focus:text-foreground cursor-pointer"
+              className="text-slate-200 focus:bg-slate-800 focus:text-white cursor-pointer"
             >
               <LogOut className="size-4" />
               Sair

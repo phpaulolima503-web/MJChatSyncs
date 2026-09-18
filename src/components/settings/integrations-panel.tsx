@@ -223,13 +223,13 @@ const INTEGRATION_CATEGORIES: Category[] = [
 export function IntegrationsPanel() {
   return (
     <div className="space-y-6">
-      <Card className="border-border bg-card/70">
+      <Card className="border-slate-800 bg-slate-900/50">
         <CardHeader className="flex flex-row items-start justify-between">
           <div>
             <CardTitle className="text-xl">Integrations Hub</CardTitle>
             <CardDescription>Connect WaCRM with your favorite tools via OAuth or API Keys.</CardDescription>
           </div>
-          <Button variant="outline" className="gap-2 border-border">
+          <Button variant="outline" className="gap-2 border-slate-700">
             <Webhook className="h-4 w-4" />
             Manage Webhooks
           </Button>
@@ -238,36 +238,36 @@ export function IntegrationsPanel() {
           
           {INTEGRATION_CATEGORIES.map((category) => (
             <div key={category.title} className="space-y-4">
-              <h3 className="text-lg font-bold text-foreground border-b border-border pb-2">
+              <h3 className="text-lg font-bold text-slate-200 border-b border-slate-800 pb-2">
                 {category.title}
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {category.items.map((integration) => (
                   <div
                     key={integration.id}
-                    className="flex flex-col p-5 rounded-xl border border-border bg-card hover:border-border transition-colors relative overflow-hidden group"
+                    className="flex flex-col p-5 rounded-xl border border-slate-800 bg-slate-900 hover:border-slate-700 transition-colors relative overflow-hidden group"
                   >
                     <div className="flex items-center gap-3 mb-3 mt-1">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-muted text-xl group-hover:scale-110 transition-transform">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-slate-800 text-xl group-hover:scale-110 transition-transform">
                         {integration.icon}
                       </div>
                       <div>
-                        <h3 className="font-semibold text-foreground leading-tight">{integration.name}</h3>
+                        <h3 className="font-semibold text-slate-200 leading-tight">{integration.name}</h3>
                         <div className="flex items-center gap-2 mt-1">
                           <span className={`text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full ${
                             integration.status === 'Connected' 
                               ? 'bg-emerald-500/10 text-emerald-400' 
-                              : 'bg-muted text-muted-foreground'
+                              : 'bg-slate-800 text-slate-400'
                           }`}>
                             {integration.status}
                           </span>
-                          <span className="text-[10px] text-muted-foreground font-medium">
+                          <span className="text-[10px] text-slate-500 font-medium">
                             via {integration.connectType}
                           </span>
                         </div>
                       </div>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-6 flex-1">
+                    <p className="text-sm text-slate-400 mb-6 flex-1">
                       {integration.description}
                     </p>
                     {integration.status === 'Connected' ? (
@@ -276,7 +276,7 @@ export function IntegrationsPanel() {
                         Configured
                       </Button>
                     ) : (
-                      <Button className="w-full gap-2 bg-muted hover:bg-muted text-foreground">
+                      <Button className="w-full gap-2 bg-slate-800 hover:bg-slate-700 text-white">
                         <Plus className="h-4 w-4" />
                         Connect
                       </Button>
@@ -288,15 +288,15 @@ export function IntegrationsPanel() {
           ))}
 
           {/* Custom Integration Action */}
-          <div className="mt-8 border-t border-border pt-8">
-            <div className="flex flex-col sm:flex-row items-center justify-between p-6 rounded-xl border-2 border-dashed border-border bg-card/30">
+          <div className="mt-8 border-t border-slate-800 pt-8">
+            <div className="flex flex-col sm:flex-row items-center justify-between p-6 rounded-xl border-2 border-dashed border-slate-800 bg-slate-900/30">
               <div className="flex items-center gap-4 mb-4 sm:mb-0">
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
                   <ExternalLink className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground text-lg">Custom API & Webhooks</h3>
-                  <p className="text-sm text-muted-foreground max-w-md">
+                  <h3 className="font-semibold text-slate-200 text-lg">Custom API & Webhooks</h3>
+                  <p className="text-sm text-slate-400 max-w-md">
                     Don't see your tool here? Build your own custom integration using our REST API and real-time event webhooks.
                   </p>
                 </div>

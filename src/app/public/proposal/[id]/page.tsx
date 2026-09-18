@@ -181,7 +181,7 @@ export default function PublicProposalPage({ params }: { params: Promise<{ id: s
 
   if (loading) {
     return (
-      <div className="flex h-screen flex-col items-center justify-center bg-background text-muted-foreground">
+      <div className="flex h-screen flex-col items-center justify-center bg-slate-950 text-slate-400">
         <Loader2 className="h-10 w-10 animate-spin text-indigo-500 mb-4" />
         <p className="text-sm">Fetching MaaJanki Web Tech proposal details...</p>
       </div>
@@ -190,9 +190,9 @@ export default function PublicProposalPage({ params }: { params: Promise<{ id: s
 
   if (!proposal) {
     return (
-      <div className="flex h-screen flex-col items-center justify-center bg-background text-muted-foreground p-4">
+      <div className="flex h-screen flex-col items-center justify-center bg-slate-950 text-slate-400 p-4">
         <ShieldAlert className="h-12 w-12 text-rose-500 mb-4 animate-bounce" />
-        <h2 className="text-lg font-bold text-foreground mb-2">Proposal Unavailable</h2>
+        <h2 className="text-lg font-bold text-white mb-2">Proposal Unavailable</h2>
         <p className="text-sm max-w-md text-center">
           The requested proposal could not be retrieved. Please check the WhatsApp link or contact your MaaJanki Web Tech manager.
         </p>
@@ -207,7 +207,7 @@ export default function PublicProposalPage({ params }: { params: Promise<{ id: s
     DEFAULT_DELIVERABLES["website development"];
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans pb-16 relative overflow-hidden">
+    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans pb-16 relative overflow-hidden">
       {/* Background gradients */}
       <div className="absolute top-0 left-0 h-[400px] w-full bg-gradient-to-b from-indigo-500/10 to-transparent blur-3xl -z-10" />
       
@@ -215,14 +215,14 @@ export default function PublicProposalPage({ params }: { params: Promise<{ id: s
       <div className="max-w-4xl mx-auto px-4 pt-10 space-y-8">
         
         {/* Header Agency Branding */}
-        <div className="flex flex-col sm:flex-row items-center justify-between border-b border-border/80 pb-6 gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between border-b border-slate-800/80 pb-6 gap-4">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 bg-indigo-650 flex items-center justify-center rounded-xl font-black text-foreground text-lg tracking-wider shadow-lg shadow-indigo-600/35 border border-indigo-500/20">
+            <div className="h-10 w-10 bg-indigo-650 flex items-center justify-center rounded-xl font-black text-white text-lg tracking-wider shadow-lg shadow-indigo-600/35 border border-indigo-500/20">
               MJ
             </div>
             <div>
-              <h2 className="text-lg font-bold tracking-tight text-foreground">MaaJanki Web Tech</h2>
-              <p className="text-xs text-muted-foreground">Website • Marketing • AI Solutions</p>
+              <h2 className="text-lg font-bold tracking-tight text-white">MaaJanki Web Tech</h2>
+              <p className="text-xs text-slate-400">Website • Marketing • AI Solutions</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -242,14 +242,14 @@ export default function PublicProposalPage({ params }: { params: Promise<{ id: s
 
         {/* Introduction Panel */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="md:col-span-2 bg-card/70 border-border backdrop-blur-sm relative">
+          <Card className="md:col-span-2 bg-slate-900/50 border-slate-850 backdrop-blur-sm relative">
             <div className="absolute top-4 right-4 text-indigo-500/10">
               <FileText className="h-24 w-24" />
             </div>
             <CardHeader className="p-6">
               <span className="text-[10px] text-indigo-400 font-bold uppercase tracking-widest block mb-1">Proposal & Scope</span>
-              <CardTitle className="text-xl text-foreground font-extrabold">{proposal.service_required}</CardTitle>
-              <CardDescription className="text-muted-foreground text-xs mt-1">
+              <CardTitle className="text-xl text-white font-extrabold">{proposal.service_required}</CardTitle>
+              <CardDescription className="text-slate-400 text-xs mt-1">
                 Prepared custom-made execution plan for {proposal.contacts?.name || "Client"}.
               </CardDescription>
             </CardHeader>
@@ -258,25 +258,25 @@ export default function PublicProposalPage({ params }: { params: Promise<{ id: s
                 Hello {proposal.contacts?.name || "Client"}, at MaaJanki Web Tech, we combine next-generation tech stack with best practices. Here is our proposed delivery roadmap for your upcoming project.
               </p>
               {proposal.details.goals && (
-                <div className="bg-background/45 p-3 rounded-lg border border-border/60 mt-2">
-                  <span className="text-[10px] text-muted-foreground font-bold block mb-1">PROJECT OBJECTIVE & GOALS:</span>
+                <div className="bg-slate-950/45 p-3 rounded-lg border border-slate-850/60 mt-2">
+                  <span className="text-[10px] text-slate-500 font-bold block mb-1">PROJECT OBJECTIVE & GOALS:</span>
                   <p className="text-xs text-slate-350">{proposal.details.goals}</p>
                 </div>
               )}
             </CardContent>
           </Card>
 
-          <Card className="bg-card/70 border-border backdrop-blur-sm space-y-4 p-5 flex flex-col justify-between">
+          <Card className="bg-slate-900/50 border-slate-850 backdrop-blur-sm space-y-4 p-5 flex flex-col justify-between">
             <div className="space-y-4">
-              <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider block border-b border-border pb-2">Deal Metrics</span>
+              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block border-b border-slate-850 pb-2">Deal Metrics</span>
               
               <div className="flex items-center gap-3">
                 <div className="h-8 w-8 bg-indigo-500/10 flex items-center justify-center rounded-lg text-indigo-400">
                   <DollarSign className="h-4 w-4" />
                 </div>
                 <div>
-                  <span className="text-[9px] text-muted-foreground block uppercase font-bold">Estimated Cost</span>
-                  <span className="text-sm font-extrabold text-foreground">{proposal.details.budget || "₹25,000 / $350"}</span>
+                  <span className="text-[9px] text-slate-500 block uppercase font-bold">Estimated Cost</span>
+                  <span className="text-sm font-extrabold text-slate-200">{proposal.details.budget || "₹25,000 / $350"}</span>
                 </div>
               </div>
 
@@ -285,13 +285,13 @@ export default function PublicProposalPage({ params }: { params: Promise<{ id: s
                   <Calendar className="h-4 w-4" />
                 </div>
                 <div>
-                  <span className="text-[9px] text-muted-foreground block uppercase font-bold">Expected Timeline</span>
-                  <span className="text-sm font-semibold text-foreground">{proposal.details.timeline || "3 to 4 Weeks"}</span>
+                  <span className="text-[9px] text-slate-500 block uppercase font-bold">Expected Timeline</span>
+                  <span className="text-sm font-semibold text-slate-200">{proposal.details.timeline || "3 to 4 Weeks"}</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-background/60 p-3 rounded-lg border border-border flex items-start gap-2 text-[10px] text-muted-foreground">
+            <div className="bg-slate-950/60 p-3 rounded-lg border border-slate-850 flex items-start gap-2 text-[10px] text-slate-500">
               <Info className="h-3.5 w-3.5 text-indigo-400 shrink-0 mt-0.5" />
               <p className="leading-normal">
                 This proposal is dynamic and subject to digital approval. Accepting creates a project ticket.
@@ -301,9 +301,9 @@ export default function PublicProposalPage({ params }: { params: Promise<{ id: s
         </div>
 
         {/* Deliverables Checklist */}
-        <Card className="bg-card/60 border-border backdrop-blur-sm">
+        <Card className="bg-slate-900/40 border-slate-850 backdrop-blur-sm">
           <CardHeader className="p-6 pb-3">
-            <CardTitle className="text-sm text-foreground uppercase font-bold tracking-wider flex items-center gap-2">
+            <CardTitle className="text-sm text-slate-200 uppercase font-bold tracking-wider flex items-center gap-2">
               <Layers className="h-4.5 w-4.5 text-indigo-400" />
               Deliverables & Project Milestones
             </CardTitle>
@@ -311,7 +311,7 @@ export default function PublicProposalPage({ params }: { params: Promise<{ id: s
           <CardContent className="p-6 pt-0">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
               {deliverables.map((item, i) => (
-                <div key={i} className="flex items-start gap-2.5 p-3 rounded-xl bg-muted/40 border border-border hover:bg-background/45 transition-colors">
+                <div key={i} className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-950/20 border border-slate-850 hover:bg-slate-950/45 transition-colors">
                   <Check className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5 bg-emerald-500/10 rounded-full p-0.5 border border-emerald-500/20" />
                   <span className="text-xs text-slate-350 leading-relaxed font-medium">{item}</span>
                 </div>
@@ -321,14 +321,14 @@ export default function PublicProposalPage({ params }: { params: Promise<{ id: s
         </Card>
 
         {/* Acceptance / Signature Area */}
-        <Card className="bg-card/80 border-border shadow-xl overflow-hidden relative">
+        <Card className="bg-slate-900/60 border-slate-800 shadow-xl overflow-hidden relative">
           <div className="absolute top-0 right-0 h-40 w-40 bg-indigo-500/5 blur-2xl rounded-full" />
           
-          <CardHeader className="p-6 border-b border-border bg-background/30 flex flex-row items-center gap-3">
+          <CardHeader className="p-6 border-b border-slate-850 bg-slate-950/30 flex flex-row items-center gap-3">
             <PenTool className="h-5 w-5 text-indigo-400" />
             <div>
-              <CardTitle className="text-base text-foreground">Digital Contract Approval</CardTitle>
-              <CardDescription className="text-muted-foreground text-xs">
+              <CardTitle className="text-base text-white">Digital Contract Approval</CardTitle>
+              <CardDescription className="text-slate-500 text-xs">
                 Review deliverables and apply your signature to accept the agreement.
               </CardDescription>
             </div>
@@ -336,24 +336,24 @@ export default function PublicProposalPage({ params }: { params: Promise<{ id: s
 
           <CardContent className="p-6 space-y-6">
             {isSigned ? (
-              <div className="flex flex-col items-center justify-center py-8 text-center bg-muted/50 border border-border rounded-xl max-w-md mx-auto space-y-3">
+              <div className="flex flex-col items-center justify-center py-8 text-center bg-slate-950/40 border border-slate-850 rounded-xl max-w-md mx-auto space-y-3">
                 <div className="h-10 w-10 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
                   <CheckCircle className="h-6 w-6" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-extrabold text-foreground">Agreement Electronically Signed</h4>
-                  <p className="text-[10px] text-muted-foreground mt-0.5">Approved via dynamic digital fingerprint ID.</p>
+                  <h4 className="text-sm font-extrabold text-white">Agreement Electronically Signed</h4>
+                  <p className="text-[10px] text-slate-500 mt-0.5">Approved via dynamic digital fingerprint ID.</p>
                 </div>
-                <div className="bg-card/80 border border-border rounded px-6 py-2 font-serif italic text-lg text-indigo-400">
+                <div className="bg-slate-900/80 border border-slate-800 rounded px-6 py-2 font-serif italic text-lg text-indigo-400">
                   {proposal.client_signature}
                 </div>
-                <span className="text-[9px] text-muted-foreground">
+                <span className="text-[9px] text-slate-600">
                   Signed on {proposal.signed_at ? new Date(proposal.signed_at).toLocaleString() : ""}
                 </span>
               </div>
             ) : (
               <div className="space-y-4 max-w-lg mx-auto">
-                <div className="flex items-center gap-2 bg-background p-1 rounded-lg border border-border w-fit mx-auto mb-4">
+                <div className="flex items-center gap-2 bg-slate-950 p-1 rounded-lg border border-slate-850 w-fit mx-auto mb-4">
                   <Button 
                     variant={signMode === "type" ? "default" : "ghost"}
                     size="sm"
@@ -374,19 +374,19 @@ export default function PublicProposalPage({ params }: { params: Promise<{ id: s
 
                 {signMode === "type" ? (
                   <div className="space-y-2">
-                    <Label className="text-muted-foreground text-xs">Enter Your Full Name</Label>
+                    <Label className="text-slate-400 text-xs">Enter Your Full Name</Label>
                     <div className="relative">
                       <Input
                         value={signatureText}
                         onChange={(e) => setSignatureText(e.target.value)}
                         placeholder="e.g. John Doe"
-                        className="bg-background border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-indigo-500 font-serif italic text-lg text-center"
+                        className="bg-slate-950 border-slate-800 text-white placeholder-slate-600 focus-visible:ring-indigo-500 font-serif italic text-lg text-center"
                       />
                     </div>
                   </div>
                 ) : (
                   <div className="space-y-2 flex flex-col items-center">
-                    <Label className="text-muted-foreground text-xs align-self-start">Draw signature inside box</Label>
+                    <Label className="text-slate-400 text-xs align-self-start">Draw signature inside box</Label>
                     <canvas
                       ref={canvasRef}
                       width={380}
@@ -395,14 +395,14 @@ export default function PublicProposalPage({ params }: { params: Promise<{ id: s
                       onMouseMove={draw}
                       onMouseUp={stopDrawing}
                       onMouseLeave={stopDrawing}
-                      className="bg-background border border-border rounded-lg cursor-crosshair"
+                      className="bg-slate-950 border border-slate-800 rounded-lg cursor-crosshair"
                     />
                     <Button 
                       type="button" 
                       variant="ghost" 
                       size="sm" 
                       onClick={clearCanvas}
-                      className="text-[10px] text-muted-foreground hover:text-foreground self-end mt-1"
+                      className="text-[10px] text-slate-500 hover:text-slate-300 self-end mt-1"
                     >
                       Clear Drawing
                     </Button>
@@ -413,7 +413,7 @@ export default function PublicProposalPage({ params }: { params: Promise<{ id: s
                   <Button
                     onClick={handleAcceptProposal}
                     disabled={signing}
-                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-foreground font-bold h-10 shadow-lg shadow-indigo-600/10 flex items-center justify-center gap-1.5"
+                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold h-10 shadow-lg shadow-indigo-600/10 flex items-center justify-center gap-1.5"
                   >
                     {signing ? (
                       <>

@@ -355,7 +355,7 @@ export function TeamManager() {
       case "staff":
         return "bg-sky-500/10 text-sky-400 border border-sky-500/20";
       default:
-        return "bg-slate-500/10 text-muted-foreground border border-slate-500/20";
+        return "bg-slate-500/10 text-slate-400 border border-slate-500/20";
     }
   };
 
@@ -364,10 +364,10 @@ export function TeamManager() {
 
   if (loading) {
     return (
-      <Card className="border-border bg-card/60 backdrop-blur-md">
+      <Card className="border-slate-800 bg-slate-900/40 backdrop-blur-md">
         <CardContent className="flex flex-col items-center justify-center py-20">
           <Loader2 className="h-10 w-10 animate-spin text-primary mb-4" />
-          <p className="text-muted-foreground text-sm">Fetching team credentials...</p>
+          <p className="text-slate-400 text-sm">Fetching team credentials...</p>
         </CardContent>
       </Card>
     );
@@ -375,18 +375,18 @@ export function TeamManager() {
 
   return (
     <div className="space-y-6 mt-4">
-      <Card className="border-border bg-card/60 backdrop-blur-md relative overflow-hidden shadow-2xl">
+      <Card className="border-slate-800 bg-slate-900/40 backdrop-blur-md relative overflow-hidden shadow-2xl">
         <div className="absolute top-0 right-0 h-40 w-40 bg-gradient-to-br from-primary/10 to-transparent blur-3xl" />
         
-        <CardHeader className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-border/80">
+        <CardHeader className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-800/80">
           <div>
             <div className="flex items-center gap-2.5">
               <div className="p-2 bg-primary/10 text-primary rounded-lg">
                 <Users className="h-5 w-5" />
               </div>
-              <CardTitle className="text-xl font-bold text-foreground tracking-wide">Team & Agent Management</CardTitle>
+              <CardTitle className="text-xl font-bold text-white tracking-wide">Team & Agent Management</CardTitle>
             </div>
-            <CardDescription className="text-muted-foreground mt-1.5 max-w-lg leading-relaxed">
+            <CardDescription className="text-slate-400 mt-1.5 max-w-lg leading-relaxed">
               Add and manage your agents, customize permission scopes, and designate tasks or primary specializations.
             </CardDescription>
           </div>
@@ -404,16 +404,16 @@ export function TeamManager() {
         <CardContent className="pt-6">
           {members.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 text-center">
-              <Users className="h-12 w-12 text-muted-foreground mb-4 animate-pulse" />
-              <p className="text-foreground text-base font-semibold">No team profiles configured</p>
-              <p className="text-muted-foreground text-sm mt-1 max-w-sm">
+              <Users className="h-12 w-12 text-slate-600 mb-4 animate-pulse" />
+              <p className="text-slate-300 text-base font-semibold">No team profiles configured</p>
+              <p className="text-slate-500 text-sm mt-1 max-w-sm">
                 Provision agent roles and credentials to delegate inbox coverage and pipelines.
               </p>
             </div>
           ) : (
-            <div className="rounded-xl border border-border bg-muted/40 overflow-hidden">
+            <div className="rounded-xl border border-slate-800 bg-slate-950/20 overflow-hidden">
               {/* Header */}
-              <div className="grid grid-cols-12 gap-4 border-b border-border/80 p-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-card/10">
+              <div className="grid grid-cols-12 gap-4 border-b border-slate-800/80 p-4 text-xs font-semibold uppercase tracking-wider text-slate-500 bg-slate-900/10">
                 <div className="col-span-5 md:col-span-4">Member</div>
                 <div className="col-span-3 md:col-span-3">Role & Permissions</div>
                 <div className="col-span-3 md:col-span-3">Assigned Task / Specialty</div>
@@ -422,7 +422,7 @@ export function TeamManager() {
               </div>
               
               {/* Rows */}
-              <div className="divide-y divide-border/60">
+              <div className="divide-y divide-slate-800/60">
                 {members.map((member) => {
                   const specialty = getMemberSpecialty(member.beta_features);
                   const isCurrentUser = member.user_id === user?.id;
@@ -430,20 +430,20 @@ export function TeamManager() {
                   return (
                     <div 
                       key={member.id} 
-                      className={`grid grid-cols-12 items-center gap-4 p-4 transition-all hover:bg-card/30 ${
-                        isCurrentUser ? "bg-card/10 border-l-2 border-primary" : ""
+                      className={`grid grid-cols-12 items-center gap-4 p-4 transition-all hover:bg-slate-900/30 ${
+                        isCurrentUser ? "bg-slate-900/10 border-l-2 border-primary" : ""
                       }`}
                     >
                       {/* Name & Email */}
                       <div className="col-span-5 md:col-span-4 flex items-center gap-3">
-                        <Avatar className="h-10 w-10 ring-2 ring-border ring-offset-2 ring-offset-slate-950 transition-all group-hover:scale-105">
+                        <Avatar className="h-10 w-10 ring-2 ring-slate-800 ring-offset-2 ring-offset-slate-950 transition-all group-hover:scale-105">
                           <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/5 text-primary font-bold">
                             {member.full_name?.charAt(0).toUpperCase() || "U"}
                           </AvatarFallback>
                         </Avatar>
                         <div className="min-w-0">
                           <div className="flex items-center gap-2">
-                            <span className="text-sm font-semibold text-foreground truncate">
+                            <span className="text-sm font-semibold text-slate-100 truncate">
                               {member.full_name}
                             </span>
                             {isCurrentUser && (
@@ -452,7 +452,7 @@ export function TeamManager() {
                               </span>
                             )}
                           </div>
-                          <span className="text-xs text-muted-foreground block truncate mt-0.5">{member.email}</span>
+                          <span className="text-xs text-slate-400 block truncate mt-0.5">{member.email}</span>
                         </div>
                       </div>
 
@@ -469,7 +469,7 @@ export function TeamManager() {
                         {/* Number of permissions overrides */}
                         {member.permissions && member.permissions.length > 0 && (
                           <span 
-                            className="hidden md:inline-flex items-center text-[10px] text-muted-foreground bg-card border border-border rounded px-1.5 py-0.5" 
+                            className="hidden md:inline-flex items-center text-[10px] text-slate-400 bg-slate-900 border border-slate-800 rounded px-1.5 py-0.5" 
                             title={member.permissions.join(", ")}
                           >
                             {member.permissions.length} Overrides
@@ -479,14 +479,14 @@ export function TeamManager() {
 
                       {/* Specialty Task */}
                       <div className="col-span-3 md:col-span-3 flex items-center gap-2">
-                        <span className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium bg-card border border-border/80 text-foreground">
+                        <span className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium bg-slate-900 border border-slate-800/80 text-slate-300">
                           <Target className="h-3 w-3 text-cyan-400" />
                           <span className="truncate max-w-[150px]">{specialty}</span>
                         </span>
                         {isSuperAdminOrAdmin && (
                           <button
                             onClick={() => handleOpenQuickTask(member)}
-                            className="text-muted-foreground hover:text-cyan-400 transition-colors p-1 hover:bg-card rounded-md"
+                            className="text-slate-500 hover:text-cyan-400 transition-colors p-1 hover:bg-slate-900 rounded-md"
                             title="Change Assigned Task/Specialty"
                           >
                             <Sparkles className="h-3.5 w-3.5" />
@@ -510,27 +510,27 @@ export function TeamManager() {
                       <div className="col-span-1 flex justify-end">
                         {isSuperAdminOrAdmin ? (
                           <DropdownMenu>
-                            <DropdownMenuTrigger className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-muted/60 rounded-lg flex items-center justify-center transition-colors focus:outline-none">
+                            <DropdownMenuTrigger className="h-8 w-8 text-slate-400 hover:text-white hover:bg-slate-800/60 rounded-lg flex items-center justify-center transition-colors focus:outline-none">
                               <MoreHorizontal className="h-4 w-4" />
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="bg-card border-border text-foreground w-44">
+                            <DropdownMenuContent align="end" className="bg-slate-900 border-slate-800 text-slate-200 w-44">
                               <DropdownMenuItem 
                                 onClick={() => handleOpenEdit(member)}
-                                className="gap-2 focus:bg-muted focus:text-foreground cursor-pointer"
+                                className="gap-2 focus:bg-slate-800 focus:text-white cursor-pointer"
                               >
-                                <Edit2 className="h-3.5 w-3.5 text-muted-foreground" />
+                                <Edit2 className="h-3.5 w-3.5 text-slate-400" />
                                 Edit Credentials
                               </DropdownMenuItem>
                               <DropdownMenuItem 
                                 onClick={() => handleOpenQuickTask(member)}
-                                className="gap-2 focus:bg-muted focus:text-foreground cursor-pointer"
+                                className="gap-2 focus:bg-slate-800 focus:text-white cursor-pointer"
                               >
                                 <Target className="h-3.5 w-3.5 text-cyan-400" />
                                 Change Task
                               </DropdownMenuItem>
                               {!isCurrentUser && (
                                 <>
-                                  <DropdownMenuSeparator className="bg-muted" />
+                                  <DropdownMenuSeparator className="bg-slate-800" />
                                   <DropdownMenuItem 
                                     onClick={() => handleOpenDelete(member)}
                                     className="gap-2 text-rose-400 focus:bg-rose-500/10 focus:text-rose-300 cursor-pointer"
@@ -544,7 +544,7 @@ export function TeamManager() {
                           </DropdownMenu>
                         ) : (
                           <span title="Contact an administrator to modify properties">
-                            <Info className="h-4 w-4 text-muted-foreground" />
+                            <Info className="h-4 w-4 text-slate-600" />
                           </span>
                         )}
                       </div>
@@ -559,52 +559,52 @@ export function TeamManager() {
 
       {/* CREATE MEMBER DIALOG */}
       <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-        <DialogContent className="bg-card border-border text-foreground max-w-md shadow-2xl">
+        <DialogContent className="bg-slate-900 border-slate-800 text-white max-w-md shadow-2xl">
           <DialogHeader>
-            <DialogTitle className="text-foreground flex items-center gap-2">
+            <DialogTitle className="text-white flex items-center gap-2">
               <UserPlus className="h-5 w-5 text-primary" />
               Invite Team Member
             </DialogTitle>
-            <DialogDescription className="text-muted-foreground">
+            <DialogDescription className="text-slate-400">
               Create an authentication account and setup profile attributes for a new agent.
             </DialogDescription>
           </DialogHeader>
 
           <form onSubmit={handleCreateMember} className="space-y-4 py-2">
             <div className="space-y-1.5">
-              <Label htmlFor="create-name" className="text-foreground">Full Name</Label>
+              <Label htmlFor="create-name" className="text-slate-300">Full Name</Label>
               <Input
                 id="create-name"
                 value={createName}
                 onChange={(e) => setCreateName(e.target.value)}
                 placeholder="e.g. Sarah Connor"
-                className="bg-muted/80 border-border text-foreground placeholder:text-muted-foreground"
+                className="bg-slate-800/80 border-slate-700 text-white placeholder:text-slate-500"
                 required
               />
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="create-email" className="text-foreground">Email Address</Label>
+              <Label htmlFor="create-email" className="text-slate-300">Email Address</Label>
               <Input
                 id="create-email"
                 type="email"
                 value={createEmail}
                 onChange={(e) => setCreateEmail(e.target.value)}
                 placeholder="e.g. agent@company.com"
-                className="bg-muted/80 border-border text-foreground placeholder:text-muted-foreground"
+                className="bg-slate-800/80 border-slate-700 text-white placeholder:text-slate-500"
                 required
               />
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="create-pass" className="text-foreground">Login Password</Label>
+              <Label htmlFor="create-pass" className="text-slate-300">Login Password</Label>
               <Input
                 id="create-pass"
                 type="password"
                 value={createPassword}
                 onChange={(e) => setCreatePassword(e.target.value)}
                 placeholder="Minimum 6 characters"
-                className="bg-muted/80 border-border text-foreground placeholder:text-muted-foreground"
+                className="bg-slate-800/80 border-slate-700 text-white placeholder:text-slate-500"
                 required
                 minLength={6}
               />
@@ -612,12 +612,12 @@ export function TeamManager() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <Label htmlFor="create-role" className="text-foreground">System Role</Label>
+                <Label htmlFor="create-role" className="text-slate-300">System Role</Label>
                 <select
                   id="create-role"
                   value={createRole}
                   onChange={(e) => setCreateRole(e.target.value as UserRole)}
-                  className="w-full rounded-md border border-border bg-muted px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                  className="w-full rounded-md border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-primary"
                 >
                   <option value="user">User</option>
                   <option value="staff">Staff / Agent</option>
@@ -628,12 +628,12 @@ export function TeamManager() {
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="create-status" className="text-foreground">Account Status</Label>
+                <Label htmlFor="create-status" className="text-slate-300">Account Status</Label>
                 <select
                   id="create-status"
                   value={createStatus}
                   onChange={(e) => setCreateStatus(e.target.value as "active" | "suspended")}
-                  className="w-full rounded-md border border-border bg-muted px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                  className="w-full rounded-md border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-primary"
                 >
                   <option value="active">Active</option>
                   <option value="suspended">Suspended</option>
@@ -642,14 +642,14 @@ export function TeamManager() {
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="create-specialty" className="text-foreground">Primary Task / Specialty</Label>
+              <Label htmlFor="create-specialty" className="text-slate-300">Primary Task / Specialty</Label>
               <div className="flex gap-2">
                 <Input
                   id="create-specialty"
                   value={createSpecialty}
                   onChange={(e) => setCreateSpecialty(e.target.value)}
                   placeholder="e.g. Sales Qualification"
-                  className="bg-muted/80 border-border text-foreground placeholder:text-muted-foreground flex-1"
+                  className="bg-slate-800/80 border-slate-700 text-white placeholder:text-slate-500 flex-1"
                 />
               </div>
               <div className="flex flex-wrap gap-1.5 mt-1.5">
@@ -658,7 +658,7 @@ export function TeamManager() {
                     key={p}
                     type="button"
                     onClick={() => setCreateSpecialty(p)}
-                    className="text-[10px] px-2 py-0.5 rounded bg-muted hover:bg-muted text-foreground border border-border/60"
+                    className="text-[10px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700/60"
                   >
                     {p}
                   </button>
@@ -666,12 +666,12 @@ export function TeamManager() {
               </div>
             </div>
 
-            <DialogFooter className="pt-4 border-t border-border/80">
+            <DialogFooter className="pt-4 border-t border-slate-800/80">
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => setIsCreateOpen(false)}
-                className="border-border text-foreground hover:bg-muted"
+                className="border-slate-700 text-slate-300 hover:bg-slate-800"
               >
                 Cancel
               </Button>
@@ -696,32 +696,32 @@ export function TeamManager() {
 
       {/* EDIT MEMBER DIALOG */}
       <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
-        <DialogContent className="bg-card border-border text-foreground max-w-lg shadow-2xl overflow-y-auto max-h-[85vh]">
+        <DialogContent className="bg-slate-900 border-slate-800 text-white max-w-lg shadow-2xl overflow-y-auto max-h-[85vh]">
           <DialogHeader>
-            <DialogTitle className="text-foreground flex items-center gap-2">
+            <DialogTitle className="text-white flex items-center gap-2">
               <Edit2 className="h-5 w-5 text-primary" />
               Edit Team Credentials
             </DialogTitle>
-            <DialogDescription className="text-muted-foreground">
+            <DialogDescription className="text-slate-400">
               Update {selectedMember?.email}'s profiles settings, override scopes, and task priorities.
             </DialogDescription>
           </DialogHeader>
 
           <form onSubmit={handleSaveEdit} className="space-y-4 py-2">
             <div className="space-y-1.5">
-              <Label htmlFor="edit-name" className="text-foreground">Full Name</Label>
+              <Label htmlFor="edit-name" className="text-slate-300">Full Name</Label>
               <Input
                 id="edit-name"
                 value={editName}
                 onChange={(e) => setEditName(e.target.value)}
-                className="bg-muted/80 border-border text-foreground"
+                className="bg-slate-800/80 border-slate-700 text-white"
                 required
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <Label htmlFor="edit-role" className="text-foreground">System Role</Label>
+                <Label htmlFor="edit-role" className="text-slate-300">System Role</Label>
                 <select
                   id="edit-role"
                   value={editRole}
@@ -730,7 +730,7 @@ export function TeamManager() {
                     setEditRole(nextRole);
                     setEditPermissions(DEFAULT_ROLE_PERMISSIONS[nextRole] || []);
                   }}
-                  className="w-full rounded-md border border-border bg-muted px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                  className="w-full rounded-md border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-primary"
                 >
                   <option value="user">User</option>
                   <option value="staff">Staff / Agent</option>
@@ -741,12 +741,12 @@ export function TeamManager() {
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="edit-status" className="text-foreground">Account Status</Label>
+                <Label htmlFor="edit-status" className="text-slate-300">Account Status</Label>
                 <select
                   id="edit-status"
                   value={editStatus}
                   onChange={(e) => setEditStatus(e.target.value as "active" | "suspended")}
-                  className="w-full rounded-md border border-border bg-muted px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                  className="w-full rounded-md border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-primary"
                 >
                   <option value="active">Active</option>
                   <option value="suspended">Suspended</option>
@@ -755,13 +755,13 @@ export function TeamManager() {
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="edit-specialty" className="text-foreground">Assigned Task / Specialty</Label>
+              <Label htmlFor="edit-specialty" className="text-slate-300">Assigned Task / Specialty</Label>
               <Input
                 id="edit-specialty"
                 value={editSpecialty}
                 onChange={(e) => setEditSpecialty(e.target.value)}
                 placeholder="e.g. Sales Qualification"
-                className="bg-muted/80 border-border text-foreground"
+                className="bg-slate-800/80 border-slate-700 text-white"
               />
               <div className="flex flex-wrap gap-1.5 mt-1.5">
                 {PRESET_SPECIALTIES.map((p) => (
@@ -772,7 +772,7 @@ export function TeamManager() {
                     className={`text-[10px] px-2 py-0.5 rounded border transition-colors ${
                       editSpecialty === p 
                         ? "bg-primary/20 text-primary border-primary/30" 
-                        : "bg-muted hover:bg-muted text-foreground border-border/60"
+                        : "bg-slate-800 hover:bg-slate-700 text-slate-300 border-slate-700/60"
                     }`}
                   >
                     {p}
@@ -782,25 +782,25 @@ export function TeamManager() {
             </div>
 
             {/* Custom Permissions Scope Override */}
-            <div className="space-y-2 pt-2 border-t border-border/80">
-              <Label className="text-foreground font-semibold block">Custom Scope Overrides</Label>
-              <span className="text-[11px] text-muted-foreground block leading-relaxed">
+            <div className="space-y-2 pt-2 border-t border-slate-800/80">
+              <Label className="text-slate-300 font-semibold block">Custom Scope Overrides</Label>
+              <span className="text-[11px] text-slate-500 block leading-relaxed">
                 By default, this role inherits standard settings. Select checkbox inputs below to customize specific authorizations for this profile.
               </span>
-              <div className="grid grid-cols-2 gap-2 mt-2 bg-muted/50 p-3 rounded-lg border border-border/50">
+              <div className="grid grid-cols-2 gap-2 mt-2 bg-slate-950/40 p-3 rounded-lg border border-slate-800/50">
                 {(Object.keys(DEFAULT_ROLE_PERMISSIONS.super_admin) as unknown as PermissionKey[]).map((permKey) => {
                   const label = permKey.replace("_", " ");
                   const checked = editPermissions.includes(permKey);
                   return (
                     <label 
                       key={permKey} 
-                      className="flex items-center gap-2 text-xs text-foreground hover:text-foreground cursor-pointer select-none py-1 transition-colors"
+                      className="flex items-center gap-2 text-xs text-slate-300 hover:text-white cursor-pointer select-none py-1 transition-colors"
                     >
                       <input
                         type="checkbox"
                         checked={checked}
                         onChange={() => handleTogglePermission(permKey)}
-                        className="rounded bg-muted border-border text-primary focus:ring-0 focus:ring-offset-0 size-3.5 accent-primary"
+                        className="rounded bg-slate-800 border-slate-700 text-primary focus:ring-0 focus:ring-offset-0 size-3.5 accent-primary"
                       />
                       <span className="capitalize">{label}</span>
                     </label>
@@ -809,12 +809,12 @@ export function TeamManager() {
               </div>
             </div>
 
-            <DialogFooter className="pt-4 border-t border-border/80">
+            <DialogFooter className="pt-4 border-t border-slate-800/80">
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => setIsEditOpen(false)}
-                className="border-border text-foreground hover:bg-muted"
+                className="border-slate-700 text-slate-300 hover:bg-slate-800"
               >
                 Cancel
               </Button>
@@ -839,26 +839,26 @@ export function TeamManager() {
 
       {/* QUICK CHANGE TASK DIALOG */}
       <Dialog open={isTaskOpen} onOpenChange={setIsTaskOpen}>
-        <DialogContent className="bg-card border-border text-foreground max-w-sm shadow-2xl">
+        <DialogContent className="bg-slate-900 border-slate-800 text-white max-w-sm shadow-2xl">
           <DialogHeader>
-            <DialogTitle className="text-foreground flex items-center gap-2">
+            <DialogTitle className="text-white flex items-center gap-2">
               <Target className="h-5 w-5 text-cyan-400" />
               Change Assigned Task
             </DialogTitle>
-            <DialogDescription className="text-muted-foreground">
+            <DialogDescription className="text-slate-400">
               Reassign the primary workspace duty or specialty target for {selectedMember?.full_name}.
             </DialogDescription>
           </DialogHeader>
 
           <form onSubmit={handleSaveQuickTask} className="space-y-4 py-2">
             <div className="space-y-1.5">
-              <Label htmlFor="quick-specialty" className="text-foreground">Current Specialty Assignment</Label>
+              <Label htmlFor="quick-specialty" className="text-slate-300">Current Specialty Assignment</Label>
               <Input
                 id="quick-specialty"
                 value={quickSpecialty}
                 onChange={(e) => setQuickSpecialty(e.target.value)}
                 placeholder="e.g. Sales Inbound Support"
-                className="bg-muted/80 border-border text-foreground focus:border-cyan-500/50"
+                className="bg-slate-800/80 border-slate-700 text-white focus:border-cyan-500/50"
                 required
               />
             </div>
@@ -872,7 +872,7 @@ export function TeamManager() {
                   className={`text-[10px] px-2 py-0.5 rounded border transition-colors ${
                     quickSpecialty === p 
                       ? "bg-cyan-500/20 text-cyan-300 border-cyan-500/30" 
-                      : "bg-muted hover:bg-muted text-foreground border-border/60"
+                      : "bg-slate-800 hover:bg-slate-700 text-slate-300 border-slate-700/60"
                   }`}
                 >
                   {p}
@@ -880,19 +880,19 @@ export function TeamManager() {
               ))}
             </div>
 
-            <DialogFooter className="pt-4 border-t border-border/80">
+            <DialogFooter className="pt-4 border-t border-slate-800/80">
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => setIsTaskOpen(false)}
-                className="border-border text-foreground hover:bg-muted"
+                className="border-slate-700 text-slate-300 hover:bg-slate-800"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
                 disabled={taskUpdating}
-                className="bg-cyan-600 hover:bg-cyan-550 text-foreground font-semibold shadow-[0_0_15px_rgba(6,182,212,0.2)]"
+                className="bg-cyan-600 hover:bg-cyan-550 text-white font-semibold shadow-[0_0_15px_rgba(6,182,212,0.2)]"
               >
                 {taskUpdating ? (
                   <>
@@ -910,14 +910,14 @@ export function TeamManager() {
 
       {/* DELETE DIALOG */}
       <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
-        <DialogContent className="bg-card border-border text-foreground max-w-sm shadow-2xl">
+        <DialogContent className="bg-slate-900 border-slate-800 text-white max-w-sm shadow-2xl">
           <DialogHeader>
-            <DialogTitle className="text-foreground flex items-center gap-2">
+            <DialogTitle className="text-white flex items-center gap-2">
               <AlertTriangle className="h-5 w-5 text-red-500" />
               Remove Team Member
             </DialogTitle>
-            <DialogDescription className="text-muted-foreground">
-              Are you sure you want to permanently delete the account for <strong className="text-foreground">{selectedMember?.full_name} ({selectedMember?.email})</strong>?
+            <DialogDescription className="text-slate-400">
+              Are you sure you want to permanently delete the account for <strong className="text-white">{selectedMember?.full_name} ({selectedMember?.email})</strong>?
             </DialogDescription>
           </DialogHeader>
 
@@ -925,19 +925,19 @@ export function TeamManager() {
             <strong>Warning:</strong> Deleting a team member removes their database profile permanently. All historic pipeline logs, deals, or conversations assigned to this user will become unassigned. This operation cannot be undone.
           </div>
 
-          <DialogFooter className="pt-2 border-t border-border/80">
+          <DialogFooter className="pt-2 border-t border-slate-800/80">
             <Button
               type="button"
               variant="outline"
               onClick={() => setIsDeleteOpen(false)}
-              className="border-border text-foreground hover:bg-muted"
+              className="border-slate-700 text-slate-300 hover:bg-slate-800"
             >
               Cancel
             </Button>
             <Button
               onClick={handleDeleteMember}
               disabled={deleting}
-              className="bg-red-600 hover:bg-red-700 text-foreground font-semibold"
+              className="bg-red-600 hover:bg-red-700 text-white font-semibold"
             >
               {deleting ? (
                 <>

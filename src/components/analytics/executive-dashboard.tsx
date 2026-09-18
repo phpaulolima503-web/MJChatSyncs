@@ -79,7 +79,7 @@ export function ExecutiveDashboard() {
       {/* AI Insights */}
       {data.insights.length > 0 && (
         <div>
-          <h3 className="mb-3 text-sm font-semibold text-foreground">AI Business Insights</h3>
+          <h3 className="mb-3 text-sm font-semibold text-slate-300">AI Business Insights</h3>
           <div className="grid grid-cols-1 gap-3 lg:grid-cols-2 xl:grid-cols-3">
             {data.insights.map((ins) => <InsightCard key={ins.id} insight={ins} />)}
           </div>
@@ -107,8 +107,8 @@ function KpiCard({ label, value, icon: Icon, color }: { label: string; value: st
       <div className="flex items-center justify-between">
         <Icon className={cn("h-5 w-5", cls.split(' ')[3])} />
       </div>
-      <p className="mt-3 text-2xl font-bold text-foreground">{value}</p>
-      <p className="mt-1 text-xs text-muted-foreground">{label}</p>
+      <p className="mt-3 text-2xl font-bold text-slate-100">{value}</p>
+      <p className="mt-1 text-xs text-slate-500">{label}</p>
     </div>
   )
 }
@@ -117,9 +117,9 @@ function KpiCard({ label, value, icon: Icon, color }: { label: string; value: st
 
 function MiniChart({ title, data, color, prefix = '' }: { title: string; data: Array<{ date: string; value: number }>; color: string; prefix?: string }) {
   if (!data || data.length === 0) return (
-    <div className="rounded-xl border border-border bg-card p-4">
-      <p className="text-sm font-semibold text-foreground">{title}</p>
-      <p className="mt-4 text-center text-xs text-muted-foreground">No data yet</p>
+    <div className="rounded-xl border border-slate-800 bg-slate-900 p-4">
+      <p className="text-sm font-semibold text-slate-300">{title}</p>
+      <p className="mt-4 text-center text-xs text-slate-600">No data yet</p>
     </div>
   )
 
@@ -141,20 +141,20 @@ function MiniChart({ title, data, color, prefix = '' }: { title: string; data: A
   const up = pct >= 0
 
   return (
-    <div className="rounded-xl border border-border bg-card p-4">
+    <div className="rounded-xl border border-slate-800 bg-slate-900 p-4">
       <div className="flex items-center justify-between">
-        <p className="text-sm font-semibold text-foreground">{title}</p>
+        <p className="text-sm font-semibold text-slate-300">{title}</p>
         <span className={cn("flex items-center gap-1 text-xs font-medium", up ? "text-emerald-400" : "text-red-400")}>
           {up ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
           {Math.abs(pct).toFixed(1)}%
         </span>
       </div>
-      <p className="mt-1 text-2xl font-bold text-foreground">{prefix}{current.toLocaleString('en-IN')}</p>
+      <p className="mt-1 text-2xl font-bold text-slate-100">{prefix}{current.toLocaleString('en-IN')}</p>
       <svg viewBox={`0 0 ${w} ${h}`} className="mt-3 w-full" style={{ height: h }}>
         <polyline fill="none" stroke={color} strokeWidth={2} points={points} />
         <polyline fill={color + '20'} points={`0,${h} ${points} ${w},${h}`} />
       </svg>
-      <div className="mt-2 flex justify-between text-[10px] text-muted-foreground">
+      <div className="mt-2 flex justify-between text-[10px] text-slate-600">
         {data.slice(0, 1).map(d => <span key={d.date}>{d.date.slice(5)}</span>)}
         {data.slice(-1).map(d => <span key={d.date}>{d.date.slice(5)}</span>)}
       </div>
@@ -166,13 +166,13 @@ function MiniChart({ title, data, color, prefix = '' }: { title: string; data: A
 
 function StatCard({ title, items }: { title: string; items: Array<{ label: string; value: string | number; alert?: boolean }> }) {
   return (
-    <div className="rounded-xl border border-border bg-card p-4">
-      <p className="mb-3 text-sm font-semibold text-foreground">{title}</p>
+    <div className="rounded-xl border border-slate-800 bg-slate-900 p-4">
+      <p className="mb-3 text-sm font-semibold text-slate-300">{title}</p>
       <div className="space-y-2">
         {items.map(item => (
           <div key={item.label} className="flex items-center justify-between">
-            <span className="text-xs text-muted-foreground">{item.label}</span>
-            <span className={cn("text-sm font-semibold", item.alert ? "text-orange-400" : "text-foreground")}>{item.value}</span>
+            <span className="text-xs text-slate-500">{item.label}</span>
+            <span className={cn("text-sm font-semibold", item.alert ? "text-orange-400" : "text-slate-200")}>{item.value}</span>
           </div>
         ))}
       </div>
@@ -186,14 +186,14 @@ const SENTIMENT_STYLE: Record<string, string> = {
   positive: 'border-emerald-500/30 bg-emerald-500/5',
   negative: 'border-red-500/30 bg-red-500/5',
   warning: 'border-orange-500/30 bg-orange-500/5',
-  neutral: 'border-border bg-card',
+  neutral: 'border-slate-700 bg-slate-900',
 }
 
 function InsightCard({ insight }: { insight: AIInsight }) {
   return (
     <div className={cn("rounded-xl border p-4", SENTIMENT_STYLE[insight.sentiment])}>
-      <p className="text-sm font-semibold text-foreground">{insight.title}</p>
-      <p className="mt-1 text-xs text-muted-foreground line-clamp-3">{insight.body}</p>
+      <p className="text-sm font-semibold text-slate-200">{insight.title}</p>
+      <p className="mt-1 text-xs text-slate-400 line-clamp-3">{insight.body}</p>
       {insight.action && (
         <button className="mt-2 text-xs font-medium text-primary hover:underline">{insight.action} →</button>
       )}

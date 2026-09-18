@@ -210,10 +210,10 @@ export function ProfileForm() {
     : '—';
 
   return (
-    <Card className="bg-card/60 border-border">
+    <Card className="bg-slate-900/40 border-slate-800">
       <CardHeader>
-        <CardTitle className="text-foreground">Profile</CardTitle>
-        <CardDescription className="text-muted-foreground">
+        <CardTitle className="text-white">Profile</CardTitle>
+        <CardDescription className="text-slate-400">
           How you show up across the app. Your avatar and name appear in the
           header, sidebar, and anywhere your teammates see you.
         </CardDescription>
@@ -255,13 +255,13 @@ export function ProfileForm() {
                   variant="ghost"
                   onClick={onRemoveAvatar}
                   disabled={saving}
-                  className="text-muted-foreground hover:text-foreground"
+                  className="text-slate-400 hover:text-white"
                 >
                   <Trash2 className="size-4" />
                   Remove
                 </Button>
               )}
-              <p className="w-full text-xs text-muted-foreground">
+              <p className="w-full text-xs text-slate-500">
                 PNG, JPG, WebP, or GIF. Up to 2 MB.
               </p>
             </div>
@@ -269,7 +269,7 @@ export function ProfileForm() {
 
           {/* Name */}
           <div className="space-y-2">
-            <Label htmlFor="profile-full-name" className="text-foreground">
+            <Label htmlFor="profile-full-name" className="text-slate-200">
               Display name
             </Label>
             <Input
@@ -285,7 +285,7 @@ export function ProfileForm() {
 
           {/* Email */}
           <div className="space-y-2">
-            <Label htmlFor="profile-email" className="text-foreground">
+            <Label htmlFor="profile-email" className="text-slate-200">
               Email
             </Label>
             <Input
@@ -309,24 +309,24 @@ export function ProfileForm() {
           </div>
 
           {/* Read-only block */}
-          <div className="rounded-lg border border-border bg-card/80 p-4">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          <div className="rounded-lg border border-slate-800 bg-slate-900/60 p-4">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
               Account details
             </p>
             <dl className="grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
               <div>
-                <dt className="text-muted-foreground">Role</dt>
-                <dd className="mt-0.5 font-mono text-foreground">
+                <dt className="text-slate-500">Role</dt>
+                <dd className="mt-0.5 font-mono text-slate-200">
                   {profile?.role ?? 'user'}
                 </dd>
               </div>
               <div>
-                <dt className="text-muted-foreground">Joined</dt>
-                <dd className="mt-0.5 text-foreground">{joined}</dd>
+                <dt className="text-slate-500">Joined</dt>
+                <dd className="mt-0.5 text-slate-200">{joined}</dd>
               </div>
               <div className="sm:col-span-2">
-                <dt className="text-muted-foreground">User ID</dt>
-                <dd className="mt-0.5 break-all font-mono text-xs text-muted-foreground">
+                <dt className="text-slate-500">User ID</dt>
+                <dd className="mt-0.5 break-all font-mono text-xs text-slate-400">
                   {user?.id ?? '—'}
                 </dd>
               </div>
@@ -334,7 +334,7 @@ export function ProfileForm() {
           </div>
 
           {!profile && (
-            <p className="flex items-center gap-2 text-sm text-muted-foreground">
+            <p className="flex items-center gap-2 text-sm text-slate-400">
               <CircleAlert className="size-4" />
               Loading your profile…
             </p>

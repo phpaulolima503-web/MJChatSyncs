@@ -273,26 +273,26 @@ export default function TasksPage() {
       { id: "today", label: "Due Today", tasks: dueToday, color: "text-amber-400 bg-amber-500/10 border-amber-500/25" },
       { id: "tomorrow", label: "Due Tomorrow", tasks: dueTomorrow, color: "text-sky-400 bg-sky-500/10 border-sky-500/25" },
       { id: "later", label: "Later", tasks: later, color: "text-indigo-400 bg-indigo-500/10 border-indigo-500/25" },
-      { id: "nodue", label: "No Due Date", tasks: noDueDate, color: "text-muted-foreground bg-muted/20 border-border/20" },
+      { id: "nodue", label: "No Due Date", tasks: noDueDate, color: "text-slate-400 bg-slate-800/20 border-slate-700/20" },
       { id: "completed", label: "Completed", tasks: completed, color: "text-emerald-400 bg-emerald-500/10 border-emerald-500/25" },
     ];
   }, [filteredTasks]);
 
   return (
-    <div className="flex h-full w-full flex-col bg-background p-4 sm:p-6 space-y-4 overflow-y-auto">
+    <div className="flex h-full w-full flex-col bg-slate-950 p-4 sm:p-6 space-y-4 overflow-y-auto">
       {/* Header Panel */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold tracking-tight text-foreground flex items-center gap-2">
+          <h1 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
             <Sparkles className="h-5.5 w-5.5 text-indigo-400 animate-pulse" />
             CRM Tasks & Reminders
           </h1>
-          <p className="text-xs text-muted-foreground mt-0.5">Manage customer follow-ups and agent workflows.</p>
+          <p className="text-xs text-slate-400 mt-0.5">Manage customer follow-ups and agent workflows.</p>
         </div>
 
         <Button
           onClick={openCreateModal}
-          className="bg-indigo-600 hover:bg-indigo-700 text-foreground font-semibold text-xs h-9 px-4 rounded-xl flex items-center gap-1.5 self-start sm:self-auto"
+          className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs h-9 px-4 rounded-xl flex items-center gap-1.5 self-start sm:self-auto"
         >
           <Plus className="h-4 w-4" />
           Create Task
@@ -300,15 +300,15 @@ export default function TasksPage() {
       </div>
 
       {/* Filter Toolbar */}
-      <div className="flex flex-col md:flex-row gap-3 bg-card/80 p-3 rounded-2xl border border-border/80">
+      <div className="flex flex-col md:flex-row gap-3 bg-slate-900/60 p-3 rounded-2xl border border-slate-800/80">
         {/* Search */}
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search tasks, descriptions or contacts..."
-            className="border-border bg-background pl-9 text-xs text-foreground placeholder:text-muted-foreground focus:border-indigo-500/50"
+            className="border-slate-800 bg-slate-950 pl-9 text-xs text-white placeholder-slate-500 focus:border-indigo-500/50"
           />
         </div>
 
@@ -316,7 +316,7 @@ export default function TasksPage() {
         <select
           value={priorityFilter}
           onChange={(e) => setPriorityFilter(e.target.value as any)}
-          className="bg-background border border-border p-2 text-xs rounded-xl text-foreground focus:border-indigo-500 focus:outline-none"
+          className="bg-slate-950 border border-slate-800 p-2 text-xs rounded-xl text-white focus:border-indigo-500 focus:outline-none"
         >
           <option value="all">All Priorities</option>
           <option value="low">Low Priority</option>
@@ -328,7 +328,7 @@ export default function TasksPage() {
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value as any)}
-          className="bg-background border border-border p-2 text-xs rounded-xl text-foreground focus:border-indigo-500 focus:outline-none"
+          className="bg-slate-950 border border-slate-800 p-2 text-xs rounded-xl text-white focus:border-indigo-500 focus:outline-none"
         >
           <option value="all">All Statuses</option>
           <option value="pending">Pending</option>
@@ -344,11 +344,11 @@ export default function TasksPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
           {columns.map((column) => (
-            <div key={column.id} className="flex flex-col space-y-3 bg-card/30 border border-card/90 rounded-2xl p-3 h-[calc(100vh-14.5rem)] overflow-y-auto min-h-[300px]">
+            <div key={column.id} className="flex flex-col space-y-3 bg-slate-900/30 border border-slate-900/90 rounded-2xl p-3 h-[calc(100vh-14.5rem)] overflow-y-auto min-h-[300px]">
               {/* Column Header */}
               <div className={`flex items-center justify-between px-2.5 py-1 rounded-lg border text-xs font-semibold uppercase tracking-wider ${column.color}`}>
                 <span>{column.label}</span>
-                <span className="font-mono text-[10px] bg-muted/50 px-1.5 py-0.2 rounded-full">
+                <span className="font-mono text-[10px] bg-slate-950/40 px-1.5 py-0.2 rounded-full">
                   {column.tasks.length}
                 </span>
               </div>
@@ -357,8 +357,8 @@ export default function TasksPage() {
               <div className="flex-1 space-y-2.5">
                 {column.tasks.length === 0 ? (
                   <div className="flex flex-col items-center justify-center py-10 opacity-40">
-                    <CheckCircle className="h-6 w-6 text-muted-foreground" />
-                    <span className="text-[10px] text-muted-foreground mt-1">Clean column</span>
+                    <CheckCircle className="h-6 w-6 text-slate-700" />
+                    <span className="text-[10px] text-slate-500 mt-1">Clean column</span>
                   </div>
                 ) : (
                   column.tasks.map((task) => {
@@ -367,12 +367,12 @@ export default function TasksPage() {
                       <div
                         key={task.id}
                         onClick={() => openEditModal(task)}
-                        className={`group relative bg-card border hover:border-border rounded-xl p-3.5 space-y-2 cursor-pointer shadow-md transition-all ${
+                        className={`group relative bg-slate-900 border hover:border-slate-700 rounded-xl p-3.5 space-y-2 cursor-pointer shadow-md transition-all ${
                           task.status === "completed"
-                            ? "border-card/40 opacity-70"
+                            ? "border-slate-900/40 opacity-70"
                             : isOverdue
                               ? "border-rose-950 hover:border-rose-900"
-                              : "border-border"
+                              : "border-slate-850"
                         }`}
                       >
                         {/* Checkbox & Title */}
@@ -383,7 +383,7 @@ export default function TasksPage() {
                               e.stopPropagation();
                               toggleStatus(task);
                             }}
-                            className="mt-0.5 text-muted-foreground hover:text-foreground"
+                            className="mt-0.5 text-slate-500 hover:text-white"
                           >
                             {task.status === "completed" ? (
                               <CheckCircle className="h-4 w-4 text-indigo-400" />
@@ -392,8 +392,8 @@ export default function TasksPage() {
                             )}
                           </button>
                           <span
-                            className={`text-xs font-semibold text-foreground leading-normal truncate block flex-1 ${
-                              task.status === "completed" && "line-through text-muted-foreground"
+                            className={`text-xs font-semibold text-white leading-normal truncate block flex-1 ${
+                              task.status === "completed" && "line-through text-slate-500"
                             }`}
                           >
                             {task.title}
@@ -403,13 +403,13 @@ export default function TasksPage() {
                         {/* Description */}
                         {task.description && (
                           <p className={`text-[10px] leading-relaxed line-clamp-2 ${
-                            task.status === "completed" ? "text-muted-foreground" : "text-muted-foreground"
+                            task.status === "completed" ? "text-slate-600" : "text-slate-400"
                           }`}>
                             {task.description}
                           </p>
                         )}
 
-                        <div className="h-px bg-muted/40" />
+                        <div className="h-px bg-slate-850/40" />
 
                         {/* Details Badges */}
                         <div className="flex flex-wrap gap-1 items-center justify-between text-[9px]">
@@ -419,7 +419,7 @@ export default function TasksPage() {
                               ? "bg-rose-500/10 text-rose-400"
                               : task.priority === "medium"
                                 ? "bg-amber-500/10 text-amber-400"
-                                : "bg-muted text-muted-foreground"
+                                : "bg-slate-800 text-slate-400"
                           }`}>
                             {task.priority}
                           </span>
@@ -427,7 +427,7 @@ export default function TasksPage() {
                           {/* Due date */}
                           {task.due_date && (
                             <span className={`flex items-center gap-0.5 font-medium ${
-                              isOverdue ? "text-rose-400" : "text-muted-foreground"
+                              isOverdue ? "text-rose-400" : "text-slate-400"
                             }`}>
                               <Calendar className="h-2.5 w-2.5" />
                               {format(new Date(task.due_date), "MMM d")}
@@ -437,16 +437,16 @@ export default function TasksPage() {
 
                         {/* Agent / Contact assignments */}
                         {(task.contact || task.assigned_to) && (
-                          <div className="flex flex-col gap-0.5 text-[9px] text-muted-foreground bg-muted/40 p-1.5 rounded-lg border border-card/50">
+                          <div className="flex flex-col gap-0.5 text-[9px] text-slate-500 bg-slate-950/20 p-1.5 rounded-lg border border-slate-900/50">
                             {task.contact && (
                               <div className="flex items-center gap-1">
                                 <Link className="h-2.5 w-2.5 text-indigo-400" />
-                                <span className="text-muted-foreground truncate max-w-[110px]">{task.contact.name || task.contact.phone}</span>
+                                <span className="text-slate-400 truncate max-w-[110px]">{task.contact.name || task.contact.phone}</span>
                               </div>
                             )}
                             {task.assigned_to && (
                               <div className="flex items-center gap-1">
-                                <User className="h-2.5 w-2.5 text-muted-foreground" />
+                                <User className="h-2.5 w-2.5 text-slate-500" />
                                 <span className="truncate max-w-[110px]">
                                   {profiles.find(p => p.user_id === task.assigned_to)?.full_name || "Assigned"}
                                 </span>
@@ -462,7 +462,7 @@ export default function TasksPage() {
                             e.stopPropagation();
                             deleteTask(task.id);
                           }}
-                          className="absolute right-2 top-2 p-1 text-muted-foreground hover:text-rose-400 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                          className="absolute right-2 top-2 p-1 text-slate-500 hover:text-rose-400 rounded opacity-0 group-hover:opacity-100 transition-opacity"
                         >
                           <Trash2 className="h-3 w-3" />
                         </button>
@@ -478,12 +478,12 @@ export default function TasksPage() {
 
       {/* Task Creation & Edit Modal */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/85 backdrop-blur-sm p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 backdrop-blur-sm p-4">
           <form
             onSubmit={handleSubmit}
-            className="w-full max-w-md rounded-2xl border border-border bg-card text-foreground overflow-hidden shadow-2xl animate-in fade-in-50 zoom-in-95"
+            className="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 text-white overflow-hidden shadow-2xl animate-in fade-in-50 zoom-in-95"
           >
-            <div className="flex items-center justify-between border-b border-border px-5 py-3.5 bg-muted/50">
+            <div className="flex items-center justify-between border-b border-slate-850 px-5 py-3.5 bg-slate-950/40">
               <span className="text-sm font-bold text-indigo-400 flex items-center gap-1.5">
                 <Sparkles className="h-4.5 w-4.5" />
                 {editingTask ? "Modify CRM Task" : "Schedule New CRM Task"}
@@ -491,7 +491,7 @@ export default function TasksPage() {
               <button
                 type="button"
                 onClick={() => setModalOpen(false)}
-                className="text-muted-foreground hover:text-foreground focus:outline-none"
+                className="text-slate-400 hover:text-white focus:outline-none"
               >
                 <Plus className="h-4 w-4 rotate-45" />
               </button>
@@ -499,37 +499,37 @@ export default function TasksPage() {
 
             <div className="p-5 space-y-4 text-xs">
               <div className="space-y-1">
-                <label className="text-[10px] text-muted-foreground font-bold uppercase">Task Title *</label>
+                <label className="text-[10px] text-slate-400 font-bold uppercase">Task Title *</label>
                 <input
                   name="title"
                   value={formData.title}
                   onChange={handleChange}
                   placeholder="e.g. Call client for proposal follow-up"
                   required
-                  className="w-full bg-background border border-border p-2.5 text-xs rounded-xl text-foreground focus:border-indigo-500 focus:outline-none"
+                  className="w-full bg-slate-950 border border-slate-800 p-2.5 text-xs rounded-xl text-white focus:border-indigo-500 focus:outline-none"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-[10px] text-muted-foreground font-bold uppercase">Description / Instruction</label>
+                <label className="text-[10px] text-slate-400 font-bold uppercase">Description / Instruction</label>
                 <textarea
                   name="description"
                   value={formData.description}
                   onChange={handleChange}
                   placeholder="Details of what needs to be discussed or resolved..."
                   rows={3}
-                  className="w-full bg-background border border-border p-2.5 text-xs rounded-xl text-foreground focus:border-indigo-500 focus:outline-none resize-none"
+                  className="w-full bg-slate-950 border border-slate-800 p-2.5 text-xs rounded-xl text-white focus:border-indigo-500 focus:outline-none resize-none"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="text-[10px] text-muted-foreground font-bold uppercase">Priority Level</label>
+                  <label className="text-[10px] text-slate-400 font-bold uppercase">Priority Level</label>
                   <select
                     name="priority"
                     value={formData.priority}
                     onChange={handleChange}
-                    className="w-full bg-background border border-border p-2.5 text-xs rounded-xl text-foreground focus:border-indigo-500 focus:outline-none"
+                    className="w-full bg-slate-950 border border-slate-800 p-2.5 text-xs rounded-xl text-white focus:border-indigo-500 focus:outline-none"
                   >
                     <option value="low">Low Priority</option>
                     <option value="medium">Medium Priority</option>
@@ -538,12 +538,12 @@ export default function TasksPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] text-muted-foreground font-bold uppercase">Recurring Period</label>
+                  <label className="text-[10px] text-slate-400 font-bold uppercase">Recurring Period</label>
                   <select
                     name="recurring"
                     value={formData.recurring}
                     onChange={handleChange}
-                    className="w-full bg-background border border-border p-2.5 text-xs rounded-xl text-foreground focus:border-indigo-500 focus:outline-none"
+                    className="w-full bg-slate-950 border border-slate-800 p-2.5 text-xs rounded-xl text-white focus:border-indigo-500 focus:outline-none"
                   >
                     <option value="">One-time Task</option>
                     <option value="daily">Daily Recurring</option>
@@ -555,23 +555,23 @@ export default function TasksPage() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="text-[10px] text-muted-foreground font-bold uppercase">Due Date & Time</label>
+                  <label className="text-[10px] text-slate-400 font-bold uppercase">Due Date & Time</label>
                   <input
                     type="datetime-local"
                     name="due_date"
                     value={formData.due_date}
                     onChange={handleChange}
-                    className="w-full bg-background border border-border p-2 text-xs rounded-xl text-foreground focus:border-indigo-500 focus:outline-none"
+                    className="w-full bg-slate-950 border border-slate-800 p-2 text-xs rounded-xl text-white focus:border-indigo-500 focus:outline-none"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] text-muted-foreground font-bold uppercase">Assign Employee</label>
+                  <label className="text-[10px] text-slate-400 font-bold uppercase">Assign Employee</label>
                   <select
                     name="assigned_to"
                     value={formData.assigned_to}
                     onChange={handleChange}
-                    className="w-full bg-background border border-border p-2.5 text-xs rounded-xl text-foreground focus:border-indigo-500 focus:outline-none"
+                    className="w-full bg-slate-950 border border-slate-800 p-2.5 text-xs rounded-xl text-white focus:border-indigo-500 focus:outline-none"
                   >
                     <option value="">Unassigned</option>
                     {profiles.map((p) => (
@@ -584,12 +584,12 @@ export default function TasksPage() {
               </div>
 
               <div className="space-y-1">
-                <label className="text-[10px] text-muted-foreground font-bold uppercase">Link Contact (Customer)</label>
+                <label className="text-[10px] text-slate-400 font-bold uppercase">Link Contact (Customer)</label>
                 <select
                   name="contact_id"
                   value={formData.contact_id}
                   onChange={handleChange}
-                  className="w-full bg-background border border-border p-2.5 text-xs rounded-xl text-foreground focus:border-indigo-500 focus:outline-none"
+                  className="w-full bg-slate-950 border border-slate-800 p-2.5 text-xs rounded-xl text-white focus:border-indigo-500 focus:outline-none"
                 >
                   <option value="">Do not link contact</option>
                   {contacts.map((c) => (
@@ -600,21 +600,21 @@ export default function TasksPage() {
                 </select>
               </div>
 
-              <div className="h-px bg-muted pt-2" />
+              <div className="h-px bg-slate-850 pt-2" />
 
               <div className="flex gap-2.5 justify-end">
                 <Button
                   type="button"
                   variant="outline"
                   onClick={() => setModalOpen(false)}
-                  className="border-border bg-background text-slate-450 hover:text-foreground text-xs h-9 px-4 rounded-xl"
+                  className="border-slate-800 bg-slate-950 text-slate-450 hover:text-white text-xs h-9 px-4 rounded-xl"
                 >
                   Cancel
                 </Button>
                 <Button
                   type="submit"
                   disabled={saving}
-                  className="bg-indigo-600 hover:bg-indigo-700 text-foreground font-semibold text-xs h-9 px-5 rounded-xl border-0 flex items-center gap-1.5"
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs h-9 px-5 rounded-xl border-0 flex items-center gap-1.5"
                 >
                   {saving ? (
                     <div className="h-4 w-4 animate-spin rounded-full border-2 border-indigo-450 border-t-transparent" />

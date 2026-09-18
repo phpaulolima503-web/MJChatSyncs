@@ -29,8 +29,8 @@ export default async function PaymentHistoryPage() {
   return (
     <div className="p-6 space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-foreground">Payment History</h1>
-        <p className="text-sm text-muted-foreground mt-1">All received payments across channels</p>
+        <h1 className="text-2xl font-bold text-slate-100">Payment History</h1>
+        <p className="text-sm text-slate-500 mt-1">All received payments across channels</p>
       </div>
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
@@ -40,17 +40,17 @@ export default async function PaymentHistoryPage() {
           { label: 'This Month', value: INR((payments ?? []).filter(p => p.status === 'success' && new Date(p.payment_date).getMonth() === new Date().getMonth()).reduce((s, p) => s + Number(p.amount), 0)) },
           { label: 'Pending', value: INR((payments ?? []).filter(p => p.status === 'pending').reduce((s, p) => s + Number(p.amount), 0)) },
         ].map(k => (
-          <div key={k.label} className="rounded-xl border border-border bg-card p-4">
-            <p className="text-xl font-bold text-foreground">{k.value}</p>
-            <p className="text-xs text-muted-foreground mt-1">{k.label}</p>
+          <div key={k.label} className="rounded-xl border border-slate-800 bg-slate-900 p-4">
+            <p className="text-xl font-bold text-slate-100">{k.value}</p>
+            <p className="text-xs text-slate-500 mt-1">{k.label}</p>
           </div>
         ))}
       </div>
 
-      <div className="rounded-xl border border-border bg-card overflow-x-auto">
+      <div className="rounded-xl border border-slate-800 bg-slate-900 overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-border text-xs text-muted-foreground">
+            <tr className="border-b border-slate-800 text-xs text-slate-500">
               <th className="px-4 py-3 text-left">Date</th>
               <th className="px-4 py-3 text-left">Invoice</th>
               <th className="px-4 py-3 text-left">Method</th>
@@ -59,23 +59,23 @@ export default async function PaymentHistoryPage() {
               <th className="px-4 py-3 text-left">Reference</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-border/50">
+          <tbody className="divide-y divide-slate-800/50">
             {(payments ?? []).map(p => {
               const inv = p.gst_invoices as { invoice_number: string; buyer_name: string } | null
               return (
-                <tr key={p.id} className="hover:bg-muted/30">
-                  <td className="px-4 py-3 text-muted-foreground text-xs">{new Date(p.payment_date || p.created_at).toLocaleDateString('en-IN')}</td>
+                <tr key={p.id} className="hover:bg-slate-800/30">
+                  <td className="px-4 py-3 text-slate-400 text-xs">{new Date(p.payment_date || p.created_at).toLocaleDateString('en-IN')}</td>
                   <td className="px-4 py-3">
-                    {inv ? <><p className="text-xs font-mono text-primary">{inv.invoice_number}</p><p className="text-[10px] text-muted-foreground">{inv.buyer_name}</p></> : <span className="text-muted-foreground">—</span>}
+                    {inv ? <><p className="text-xs font-mono text-primary">{inv.invoice_number}</p><p className="text-[10px] text-slate-600">{inv.buyer_name}</p></> : <span className="text-slate-600">—</span>}
                   </td>
-                  <td className="px-4 py-3 text-muted-foreground text-xs">{METHOD_LABELS[p.method] ?? p.method}</td>
-                  <td className="px-4 py-3 text-right font-semibold text-foreground">{INR(Number(p.amount))}</td>
+                  <td className="px-4 py-3 text-slate-400 text-xs">{METHOD_LABELS[p.method] ?? p.method}</td>
+                  <td className="px-4 py-3 text-right font-semibold text-slate-200">{INR(Number(p.amount))}</td>
                   <td className="px-4 py-3 text-center"><span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold capitalize ${STATUS_STYLES[p.status] ?? ''}`}>{p.status}</span></td>
-                  <td className="px-4 py-3 text-xs text-muted-foreground font-mono">{p.reference_no || p.gateway_payment_id || '—'}</td>
+                  <td className="px-4 py-3 text-xs text-slate-600 font-mono">{p.reference_no || p.gateway_payment_id || '—'}</td>
                 </tr>
               )
             })}
-            {(payments ?? []).length === 0 && <tr><td colSpan={6} className="py-12 text-center text-muted-foreground">No payments yet</td></tr>}
+            {(payments ?? []).length === 0 && <tr><td colSpan={6} className="py-12 text-center text-slate-600">No payments yet</td></tr>}
           </tbody>
         </table>
       </div>

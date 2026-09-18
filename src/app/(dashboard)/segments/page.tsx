@@ -101,8 +101,8 @@ export default function SegmentsPage() {
     <div className="space-y-6 max-w-6xl mx-auto pb-10">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-foreground tracking-tight">Contact Segments</h1>
-          <p className="text-sm text-muted-foreground mt-1">
+          <h1 className="text-2xl font-bold text-white tracking-tight">Contact Segments</h1>
+          <p className="text-sm text-slate-400 mt-1">
             Group your contacts based on tags, custom fields, and behaviors to send targeted broadcasts.
           </p>
         </div>
@@ -116,28 +116,28 @@ export default function SegmentsPage() {
       </div>
 
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
         <Input
           placeholder="Search segments..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-9 bg-card border-border text-foreground max-w-md"
+          className="pl-9 bg-slate-900 border-slate-800 text-white max-w-md"
         />
       </div>
 
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-40 animate-pulse rounded-xl bg-card border border-border" />
+            <div key={i} className="h-40 animate-pulse rounded-xl bg-slate-900 border border-slate-800" />
           ))}
         </div>
       ) : filteredSegments.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 rounded-xl border border-dashed border-border bg-card/30">
+        <div className="flex flex-col items-center justify-center py-20 rounded-xl border border-dashed border-slate-800 bg-slate-900/30">
           <div className="p-4 bg-primary/10 rounded-full mb-4">
             <ListFilter className="h-10 w-10 text-primary" />
           </div>
-          <p className="text-base font-semibold text-foreground">No segments found</p>
-          <p className="text-sm text-muted-foreground mt-1 mb-6 text-center max-w-sm">
+          <p className="text-base font-semibold text-white">No segments found</p>
+          <p className="text-sm text-slate-500 mt-1 mb-6 text-center max-w-sm">
             Create your first segment to organize your contacts into dynamic smart lists.
           </p>
           <Button onClick={handleOpenDialog} className="shadow-lg shadow-primary/20">
@@ -147,25 +147,25 @@ export default function SegmentsPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredSegments.map((segment) => (
-            <div key={segment.id} className="group relative flex flex-col rounded-xl border border-border bg-card overflow-hidden hover:border-border transition-colors">
+            <div key={segment.id} className="group relative flex flex-col rounded-xl border border-slate-800 bg-slate-900 overflow-hidden hover:border-slate-700 transition-colors">
               <div className="p-5 flex-1">
                 <div className="flex items-start justify-between gap-4 mb-3">
                   <div className="flex items-center gap-2">
                     <div className="p-2 bg-blue-500/10 rounded-lg">
                       <Users className="h-4 w-4 text-blue-400" />
                     </div>
-                    <h3 className="font-semibold text-foreground">{segment.name}</h3>
+                    <h3 className="font-semibold text-white">{segment.name}</h3>
                   </div>
-                  <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity" onClick={() => handleDelete(segment.id)}>
+                  <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity" onClick={() => handleDelete(segment.id)}>
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
-                <p className="text-sm text-muted-foreground line-clamp-2 min-h-[40px]">
+                <p className="text-sm text-slate-400 line-clamp-2 min-h-[40px]">
                   {segment.description || "No description provided for this segment."}
                 </p>
               </div>
-              <div className="border-t border-border p-3 bg-background/50 flex justify-between items-center">
-                <span className="text-xs font-medium text-muted-foreground px-2 py-1 bg-muted rounded-md">Dynamic List</span>
+              <div className="border-t border-slate-800 p-3 bg-slate-950/50 flex justify-between items-center">
+                <span className="text-xs font-medium text-slate-500 px-2 py-1 bg-slate-800 rounded-md">Dynamic List</span>
                 <Link href="/contacts" className="text-xs font-medium text-primary hover:text-primary/80 flex items-center">
                   View Contacts <ArrowRight className="h-3 w-3 ml-1" />
                 </Link>
@@ -176,36 +176,36 @@ export default function SegmentsPage() {
       )}
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="sm:max-w-md bg-card border-border">
+        <DialogContent className="sm:max-w-md bg-slate-900 border-slate-700">
           <DialogHeader>
-            <DialogTitle className="text-foreground">Create New Segment</DialogTitle>
+            <DialogTitle className="text-white">Create New Segment</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label className="text-foreground">Segment Name</Label>
+              <Label className="text-slate-300">Segment Name</Label>
               <Input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g., VIP Customers"
-                className="bg-muted border-border text-foreground"
+                className="bg-slate-800 border-slate-700 text-white"
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-foreground">Description (Optional)</Label>
+              <Label className="text-slate-300">Description (Optional)</Label>
               <Textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="e.g., Customers who spent over $500"
-                className="bg-muted border-border text-foreground resize-none"
+                className="bg-slate-800 border-slate-700 text-white resize-none"
               />
             </div>
             {/* Future iteration: Build dynamic query builder here */}
-            <div className="p-3 bg-accent/60 rounded-lg border border-border text-xs text-muted-foreground">
+            <div className="p-3 bg-slate-800/50 rounded-lg border border-slate-700 text-xs text-slate-400">
               <span className="text-primary font-medium">Coming Soon:</span> Visual Filter Builder will be added here to let you define rules like "Tag is VIP" or "Deal value &gt; 1000". For now, this creates an empty placeholder segment.
             </div>
           </div>
-          <DialogFooter className="bg-card/70 border-border">
-            <Button variant="outline" onClick={() => setDialogOpen(false)} className="border-border text-foreground">
+          <DialogFooter className="bg-slate-900/50 border-slate-700">
+            <Button variant="outline" onClick={() => setDialogOpen(false)} className="border-slate-700 text-slate-300">
               Cancel
             </Button>
             <Button onClick={handleSave} disabled={saving} className="bg-primary text-primary-foreground">

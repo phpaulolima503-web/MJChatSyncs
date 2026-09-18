@@ -58,7 +58,7 @@ function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-background text-foreground flex items-center justify-center relative overflow-hidden font-sans py-12 px-4 sm:px-8 lg:px-12">
+    <div className="min-h-screen w-full bg-slate-950 text-slate-100 flex items-center justify-center relative overflow-hidden font-sans py-12 px-4 sm:px-8 lg:px-12">
       {/* Subtle Grid Background */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-[0.15] pointer-events-none" />
       
@@ -75,15 +75,15 @@ function LoginForm() {
             {/* Logo */}
             <div className="flex items-center gap-2.5">
               <div className="h-10 w-10 rounded-xl bg-blue-600 flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.3)]">
-                <MessageSquare className="h-5.5 w-5.5 text-foreground" />
+                <MessageSquare className="h-5.5 w-5.5 text-white" />
               </div>
-              <span className="text-2xl font-extrabold text-foreground tracking-tight">MJChatSyncs</span>
+              <span className="text-2xl font-extrabold text-white tracking-tight">MJChatSyncs</span>
             </div>
 
             {/* Welcome Headers */}
             <div className="space-y-4">
-              <h1 className="text-4xl font-extrabold text-foreground tracking-tight">Welcome back!</h1>
-              <p className="text-muted-foreground text-base leading-relaxed">
+              <h1 className="text-4xl font-extrabold text-white tracking-tight">Welcome back!</h1>
+              <p className="text-slate-400 text-base leading-relaxed">
                 Sign in to manage your marketing campaigns
               </p>
             </div>
@@ -112,8 +112,8 @@ function LoginForm() {
                     <item.icon className="h-5 w-5" />
                   </div>
                   <div className="space-y-1 text-left">
-                    <h3 className="text-sm font-bold text-foreground">{item.title}</h3>
-                    <p className="text-xs text-muted-foreground leading-normal">{item.desc}</p>
+                    <h3 className="text-sm font-bold text-slate-200">{item.title}</h3>
+                    <p className="text-xs text-slate-500 leading-normal">{item.desc}</p>
                   </div>
                 </div>
               ))}
@@ -123,13 +123,13 @@ function LoginForm() {
 
         {/* Right Column: Glassmorphic Form */}
         <div className="md:col-span-6 lg:col-span-5 flex items-center justify-center md:justify-end w-full">
-          <div className="w-full max-w-md rounded-2xl border border-card bg-card/20 p-8 backdrop-blur-xl shadow-2xl relative group">
+          <div className="w-full max-w-md rounded-2xl border border-slate-900 bg-slate-900/20 p-8 backdrop-blur-xl shadow-2xl relative group">
             <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none" />
             
             <div className="space-y-6 relative z-10">
               <div className="space-y-2 text-center md:text-left">
-                <h2 className="text-2xl font-bold text-foreground tracking-tight">Sign in to your account</h2>
-                <p className="text-xs text-muted-foreground">Enter your credentials to continue</p>
+                <h2 className="text-2xl font-bold text-white tracking-tight">Sign in to your account</h2>
+                <p className="text-xs text-slate-500">Enter your credentials to continue</p>
               </div>
 
               <form onSubmit={handleLogin} className="space-y-4">
@@ -141,7 +141,7 @@ function LoginForm() {
 
                 {/* Email */}
                 <div className="space-y-1.5 text-left">
-                  <Label htmlFor="email" className="text-xs font-semibold text-muted-foreground">
+                  <Label htmlFor="email" className="text-xs font-semibold text-slate-400">
                     Email
                   </Label>
                   <Input
@@ -151,14 +151,14 @@ function LoginForm() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="h-11 border-card bg-background/60 text-foreground placeholder:text-muted-foreground focus-visible:border-blue-500 focus-visible:ring-blue-500/10"
+                    className="h-11 border-slate-900 bg-slate-950/60 text-slate-100 placeholder:text-slate-600 focus-visible:border-blue-500 focus-visible:ring-blue-500/10"
                   />
                 </div>
 
                 {/* Password */}
                 <div className="space-y-1.5 text-left">
                   <div className="flex items-center justify-between">
-                    <Label htmlFor="password" className="text-xs font-semibold text-muted-foreground">
+                    <Label htmlFor="password" className="text-xs font-semibold text-slate-400">
                       Password
                     </Label>
                   </div>
@@ -170,12 +170,12 @@ function LoginForm() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
-                      className="h-11 pr-10 border-card bg-background/60 text-foreground placeholder:text-muted-foreground focus-visible:border-blue-500 focus-visible:ring-blue-500/10"
+                      className="h-11 pr-10 border-slate-900 bg-slate-950/60 text-slate-100 placeholder:text-slate-600 focus-visible:border-blue-500 focus-visible:ring-blue-500/10"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-550 hover:text-muted-foreground transition-colors"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-550 hover:text-slate-400 transition-colors"
                     >
                       {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
@@ -194,14 +194,14 @@ function LoginForm() {
                 <Button
                   type="submit"
                   disabled={loading}
-                  className="h-11 w-full mt-2 font-semibold text-foreground bg-blue-600 hover:bg-blue-500 rounded-xl transition-all shadow-[0_0_20px_rgba(37,99,235,0.25)] hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] disabled:opacity-50"
+                  className="h-11 w-full mt-2 font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-xl transition-all shadow-[0_0_20px_rgba(37,99,235,0.25)] hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] disabled:opacity-50"
                 >
                   {loading ? "Signing in..." : "Sign in"}
                 </Button>
               </form>
 
               {/* Bottom Link */}
-              <p className="text-center text-xs text-muted-foreground">
+              <p className="text-center text-xs text-slate-500">
                 Don&apos;t have an account?{" "}
                 <Link
                   href="/signup"
@@ -222,7 +222,7 @@ function LoginForm() {
 export default function LoginPage() {
   return (
     <Suspense fallback={
-      <div className="flex min-h-screen items-center justify-center bg-background px-4 text-muted-foreground font-mono text-xs">
+      <div className="flex min-h-screen items-center justify-center bg-slate-950 px-4 text-slate-400 font-mono text-xs">
         Loading...
       </div>
     }>

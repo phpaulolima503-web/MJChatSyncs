@@ -56,7 +56,7 @@ const THEME_PRESETS: Record<WidgetTheme, ThemePreset> = {
     color: "#25D366",
     bgClass: "bg-[#25D366]",
     popupBg: "#0b0f19",
-    borderClass: "border-border",
+    borderClass: "border-slate-800",
     btnGlow: "shadow-[0_4px_15px_rgba(37,211,102,0.3)] hover:shadow-[0_4px_25px_rgba(37,211,102,0.5)]"
   },
   glass: {
@@ -233,16 +233,16 @@ export function WidgetManager() {
     <div className="space-y-6 mt-4 pb-12 max-w-7xl mx-auto px-4 md:px-0">
       
       {/* Top Heading Banner - fully responsive flex */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 rounded-2xl border border-border bg-card/60 backdrop-blur-md p-6 relative overflow-hidden shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 rounded-2xl border border-slate-800 bg-slate-900/40 backdrop-blur-md p-6 relative overflow-hidden shadow-xl">
         <div className="absolute top-0 right-0 h-40 w-40 bg-gradient-to-br from-primary/10 to-transparent blur-3xl rounded-full" />
         <div className="space-y-2">
           <div className="flex flex-wrap items-center gap-2">
-            <h2 className="text-xl font-extrabold text-foreground tracking-tight">Floating Chatbot Widget Builder</h2>
+            <h2 className="text-xl font-extrabold text-white tracking-tight">Floating Chatbot Widget Builder</h2>
             <span className="flex items-center gap-1 text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full font-bold shadow-sm">
               <Globe className="h-3 w-3" /> Fully Responsive
             </span>
           </div>
-          <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
+          <p className="text-sm text-slate-400 leading-relaxed max-w-2xl">
             Create an interactive floating support widget for your site. Capture WhatsApp leads instantly, compatible with Coding/Custom websites, WordPress, Wix, Shopify, WooCommerce and all major CMS platforms.
           </p>
         </div>
@@ -253,13 +253,13 @@ export function WidgetManager() {
         
         {/* LEFT COLUMN - CUSTOMIZER (7/12 width on large screen, full on smaller) */}
         <div className="lg:col-span-7 space-y-6">
-          <Card className="bg-card/30 border-border backdrop-blur-md shadow-2xl relative">
-            <CardHeader className="border-b border-border pb-4">
-              <CardTitle className="text-base text-foreground flex items-center gap-2">
+          <Card className="bg-slate-900/30 border-slate-800 backdrop-blur-md shadow-2xl relative">
+            <CardHeader className="border-b border-slate-800 pb-4">
+              <CardTitle className="text-base text-white flex items-center gap-2">
                 <Palette className="size-4 text-primary" />
                 Customize Aesthetics & Identity
               </CardTitle>
-              <CardDescription className="text-xs text-muted-foreground">
+              <CardDescription className="text-xs text-slate-400">
                 Alter bot information, greeting defaults, color styles, and screen placements.
               </CardDescription>
             </CardHeader>
@@ -267,9 +267,9 @@ export function WidgetManager() {
               
               {/* Dropdown Selector for connected WhatsApp lines */}
               <div className="space-y-1.5">
-                <Label className="text-foreground font-medium">WhatsApp Destination Number</Label>
+                <Label className="text-slate-300 font-medium">WhatsApp Destination Number</Label>
                 {loading && lines.length === 0 ? (
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground bg-muted px-3 py-2.5 rounded-lg border border-border">
+                  <div className="flex items-center gap-2 text-xs text-slate-500 bg-slate-800 px-3 py-2.5 rounded-lg border border-slate-700">
                     <Loader2 className="size-4 animate-spin" />
                     Fetching active numbers from cloud...
                   </div>
@@ -277,7 +277,7 @@ export function WidgetManager() {
                   <select
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
-                    className="w-full rounded-lg border border-border bg-muted px-3.5 py-2.5 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                    className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:ring-1 focus:ring-primary"
                   >
                     {lines.map((l) => (
                       <option key={l.id} value={l.phone_number.replace(/[^0-9]/g, "")}>
@@ -290,10 +290,10 @@ export function WidgetManager() {
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
                     placeholder="e.g. 919876543210 (Include country code without +)"
-                    className="bg-muted border-border text-foreground py-5 placeholder:text-muted-foreground"
+                    className="bg-slate-800 border-slate-700 text-white py-5 placeholder:text-slate-500"
                   />
                 )}
-                <p className="text-[10px] text-muted-foreground leading-normal">
+                <p className="text-[10px] text-slate-500 leading-normal">
                   Widget messages will route to this line. Ensure it includes country code (e.g. 91 for India, 1 for US) with no symbols.
                 </p>
               </div>
@@ -301,19 +301,19 @@ export function WidgetManager() {
               {/* Bot Identity Details Grid */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="space-y-1.5 md:col-span-2">
-                  <Label className="text-foreground font-medium">Chatbot Agent Name</Label>
+                  <Label className="text-slate-300 font-medium">Chatbot Agent Name</Label>
                   <Input
                     value={botName}
                     onChange={(e) => setBotName(e.target.value)}
-                    className="bg-muted border-border text-foreground"
+                    className="bg-slate-800 border-slate-700 text-white"
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-foreground font-medium">Agent Avatar</Label>
+                  <Label className="text-slate-300 font-medium">Agent Avatar</Label>
                   <select
                     value={botAvatar}
                     onChange={(e) => setBotAvatar(e.target.value)}
-                    className="w-full rounded-lg border border-border bg-muted px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                    className="w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-primary"
                   >
                     <option value="🤖">🤖 Robot Bot</option>
                     <option value="🙋‍♂️">🙋‍♂️ Support Rep</option>
@@ -327,39 +327,39 @@ export function WidgetManager() {
 
               {/* Status Subtitle */}
               <div className="space-y-1.5">
-                <Label className="text-foreground font-medium">Status Text (e.g. replies instantly)</Label>
+                <Label className="text-slate-300 font-medium">Status Text (e.g. replies instantly)</Label>
                 <Input
                   value={botSubtitle}
                   onChange={(e) => setBotSubtitle(e.target.value)}
                   placeholder="Replies instantly"
-                  className="bg-muted border-border text-foreground"
+                  className="bg-slate-800 border-slate-700 text-white"
                 />
               </div>
 
               {/* Greeting welcome message */}
               <div className="space-y-1.5">
-                <Label className="text-foreground font-medium">Default Chat Welcome Greeting</Label>
+                <Label className="text-slate-300 font-medium">Default Chat Welcome Greeting</Label>
                 <Textarea
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="bg-muted border-border text-foreground resize-none text-xs leading-relaxed"
+                  className="bg-slate-800 border-slate-700 text-white resize-none text-xs leading-relaxed"
                   rows={3}
                 />
               </div>
 
               {/* CTA button redirect text */}
               <div className="space-y-1.5">
-                <Label className="text-foreground font-medium">Call-to-Action Redirect Button Text</Label>
+                <Label className="text-slate-300 font-medium">Call-to-Action Redirect Button Text</Label>
                 <Input
                   value={ctaText}
                   onChange={(e) => setCtaText(e.target.value)}
-                  className="bg-muted border-border text-foreground"
+                  className="bg-slate-800 border-slate-700 text-white"
                 />
               </div>
 
               {/* Design Preset Selectors */}
-              <div className="space-y-2 pt-2 border-t border-border/80">
-                <Label className="text-foreground font-medium block">Select Design Preset Theme</Label>
+              <div className="space-y-2 pt-2 border-t border-slate-800/80">
+                <Label className="text-slate-300 font-medium block">Select Design Preset Theme</Label>
                 <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
                   {(Object.keys(THEME_PRESETS) as WidgetTheme[]).map((themeKey) => {
                     const preset = THEME_PRESETS[themeKey];
@@ -371,8 +371,8 @@ export function WidgetManager() {
                         onClick={() => setActiveTheme(themeKey)}
                         className={`p-2 rounded-xl text-[11px] font-bold text-center border transition-all truncate flex flex-col items-center justify-center gap-1.5 ${
                           active 
-                            ? 'border-white text-foreground bg-muted shadow-[0_0_10px_rgba(255,255,255,0.05)]' 
-                            : 'border-border text-muted-foreground bg-muted/50 hover:text-foreground hover:bg-card/80'
+                            ? 'border-white text-white bg-slate-850 shadow-[0_0_10px_rgba(255,255,255,0.05)]' 
+                            : 'border-slate-800 text-slate-400 bg-slate-950/40 hover:text-white hover:bg-slate-900/60'
                         }`}
                       >
                         <span className={`w-3.5 h-3.5 rounded-full ${preset.bgClass}`} />
@@ -385,12 +385,12 @@ export function WidgetManager() {
 
               {/* Custom Placement Position */}
               <div className="space-y-1.5 pt-2">
-                <Label className="text-foreground font-medium">Layout Position Alignment</Label>
+                <Label className="text-slate-300 font-medium">Layout Position Alignment</Label>
                 <div className="flex gap-2">
                   <Button
                     type="button"
                     variant={position === "left" ? "default" : "outline"}
-                    className={`flex-1 font-semibold ${position === "left" ? "bg-primary" : "border-border text-foreground bg-muted"}`}
+                    className={`flex-1 font-semibold ${position === "left" ? "bg-primary" : "border-slate-700 text-slate-300 bg-slate-800"}`}
                     onClick={() => setPosition("left")}
                   >
                     Bottom Left
@@ -398,7 +398,7 @@ export function WidgetManager() {
                   <Button
                     type="button"
                     variant={position === "right" ? "default" : "outline"}
-                    className={`flex-1 font-semibold ${position === "right" ? "bg-primary" : "border-border text-foreground bg-muted"}`}
+                    className={`flex-1 font-semibold ${position === "right" ? "bg-primary" : "border-slate-700 text-slate-300 bg-slate-800"}`}
                     onClick={() => setPosition("right")}
                   >
                     Bottom Right
@@ -414,65 +414,65 @@ export function WidgetManager() {
         <div className="lg:col-span-5 space-y-6">
           
           {/* Simulated Browser Frame Preview */}
-          <Card className="bg-card/30 border-border backdrop-blur-md shadow-2xl overflow-hidden flex flex-col relative">
+          <Card className="bg-slate-900/30 border-slate-800 backdrop-blur-md shadow-2xl overflow-hidden flex flex-col relative">
             <div className="absolute top-0 right-0 h-32 w-32 bg-primary/5 blur-3xl rounded-full" />
             
             {/* Browser Header Bar */}
-            <div className="p-4 border-b border-border bg-background/60 flex items-center justify-between">
+            <div className="p-4 border-b border-slate-800 bg-slate-950/60 flex items-center justify-between">
               <div className="flex items-center gap-1.5 shrink-0">
                 <span className="w-3 h-3 rounded-full bg-rose-500/80 inline-block" />
                 <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
                 <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
               </div>
-              <div className="bg-card border border-border/80 px-4 py-1 rounded-md text-[10px] text-muted-foreground font-mono truncate max-w-[200px]">
+              <div className="bg-slate-900 border border-slate-800/80 px-4 py-1 rounded-md text-[10px] text-slate-500 font-mono truncate max-w-[200px]">
                 https://yourwebsite.com
               </div>
               <div className="w-12 shrink-0" />
             </div>
 
             {/* Canvas Area */}
-            <div className="flex-1 bg-muted/40 relative min-h-[300px] p-6 overflow-hidden flex items-center justify-center">
+            <div className="flex-1 bg-slate-950/20 relative min-h-[300px] p-6 overflow-hidden flex items-center justify-center">
               <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:14px_14px]" />
               
-              <div className="relative h-full w-full border border-dashed border-border/80 rounded-xl flex items-center justify-center text-muted-foreground bg-card/10 min-h-[250px]">
-                <span className="text-[10px] tracking-wide text-muted-foreground select-none uppercase font-semibold">Web Canvas Preview</span>
+              <div className="relative h-full w-full border border-dashed border-slate-800/80 rounded-xl flex items-center justify-center text-slate-600 bg-slate-900/10 min-h-[250px]">
+                <span className="text-[10px] tracking-wide text-slate-500 select-none uppercase font-semibold">Web Canvas Preview</span>
 
                 {/* Simulated popup chatbot frame */}
                 {previewExpanded && (
                   <div 
-                    className={`absolute bottom-16 rounded-2xl overflow-hidden shadow-2xl border bg-card w-[240px] transition-all duration-300 ease-in-out ${selectedThemePreset.borderClass}`}
+                    className={`absolute bottom-16 rounded-2xl overflow-hidden shadow-2xl border bg-slate-900 w-[240px] transition-all duration-300 ease-in-out ${selectedThemePreset.borderClass}`}
                     style={{ [position]: '8px' }}
                   >
                     <div 
-                      className={`p-3 text-foreground flex items-center gap-2.5 ${selectedThemePreset.bgClass}`}
+                      className={`p-3 text-white flex items-center gap-2.5 ${selectedThemePreset.bgClass}`}
                     >
                       <div className="size-8 bg-white/20 rounded-full flex items-center justify-center text-base border border-white/10 shrink-0">
                         {botAvatar}
                       </div>
                       <div className="min-w-0">
-                        <h5 className="margin-0 text-[11px] font-bold truncate text-foreground leading-tight">{botName}</h5>
-                        <p className="margin-0 text-[8px] opacity-85 text-foreground truncate flex items-center gap-1 mt-0.5">
+                        <h5 className="margin-0 text-[11px] font-bold truncate text-white leading-tight">{botName}</h5>
+                        <p className="margin-0 text-[8px] opacity-85 text-slate-100 truncate flex items-center gap-1 mt-0.5">
                           <span className="size-1.5 bg-emerald-400 rounded-full inline-block"></span>
                           {botSubtitle}
                         </p>
                       </div>
                       <button 
                         onClick={() => setPreviewExpanded(false)}
-                        className="text-foreground text-base ml-auto font-bold opacity-80 hover:opacity-100"
+                        className="text-white text-base ml-auto font-bold opacity-80 hover:opacity-100"
                       >
                         ×
                       </button>
                     </div>
 
-                    <div className="p-3 bg-background/80 min-h-[60px]">
-                      <div className="bg-muted text-foreground p-2.5 rounded-xl rounded-bl-none text-[10px] leading-relaxed border border-border shadow-lg">
+                    <div className="p-3 bg-slate-950/80 min-h-[60px]">
+                      <div className="bg-slate-850 text-slate-200 p-2.5 rounded-xl rounded-bl-none text-[10px] leading-relaxed border border-slate-800 shadow-lg">
                         {message}
                       </div>
                     </div>
 
-                    <div className="p-2.5 bg-card border-t border-border">
+                    <div className="p-2.5 bg-slate-900 border-t border-slate-850">
                       <div 
-                        className="flex items-center justify-center gap-1.5 text-[9.5px] font-bold text-foreground py-2 rounded-lg cursor-pointer transition-colors shadow-lg"
+                        className="flex items-center justify-center gap-1.5 text-[9.5px] font-bold text-white py-2 rounded-lg cursor-pointer transition-colors shadow-lg"
                         style={{ backgroundColor: '#25D366' }}
                       >
                         <MessageCircle className="size-3.5" />
@@ -496,25 +496,25 @@ export function WidgetManager() {
                     padding: 0
                   }}
                 >
-                  <MessageCircle className="w-5 h-5 text-foreground" />
+                  <MessageCircle className="w-5 h-5 text-white" />
                 </button>
               </div>
             </div>
 
             {/* Footer containing generated code output */}
-            <div className="p-4 bg-background border-t border-border">
+            <div className="p-4 bg-slate-950 border-t border-slate-850">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
                 <div className="flex items-center gap-1.5">
                   <Code className="h-4 w-4 text-indigo-400" />
-                  <span className="text-xs font-semibold text-foreground">Copy Widget Code snippet</span>
+                  <span className="text-xs font-semibold text-slate-300">Copy Widget Code snippet</span>
                 </div>
                 <Button size="sm" variant="secondary" onClick={handleCopy} className="h-7 text-xs gap-1.5">
                   {copied ? <CheckCircle2 className="h-3.5 w-3.5 text-green-500" /> : <Copy className="h-3.5 w-3.5" />}
                   {copied ? "Copied!" : "Copy Code"}
                 </Button>
               </div>
-              <div className="bg-[#020617] rounded-lg p-3 max-h-[140px] overflow-y-auto border border-card">
-                <pre className="text-[10px] text-muted-foreground whitespace-pre font-mono leading-relaxed select-all">
+              <div className="bg-[#020617] rounded-lg p-3 max-h-[140px] overflow-y-auto border border-slate-900">
+                <pre className="text-[10px] text-slate-400 whitespace-pre font-mono leading-relaxed select-all">
                   {generateWidgetCode()}
                 </pre>
               </div>
@@ -525,13 +525,13 @@ export function WidgetManager() {
       </div>
 
       {/* DETAILED RESPONSIVE PLATFORM INTEGRATION GUIDE */}
-      <Card className="bg-card/30 border-border backdrop-blur-md mt-6 shadow-2xl relative">
-        <CardHeader className="border-b border-border pb-4">
-          <CardTitle className="text-base text-foreground flex items-center gap-2">
+      <Card className="bg-slate-900/30 border-slate-800 backdrop-blur-md mt-6 shadow-2xl relative">
+        <CardHeader className="border-b border-slate-800 pb-4">
+          <CardTitle className="text-base text-white flex items-center gap-2">
             <Globe className="size-4 text-emerald-400" />
             Integrate on WordPress, CMS, or Custom Code Sites
           </CardTitle>
-          <CardDescription className="text-xs text-muted-foreground">
+          <CardDescription className="text-xs text-slate-400">
             Follow our clean responsive guides to easily run your custom AI chatbot widget on any website.
           </CardDescription>
         </CardHeader>
@@ -539,16 +539,16 @@ export function WidgetManager() {
           <Accordion>
             
             {/* Custom Code Integration */}
-            <AccordionItem className="border-border">
-              <AccordionTrigger className="text-foreground hover:text-foreground hover:no-underline py-3">
+            <AccordionItem className="border-slate-850">
+              <AccordionTrigger className="text-slate-300 hover:text-white hover:no-underline py-3">
                 <span className="flex items-center gap-2">
                   <Laptop className="h-4 w-4 text-indigo-400 shrink-0" />
                   Custom Code Website (HTML, React, Vue, Next.js)
                 </span>
               </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground text-xs leading-relaxed space-y-2.5">
+              <AccordionContent className="text-slate-400 text-xs leading-relaxed space-y-2.5">
                 <p>Add the floating WhatsApp Chatbot Widget to your custom coding project by injecting the code block right before your closing body tags.</p>
-                <ol className="list-decimal list-inside space-y-1 text-muted-foreground">
+                <ol className="list-decimal list-inside space-y-1 text-slate-400">
                   <li>Copy the global generated code block from the preview card above.</li>
                   <li>Locate the main layout template or HTML wrapper (e.g. <code>index.html</code>, <code>layout.js</code>, or <code>App.vue</code>).</li>
                   <li>Scroll to the bottom of the document and paste the copied block right before the closing <code>&lt;/body&gt;</code> tag.</li>
@@ -558,16 +558,16 @@ export function WidgetManager() {
             </AccordionItem>
 
             {/* WordPress CMS Integration */}
-            <AccordionItem className="border-border">
-              <AccordionTrigger className="text-foreground hover:text-foreground hover:no-underline py-3">
+            <AccordionItem className="border-slate-850">
+              <AccordionTrigger className="text-slate-300 hover:text-white hover:no-underline py-3">
                 <span className="flex items-center gap-2">
                   <Layers className="h-4 w-4 text-blue-400 shrink-0" />
                   WordPress & CMS Platforms (Wix, Squarespace)
                 </span>
               </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground text-xs leading-relaxed space-y-4">
+              <AccordionContent className="text-slate-400 text-xs leading-relaxed space-y-4">
                 <div>
-                  <h5 className="font-bold text-foreground mb-1.5">WordPress Integration Tutorial:</h5>
+                  <h5 className="font-bold text-slate-300 mb-1.5">WordPress Integration Tutorial:</h5>
                   <ol className="list-decimal list-inside space-y-1">
                     <li>Log in to your WordPress dashboard.</li>
                     <li>Navigate to **Plugins &gt; Add New**, search for "WPCode" or "Insert Headers and Footers" and click **Install & Activate**.</li>
@@ -576,8 +576,8 @@ export function WidgetManager() {
                     <li>Click **Save Changes**. Your WhatsApp Support Chatbot goes live on all pages!</li>
                   </ol>
                 </div>
-                <div className="pt-3 border-t border-border">
-                  <h5 className="font-bold text-foreground mb-1.5">Wix / Squarespace Integration Tutorial:</h5>
+                <div className="pt-3 border-t border-slate-850">
+                  <h5 className="font-bold text-slate-300 mb-1.5">Wix / Squarespace Integration Tutorial:</h5>
                   <ol className="list-decimal list-inside space-y-1">
                     <li>Go to your Wix/Squarespace site manager settings.</li>
                     <li>Locate **Custom Code** or **Code Injection** settings.</li>
@@ -589,14 +589,14 @@ export function WidgetManager() {
             </AccordionItem>
 
             {/* Shopify Store E-Commerce */}
-            <AccordionItem className="border-border">
-              <AccordionTrigger className="text-foreground hover:text-foreground hover:no-underline py-3">
+            <AccordionItem className="border-slate-850">
+              <AccordionTrigger className="text-slate-300 hover:text-white hover:no-underline py-3">
                 <span className="flex items-center gap-2">
                   <ExternalLink className="h-4 w-4 text-emerald-400 shrink-0" />
                   E-Commerce Stores (Shopify, WooCommerce)
                 </span>
               </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground text-xs leading-relaxed space-y-2">
+              <AccordionContent className="text-slate-400 text-xs leading-relaxed space-y-2">
                 <p>Support customer queries, order updates, and product questions directly inside your shop.</p>
                 <ol className="list-decimal list-inside space-y-1">
                   <li>Log in to your Shopify store admin panel.</li>

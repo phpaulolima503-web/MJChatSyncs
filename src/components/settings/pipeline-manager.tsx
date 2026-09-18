@@ -149,10 +149,10 @@ export function PipelineManager() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-border bg-card/70 p-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-slate-800 bg-slate-900/50 p-6">
         <div>
-          <h2 className="text-lg font-semibold text-foreground">Sales Pipelines</h2>
-          <p className="text-sm text-muted-foreground mt-1">
+          <h2 className="text-lg font-semibold text-white">Sales Pipelines</h2>
+          <p className="text-sm text-slate-400 mt-1">
             Create and manage multiple pipelines for different products or sales motions.
           </p>
         </div>
@@ -168,19 +168,19 @@ export function PipelineManager() {
       {loading ? (
         <div className="space-y-4">
           {[1, 2].map((i) => (
-            <div key={i} className="h-24 animate-pulse rounded-xl bg-muted" />
+            <div key={i} className="h-24 animate-pulse rounded-xl bg-slate-800" />
           ))}
         </div>
       ) : pipelines.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-12 rounded-xl border border-dashed border-border bg-card/20">
-          <GitBranch className="h-10 w-10 text-muted-foreground mb-4" />
-          <p className="text-sm font-medium text-foreground">No pipelines found</p>
-          <p className="text-xs text-muted-foreground mt-1 mb-4">You haven't created any sales pipelines yet.</p>
+        <div className="flex flex-col items-center justify-center py-12 rounded-xl border border-dashed border-slate-800 bg-slate-900/20">
+          <GitBranch className="h-10 w-10 text-slate-600 mb-4" />
+          <p className="text-sm font-medium text-white">No pipelines found</p>
+          <p className="text-xs text-slate-500 mt-1 mb-4">You haven't created any sales pipelines yet.</p>
           <div className="flex gap-3">
-            <Button variant="outline" onClick={() => setNewPipelineOpen(true)} className="border-border text-foreground">
+            <Button variant="outline" onClick={() => setNewPipelineOpen(true)} className="border-slate-700 text-slate-300">
               Create your first pipeline
             </Button>
-            <Button variant="outline" onClick={handleLoadReferencePipeline} disabled={creating} className="border-border text-foreground bg-muted">
+            <Button variant="outline" onClick={handleLoadReferencePipeline} disabled={creating} className="border-slate-700 text-slate-300 bg-slate-800">
               Load Example Pipeline
             </Button>
           </div>
@@ -192,7 +192,7 @@ export function PipelineManager() {
             return (
               <div
                 key={pipeline.id}
-                className="flex flex-col rounded-xl border border-border bg-card p-5 transition-colors hover:border-border"
+                className="flex flex-col rounded-xl border border-slate-800 bg-slate-900 p-5 transition-colors hover:border-slate-700"
               >
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
@@ -200,30 +200,30 @@ export function PipelineManager() {
                       <GitBranch className="h-5 w-5" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-foreground">{pipeline.name}</h3>
-                      <p className="text-xs text-muted-foreground">{stages.length} stages</p>
+                      <h3 className="font-semibold text-white">{pipeline.name}</h3>
+                      <p className="text-xs text-slate-500">{stages.length} stages</p>
                     </div>
                   </div>
                   <Button
                     variant="ghost"
                     size="icon"
                     onClick={() => setEditingPipelineId(pipeline.id)}
-                    className="text-muted-foreground hover:text-foreground"
+                    className="text-slate-400 hover:text-white"
                   >
                     <Settings2 className="h-4 w-4" />
                   </Button>
                 </div>
                 
-                <div className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-border/50">
+                <div className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-slate-800/50">
                   {stages.slice(0, 5).map((stage) => (
-                    <div key={stage.id} className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-background border border-border">
+                    <div key={stage.id} className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-slate-950 border border-slate-800">
                       <span className="w-2 h-2 rounded-full" style={{ backgroundColor: stage.color }} />
-                      <span className="text-[10px] text-muted-foreground font-medium truncate max-w-[80px]">{stage.name}</span>
+                      <span className="text-[10px] text-slate-400 font-medium truncate max-w-[80px]">{stage.name}</span>
                     </div>
                   ))}
                   {stages.length > 5 && (
-                    <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-background border border-border">
-                      <span className="text-[10px] text-muted-foreground">+{stages.length - 5} more</span>
+                    <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-slate-950 border border-slate-800">
+                      <span className="text-[10px] text-slate-500">+{stages.length - 5} more</span>
                     </div>
                   )}
                 </div>
@@ -235,30 +235,30 @@ export function PipelineManager() {
 
       {/* New Pipeline Dialog */}
       <Dialog open={newPipelineOpen} onOpenChange={setNewPipelineOpen}>
-        <DialogContent className="sm:max-w-sm bg-card border-border">
+        <DialogContent className="sm:max-w-sm bg-slate-900 border-slate-700">
           <DialogHeader>
-            <DialogTitle className="text-foreground">New Pipeline</DialogTitle>
+            <DialogTitle className="text-white">New Pipeline</DialogTitle>
           </DialogHeader>
           <div className="py-2">
-            <Label className="text-foreground">Pipeline Name</Label>
+            <Label className="text-slate-300">Pipeline Name</Label>
             <Input
               value={newPipelineName}
               onChange={(e) => setNewPipelineName(e.target.value)}
               placeholder="e.g., Enterprise Sales"
-              className="mt-2 bg-muted border-border text-foreground"
+              className="mt-2 bg-slate-800 border-slate-700 text-white"
               onKeyDown={(e) => {
                 if (e.key === "Enter") handleCreatePipeline();
               }}
             />
-            <p className="mt-2 text-xs text-muted-foreground">
+            <p className="mt-2 text-xs text-slate-400">
               Default stages (New Lead → Won) will be created automatically.
             </p>
           </div>
-          <DialogFooter className="bg-card/70 border-border pt-4 sm:pt-0">
+          <DialogFooter className="bg-slate-900/50 border-slate-700 pt-4 sm:pt-0">
             <Button
               variant="outline"
               onClick={() => setNewPipelineOpen(false)}
-              className="border-border text-foreground hover:bg-muted"
+              className="border-slate-700 text-slate-300 hover:bg-slate-800"
             >
               Cancel
             </Button>

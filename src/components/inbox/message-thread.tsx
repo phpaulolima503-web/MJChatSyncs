@@ -138,7 +138,7 @@ function groupMessagesByDate(messages: Message[]) {
 const STATUS_OPTIONS: { label: string; value: ConversationStatus; color: string }[] = [
   { label: "Aberta", value: "open", color: "text-primary" },
   { label: "Pendente", value: "pending", color: "text-amber-400" },
-  { label: "Fechada", value: "closed", color: "text-muted-foreground" },
+  { label: "Fechada", value: "closed", color: "text-slate-400" },
 ];
 
 /**
@@ -151,7 +151,7 @@ const STATUS_OPTIONS: { label: string; value: ConversationStatus; color: string 
  * if we ever switch the asset, both spots update together.
  */
 const DOODLE_BG_CLASSES =
-  "bg-background bg-[url('/inbox-doodle.svg')] bg-repeat";
+  "bg-slate-950 bg-[url('/inbox-doodle.svg')] bg-repeat";
 
 export function MessageThread({
   conversation,
@@ -885,13 +885,13 @@ export function MessageThread({
   if (!conversation || !contact) {
     return (
       <div className={cn("flex flex-1 flex-col items-center justify-center", DOODLE_BG_CLASSES)}>
-        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-muted">
-          <MessageSquare className="h-8 w-8 text-muted-foreground" />
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-800">
+          <MessageSquare className="h-8 w-8 text-slate-600" />
         </div>
-        <h3 className="mt-4 text-sm font-medium text-muted-foreground">
+        <h3 className="mt-4 text-sm font-medium text-slate-400">
           Select a conversation
         </h3>
-        <p className="mt-1 text-xs text-muted-foreground">
+        <p className="mt-1 text-xs text-slate-600">
           Choose a conversation from the left to start messaging
         </p>
       </div>
@@ -956,9 +956,9 @@ export function MessageThread({
 
   return (
     <div className={cn("flex flex-1 flex-col", DOODLE_BG_CLASSES)}>
-      {/* Header — solid bg-card sits on top of the doodle so the
+      {/* Header — solid bg-slate-900 sits on top of the doodle so the
           name/avatar/dropdowns stay legible. */}
-      <div className="flex items-center justify-between gap-2 border-b border-border bg-card px-3 py-3 sm:px-4">
+      <div className="flex items-center justify-between gap-2 border-b border-slate-800 bg-slate-900 px-3 py-3 sm:px-4">
         <div className="flex min-w-0 items-center gap-2 sm:gap-3">
           {/* Back-to-list button — mobile only. Hidden on lg+ where the
               conversation list is always visible next to the thread. */}
@@ -967,25 +967,25 @@ export function MessageThread({
               type="button"
               onClick={onBack}
               aria-label="Back to conversations"
-              className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-md text-muted-foreground hover:bg-accent hover:text-foreground lg:hidden"
+              className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-md text-slate-300 hover:bg-slate-800 hover:text-white lg:hidden"
             >
               <ArrowLeft className="h-5 w-5" />
             </button>
           )}
-          <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-muted text-sm font-medium text-foreground">
+          <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-slate-700 text-sm font-medium text-white">
             {displayName.charAt(0).toUpperCase()}
           </div>
           <div className="min-w-0">
-            <h2 className="truncate text-sm font-semibold text-foreground">{displayName}</h2>
-            <p className="truncate text-xs text-muted-foreground">{contact.phone}</p>
+            <h2 className="truncate text-sm font-semibold text-white">{displayName}</h2>
+            <p className="truncate text-xs text-slate-400">{contact.phone}</p>
           </div>
           {/* Session timer badge — hidden on the narrowest phones so
               the name + back arrow keep their room. */}
           <Badge
             variant="outline"
             className={cn(
-              "ml-1 hidden gap-1 border-border text-[10px] sm:inline-flex sm:ml-2",
-              sessionInfo.expired ? "text-red-600 dark:text-red-400" : "text-primary"
+              "ml-1 hidden gap-1 border-slate-700 text-[10px] sm:inline-flex sm:ml-2",
+              sessionInfo.expired ? "text-red-400" : "text-primary"
             )}
           >
             <Clock className="h-3 w-3" />
@@ -1008,7 +1008,7 @@ export function MessageThread({
               aria-label="Atualizar conversa"
               title="Atualizar"
               className={cn(
-                "inline-flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:opacity-60",
+                "inline-flex h-7 w-7 items-center justify-center rounded-md text-slate-400 transition-colors hover:bg-slate-800 hover:text-white disabled:opacity-60",
               )}
             >
               <RefreshCw
@@ -1026,7 +1026,7 @@ export function MessageThread({
               onClick={onToggleContactSidebar}
               title={contactSidebarVisible ? "Ocultar painel do contato" : "Mostrar painel do contato"}
               aria-label={contactSidebarVisible ? "Ocultar painel do contato" : "Mostrar painel do contato"}
-              className="hidden lg:inline-flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+              className="hidden lg:inline-flex h-7 w-7 items-center justify-center rounded-md text-slate-400 transition-colors hover:bg-slate-800 hover:text-white"
             >
               {contactSidebarVisible ? (
                 <Eye className="h-3.5 w-3.5" />
@@ -1042,8 +1042,8 @@ export function MessageThread({
             onClick={handleTogglePin}
             title={conversation.pinned ? "Desafixar conversa" : "Fixar conversa"}
             className={cn(
-              "inline-flex h-7 w-7 items-center justify-center rounded-md transition-colors hover:bg-accent",
-              conversation.pinned ? "text-primary fill-primary rotate-45" : "text-muted-foreground hover:text-foreground"
+              "inline-flex h-7 w-7 items-center justify-center rounded-md transition-colors hover:bg-slate-800",
+              conversation.pinned ? "text-primary fill-primary rotate-45" : "text-slate-400 hover:text-white"
             )}
           >
             <Pin className="h-3.5 w-3.5" />
@@ -1055,8 +1055,8 @@ export function MessageThread({
             onClick={handleToggleFavorite}
             title={conversation.favorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
             className={cn(
-              "inline-flex h-7 w-7 items-center justify-center rounded-md transition-colors hover:bg-accent",
-              conversation.favorite ? "text-amber-400 fill-amber-400" : "text-muted-foreground hover:text-foreground"
+              "inline-flex h-7 w-7 items-center justify-center rounded-md transition-colors hover:bg-slate-800",
+              conversation.favorite ? "text-amber-400 fill-amber-400" : "text-slate-400 hover:text-white"
             )}
           >
             <Star className="h-3.5 w-3.5" />
@@ -1068,8 +1068,8 @@ export function MessageThread({
             onClick={handleToggleSpam}
             title={conversation.spam ? "Desmarcar como spam" : "Marcar como spam"}
             className={cn(
-              "inline-flex h-7 w-7 items-center justify-center rounded-md transition-colors hover:bg-accent",
-              conversation.spam ? "text-rose-500 fill-rose-500/10" : "text-muted-foreground hover:text-foreground"
+              "inline-flex h-7 w-7 items-center justify-center rounded-md transition-colors hover:bg-slate-800",
+              conversation.spam ? "text-rose-500 fill-rose-500/10" : "text-slate-400 hover:text-white"
             )}
           >
             <AlertOctagon className="h-3.5 w-3.5" />
@@ -1081,8 +1081,8 @@ export function MessageThread({
             onClick={handleToggleBlocked}
             title={conversation.blocked ? "Desbloquear contato" : "Bloquear contato"}
             className={cn(
-              "inline-flex h-7 w-7 items-center justify-center rounded-md transition-colors hover:bg-accent",
-              conversation.blocked ? "text-rose-600 dark:text-rose-400" : "text-muted-foreground hover:text-foreground"
+              "inline-flex h-7 w-7 items-center justify-center rounded-md transition-colors hover:bg-slate-800",
+              conversation.blocked ? "text-rose-650" : "text-slate-400 hover:text-white"
             )}
           >
             <Ban className="h-3.5 w-3.5" />
@@ -1097,7 +1097,7 @@ export function MessageThread({
               type="button"
               onClick={() => handleStatusChange("closed")}
               title="Concluir esta conversa"
-              className="inline-flex h-8 items-center justify-center gap-1.5 rounded-md bg-emerald-600 px-3 text-xs font-bold text-foreground shadow-sm transition-colors hover:bg-emerald-500"
+              className="inline-flex h-8 items-center justify-center gap-1.5 rounded-md bg-emerald-600 px-3 text-xs font-bold text-white shadow-sm transition-colors hover:bg-emerald-500"
             >
               <CheckCircle2 className="h-4 w-4" />
               Concluir
@@ -1107,15 +1107,15 @@ export function MessageThread({
           {/* Status dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger className={cn(
-                  "inline-flex items-center justify-center h-7 gap-1 px-2 text-xs rounded-md hover:bg-accent",
-                  currentStatus?.color ?? "text-muted-foreground"
+                  "inline-flex items-center justify-center h-7 gap-1 px-2 text-xs rounded-md hover:bg-slate-800",
+                  currentStatus?.color ?? "text-slate-400"
                 )}>
                 {currentStatus?.label ?? "Status"}
                 <ChevronDown className="h-3 w-3" />
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align="end"
-              className="border-border bg-popover"
+              className="border-slate-700 bg-slate-800"
             >
               {STATUS_OPTIONS.map((opt) => (
                 <DropdownMenuItem
@@ -1135,7 +1135,7 @@ export function MessageThread({
               type="button"
               onClick={() => handleAssignChange(user?.id || null)}
               title="Assumir esta conversa"
-              className="inline-flex h-7 items-center justify-center gap-1 px-2.5 text-xs font-semibold rounded-md bg-indigo-600 hover:bg-indigo-700 text-foreground transition-colors"
+              className="inline-flex h-7 items-center justify-center gap-1 px-2.5 text-xs font-semibold rounded-md bg-indigo-600 hover:bg-indigo-700 text-white transition-colors"
             >
               <UserPlus className="h-3 w-3" />
               <span className="hidden md:inline">Assumir</span>
@@ -1148,7 +1148,7 @@ export function MessageThread({
               type="button"
               onClick={() => handleAssignChange(null)}
               title="Liberar esta conversa (remover atribuição)"
-              className="inline-flex h-7 items-center justify-center gap-1 px-2.5 text-xs font-semibold rounded-md bg-accent hover:bg-accent/70 text-accent-foreground transition-colors border border-border"
+              className="inline-flex h-7 items-center justify-center gap-1 px-2.5 text-xs font-semibold rounded-md bg-slate-800 hover:bg-slate-750 text-slate-300 transition-colors border border-slate-700"
             >
               <UserMinus className="h-3 w-3" />
               <span className="hidden md:inline">Liberar</span>
@@ -1172,8 +1172,8 @@ export function MessageThread({
           <DropdownMenu>
             <DropdownMenuTrigger
               className={cn(
-                "inline-flex items-center justify-center h-7 gap-1 px-2 text-xs rounded-md hover:bg-accent",
-                assignedAgentId ? "text-primary" : "text-muted-foreground"
+                "inline-flex items-center justify-center h-7 gap-1 px-2 text-xs rounded-md hover:bg-slate-800",
+                assignedAgentId ? "text-primary" : "text-slate-400"
               )}
             >
               <UserPlus className="h-3 w-3" />
@@ -1182,10 +1182,10 @@ export function MessageThread({
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align="end"
-              className="border-border bg-popover"
+              className="border-slate-700 bg-slate-800"
             >
               {profiles.length === 0 ? (
-                <DropdownMenuItem disabled className="text-sm text-muted-foreground">
+                <DropdownMenuItem disabled className="text-sm text-slate-500">
                   Nenhum colega disponível
                 </DropdownMenuItem>
               ) : (
@@ -1197,7 +1197,7 @@ export function MessageThread({
                       onClick={() => handleAssignChange(p.user_id)}
                       className={cn(
                         "text-sm",
-                        isSelected ? "text-primary" : "text-popover-foreground"
+                        isSelected ? "text-primary" : "text-slate-300"
                       )}
                     >
                       <span className="flex-1">
@@ -1211,10 +1211,10 @@ export function MessageThread({
               )}
               {assignedAgentId && (
                 <>
-                  <DropdownMenuSeparator className="bg-border" />
+                  <DropdownMenuSeparator className="bg-slate-700" />
                   <DropdownMenuItem
                     onClick={() => handleAssignChange(null)}
-                    className="text-sm text-muted-foreground"
+                    className="text-sm text-slate-400"
                   >
                     Unassign
                   </DropdownMenuItem>
@@ -1242,8 +1242,8 @@ export function MessageThread({
           </div>
         ) : messages.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12">
-            <p className="text-sm text-muted-foreground">No messages yet</p>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-sm text-slate-500">No messages yet</p>
+            <p className="text-xs text-slate-600">
               Send a template to start the conversation
             </p>
           </div>
@@ -1253,7 +1253,7 @@ export function MessageThread({
               <div key={group.date}>
                 {/* Date separator */}
                 <div className="mb-4 flex items-center justify-center">
-                  <span className="rounded-full bg-muted px-3 py-1 text-[10px] font-medium text-muted-foreground">
+                  <span className="rounded-full bg-slate-800 px-3 py-1 text-[10px] font-medium text-slate-400">
                     {formatDateSeparator(group.date)}
                   </span>
                 </div>

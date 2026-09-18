@@ -193,53 +193,53 @@ export function CampaignBuilder({ onCampaignCreated }: CampaignBuilderProps) {
   }
 
   return (
-    <div className="rounded-2xl border border-border bg-card/70 p-6 backdrop-blur-xl">
-      <div className="mb-6 flex items-center justify-between border-b border-border pb-4">
+    <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6 backdrop-blur-xl">
+      <div className="mb-6 flex items-center justify-between border-b border-slate-800 pb-4">
         <div>
-          <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
+          <h2 className="text-xl font-bold text-white flex items-center gap-2">
             <Sparkles className="h-5 w-5 text-indigo-400 animate-pulse" />
             AI Campaign Studio & Builder
           </h2>
-          <p className="text-sm text-muted-foreground">Generate high-converting multi-channel campaigns powered by NVIDIA AI</p>
+          <p className="text-sm text-slate-400">Generate high-converting multi-channel campaigns powered by NVIDIA AI</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
         {/* INPUT PANEL */}
         <div className="lg:col-span-5 space-y-4">
-          <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
-            <Layers className="h-4 w-4 text-muted-foreground" /> Configure Strategy Inputs
+          <h3 className="text-sm font-semibold text-slate-300 flex items-center gap-2">
+            <Layers className="h-4 w-4 text-slate-400" /> Configure Strategy Inputs
           </h3>
 
           <div className="space-y-2">
-            <label className="text-xs font-medium text-muted-foreground">Campaign Name (Optional)</label>
+            <label className="text-xs font-medium text-slate-400">Campaign Name (Optional)</label>
             <input 
               type="text" 
               placeholder="e.g. Summer Web Design Launch" 
               value={name} 
               onChange={(e) => setName(e.target.value)}
-              className="w-full rounded-lg border border-border bg-background px-3.5 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-indigo-500 focus:outline-none"
+              className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3.5 py-2 text-sm text-white placeholder:text-slate-600 focus:border-indigo-500 focus:outline-none"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="text-xs font-medium text-muted-foreground">Campaign Objective <span className="text-rose-500">*</span></label>
+            <label className="text-xs font-medium text-slate-400">Campaign Objective <span className="text-rose-500">*</span></label>
             <textarea 
               rows={3}
               placeholder="Describe what you want to achieve (e.g., pitch customized SEO packages to high budget website design clients who had a meeting but haven't signed up yet)" 
               value={objective} 
               onChange={(e) => setObjective(e.target.value)}
-              className="w-full rounded-lg border border-border bg-background px-3.5 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-indigo-500 focus:outline-none resize-none"
+              className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3.5 py-2 text-sm text-white placeholder:text-slate-600 focus:border-indigo-500 focus:outline-none resize-none"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
-              <label className="text-xs font-medium text-muted-foreground">Campaign Category</label>
+              <label className="text-xs font-medium text-slate-400">Campaign Category</label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full rounded-lg border border-border bg-background px-3.5 py-2 text-sm text-foreground focus:border-indigo-500 focus:outline-none"
+                className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3.5 py-2 text-sm text-white focus:border-indigo-500 focus:outline-none"
               >
                 <option value="promotional">Promotional</option>
                 <option value="nurturing">Lead Nurturing</option>
@@ -251,11 +251,11 @@ export function CampaignBuilder({ onCampaignCreated }: CampaignBuilderProps) {
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs font-medium text-muted-foreground">Target Segment</label>
+              <label className="text-xs font-medium text-slate-400">Target Segment</label>
               <select
                 value={segmentId}
                 onChange={(e) => setSegmentId(e.target.value)}
-                className="w-full rounded-lg border border-border bg-background px-3.5 py-2 text-sm text-foreground focus:border-indigo-500 focus:outline-none"
+                className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3.5 py-2 text-sm text-white focus:border-indigo-500 focus:outline-none"
               >
                 <option value="">All Contacts (No Filter)</option>
                 {segments.map(s => (
@@ -267,11 +267,11 @@ export function CampaignBuilder({ onCampaignCreated }: CampaignBuilderProps) {
 
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
-              <label className="text-xs font-medium text-muted-foreground">Media Attachment</label>
+              <label className="text-xs font-medium text-slate-400">Media Attachment</label>
               <select
                 value={mediaPreference}
                 onChange={(e) => setMediaPreference(e.target.value)}
-                className="w-full rounded-lg border border-border bg-background px-3.5 py-2 text-sm text-foreground focus:border-indigo-500 focus:outline-none"
+                className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3.5 py-2 text-sm text-white focus:border-indigo-500 focus:outline-none"
               >
                 <option value="none">No Media (Text Only)</option>
                 <option value="image">Image Asset</option>
@@ -281,24 +281,24 @@ export function CampaignBuilder({ onCampaignCreated }: CampaignBuilderProps) {
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs font-medium text-muted-foreground">Campaign Cost (₹)</label>
+              <label className="text-xs font-medium text-slate-400">Campaign Cost (₹)</label>
               <input 
                 type="number" 
                 value={cost} 
                 onChange={(e) => setCost(e.target.value)}
-                className="w-full rounded-lg border border-border bg-background px-3.5 py-2 text-sm text-foreground focus:border-indigo-500 focus:outline-none"
+                className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3.5 py-2 text-sm text-white focus:border-indigo-500 focus:outline-none"
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <label className="text-xs font-medium text-muted-foreground">Offer / Discount Details (Optional)</label>
+            <label className="text-xs font-medium text-slate-400">Offer / Discount Details (Optional)</label>
             <input 
               type="text" 
               placeholder="e.g. 15% discount for early bird signups this week" 
               value={offerDetails} 
               onChange={(e) => setOfferDetails(e.target.value)}
-              className="w-full rounded-lg border border-border bg-background px-3.5 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-indigo-500 focus:outline-none"
+              className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3.5 py-2 text-sm text-white placeholder:text-slate-600 focus:border-indigo-500 focus:outline-none"
             />
           </div>
 
@@ -306,7 +306,7 @@ export function CampaignBuilder({ onCampaignCreated }: CampaignBuilderProps) {
             <button
               onClick={handleGenerateAI}
               disabled={generating}
-              className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 px-4 py-2.5 text-sm font-semibold text-foreground transition-all shadow-lg shadow-indigo-500/15 disabled:opacity-50 cursor-pointer"
+              className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 px-4 py-2.5 text-sm font-semibold text-white transition-all shadow-lg shadow-indigo-500/15 disabled:opacity-50 cursor-pointer"
             >
               {generating ? (
                 <>
@@ -324,7 +324,7 @@ export function CampaignBuilder({ onCampaignCreated }: CampaignBuilderProps) {
         </div>
 
         {/* OUTPUT & PREVIEW PANEL */}
-        <div className="lg:col-span-7 flex flex-col min-h-[420px] rounded-xl border border-border/80 bg-muted/50 p-5">
+        <div className="lg:col-span-7 flex flex-col min-h-[420px] rounded-xl border border-slate-800/80 bg-slate-950/40 p-5">
           {generating ? (
             <div className="flex-1 flex flex-col items-center justify-center p-8 space-y-6 text-center">
               <div className="relative flex items-center justify-center">
@@ -332,22 +332,22 @@ export function CampaignBuilder({ onCampaignCreated }: CampaignBuilderProps) {
                 <div className="relative h-12 w-12 animate-spin rounded-full border-4 border-indigo-500 border-t-transparent" />
               </div>
               <div className="space-y-2">
-                <h4 className="text-md font-semibold text-foreground">NVIDIA NIM Coprocessor at Work</h4>
+                <h4 className="text-md font-semibold text-white">NVIDIA NIM Coprocessor at Work</h4>
                 <p className="text-sm text-indigo-400 font-medium animate-pulse">{steps[genStep]}</p>
               </div>
             </div>
           ) : generatedStrategy ? (
             <div className="flex-1 flex flex-col">
               {/* Strategy Header */}
-              <div className="mb-4 flex items-start justify-between border-b border-border pb-3">
+              <div className="mb-4 flex items-start justify-between border-b border-slate-800 pb-3">
                 <div>
                   <span className="text-xs uppercase font-semibold text-indigo-400 bg-indigo-500/5 px-2 py-0.5 rounded-full border border-indigo-500/15">
                     AI Strategic Draft
                   </span>
-                  <h4 className="text-md font-bold text-foreground mt-1.5">{generatedStrategy.strategyName}</h4>
+                  <h4 className="text-md font-bold text-white mt-1.5">{generatedStrategy.strategyName}</h4>
                 </div>
                 <div className="text-right">
-                  <span className="text-xs text-muted-foreground">Best Sent</span>
+                  <span className="text-xs text-slate-400">Best Sent</span>
                   <p className="text-xs font-semibold text-emerald-400 flex items-center gap-1 mt-0.5">
                     <Clock className="h-3 w-3" /> {generatedStrategy.bestSendingTime}
                   </p>
@@ -355,23 +355,23 @@ export function CampaignBuilder({ onCampaignCreated }: CampaignBuilderProps) {
               </div>
 
               {/* Forecast Metrics Bar */}
-              <div className="mb-4 grid grid-cols-3 gap-3 rounded-lg border border-border bg-card/60 p-2.5">
+              <div className="mb-4 grid grid-cols-3 gap-3 rounded-lg border border-slate-800 bg-slate-900/40 p-2.5">
                 <div className="text-center">
-                  <span className="text-[10px] uppercase font-bold text-muted-foreground">Predicted CTR</span>
-                  <p className="text-sm font-bold text-foreground flex items-center justify-center gap-0.5 mt-0.5">
+                  <span className="text-[10px] uppercase font-bold text-slate-500">Predicted CTR</span>
+                  <p className="text-sm font-bold text-white flex items-center justify-center gap-0.5 mt-0.5">
                     <TrendingUp className="h-3.5 w-3.5 text-indigo-400" />
                     {generatedStrategy.expectedEngagement?.ctrPercent}%
                   </p>
                 </div>
                 <div className="text-center">
-                  <span className="text-[10px] uppercase font-bold text-muted-foreground">Opt-Out Risk</span>
-                  <p className="text-sm font-bold text-foreground flex items-center justify-center gap-0.5 mt-0.5">
+                  <span className="text-[10px] uppercase font-bold text-slate-500">Opt-Out Risk</span>
+                  <p className="text-sm font-bold text-white flex items-center justify-center gap-0.5 mt-0.5">
                     <AlertCircle className="h-3.5 w-3.5 text-amber-400" />
                     {generatedStrategy.expectedEngagement?.optOutPercent}%
                   </p>
                 </div>
                 <div className="text-center">
-                  <span className="text-[10px] uppercase font-bold text-muted-foreground">Target ROI</span>
+                  <span className="text-[10px] uppercase font-bold text-slate-500">Target ROI</span>
                   <p className="text-sm font-bold text-emerald-400 flex items-center justify-center gap-0.5 mt-0.5">
                     <DollarSign className="h-3.5 w-3.5 text-emerald-400" />
                     {generatedStrategy.expectedEngagement?.estimatedRoiMultiplier}x
@@ -380,15 +380,15 @@ export function CampaignBuilder({ onCampaignCreated }: CampaignBuilderProps) {
               </div>
 
               {/* Tabs */}
-              <div className="mb-4 flex border-b border-border">
+              <div className="mb-4 flex border-b border-slate-800">
                 {(['whatsapp', 'email', 'landing', 'drip'] as const).map((tab) => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
                     className={`border-b-2 px-4 py-2 text-xs font-semibold capitalize transition-all cursor-pointer ${
                       activeTab === tab
-                        ? 'border-indigo-500 text-foreground'
-                        : 'border-transparent text-muted-foreground hover:text-foreground'
+                        ? 'border-indigo-500 text-white'
+                        : 'border-transparent text-slate-400 hover:text-slate-200'
                     }`}
                   >
                     {tab === 'whatsapp' && <span className="flex items-center gap-1.5"><MessageSquare className="h-3.5 w-3.5" /> WhatsApp</span>}
@@ -400,10 +400,10 @@ export function CampaignBuilder({ onCampaignCreated }: CampaignBuilderProps) {
               </div>
 
               {/* Tab Contents */}
-              <div className="flex-1 overflow-y-auto max-h-[220px] rounded-lg bg-background/50 p-4 border border-border text-foreground text-sm scrollbar-thin">
+              <div className="flex-1 overflow-y-auto max-h-[220px] rounded-lg bg-slate-950/50 p-4 border border-slate-850 text-slate-300 text-sm scrollbar-thin">
                 {activeTab === 'whatsapp' && (
                   <div className="space-y-2">
-                    <p className="font-semibold text-muted-foreground text-xs">WhatsApp Broadcast Template:</p>
+                    <p className="font-semibold text-slate-400 text-xs">WhatsApp Broadcast Template:</p>
                     <div className="rounded-lg bg-emerald-950/20 border border-emerald-500/10 p-3 text-emerald-100 whitespace-pre-wrap leading-relaxed">
                       {generatedStrategy.whatsappCopy}
                     </div>
@@ -413,12 +413,12 @@ export function CampaignBuilder({ onCampaignCreated }: CampaignBuilderProps) {
                 {activeTab === 'email' && (
                   <div className="space-y-3">
                     <div>
-                      <span className="text-muted-foreground font-medium text-xs">Subject:</span>
-                      <p className="font-bold text-foreground">{generatedStrategy.emailSubject}</p>
+                      <span className="text-slate-500 font-medium text-xs">Subject:</span>
+                      <p className="font-bold text-white">{generatedStrategy.emailSubject}</p>
                     </div>
-                    <div className="border-t border-card pt-2.5">
-                      <p className="font-semibold text-muted-foreground text-xs mb-1">Email Body Draft:</p>
-                      <div className="whitespace-pre-wrap text-foreground leading-relaxed bg-card/30 p-2.5 rounded border border-card">
+                    <div className="border-t border-slate-900 pt-2.5">
+                      <p className="font-semibold text-slate-400 text-xs mb-1">Email Body Draft:</p>
+                      <div className="whitespace-pre-wrap text-slate-300 leading-relaxed bg-slate-900/30 p-2.5 rounded border border-slate-900">
                         {generatedStrategy.emailCopy}
                       </div>
                     </div>
@@ -428,11 +428,11 @@ export function CampaignBuilder({ onCampaignCreated }: CampaignBuilderProps) {
                 {activeTab === 'landing' && (
                   <div className="space-y-3">
                     <div>
-                      <span className="text-muted-foreground font-medium text-xs">Headline:</span>
+                      <span className="text-slate-500 font-medium text-xs">Headline:</span>
                       <p className="font-bold text-indigo-300 text-md">{generatedStrategy.landingHeadline}</p>
                     </div>
-                    <div className="border-t border-card pt-2.5">
-                      <span className="text-muted-foreground font-medium text-xs">Benefit Statement:</span>
+                    <div className="border-t border-slate-900 pt-2.5">
+                      <span className="text-slate-500 font-medium text-xs">Benefit Statement:</span>
                       <p className="leading-relaxed mt-1">{generatedStrategy.landingBody}</p>
                     </div>
                   </div>
@@ -440,15 +440,15 @@ export function CampaignBuilder({ onCampaignCreated }: CampaignBuilderProps) {
 
                 {activeTab === 'drip' && (
                   <div className="space-y-4">
-                    <p className="font-semibold text-muted-foreground text-xs">AI-Nurtured Drip Campaign Sequence:</p>
-                    <div className="relative pl-6 space-y-4 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-[2px] before:bg-muted">
+                    <p className="font-semibold text-slate-400 text-xs">AI-Nurtured Drip Campaign Sequence:</p>
+                    <div className="relative pl-6 space-y-4 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-[2px] before:bg-slate-800">
                       {generatedStrategy.dripSequence?.map((step: any, idx: number) => (
                         <div key={idx} className="relative">
-                          <div className="absolute -left-[22px] top-1.5 h-3 w-3 rounded-full bg-indigo-500 border border-background" />
-                          <div className="rounded-lg bg-card/80 border border-border/80 p-2.5">
+                          <div className="absolute -left-[22px] top-1.5 h-3 w-3 rounded-full bg-indigo-500 border border-slate-950" />
+                          <div className="rounded-lg bg-slate-900/60 border border-slate-800/80 p-2.5">
                             <span className="text-[10px] uppercase font-bold text-indigo-400">Day {step.day}</span>
-                            <h5 className="font-semibold text-foreground text-xs mt-0.5">{step.subject}</h5>
-                            <p className="text-muted-foreground text-xs mt-1 leading-relaxed">{step.content}</p>
+                            <h5 className="font-semibold text-white text-xs mt-0.5">{step.subject}</h5>
+                            <p className="text-slate-400 text-xs mt-1 leading-relaxed">{step.content}</p>
                           </div>
                         </div>
                       ))}
@@ -458,29 +458,29 @@ export function CampaignBuilder({ onCampaignCreated }: CampaignBuilderProps) {
               </div>
 
               {/* Schedule & Action Bar */}
-              <div className="mt-4 border-t border-border pt-4 grid grid-cols-1 md:grid-cols-2 gap-3 items-end">
+              <div className="mt-4 border-t border-slate-800 pt-4 grid grid-cols-1 md:grid-cols-2 gap-3 items-end">
                 <div className="space-y-1.5">
-                  <label className="text-[10px] uppercase font-bold text-muted-foreground flex items-center gap-1">
+                  <label className="text-[10px] uppercase font-bold text-slate-400 flex items-center gap-1">
                     <Calendar className="h-3 w-3 text-indigo-400" /> Set Broadcast Time (Optional)
                   </label>
                   <input 
                     type="datetime-local" 
                     value={scheduledAt}
                     onChange={(e) => setScheduledAt(e.target.value)}
-                    className="w-full rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs text-foreground focus:border-indigo-500 focus:outline-none"
+                    className="w-full rounded-lg border border-slate-800 bg-slate-950 px-2.5 py-1.5 text-xs text-white focus:border-indigo-500 focus:outline-none"
                   />
                 </div>
                 <div className="flex gap-2">
                   <button
                     onClick={() => setGeneratedStrategy(null)}
-                    className="flex-1 rounded-lg border border-border hover:bg-card py-2 text-xs font-semibold text-foreground transition-all cursor-pointer"
+                    className="flex-1 rounded-lg border border-slate-800 hover:bg-slate-900 py-2 text-xs font-semibold text-slate-300 transition-all cursor-pointer"
                   >
                     Reset Draft
                   </button>
                   <button
                     onClick={handleSaveCampaign}
                     disabled={saving}
-                    className="flex-1 flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 py-2 text-xs font-semibold text-foreground transition-all cursor-pointer disabled:opacity-50"
+                    className="flex-1 flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 py-2 text-xs font-semibold text-white transition-all cursor-pointer disabled:opacity-50"
                   >
                     {saving ? (
                       <div className="h-3 w-3 animate-spin rounded-full border border-white border-t-transparent" />
@@ -493,10 +493,10 @@ export function CampaignBuilder({ onCampaignCreated }: CampaignBuilderProps) {
               </div>
             </div>
           ) : (
-            <div className="flex-1 flex flex-col items-center justify-center p-8 text-center text-muted-foreground">
+            <div className="flex-1 flex flex-col items-center justify-center p-8 text-center text-slate-500">
               <Sparkles className="h-10 w-10 text-slate-750 mb-3 animate-pulse" />
-              <h4 className="text-sm font-semibold text-muted-foreground">Draft Your Perfect Campaign Strategy</h4>
-              <p className="text-xs text-muted-foreground max-w-sm mt-1">
+              <h4 className="text-sm font-semibold text-slate-400">Draft Your Perfect Campaign Strategy</h4>
+              <p className="text-xs text-slate-500 max-w-sm mt-1">
                 Enter your objective and criteria on the left, then click generate. NVIDIA AI will synthesize your copy, email, and workflow instantly.
               </p>
             </div>

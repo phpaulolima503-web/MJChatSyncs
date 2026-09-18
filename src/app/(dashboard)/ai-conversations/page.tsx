@@ -124,16 +124,16 @@ export default function AiConversationsPage() {
   return (
     <div className="space-y-6 max-w-5xl mx-auto pb-10 mt-4">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
         <div>
           <Link href="/ai-router" className="inline-flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 font-semibold mb-2 transition-colors">
             <ArrowLeft className="h-3.5 w-3.5" />
             Back to AI Settings
           </Link>
-          <h1 className="text-2xl font-bold text-foreground tracking-tight flex items-center gap-2">
+          <h1 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
             AI Operations & Analytics
           </h1>
-          <p className="text-sm text-muted-foreground mt-1">
+          <p className="text-sm text-slate-400 mt-1">
             Monitor active bot conversations, review LLM confidence metrics, and audit token consumption usage logs.
           </p>
         </div>
@@ -142,7 +142,7 @@ export default function AiConversationsPage() {
           variant="outline" 
           onClick={loadData}
           disabled={loading}
-          className="bg-card border-border text-foreground hover:bg-muted hover:text-foreground"
+          className="bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white"
         >
           {loading ? (
             <Loader2 className="h-4 w-4 animate-spin mr-2" />
@@ -154,7 +154,7 @@ export default function AiConversationsPage() {
       </div>
 
       {loading ? (
-        <div className="flex flex-col items-center justify-center py-24 text-muted-foreground">
+        <div className="flex flex-col items-center justify-center py-24 text-slate-500">
           <Loader2 className="h-10 w-10 animate-spin text-indigo-500 mb-4" />
           <span className="text-sm">Fetching analytics and logs...</span>
         </div>
@@ -162,40 +162,40 @@ export default function AiConversationsPage() {
         <>
           {/* Stats Grid */}
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            <Card className="bg-card/30 border-border p-4">
-              <span className="text-[10px] uppercase font-bold text-muted-foreground block">Total Handled</span>
-              <span className="text-2xl font-extrabold text-foreground mt-1 block">{totalHandled}</span>
+            <Card className="bg-slate-900/30 border-slate-850 p-4">
+              <span className="text-[10px] uppercase font-bold text-slate-500 block">Total Handled</span>
+              <span className="text-2xl font-extrabold text-white mt-1 block">{totalHandled}</span>
               <span className="text-[10px] text-indigo-400 mt-1 block font-semibold flex items-center gap-0.5">
                 <Sparkles className="h-3 w-3" />
                 Conversations
               </span>
             </Card>
 
-            <Card className="bg-card/30 border-border p-4">
-              <span className="text-[10px] uppercase font-bold text-muted-foreground block">Active Bots</span>
+            <Card className="bg-slate-900/30 border-slate-850 p-4">
+              <span className="text-[10px] uppercase font-bold text-slate-500 block">Active Bots</span>
               <span className="text-2xl font-extrabold text-emerald-400 mt-1 block">{activeAI}</span>
-              <span className="text-[10px] text-muted-foreground mt-1 block font-medium">Currently replies</span>
+              <span className="text-[10px] text-slate-500 mt-1 block font-medium">Currently replies</span>
             </Card>
 
-            <Card className="bg-card/30 border-border p-4">
-              <span className="text-[10px] uppercase font-bold text-muted-foreground block">Handoffs</span>
+            <Card className="bg-slate-900/30 border-slate-850 p-4">
+              <span className="text-[10px] uppercase font-bold text-slate-500 block">Handoffs</span>
               <span className="text-2xl font-extrabold text-amber-400 mt-1 block">{handedOff}</span>
-              <span className="text-[10px] text-muted-foreground mt-1 block font-medium">
+              <span className="text-[10px] text-slate-500 mt-1 block font-medium">
                 Rate: {totalHandled > 0 ? ((handedOff / totalHandled) * 100).toFixed(0) : 0}%
               </span>
             </Card>
 
-            <Card className="bg-card/30 border-border p-4">
-              <span className="text-[10px] uppercase font-bold text-muted-foreground block">Avg Confidence</span>
+            <Card className="bg-slate-900/30 border-slate-850 p-4">
+              <span className="text-[10px] uppercase font-bold text-slate-500 block">Avg Confidence</span>
               <span className="text-2xl font-extrabold text-indigo-400 mt-1 block">{(avgConfidence * 100).toFixed(0)}%</span>
-              <span className="text-[10px] text-muted-foreground mt-1 block font-medium">LLM confidence avg</span>
+              <span className="text-[10px] text-slate-500 mt-1 block font-medium">LLM confidence avg</span>
             </Card>
 
-            <Card className="bg-card/30 border-border p-4">
-              <span className="text-[10px] uppercase font-bold text-muted-foreground block">Tokens Injected</span>
-              <span className="text-2xl font-extrabold text-foreground mt-1 block">{totalTokens.toLocaleString()}</span>
-              <span className="text-[10px] text-muted-foreground mt-1 block font-medium flex items-center gap-0.5">
-                <BarChart3 className="h-3 w-3 text-muted-foreground" />
+            <Card className="bg-slate-900/30 border-slate-850 p-4">
+              <span className="text-[10px] uppercase font-bold text-slate-500 block">Tokens Injected</span>
+              <span className="text-2xl font-extrabold text-slate-200 mt-1 block">{totalTokens.toLocaleString()}</span>
+              <span className="text-[10px] text-slate-500 mt-1 block font-medium flex items-center gap-0.5">
+                <BarChart3 className="h-3 w-3 text-slate-400" />
                 Last 100 events
               </span>
             </Card>
@@ -203,21 +203,21 @@ export default function AiConversationsPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Conversations List Card */}
-            <Card className="bg-card/60 border-border">
+            <Card className="bg-slate-900/40 border-slate-800">
               <CardHeader className="p-5 pb-3">
-                <CardTitle className="text-base text-foreground flex items-center gap-2">
+                <CardTitle className="text-base text-white flex items-center gap-2">
                   <Bot className="h-4.5 w-4.5 text-indigo-400" />
                   AI Handled Conversations
                 </CardTitle>
-                <CardDescription className="text-muted-foreground text-xs">
+                <CardDescription className="text-slate-400 text-xs">
                   Active chats where the AI Agent is reading context and answering.
                 </CardDescription>
               </CardHeader>
               <CardContent className="p-5 pt-0">
                 {conversations.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center py-16 text-muted-foreground border border-dashed border-border rounded-xl bg-background/10">
-                    <Compass className="h-8 w-8 text-muted-foreground mb-2" />
-                    <span className="text-xs font-semibold text-muted-foreground">No active AI chats found</span>
+                  <div className="flex flex-col items-center justify-center py-16 text-slate-500 border border-dashed border-slate-850 rounded-xl bg-slate-950/10">
+                    <Compass className="h-8 w-8 text-slate-700 mb-2" />
+                    <span className="text-xs font-semibold text-slate-400">No active AI chats found</span>
                   </div>
                 ) : (
                   <div className="space-y-3 max-h-[420px] overflow-y-auto pr-1">
@@ -225,11 +225,11 @@ export default function AiConversationsPage() {
                       const contactName = c.conversations?.contacts?.name || c.conversations?.contacts?.phone || "Unknown Customer";
                       const lastMsg = c.conversations?.last_message_text || "No messages";
                       return (
-                        <div key={c.id} className="flex items-start justify-between p-3 rounded-lg border border-border/60 bg-muted/40 hover:bg-muted/50 transition-colors">
+                        <div key={c.id} className="flex items-start justify-between p-3 rounded-lg border border-slate-850/60 bg-slate-950/20 hover:bg-slate-950/40 transition-colors">
                           <div className="min-w-0 pr-3">
-                            <span className="font-semibold text-foreground text-xs block">{contactName}</span>
-                            <span className="text-[10px] text-muted-foreground block truncate mt-1">{lastMsg}</span>
-                            <span className="text-[9px] text-muted-foreground block mt-0.5 uppercase font-mono">
+                            <span className="font-semibold text-slate-200 text-xs block">{contactName}</span>
+                            <span className="text-[10px] text-slate-500 block truncate mt-1">{lastMsg}</span>
+                            <span className="text-[9px] text-slate-600 block mt-0.5 uppercase font-mono">
                               Model: {c.model || c.provider} • Messages: {c.total_ai_messages}
                             </span>
                           </div>
@@ -244,7 +244,7 @@ export default function AiConversationsPage() {
                                 Handoff
                               </Badge>
                             )}
-                            <span className="text-[9px] text-muted-foreground font-medium">
+                            <span className="text-[9px] text-slate-500 font-medium">
                               {c.conversations?.last_message_at ? new Date(c.conversations.last_message_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ""}
                             </span>
                           </div>
@@ -257,45 +257,45 @@ export default function AiConversationsPage() {
             </Card>
 
             {/* Ingestion & Operations Logs */}
-            <Card className="bg-card/60 border-border">
+            <Card className="bg-slate-900/40 border-slate-800">
               <CardHeader className="p-5 pb-3">
-                <CardTitle className="text-base text-foreground flex items-center gap-2">
+                <CardTitle className="text-base text-white flex items-center gap-2">
                   <BarChart3 className="h-4.5 w-4.5 text-indigo-400" />
                   Recent Execution Logs
                 </CardTitle>
-                <CardDescription className="text-muted-foreground text-xs">
+                <CardDescription className="text-slate-400 text-xs">
                   A trace of token consumption, models triggered, and response confidence.
                 </CardDescription>
               </CardHeader>
               <CardContent className="p-5 pt-0">
                 {usageLogs.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center py-16 text-muted-foreground border border-dashed border-border rounded-xl bg-background/10">
-                    <Activity className="h-8 w-8 text-muted-foreground mb-2" />
+                  <div className="flex flex-col items-center justify-center py-16 text-slate-500 border border-dashed border-slate-850 rounded-xl bg-slate-950/10">
+                    <Activity className="h-8 w-8 text-slate-700 mb-2" />
                     <span className="text-xs">No execution logs logged yet</span>
                   </div>
                 ) : (
                   <div className="space-y-2.5 max-h-[420px] overflow-y-auto pr-1">
                     {usageLogs.map((log) => (
-                      <div key={log.id} className="p-2.5 rounded-lg border border-border/60 bg-muted/40 text-foreground text-[11px] space-y-1">
+                      <div key={log.id} className="p-2.5 rounded-lg border border-slate-850/60 bg-slate-950/20 text-slate-300 text-[11px] space-y-1">
                         <div className="flex items-center justify-between">
-                          <span className="font-semibold text-foreground capitalize">
+                          <span className="font-semibold text-slate-200 capitalize">
                             {log.operation}
                           </span>
-                          <span className="text-[9px] text-muted-foreground">
+                          <span className="text-[9px] text-slate-500">
                             {new Date(log.created_at).toLocaleTimeString()}
                           </span>
                         </div>
-                        <div className="flex items-center justify-between text-[10px] text-muted-foreground">
+                        <div className="flex items-center justify-between text-[10px] text-slate-400">
                           <span>
                             {log.provider} • {log.model.split('/').pop()}
                           </span>
-                          <span className="font-mono text-muted-foreground">
+                          <span className="font-mono text-slate-500">
                             {log.total_tokens} tokens
                           </span>
                         </div>
                         {log.confidence !== null && (
                           <div className="flex items-center justify-between text-[9px] pt-0.5">
-                            <span className="text-muted-foreground">Confidence Match:</span>
+                            <span className="text-slate-500">Confidence Match:</span>
                             <span className={log.confidence >= 0.7 ? "text-emerald-400 font-semibold" : "text-amber-400 font-semibold"}>
                               {(log.confidence * 100).toFixed(0)}%
                             </span>

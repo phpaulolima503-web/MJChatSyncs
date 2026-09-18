@@ -191,7 +191,7 @@ export function MessageComposer({
   }
 
   return (
-    <div className="border-t border-border bg-card p-3">
+    <div className="border-t border-slate-800 bg-slate-900 p-3">
       {/* Collision Lock Warning */}
       {locked && (
         <div className="mb-2 flex items-center justify-between rounded-lg bg-rose-500/10 px-3 py-2 border border-rose-500/20 animate-pulse">
@@ -213,7 +213,7 @@ export function MessageComposer({
       )}
 
       {/* Switcher */}
-      <div className="flex gap-4 mb-2 px-1 text-[11px] border-b border-border/40 pb-2">
+      <div className="flex gap-4 mb-2 px-1 text-[11px] border-b border-slate-800/40 pb-2">
         <button
           type="button"
           onClick={() => setIsInternal(false)}
@@ -221,7 +221,7 @@ export function MessageComposer({
             "pb-1 border-b-2 font-semibold transition-all px-1",
             !isInternal
               ? "border-primary text-primary"
-              : "border-transparent text-muted-foreground hover:text-foreground"
+              : "border-transparent text-slate-400 hover:text-slate-200"
           )}
         >
           Reply (WhatsApp)
@@ -233,7 +233,7 @@ export function MessageComposer({
             "pb-1 border-b-2 font-semibold transition-all px-1",
             isInternal
               ? "border-amber-400 text-amber-400"
-              : "border-transparent text-muted-foreground hover:text-foreground"
+              : "border-transparent text-slate-400 hover:text-slate-200"
           )}
         >
           Internal Note (Private)
@@ -280,7 +280,7 @@ export function MessageComposer({
                 selectQuickReply(qr);
                 setRecommendedReplies([]);
               }}
-              className="text-[11px] bg-muted hover:bg-indigo-955 hover:text-indigo-300 border border-border hover:border-indigo-500/35 px-2.5 py-1 rounded-full transition-all text-foreground flex items-center gap-1.5 font-medium"
+              className="text-[11px] bg-slate-800 hover:bg-indigo-955 hover:text-indigo-300 border border-slate-700 hover:border-indigo-500/35 px-2.5 py-1 rounded-full transition-all text-slate-300 flex items-center gap-1.5 font-medium"
               title={qr.message_text}
             >
               <span className="font-semibold font-mono text-[9px] text-primary">{qr.shortcut}</span>
@@ -290,7 +290,7 @@ export function MessageComposer({
           <button
             type="button"
             onClick={() => setRecommendedReplies([])}
-            className="text-[10px] text-muted-foreground hover:text-foreground ml-auto px-1.5 font-medium"
+            className="text-[10px] text-slate-500 hover:text-slate-300 ml-auto px-1.5 font-medium"
           >
             Clear
           </button>
@@ -302,7 +302,7 @@ export function MessageComposer({
           <Button
             variant="ghost"
             size="sm"
-            className="h-9 w-9 p-0 text-muted-foreground hover:text-foreground"
+            className="h-9 w-9 p-0 text-slate-400 hover:text-white"
             onClick={onOpenTemplates}
             disabled={locked}
             title="Send template"
@@ -315,7 +315,7 @@ export function MessageComposer({
             variant="ghost"
             size="sm"
             className={cn(
-              "h-9 w-9 p-0 text-indigo-400 hover:text-indigo-300 hover:bg-muted/60 transition-all rounded-lg",
+              "h-9 w-9 p-0 text-indigo-400 hover:text-indigo-300 hover:bg-slate-800/60 transition-all rounded-lg",
               drafting && "animate-pulse"
             )}
             onClick={handleAiAssist}
@@ -333,7 +333,7 @@ export function MessageComposer({
             type="button"
             variant="ghost"
             size="sm"
-            className="h-9 w-9 p-0 text-indigo-400 hover:text-indigo-300 hover:bg-muted/60 transition-all rounded-lg"
+            className="h-9 w-9 p-0 text-indigo-400 hover:text-indigo-300 hover:bg-slate-800/60 transition-all rounded-lg"
             onClick={() => setShowUpiModal(true)}
             disabled={locked}
             title="Generate UPI Payment Request"
@@ -344,16 +344,16 @@ export function MessageComposer({
 
         <div className="relative flex-1">
           {showQuickReplies && activeQuickReplies.length > 0 && (
-            <div className="absolute bottom-full left-0 mb-2 w-full max-h-[200px] overflow-y-auto rounded-xl border border-border bg-muted shadow-xl z-50">
+            <div className="absolute bottom-full left-0 mb-2 w-full max-h-[200px] overflow-y-auto rounded-xl border border-slate-700 bg-slate-800 shadow-xl z-50">
               <ul className="p-1">
                 {activeQuickReplies.map(qr => (
                   <li key={qr.id}>
                     <button
-                      className="w-full flex flex-col text-left px-3 py-2 hover:bg-muted rounded-lg transition-colors"
+                      className="w-full flex flex-col text-left px-3 py-2 hover:bg-slate-700 rounded-lg transition-colors"
                       onClick={() => selectQuickReply(qr)}
                     >
                       <span className="text-primary font-mono text-xs font-semibold">{qr.shortcut}</span>
-                      <span className="text-foreground text-xs truncate w-full">{qr.message_text}</span>
+                      <span className="text-slate-300 text-xs truncate w-full">{qr.message_text}</span>
                     </button>
                   </li>
                 ))}
@@ -375,10 +375,10 @@ export function MessageComposer({
             disabled={(sessionExpired && !isInternal) || locked}
             rows={1}
             className={cn(
-              "w-full resize-none rounded-xl border px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground outline-none transition-colors block focus:border-primary/50",
+              "w-full resize-none rounded-xl border px-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none transition-colors block focus:border-primary/50",
               isInternal
                 ? "border-amber-500/30 bg-amber-500/5 focus:border-amber-500/50"
-                : "border-border bg-muted focus:border-primary/50",
+                : "border-slate-700 bg-slate-800 focus:border-primary/50",
               ((sessionExpired && !isInternal) || locked) && "cursor-not-allowed opacity-50"
             )}
           />
@@ -400,9 +400,9 @@ export function MessageComposer({
 
       {/* RAZORPAY & BHIM COMPLIANT UPI QR REQUEST MAKER MODAL */}
       {showUpiModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm p-4">
-          <div className="w-full max-w-sm rounded-2xl border border-border bg-card text-foreground overflow-hidden shadow-2xl animate-in fade-in-50 zoom-in-95">
-            <div className="flex items-center justify-between border-b border-border px-4 py-3 bg-muted/50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
+          <div className="w-full max-w-sm rounded-2xl border border-slate-800 bg-slate-900 text-white overflow-hidden shadow-2xl animate-in fade-in-50 zoom-in-95">
+            <div className="flex items-center justify-between border-b border-slate-800 px-4 py-3 bg-slate-950/40">
               <span className="text-xs font-bold text-indigo-400 flex items-center gap-1.5">
                 <QrCode className="h-4 w-4" />
                 BHIM UPI Payment Request Link
@@ -410,51 +410,51 @@ export function MessageComposer({
               <button 
                 type="button"
                 onClick={() => setShowUpiModal(false)} 
-                className="text-muted-foreground hover:text-foreground focus:outline-none"
+                className="text-slate-400 hover:text-white focus:outline-none"
               >
                 <X className="h-4 w-4" />
               </button>
             </div>
             <div className="p-4 space-y-3 text-xs">
               <div className="space-y-1">
-                <label className="text-[10px] text-muted-foreground font-bold uppercase">Merchant UPI ID (VPA)</label>
+                <label className="text-[10px] text-slate-400 font-bold uppercase">Merchant UPI ID (VPA)</label>
                 <input 
                   value={upiVpa}
                   onChange={(e) => setUpiVpa(e.target.value)}
                   placeholder="merchant@upi"
-                  className="w-full bg-background border border-border p-2 text-xs rounded-lg text-foreground font-mono focus:border-indigo-500 focus:outline-none"
+                  className="w-full bg-slate-950 border border-slate-800 p-2 text-xs rounded-lg text-white font-mono focus:border-indigo-500 focus:outline-none"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-2">
                 <div className="space-y-1">
-                  <label className="text-[10px] text-muted-foreground font-bold uppercase">Amount (INR)</label>
+                  <label className="text-[10px] text-slate-400 font-bold uppercase">Amount (INR)</label>
                   <input 
                     value={upiAmount}
                     onChange={(e) => setUpiAmount(e.target.value)}
                     placeholder="e.g. 999"
-                    className="w-full bg-background border border-border p-2 text-xs rounded-lg text-foreground focus:border-indigo-500 focus:outline-none"
+                    className="w-full bg-slate-950 border border-slate-800 p-2 text-xs rounded-lg text-white focus:border-indigo-500 focus:outline-none"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[10px] text-muted-foreground font-bold uppercase">Transaction Note</label>
+                  <label className="text-[10px] text-slate-400 font-bold uppercase">Transaction Note</label>
                   <input 
                     value={upiNote}
                     onChange={(e) => setUpiNote(e.target.value)}
                     placeholder="Order Confirmation"
-                    className="w-full bg-background border border-border p-2 text-xs rounded-lg text-foreground focus:border-indigo-500 focus:outline-none"
+                    className="w-full bg-slate-950 border border-slate-800 p-2 text-xs rounded-lg text-white focus:border-indigo-500 focus:outline-none"
                   />
                 </div>
               </div>
 
-              <div className="h-px bg-muted my-2" />
+              <div className="h-px bg-slate-800 my-2" />
 
               <div className="flex gap-2 justify-end pt-2">
                 <Button 
                   type="button" 
                   variant="outline" 
                   onClick={() => setShowUpiModal(false)}
-                  className="border-border bg-background text-muted-foreground hover:text-foreground text-xs h-8 px-3 rounded-lg"
+                  className="border-slate-800 bg-slate-950 text-slate-400 hover:text-white text-xs h-8 px-3 rounded-lg"
                 >
                   Cancel
                 </Button>
@@ -472,7 +472,7 @@ export function MessageComposer({
                       setTimeout(adjustHeight, 0);
                     }
                   }}
-                  className="bg-indigo-600 hover:bg-indigo-700 text-foreground text-xs h-8 px-4 rounded-lg border-0 font-semibold"
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs h-8 px-4 rounded-lg border-0 font-semibold"
                 >
                   Insert Payment Link
                 </Button>

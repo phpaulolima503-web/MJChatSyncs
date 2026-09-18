@@ -165,20 +165,20 @@ export function LiveChatSimulator() {
   }
 
   return (
-    <div className="rounded-2xl border border-border bg-card/70 p-6 backdrop-blur-xl flex flex-col justify-between">
+    <div className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6 backdrop-blur-xl flex flex-col justify-between">
       <div>
-        <div className="mb-4 flex items-center justify-between border-b border-border pb-4">
+        <div className="mb-4 flex items-center justify-between border-b border-slate-800 pb-4">
           <div>
-            <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
+            <h3 className="text-lg font-bold text-white flex items-center gap-2">
               <Activity className="h-5 w-5 text-indigo-400" />
               UTM, Attribution & Live Chat Simulator
             </h3>
-            <p className="text-xs text-muted-foreground">Test how marketing campaign clicks capture leads and trigger RAG answers</p>
+            <p className="text-xs text-slate-400">Test how marketing campaign clicks capture leads and trigger RAG answers</p>
           </div>
           {contactId && (
             <button 
               onClick={handleReset}
-              className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground border border-border rounded-lg px-2 py-1 bg-background cursor-pointer"
+              className="flex items-center gap-1 text-xs text-slate-400 hover:text-white border border-slate-800 rounded-lg px-2 py-1 bg-slate-950 cursor-pointer"
             >
               <RefreshCw className="h-3 w-3" /> Reset
             </button>
@@ -186,11 +186,11 @@ export function LiveChatSimulator() {
         </div>
 
         {/* Tab Selection */}
-        <div className="mb-4 flex rounded-lg bg-background p-1 border border-card">
+        <div className="mb-4 flex rounded-lg bg-slate-950 p-1 border border-slate-900">
           <button
             onClick={() => setActiveTab('landing')}
             className={`flex-1 rounded-md py-1.5 text-xs font-semibold transition-all cursor-pointer ${
-              activeTab === 'landing' ? 'bg-indigo-600 text-foreground' : 'text-muted-foreground hover:text-foreground'
+              activeTab === 'landing' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-slate-200'
             }`}
           >
             1. Simulate Landing UTM Visit
@@ -198,7 +198,7 @@ export function LiveChatSimulator() {
           <button
             onClick={() => setActiveTab('chat')}
             className={`flex-1 rounded-md py-1.5 text-xs font-semibold transition-all cursor-pointer ${
-              activeTab === 'chat' ? 'bg-indigo-600 text-foreground' : 'text-muted-foreground hover:text-foreground'
+              activeTab === 'chat' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-slate-200'
             }`}
           >
             2. Live Chat Simulator
@@ -210,11 +210,11 @@ export function LiveChatSimulator() {
           <div className="space-y-4">
             <div className="grid grid-cols-3 gap-3">
               <div className="space-y-1">
-                <label className="text-[10px] uppercase font-bold text-muted-foreground">UTM Source</label>
+                <label className="text-[10px] uppercase font-bold text-slate-500">UTM Source</label>
                 <select
                   value={utmSource}
                   onChange={(e) => setUtmSource(e.target.value)}
-                  className="w-full rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs text-foreground focus:border-indigo-500 focus:outline-none"
+                  className="w-full rounded-lg border border-slate-800 bg-slate-950 px-2.5 py-1.5 text-xs text-white focus:border-indigo-500 focus:outline-none"
                 >
                   <option value="Google Ads">Google Ads</option>
                   <option value="Meta Ads">Meta Ads</option>
@@ -225,34 +225,34 @@ export function LiveChatSimulator() {
                 </select>
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] uppercase font-bold text-muted-foreground">UTM Medium</label>
+                <label className="text-[10px] uppercase font-bold text-slate-500">UTM Medium</label>
                 <input 
                   type="text" 
                   value={utmMedium} 
                   onChange={(e) => setUtmMedium(e.target.value)}
-                  className="w-full rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs text-foreground focus:outline-none focus:border-indigo-500"
+                  className="w-full rounded-lg border border-slate-800 bg-slate-950 px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500"
                 />
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] uppercase font-bold text-muted-foreground">UTM Campaign</label>
+                <label className="text-[10px] uppercase font-bold text-slate-500">UTM Campaign</label>
                 <input 
                   type="text" 
                   value={utmCampaign} 
                   onChange={(e) => setUtmCampaign(e.target.value)}
-                  className="w-full rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs text-foreground focus:outline-none focus:border-indigo-500"
+                  className="w-full rounded-lg border border-slate-800 bg-slate-950 px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-1 flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-1.5">
+              <div className="space-y-1 flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-950 px-3 py-1.5">
                 <Globe className="h-4 w-4 text-indigo-400" />
                 <div>
-                  <span className="text-[9px] uppercase font-bold text-muted-foreground block">Device</span>
+                  <span className="text-[9px] uppercase font-bold text-slate-500 block">Device</span>
                   <select 
                     value={deviceType} 
                     onChange={(e) => setDeviceType(e.target.value)}
-                    className="bg-transparent text-xs text-foreground border-none focus:outline-none p-0 cursor-pointer"
+                    className="bg-transparent text-xs text-white border-none focus:outline-none p-0 cursor-pointer"
                   >
                     <option value="Mobile">Mobile (iOS)</option>
                     <option value="Desktop">Desktop (Chrome)</option>
@@ -261,14 +261,14 @@ export function LiveChatSimulator() {
                 </div>
               </div>
 
-              <div className="space-y-1 flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-1.5">
+              <div className="space-y-1 flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-950 px-3 py-1.5">
                 <MapPin className="h-4 w-4 text-indigo-400" />
                 <div>
-                  <span className="text-[9px] uppercase font-bold text-muted-foreground block">Location</span>
+                  <span className="text-[9px] uppercase font-bold text-slate-500 block">Location</span>
                   <select 
                     value={location} 
                     onChange={(e) => setLocation(e.target.value)}
-                    className="bg-transparent text-xs text-foreground border-none focus:outline-none p-0 cursor-pointer"
+                    className="bg-transparent text-xs text-white border-none focus:outline-none p-0 cursor-pointer"
                   >
                     <option value="India">India (IN)</option>
                     <option value="United States">United States (US)</option>
@@ -280,7 +280,7 @@ export function LiveChatSimulator() {
             </div>
 
             {/* Optional Lead Form Submission */}
-            <div className="rounded-xl border border-border/80 bg-background/60 p-4 space-y-3">
+            <div className="rounded-xl border border-slate-800/80 bg-slate-950/60 p-4 space-y-3">
               <span className="text-xs font-semibold text-indigo-400 flex items-center gap-1.5">
                 <UserCheck className="h-3.5 w-3.5" /> Lead Form Capture (Simulate Form Submission)
               </span>
@@ -292,7 +292,7 @@ export function LiveChatSimulator() {
                     placeholder="Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full rounded-lg border border-border bg-background pl-8 pr-2 py-1.5 text-xs text-foreground focus:outline-none focus:border-indigo-500"
+                    className="w-full rounded-lg border border-slate-800 bg-slate-950 pl-8 pr-2 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500"
                   />
                 </div>
                 <div className="relative">
@@ -302,7 +302,7 @@ export function LiveChatSimulator() {
                     placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full rounded-lg border border-border bg-background pl-8 pr-2 py-1.5 text-xs text-foreground focus:outline-none focus:border-indigo-500"
+                    className="w-full rounded-lg border border-slate-800 bg-slate-950 pl-8 pr-2 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500"
                   />
                 </div>
                 <div className="relative">
@@ -312,7 +312,7 @@ export function LiveChatSimulator() {
                     placeholder="Phone"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full rounded-lg border border-border bg-background pl-8 pr-2 py-1.5 text-xs text-foreground focus:outline-none focus:border-indigo-500"
+                    className="w-full rounded-lg border border-slate-800 bg-slate-950 pl-8 pr-2 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500"
                   />
                 </div>
               </div>
@@ -320,7 +320,7 @@ export function LiveChatSimulator() {
 
             <button
               onClick={handleSimulateVisit}
-              className="w-full rounded-xl bg-indigo-600 hover:bg-indigo-500 py-2.5 text-sm font-semibold text-foreground transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-lg shadow-indigo-600/10"
+              className="w-full rounded-xl bg-indigo-600 hover:bg-indigo-500 py-2.5 text-sm font-semibold text-white transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-lg shadow-indigo-600/10"
             >
               <Globe className="h-4 w-4" /> Simulate Campaign Click & Page Visit
             </button>
@@ -330,7 +330,7 @@ export function LiveChatSimulator() {
         {/* TAB 2: LIVE CHAT WINDOW */}
         {activeTab === 'chat' && (
           <div className="space-y-3 flex flex-col">
-            <div className="rounded-xl border border-border bg-background/80 p-3 h-[240px] overflow-y-auto flex flex-col gap-2.5 scrollbar-thin">
+            <div className="rounded-xl border border-slate-800 bg-slate-950/80 p-3 h-[240px] overflow-y-auto flex flex-col gap-2.5 scrollbar-thin">
               {messages.map((msg, idx) => (
                 <div 
                   key={idx} 
@@ -343,15 +343,15 @@ export function LiveChatSimulator() {
                   }`}
                 >
                   {msg.sender === 'system' ? (
-                    <div className="rounded bg-card border border-border px-2 py-1 text-[10px] font-medium text-muted-foreground max-w-[90%] text-center">
+                    <div className="rounded bg-slate-900 border border-slate-800 px-2 py-1 text-[10px] font-medium text-slate-400 max-w-[90%] text-center">
                       {msg.text}
                     </div>
                   ) : (
                     <div 
                       className={`rounded-xl px-3 py-2 text-xs max-w-[80%] leading-relaxed ${
                         msg.sender === 'visitor'
-                          ? 'bg-indigo-600 text-foreground rounded-tr-none'
-                          : 'bg-card border border-border text-foreground rounded-tl-none'
+                          ? 'bg-indigo-600 text-white rounded-tr-none'
+                          : 'bg-slate-900 border border-slate-800 text-slate-200 rounded-tl-none'
                       }`}
                     >
                       {msg.text}
@@ -361,7 +361,7 @@ export function LiveChatSimulator() {
               ))}
               {loading && (
                 <div className="flex justify-start">
-                  <div className="rounded-xl px-3 py-2 text-xs bg-card border border-border text-muted-foreground rounded-tl-none flex items-center gap-1.5">
+                  <div className="rounded-xl px-3 py-2 text-xs bg-slate-900 border border-slate-800 text-slate-400 rounded-tl-none flex items-center gap-1.5">
                     <Sparkles className="h-3.5 w-3.5 text-indigo-400 animate-spin" />
                     Maajanki AI is looking up rates...
                   </div>
@@ -376,19 +376,19 @@ export function LiveChatSimulator() {
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 disabled={loading || handedOff}
-                className="flex-1 rounded-lg border border-border bg-background px-3 py-2 text-xs text-foreground focus:outline-none focus:border-indigo-500 disabled:opacity-50"
+                className="flex-1 rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 disabled:opacity-50"
               />
               <button
                 type="submit"
                 disabled={loading || handedOff || !inputText.trim()}
-                className="rounded-lg bg-indigo-600 hover:bg-indigo-500 p-2 text-foreground disabled:opacity-40 transition-all cursor-pointer"
+                className="rounded-lg bg-indigo-600 hover:bg-indigo-500 p-2 text-white disabled:opacity-40 transition-all cursor-pointer"
               >
                 <Send className="h-3.5 w-3.5" />
               </button>
             </form>
 
-            <div className="flex items-center justify-between border-t border-border pt-2 text-[10px]">
-              <span className="text-muted-foreground flex items-center gap-1">
+            <div className="flex items-center justify-between border-t border-slate-850 pt-2 text-[10px]">
+              <span className="text-slate-500 flex items-center gap-1">
                 <MessageSquare className="h-3 w-3" /> Simulated channel: Website Live Chat
               </span>
               <button

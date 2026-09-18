@@ -28,7 +28,7 @@ interface ConversationListProps {
 const STATUS_COLORS: Record<ConversationStatus, string> = {
   open: "bg-primary",
   pending: "bg-amber-500",
-  closed: "bg-muted-foreground",
+  closed: "bg-slate-500",
 };
 
 const STATUS_FILTER_OPTIONS: { label: string; value: ConversationStatus | "all" }[] = [
@@ -54,7 +54,7 @@ export function ConversationList({
 }: ConversationListProps) {
   const { user } = useAuth();
   const [search, setSearch] = useState("");
-
+  
   // Smart filter states
   const [inboxTab, setInboxTab] = useState<'shared' | 'private' | 'assigned' | 'unassigned' | 'pinned' | 'favorites' | 'unread' | 'spam' | 'blocked' | 'archived' | 'mentioned' | 'resolved' | 'pending' | 'follow_up' | 'recently_active'>('shared');
   const [statusFilter, setStatusFilter] = useState<ConversationStatus | "all">("all");
@@ -261,9 +261,9 @@ export function ConversationList({
   ] as const;
 
   return (
-    <div className="flex h-full w-full flex-col border-r border-sidebar-border bg-sidebar lg:w-80">
+    <div className="flex h-full w-full flex-col border-r border-slate-800 bg-slate-900 lg:w-80">
       {/* Horizontal Tabs */}
-      <div className="flex items-center gap-1 border-b border-sidebar-border bg-sidebar/60 px-2 py-1.5 shrink-0">
+      <div className="flex items-center gap-1 border-b border-slate-800 bg-slate-950/20 px-2 py-1.5 shrink-0">
         <div className="flex flex-1 overflow-x-auto gap-1 select-none scrollbar-none">
         {INBOX_TABS.map((tab) => {
           const isActive = inboxTab === tab.value;
@@ -273,10 +273,10 @@ export function ConversationList({
               type="button"
               onClick={() => setInboxTab(tab.value)}
               className={cn(
-                "h-7 shrink-0 px-2.5 text-[10px] uppercase tracking-wider font-semibold rounded-md transition-all hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                "h-7 shrink-0 px-2.5 text-[10px] uppercase tracking-wider font-semibold rounded-md transition-all hover:bg-slate-800 hover:text-white",
                 isActive
-                  ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm ring-1 ring-sidebar-border"
-                  : "text-muted-foreground"
+                  ? "bg-slate-800 text-white shadow-sm ring-1 ring-slate-700"
+                  : "text-slate-400"
               )}
             >
               {tab.label}
@@ -298,14 +298,14 @@ export function ConversationList({
       </div>
 
       {/* Search + Smart Filters */}
-      <div className="space-y-2 border-b border-sidebar-border p-3">
+      <div className="space-y-2 border-b border-slate-800 p-3">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
           <Input
             value={search}
             onChange={handleSearchChange}
             placeholder="Buscar na caixa de entrada..."
-            className="border-border bg-background pl-9 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary/50"
+            className="border-slate-700 bg-slate-800 pl-9 text-sm text-white placeholder-slate-500 focus:border-primary/50"
           />
         </div>
 
@@ -313,16 +313,16 @@ export function ConversationList({
         <div className="flex flex-wrap gap-1 pt-1">
           {/* Status Filter */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="inline-flex items-center justify-center h-6 gap-1 px-2 text-[10px] font-semibold text-muted-foreground hover:text-foreground rounded-md hover:bg-sidebar-accent border border-sidebar-border bg-sidebar/60">
+            <DropdownMenuTrigger className="inline-flex items-center justify-center h-6 gap-1 px-2 text-[10px] font-semibold text-slate-400 hover:text-white rounded-md hover:bg-slate-800 border border-slate-800 bg-slate-950/20">
                 {activeStatusLabel}
                 <ChevronDown className="h-2.5 w-2.5" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="border-border bg-popover">
+            <DropdownMenuContent align="start" className="border-slate-700 bg-slate-800">
               {STATUS_FILTER_OPTIONS.map((opt) => (
                 <DropdownMenuItem
                   key={opt.value}
                   onClick={() => setStatusFilter(opt.value)}
-                  className={cn("text-xs", statusFilter === opt.value ? "text-primary font-bold" : "text-popover-foreground")}
+                  className={cn("text-xs", statusFilter === opt.value ? "text-primary font-bold" : "text-slate-300")}
                 >
                   {opt.label}
                 </DropdownMenuItem>
@@ -332,12 +332,12 @@ export function ConversationList({
 
           {/* Assignee Filter */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="inline-flex items-center justify-center h-6 gap-1 px-2 text-[10px] font-semibold text-muted-foreground hover:text-foreground rounded-md hover:bg-sidebar-accent border border-sidebar-border bg-sidebar/60">
+            <DropdownMenuTrigger className="inline-flex items-center justify-center h-6 gap-1 px-2 text-[10px] font-semibold text-slate-400 hover:text-white rounded-md hover:bg-slate-800 border border-slate-800 bg-slate-950/20">
                 <User className="h-2.5 w-2.5 mr-0.5" />
                 {activeAssigneeLabel}
                 <ChevronDown className="h-2.5 w-2.5" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="border-border bg-popover max-h-[250px] overflow-y-auto">
+            <DropdownMenuContent align="start" className="border-slate-700 bg-slate-800 max-h-[250px] overflow-y-auto">
               <DropdownMenuItem onClick={() => setAssigneeFilter("all")} className={cn("text-xs", assigneeFilter === "all" && "text-primary font-bold")}>Todos os Agentes</DropdownMenuItem>
               <DropdownMenuItem onClick={() => setAssigneeFilter("me")} className={cn("text-xs", assigneeFilter === "me" && "text-primary font-bold")}>Minhas Conversas (eu)</DropdownMenuItem>
               <DropdownMenuItem onClick={() => setAssigneeFilter("unassigned")} className={cn("text-xs", assigneeFilter === "unassigned" && "text-primary font-bold")}>Não Atribuído</DropdownMenuItem>
@@ -345,7 +345,7 @@ export function ConversationList({
                 <DropdownMenuItem
                   key={p.id}
                   onClick={() => setAssigneeFilter(p.user_id)}
-                  className={cn("text-xs", assigneeFilter === p.user_id ? "text-primary font-bold" : "text-popover-foreground")}
+                  className={cn("text-xs", assigneeFilter === p.user_id ? "text-primary font-bold" : "text-slate-300")}
                 >
                   {p.full_name}
                 </DropdownMenuItem>
@@ -355,17 +355,17 @@ export function ConversationList({
 
           {/* AI / Chat Mode Filter */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="inline-flex items-center justify-center h-6 gap-1 px-2 text-[10px] font-semibold text-muted-foreground hover:text-foreground rounded-md hover:bg-sidebar-accent border border-sidebar-border bg-sidebar/60">
+            <DropdownMenuTrigger className="inline-flex items-center justify-center h-6 gap-1 px-2 text-[10px] font-semibold text-slate-400 hover:text-white rounded-md hover:bg-slate-800 border border-slate-800 bg-slate-950/20">
                 <Bot className="h-2.5 w-2.5 mr-0.5" />
                 {activeAiLabel}
                 <ChevronDown className="h-2.5 w-2.5" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="border-border bg-popover">
+            <DropdownMenuContent align="start" className="border-slate-700 bg-slate-800">
               {AI_FILTER_OPTIONS.map((opt) => (
                 <DropdownMenuItem
                   key={opt.value}
                   onClick={() => setAiFilter(opt.value as any)}
-                  className={cn("text-xs", aiFilter === opt.value ? "text-primary font-bold" : "text-popover-foreground")}
+                  className={cn("text-xs", aiFilter === opt.value ? "text-primary font-bold" : "text-slate-300")}
                 >
                   {opt.label}
                 </DropdownMenuItem>
@@ -375,18 +375,18 @@ export function ConversationList({
 
           {/* Tags Filter */}
           <DropdownMenu>
-            <DropdownMenuTrigger className="inline-flex items-center justify-center h-6 gap-1 px-2 text-[10px] font-semibold text-muted-foreground hover:text-foreground rounded-md hover:bg-sidebar-accent border border-sidebar-border bg-sidebar/60">
+            <DropdownMenuTrigger className="inline-flex items-center justify-center h-6 gap-1 px-2 text-[10px] font-semibold text-slate-400 hover:text-white rounded-md hover:bg-slate-800 border border-slate-800 bg-slate-950/20">
                 <TagIcon className="h-2.5 w-2.5 mr-0.5" />
                 {activeTagLabel}
                 <ChevronDown className="h-2.5 w-2.5" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="border-border bg-popover max-h-[250px] overflow-y-auto">
+            <DropdownMenuContent align="start" className="border-slate-700 bg-slate-800 max-h-[250px] overflow-y-auto">
               <DropdownMenuItem onClick={() => setTagFilter("all")} className={cn("text-xs", tagFilter === "all" && "text-primary font-bold")}>Todas as Etiquetas</DropdownMenuItem>
               {allTags.map((t) => (
                 <DropdownMenuItem
                   key={t.id}
                   onClick={() => setTagFilter(t.id)}
-                  className={cn("text-xs", tagFilter === t.id ? "text-primary font-bold" : "text-popover-foreground")}
+                  className={cn("text-xs", tagFilter === t.id ? "text-primary font-bold" : "text-slate-300")}
                 >
                   <span className="inline-block h-2 w-2 rounded-full mr-2" style={{ backgroundColor: t.color }} />
                   {t.name}
@@ -405,13 +405,13 @@ export function ConversationList({
           </div>
         ) : filtered.length === 0 ? (
           <div className="px-4 py-12 text-center">
-            <p className="text-sm text-muted-foreground">Nenhuma conversa encontrada</p>
+            <p className="text-sm text-slate-500">Nenhuma conversa encontrada</p>
           </div>
         ) : (
           <div className="flex flex-col">
             {filtered.map((conv) => {
               const aiActive = aiConvs.find((a) => a.conversation_id === conv.id)?.ai_active ?? true;
-
+              
               // Resolve tags for this conversation's contact
               const cTags = contactTags
                 .filter((ct) => ct.contact_id === conv.contact_id)
@@ -479,21 +479,21 @@ function ConversationItem({
     const remainingMins = Math.max(0, Math.ceil(SLA_LIMIT_MINS - elapsedMins));
     if (isSlaBreached) {
       slaBadge = (
-        <span className="flex items-center gap-0.5 text-[9px] font-semibold bg-rose-500/10 text-rose-500 dark:text-rose-400 border border-rose-500/20 px-1 py-0.5 rounded">
+        <span className="flex items-center gap-0.5 text-[9px] font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/20 px-1 py-0.5 rounded">
           <Clock className="h-2.5 w-2.5" />
           SLA Estourado ({Math.floor(elapsedMins - SLA_LIMIT_MINS)}m)
         </span>
       );
     } else if (isSlaWarning) {
       slaBadge = (
-        <span className="flex items-center gap-0.5 text-[9px] font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 px-1 py-0.5 rounded">
+        <span className="flex items-center gap-0.5 text-[9px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20 px-1 py-0.5 rounded">
           <Clock className="h-2.5 w-2.5" />
           Alerta de SLA ({remainingMins}m)
         </span>
       );
     } else {
       slaBadge = (
-        <span className="flex items-center gap-0.5 text-[9px] font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 px-1 py-0.5 rounded">
+        <span className="flex items-center gap-0.5 text-[9px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-1 py-0.5 rounded">
           <Clock className="h-2.5 w-2.5" />
           SLA: {remainingMins}m
         </span>
@@ -505,12 +505,12 @@ function ConversationItem({
     <button
       onClick={handleClick}
       className={cn(
-        "flex w-full items-start gap-3 px-3 py-3 text-left transition-colors hover:bg-sidebar-accent/60",
-        isActive && "border-l-2 border-primary bg-sidebar-accent"
+        "flex w-full items-start gap-3 px-3 py-3 text-left transition-colors hover:bg-slate-800/50",
+        isActive && "border-l-2 border-primary bg-slate-800/70"
       )}
     >
       {/* Avatar */}
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-muted text-sm font-medium text-foreground relative">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-700 text-sm font-medium text-white relative">
         {contact?.avatar_url ? (
           <img
             src={contact.avatar_url}
@@ -522,22 +522,22 @@ function ConversationItem({
         )}
         {/* AI active dot badge */}
         {aiActive && (
-          <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-indigo-500 border border-sidebar" title="IA ativa nesta conversa" />
+          <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-indigo-500 border border-slate-900" title="IA ativa nesta conversa" />
         )}
       </div>
 
       {/* Content */}
       <div className="min-w-0 flex-1">
         <div className="flex items-center justify-between gap-2">
-          <span className="truncate text-sm font-medium text-sidebar-foreground flex items-center gap-1">
+          <span className="truncate text-sm font-medium text-white flex items-center gap-1">
             {displayName}
             {conversation.pinned && <Pin className="h-3 w-3 text-primary fill-primary rotate-45 shrink-0" />}
             {conversation.favorite && <Star className="h-3 w-3 text-amber-400 fill-amber-400 shrink-0" />}
           </span>
-          <span className="shrink-0 text-[10px] text-muted-foreground">{timeAgo}</span>
+          <span className="shrink-0 text-[10px] text-slate-500">{timeAgo}</span>
         </div>
         <div className="mt-0.5 flex items-center justify-between gap-2">
-          <p className="truncate text-xs text-muted-foreground">
+          <p className="truncate text-xs text-slate-400">
             {conversation.last_message_text || "Nenhuma mensagem ainda"}
           </p>
           <div className="flex shrink-0 items-center gap-1.5">

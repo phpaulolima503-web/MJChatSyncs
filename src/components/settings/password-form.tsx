@@ -81,13 +81,13 @@ export function PasswordForm() {
   };
 
   return (
-    <Card className="bg-card/60 border-border">
+    <Card className="bg-slate-900/40 border-slate-800">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-foreground">
+        <CardTitle className="flex items-center gap-2 text-white">
           <KeyRound className="size-4 text-primary" />
           Password
         </CardTitle>
-        <CardDescription className="text-muted-foreground">
+        <CardDescription className="text-slate-400">
           Use at least {MIN_PASSWORD} characters. You will stay signed in on
           this device after changing it.
         </CardDescription>
@@ -96,7 +96,7 @@ export function PasswordForm() {
       <CardContent>
         <form onSubmit={onSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="current-password" className="text-foreground">
+            <Label htmlFor="current-password" className="text-slate-200">
               Current password
             </Label>
             <Input
@@ -112,7 +112,7 @@ export function PasswordForm() {
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="new-password" className="text-foreground">
+              <Label htmlFor="new-password" className="text-slate-200">
                 New password
               </Label>
               <Input
@@ -127,7 +127,7 @@ export function PasswordForm() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="confirm-password" className="text-foreground">
+              <Label htmlFor="confirm-password" className="text-slate-200">
                 Confirm new password
               </Label>
               <Input

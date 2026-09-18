@@ -13,8 +13,8 @@ export default async function TemplatesPage() {
   return (
     <div className="p-6 space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-foreground">Workflow Templates</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Start with a pre-built template and customize for your business</p>
+        <h1 className="text-2xl font-bold text-slate-100">Workflow Templates</h1>
+        <p className="mt-1 text-sm text-slate-500">Start with a pre-built template and customize for your business</p>
       </div>
       <TemplateGallery />
     </div>
