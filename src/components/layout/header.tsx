@@ -4,7 +4,15 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/use-auth";
-import { LogOut, Menu, Settings as SettingsIcon, User, Building2, ChevronDown, Sparkles, Plus, PlusCircle, Check, Search, Bell } from "lucide-react";
+import { useTotalUnread } from "@/hooks/use-total-unread";
+import {
+  LogOut, Menu, Settings as SettingsIcon, User, Building2, ChevronDown,
+  Sparkles, Plus, Check, Search, Bell, MessageSquare, LayoutGrid, BarChart3,
+  Users, GitBranch, Settings2, Tag, ListFilter, History, CheckSquare, Zap,
+  Workflow, Radio, Bot, BookOpen, ShoppingCart, MessageCircle, Webhook,
+  Receipt, FileText, CreditCard, Globe, Palette, HelpCircle, Headphones,
+  Shield,
+} from "lucide-react";
 import {
   Avatar,
   AvatarFallback,
@@ -23,6 +31,93 @@ import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { GlobalSearchModal } from "./global-search-modal";
 import { cn } from "@/lib/utils";
+
+// Top nav groups — Papervines-style: a few primary tabs, the long tail of
+// features tucked into dropdowns instead of a full-height side list.
+// Every href here also exists in Sidebar's navItems; that list stays as
+// the mobile drawer / full menu, this is just a second, grouped way in.
+interface TopNavLeaf {
+  href: string;
+  label: string;
+  icon: typeof MessageSquare;
+}
+interface TopNavGroup {
+  key: string;
+  label: string;
+  icon: typeof MessageSquare;
+  /** Single link (Atendimentos) vs a dropdown of sub-items. */
+  href?: string;
+  items?: TopNavLeaf[];
+}
+
+const TOP_NAV_GROUPS: TopNavGroup[] = [
+  { key: "inbox", label: "Atendimentos", icon: MessageSquare, href: "/inbox" },
+  {
+    key: "crm",
+    label: "CRM",
+    icon: Users,
+    items: [
+      { href: "/contacts", label: "Contatos", icon: Users },
+      { href: "/pipelines", label: "Funis", icon: GitBranch },
+      { href: "/pipeline-manager", label: "Gerenciador de Funis", icon: Settings2 },
+      { href: "/conversation-history", label: "Histórico de Atendimentos", icon: History },
+      { href: "/tasks", label: "Tarefas", icon: CheckSquare },
+      { href: "/tags", label: "Etiquetas", icon: Tag },
+      { href: "/segments", label: "Segmentos", icon: ListFilter },
+      { href: "/team", label: "Equipe", icon: Users },
+    ],
+  },
+  {
+    key: "apps",
+    label: "Apps",
+    icon: LayoutGrid,
+    items: [
+      { href: "/automations", label: "Automações", icon: Zap },
+      { href: "/workflows", label: "Fluxos de Trabalho", icon: Workflow },
+      { href: "/workflows/templates", label: "Modelos de Fluxo", icon: Sparkles },
+      { href: "/flows", label: "Fluxos", icon: Workflow },
+      { href: "/broadcasts", label: "Transmissões", icon: Radio },
+      { href: "/templates", label: "Modelos de Mensagem", icon: MessageSquare },
+      { href: "/quick-replies", label: "Respostas Rápidas", icon: MessageSquare },
+      { href: "/ai-router", label: "Roteador de IA", icon: Bot },
+      { href: "/knowledge", label: "Base de Conhecimento", icon: BookOpen },
+      { href: "/commerce", label: "Comércio", icon: ShoppingCart },
+      { href: "/widgets", label: "Widget de Chat", icon: MessageCircle },
+      { href: "/integrations", label: "Integrações", icon: Webhook },
+    ],
+  },
+  {
+    key: "reports",
+    label: "Relatórios",
+    icon: BarChart3,
+    items: [
+      { href: "/analytics/executive", label: "BI Executivo", icon: BarChart3 },
+      { href: "/analytics/sales", label: "Análise de Vendas", icon: BarChart3 },
+      { href: "/analytics/ai-usage", label: "Uso de IA", icon: Bot },
+      { href: "/analytics/reports", label: "Relatórios e Alertas", icon: ListFilter },
+      { href: "/analytics", label: "Análises (Legado)", icon: BarChart3 },
+      { href: "/billing", label: "Faturamento GST", icon: Receipt },
+      { href: "/billing/new", label: "Nova Fatura", icon: FileText },
+      { href: "/gst-reports", label: "Declarações GST", icon: BarChart3 },
+      { href: "/payment-history", label: "Histórico de Pagamentos", icon: CreditCard },
+      { href: "/seo", label: "SEO e Marketing", icon: Globe },
+    ],
+  },
+  {
+    key: "settings",
+    label: "Ajustes",
+    icon: SettingsIcon,
+    items: [
+      { href: "/settings", label: "Configurações", icon: SettingsIcon },
+      { href: "/workspace", label: "Workspace e Marca", icon: Building2 },
+      { href: "/appearance", label: "Aparência", icon: Palette },
+      { href: "/support", label: "Chamados de Suporte", icon: Headphones },
+      { href: "/support/settings", label: "Configurações de Suporte", icon: Settings2 },
+      { href: "/admin", label: "Painel Admin", icon: Shield },
+      { href: "/docs", label: "Ajuda e Documentação", icon: HelpCircle },
+    ],
+  },
+];
 
 const pageTitles: Record<string, string> = {
   "/dashboard": "Painel",
@@ -243,26 +338,116 @@ export function Header({ onOpenSidebar }: HeaderProps) {
     }
   };
 
+  const totalUnread = useTotalUnread();
+
   return (
-    <header className="flex h-14 shrink-0 items-center justify-between gap-3 border-b border-border bg-background px-4 lg:px-6">
-      <div className="flex min-w-0 items-center gap-3">
-        {/* Hamburger — mobile only */}
+    <header className="flex h-14 shrink-0 items-center justify-between gap-3 border-b border-border bg-card px-3 lg:px-4">
+      <div className="flex min-w-0 flex-1 items-center gap-1">
+        {/* Hamburger — opens the full menu (every nav item). Visible on
+            all sizes: on mobile it's the only way in, on desktop it's
+            the "everything else" fallback next to the grouped tabs. */}
         <button
           type="button"
           onClick={onOpenSidebar}
-          aria-label="Abrir menu"
-          className="flex h-10 w-10 items-center justify-center rounded-md text-foreground transition-colors hover:bg-muted hover:text-foreground lg:hidden"
+          aria-label="Abrir menu completo"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-foreground transition-colors hover:bg-muted hover:text-foreground"
         >
           <Menu className="h-5 w-5" />
         </button>
-        
-        <h1 className="hidden sm:block truncate text-base font-semibold text-foreground sm:text-lg mr-2">
-          {title}
-        </h1>
 
-        {/* Workspace Switcher */}
-        <div className="h-4 w-px bg-muted hidden sm:block mr-2" />
-        
+        {/* Brand */}
+        <Link href="/dashboard" className="mr-1 hidden shrink-0 items-center gap-2 pl-1 pr-2 sm:flex">
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+            <MessageSquare className="h-3.5 w-3.5" />
+          </div>
+          <span className="text-sm font-bold text-foreground">CRM</span>
+        </Link>
+
+        {/* Grouped top nav — Papervines-style tabs. Overflow-x scrolls on
+            narrow desktop widths rather than wrapping, so the row never
+            grows past one line. */}
+        <nav
+          aria-label="Navegação principal"
+          className="flex min-w-0 items-center gap-0.5 overflow-x-auto scrollbar-none"
+        >
+          {TOP_NAV_GROUPS.map((group) => {
+            const isSingleLink = !!group.href;
+            const isActive = isSingleLink
+              ? pathname === group.href || pathname.startsWith(group.href!)
+              : (group.items ?? []).some(
+                  (it) => pathname === it.href || pathname.startsWith(it.href),
+                );
+            const showUnreadDot = group.key === "inbox" && totalUnread > 0 && !isActive;
+
+            if (isSingleLink) {
+              return (
+                <Link
+                  key={group.key}
+                  href={group.href!}
+                  className={cn(
+                    "flex shrink-0 items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-medium transition-colors",
+                    isActive
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                  )}
+                >
+                  <group.icon className="h-3.5 w-3.5" />
+                  <span className="hidden md:inline">{group.label}</span>
+                  {showUnreadDot && (
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
+                    </span>
+                  )}
+                </Link>
+              );
+            }
+
+            return (
+              <DropdownMenu key={group.key}>
+                <DropdownMenuTrigger
+                  className={cn(
+                    "flex shrink-0 items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-medium transition-colors focus:outline-none",
+                    isActive
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                  )}
+                >
+                  <group.icon className="h-3.5 w-3.5" />
+                  <span className="hidden md:inline">{group.label}</span>
+                  <ChevronDown className="h-3 w-3 opacity-60" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-64 bg-card border-border text-foreground">
+                  {(group.items ?? []).map((item) => {
+                    const itemActive = pathname === item.href || pathname.startsWith(item.href);
+                    return (
+                      <DropdownMenuItem
+                        key={item.href}
+                        render={
+                          <Link
+                            href={item.href}
+                            className={cn(
+                              "flex items-center gap-2",
+                              itemActive
+                                ? "text-primary"
+                                : "text-foreground focus:bg-muted focus:text-foreground",
+                            )}
+                          />
+                        }
+                      >
+                        <item.icon className="h-3.5 w-3.5" />
+                        {item.label}
+                      </DropdownMenuItem>
+                    );
+                  })}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            );
+          })}
+        </nav>
+      </div>
+
+      <div className="hidden min-w-0 shrink-0 items-center lg:flex">
         <DropdownMenu>
           <DropdownMenuTrigger
             className="flex items-center gap-2 rounded-lg border border-border bg-card/70 px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-muted hover:text-foreground focus:outline-none"
@@ -409,7 +594,7 @@ export function Header({ onOpenSidebar }: HeaderProps) {
                 </AvatarFallback>
               </Avatar>
               <span className={cn(
-                "absolute bottom-0 right-0 block h-2 w-2 rounded-full ring-1 ring-slate-950",
+                "absolute bottom-0 right-0 block h-2 w-2 rounded-full ring-1 ring-card",
                 profile?.availability === 'online' ? 'bg-emerald-555' :
                 profile?.availability === 'busy' ? 'bg-rose-555' :
                 profile?.availability === 'away' ? 'bg-amber-555' :
