@@ -73,19 +73,27 @@ const nextConfig: NextConfig = {
    *     old ones are safe to keep indefinitely in caches.
    *   - /api/*          — no-store. API responses are per-user and
    *     must never be shared across requests at the edge.
-   *   - Everything else — public, brief s-maxage + generous
-   *     stale-while-revalidate. The edge serves instantly from cache
-   *     for the first 5 min, then returns cached content while
-   *     refreshing in the background for up to 24 h. A deploy's
-   *     chunk-hash drift self-heals within ~5 min with no user-
-   *     visible latency.
+   *   - Everything else — no shared/edge caching at all (see below).
    *
    *   Note: dynamic dashboard routes (/inbox, /contacts, /pipelines,
    *   /broadcasts, etc.) are server-rendered per request — Next.js
    *   and Supabase auth already prevent them from being served
-   *   from a shared cache. The s-maxage here is a ceiling; Next.js
-   *   and auth middleware still set `private` / `no-store` for
-   *   per-user responses.
+   *   from a shared cache.
+   *
+   * The previous policy here (`s-maxage=300, stale-while-revalidate`)
+   * caused a worse failure than the one it was written to fix: the
+   * App Router serves two different payload shapes from the *same*
+   * URL — a full HTML document on a hard navigation, and a raw RSC
+   * flight payload (the `0:{"tree":...}` text some users saw) on a
+   * client-side Link navigation — distinguished only by request
+   * headers (`RSC`, `Next-Router-State-Tree`, ...), not the URL.
+   * Next.js sets `Vary` for that, but Hostinger's edge cache keys
+   * purely on URL and ignores it, so after a deploy it was capable of
+   * serving one user's RSC-payload response as another user's full
+   * page load. `s-maxage=0` here means the edge never shares an HTML
+   * response between requests, so that class of cross-contamination
+   * can't happen — only /_next/static/* (genuinely safe, content-
+   * hashed filenames) stays cached at the edge.
    *
    * Security headers are appended via a separate catch-all rule
    * below — Next.js merges headers from every matching rule, so
@@ -103,8 +111,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "Cache-Control",
-            value:
-              "public, max-age=0, s-maxage=300, stale-while-revalidate=86400",
+            value: "public, max-age=0, s-maxage=0, must-revalidate",
           },
         ],
       },
