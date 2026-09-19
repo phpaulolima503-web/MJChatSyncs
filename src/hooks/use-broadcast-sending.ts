@@ -38,6 +38,14 @@ interface BroadcastPayload {
   template: MessageTemplate;
   audience: AudienceConfig;
   variables: Record<string, VariableMapping>;
+  /**
+   * Required whenever `template.header_type` is image/video/document —
+   * Meta needs the actual media reference on every send of such a
+   * template (not just at approval time), or the send fails with
+   * "(#132012) Parameter format does not match format in the created
+   * template". Collected in Step3Personalize.
+   */
+  headerMediaUrl?: string;
 }
 
 interface UseBroadcastSendingReturn {
@@ -450,6 +458,12 @@ export function useBroadcastSending(): UseBroadcastSendingReturn {
               recipients: apiRecipients,
               template_name: payload.template.name,
               template_language: payload.template.language ?? 'en_US',
+              header_media_type:
+                payload.template.header_type &&
+                payload.template.header_type !== 'text'
+                  ? payload.template.header_type
+                  : undefined,
+              header_media_url: payload.headerMediaUrl || undefined,
             }),
           });
 

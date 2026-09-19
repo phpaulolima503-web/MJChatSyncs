@@ -122,6 +122,16 @@ export interface SendTemplateMessageArgs {
   params?: string[]
   /** Meta's message_id of the message being replied to. */
   contextMessageId?: string
+  /**
+   * Required whenever the template's HEADER component is image/video/
+   * document — Meta needs the actual media reference on every send,
+   * not just when the template was submitted for approval. Omitting
+   * this for such a template is why sends failed with
+   * "(#132012) Parameter format does not match format in the created
+   * template": the header component Meta expects was simply missing
+   * from the request.
+   */
+  headerMedia?: { type: 'image' | 'video' | 'document'; link: string }
 }
 
 /**
@@ -139,6 +149,7 @@ export async function sendTemplateMessage(
     language = 'en_US',
     params,
     contextMessageId,
+    headerMedia,
   } = args
   const url = `${META_API_BASE}/${phoneNumberId}/messages`
 
@@ -147,13 +158,23 @@ export async function sendTemplateMessage(
     language: { code: language },
   }
 
+  const components: Record<string, unknown>[] = []
+  if (headerMedia) {
+    components.push({
+      type: 'header',
+      parameters: [
+        { type: headerMedia.type, [headerMedia.type]: { link: headerMedia.link } },
+      ],
+    })
+  }
   if (params && params.length > 0) {
-    template.components = [
-      {
-        type: 'body',
-        parameters: params.map((p) => ({ type: 'text', text: String(p) })),
-      },
-    ]
+    components.push({
+      type: 'body',
+      parameters: params.map((p) => ({ type: 'text', text: String(p) })),
+    })
+  }
+  if (components.length > 0) {
+    template.components = components
   }
 
   const body: Record<string, unknown> = {

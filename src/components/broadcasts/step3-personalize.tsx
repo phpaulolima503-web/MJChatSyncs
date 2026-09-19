@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { ArrowLeft, ArrowRight, Eye, Loader2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Eye, Image as ImageIcon, Loader2 } from 'lucide-react';
 
 type VariableType = 'static' | 'field' | 'custom_field';
 
@@ -25,9 +25,20 @@ interface Step3Props {
   template: MessageTemplate;
   variables: Record<string, VariableMapping>;
   onUpdate: (variables: Record<string, VariableMapping>) => void;
+  /**
+   * Only relevant when `template.header_type` is image/video/document.
+   * Meta requires a media reference on every send of such a template —
+   * omitting it fails with "(#132012) Parameter format does not match
+   * format in the created template", since the header component the
+   * template registration expects is simply missing from the request.
+   */
+  headerMediaUrl: string;
+  onHeaderMediaUrlChange: (url: string) => void;
   onNext: () => void;
   onBack: () => void;
 }
+
+const MEDIA_HEADER_TYPES = new Set(['image', 'video', 'document']);
 
 const contactFields = [
   { value: 'name', label: 'Contact Name' },
@@ -51,9 +62,13 @@ export function Step3Personalize({
   template,
   variables,
   onUpdate,
+  headerMediaUrl,
+  onHeaderMediaUrlChange,
   onNext,
   onBack,
 }: Step3Props) {
+  const needsHeaderMedia =
+    !!template.header_type && MEDIA_HEADER_TYPES.has(template.header_type);
   const [customFields, setCustomFields] = useState<CustomField[]>([]);
   const [loadingFields, setLoadingFields] = useState(true);
   const [firstContact, setFirstContact] = useState<Contact | null>(null);
@@ -192,6 +207,35 @@ export function Step3Personalize({
           values.
         </p>
       </div>
+
+      {needsHeaderMedia && (
+        <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-4">
+          <div className="mb-2 flex items-center gap-2">
+            <ImageIcon className="h-4 w-4 text-primary" />
+            <p className="text-sm font-medium text-white">
+              Header {template.header_type}
+            </p>
+          </div>
+          <p className="mb-3 text-xs text-slate-400">
+            This template&apos;s header is a {template.header_type} — Meta
+            requires a link to it on every send, not just when the template
+            was approved. Paste a public HTTPS URL to the file (e.g. hosted
+            in Supabase Storage or anywhere reachable by Meta).
+          </p>
+          <Input
+            value={headerMediaUrl}
+            onChange={(e) => onHeaderMediaUrlChange(e.target.value)}
+            placeholder={`https://.../header.${template.header_type === 'image' ? 'jpg' : template.header_type === 'video' ? 'mp4' : 'pdf'}`}
+            className="border-slate-700 bg-slate-800 text-white placeholder:text-slate-500"
+          />
+          {!headerMediaUrl.trim() && (
+            <p className="mt-2 text-xs text-amber-300">
+              Required — the send will fail with Meta&apos;s #132012 error
+              without it.
+            </p>
+          )}
+        </div>
+      )}
 
       {placeholders.length === 0 ? (
         <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-6 text-center">
@@ -350,7 +394,7 @@ export function Step3Personalize({
         </Button>
         <Button
           onClick={onNext}
-          disabled={unmappedKeys.length > 0}
+          disabled={unmappedKeys.length > 0 || (needsHeaderMedia && !headerMediaUrl.trim())}
           className="bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
         >
           Next

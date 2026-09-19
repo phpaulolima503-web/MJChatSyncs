@@ -76,7 +76,17 @@ export async function POST(request: Request) {
       template_name,
       template_language,
       template_params,
+      // Only meaningful when the template's own HEADER component is
+      // image/video/document — Meta requires the media reference on
+      // every send of such a template, see sendTemplateMessage.
+      header_media_type,
+      header_media_url,
     } = body
+
+    const headerMedia =
+      header_media_type && header_media_url
+        ? { type: header_media_type as 'image' | 'video' | 'document', link: header_media_url as string }
+        : undefined
 
     // Normalize to a list of {phone, params} regardless of shape.
     let recipients: NewRecipient[]
@@ -157,6 +167,7 @@ export async function POST(request: Request) {
             templateName: template_name,
             language: template_language || 'en_US',
             params: recipient.params ?? [],
+            headerMedia,
           })
           sentMessageId = result.messageId
           lastError = null
