@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
-import { Plus, Trash2, Loader2, RefreshCw } from 'lucide-react';
+import { Plus, Trash2, Loader2, RefreshCw, Image as ImageIcon, Upload } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
@@ -41,7 +41,7 @@ const categoryColors: Record<string, string> = {
 };
 
 const statusColors: Record<string, string> = {
-  Draft: 'bg-slate-600/20 text-slate-400 border-slate-600/30',
+  Draft: 'bg-slate-600/20 text-muted-foreground border-border/30',
   Pending: 'bg-yellow-600/20 text-yellow-400 border-yellow-600/30',
   Approved: 'bg-primary/20 text-primary border-primary/30',
   Rejected: 'bg-red-600/20 text-red-400 border-red-600/30',
@@ -105,6 +105,13 @@ export function TemplateManager() {
   const [saving, setSaving] = useState(false);
   const [syncing, setSyncing] = useState(false);
   const [form, setForm] = useState<TemplateFormData>(emptyForm);
+  // Draft text for the per-template header-media URL field, keyed by
+  // template id — falls back to the persisted value until edited.
+  const [headerMediaDrafts, setHeaderMediaDrafts] = useState<Record<string, string>>({});
+  const [savingHeaderMediaId, setSavingHeaderMediaId] = useState<string | null>(null);
+  const [uploadingHeaderMediaId, setUploadingHeaderMediaId] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const uploadTargetRef = useRef<MessageTemplate | null>(null);
 
   useEffect(() => {
     if (authLoading) return;
@@ -240,6 +247,80 @@ export function TemplateManager() {
     }
   }
 
+  /**
+   * Persists the header-media URL (typed or uploaded) onto the
+   * template row so every future broadcast auto-fills it — the user
+   * shouldn't have to paste this on every campaign send.
+   */
+  async function handleSaveHeaderMedia(template: MessageTemplate) {
+    const url = (headerMediaDrafts[template.id] ?? template.header_media_url ?? '').trim();
+    if (!url) {
+      toast.error('Paste a URL or upload a file first');
+      return;
+    }
+    setSavingHeaderMediaId(template.id);
+    try {
+      const { error } = await supabase
+        .from('message_templates')
+        .update({ header_media_url: url })
+        .eq('id', template.id);
+      if (error) throw error;
+      setTemplates((prev) =>
+        prev.map((t) => (t.id === template.id ? { ...t, header_media_url: url } : t)),
+      );
+      toast.success('Header media saved — future sends will use it automatically');
+    } catch (err) {
+      console.error('Failed to save header media:', err);
+      toast.error('Failed to save header media URL');
+    } finally {
+      setSavingHeaderMediaId(null);
+    }
+  }
+
+  function handleUploadClick(template: MessageTemplate) {
+    uploadTargetRef.current = template;
+    fileInputRef.current?.click();
+  }
+
+  async function handleFileSelected(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    const template = uploadTargetRef.current;
+    e.target.value = '';
+    if (!file || !template || !user) return;
+
+    setUploadingHeaderMediaId(template.id);
+    try {
+      const ext = file.name.split('.').pop() || 'bin';
+      const path = `${user.id}/${template.id}/header-${Date.now()}.${ext}`;
+      const { error: uploadError } = await supabase.storage
+        .from('template-media')
+        .upload(path, file, { upsert: true });
+      if (uploadError) throw uploadError;
+
+      const { data: publicUrlData } = supabase.storage
+        .from('template-media')
+        .getPublicUrl(path);
+      const publicUrl = publicUrlData.publicUrl;
+
+      const { error: updateError } = await supabase
+        .from('message_templates')
+        .update({ header_media_url: publicUrl })
+        .eq('id', template.id);
+      if (updateError) throw updateError;
+
+      setTemplates((prev) =>
+        prev.map((t) => (t.id === template.id ? { ...t, header_media_url: publicUrl } : t)),
+      );
+      setHeaderMediaDrafts((prev) => ({ ...prev, [template.id]: publicUrl }));
+      toast.success('Header media uploaded — future sends will use it automatically');
+    } catch (err) {
+      console.error('Header media upload failed:', err);
+      toast.error(err instanceof Error ? err.message : 'Upload failed');
+    } finally {
+      setUploadingHeaderMediaId(null);
+    }
+  }
+
   async function handleDelete(id: string) {
     try {
       const { error } = await supabase
@@ -266,10 +347,17 @@ export function TemplateManager() {
 
   return (
     <div className="space-y-4 mt-4">
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/png,image/jpeg,image/webp,video/mp4,video/3gpp,application/pdf"
+        className="hidden"
+        onChange={handleFileSelected}
+      />
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div>
-          <h2 className="text-lg font-semibold text-white">Message Templates</h2>
-          <p className="text-sm text-slate-400">
+          <h2 className="text-lg font-semibold text-foreground">Message Templates</h2>
+          <p className="text-sm text-muted-foreground">
             Create and manage your WhatsApp message templates. Meta requires
             every template to be approved in the WhatsApp Manager before it can
             be sent â€” use &quot;Sync from Meta&quot; to pull your approved list.
@@ -280,7 +368,7 @@ export function TemplateManager() {
             variant="outline"
             onClick={handleSyncFromMeta}
             disabled={syncing}
-            className="border-slate-700 bg-transparent text-slate-300 hover:bg-slate-800"
+            className="border-border bg-transparent text-foreground hover:bg-muted"
             title="Pull approved templates from your Meta WhatsApp Business Account"
           >
             <RefreshCw
@@ -302,10 +390,10 @@ export function TemplateManager() {
       </div>
 
       {templates.length === 0 ? (
-        <Card className="bg-slate-900 border-slate-700 ring-0 ring-transparent">
+        <Card className="bg-card border-border ring-0 ring-transparent">
           <CardContent className="flex flex-col items-center justify-center py-12 text-center">
-            <p className="text-slate-400 text-sm">No templates yet.</p>
-            <p className="text-slate-500 text-xs mt-1">Create your first message template to get started.</p>
+            <p className="text-muted-foreground text-sm">No templates yet.</p>
+            <p className="text-muted-foreground text-xs mt-1">Create your first message template to get started.</p>
             <div className="flex gap-3 mt-6">
               <Button onClick={() => { setForm(emptyForm); setDialogOpen(true); }} className="bg-primary hover:bg-primary/90 text-primary-foreground">
                 <Plus className="size-4 mr-2" />
@@ -317,11 +405,11 @@ export function TemplateManager() {
       ) : (
         <div className="grid gap-3">
           {templates.map((template) => (
-            <Card key={template.id} className="bg-slate-900 border-slate-700 ring-0 ring-transparent">
+            <Card key={template.id} className="bg-card border-border ring-0 ring-transparent">
               <CardContent className="flex items-start justify-between pt-4">
                 <div className="space-y-2 min-w-0 flex-1">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="font-medium text-white">{template.name}</h3>
+                    <h3 className="font-medium text-foreground">{template.name}</h3>
                     <Badge
                       className={`text-xs border ${categoryColors[template.category] || ''}`}
                     >
@@ -333,19 +421,80 @@ export function TemplateManager() {
                       {template.status || 'Draft'}
                     </Badge>
                     {template.language && (
-                      <span className="text-xs text-slate-500 uppercase">{template.language}</span>
+                      <span className="text-xs text-muted-foreground uppercase">{template.language}</span>
                     )}
                   </div>
-                  <p className="text-sm text-slate-400 line-clamp-2">{template.body_text}</p>
+                  <p className="text-sm text-muted-foreground line-clamp-2">{template.body_text}</p>
                   {template.footer_text && (
-                    <p className="text-xs text-slate-500 italic">{template.footer_text}</p>
+                    <p className="text-xs text-muted-foreground italic">{template.footer_text}</p>
                   )}
+                  {template.header_type &&
+                    ['image', 'video', 'document'].includes(template.header_type) && (
+                      <div className="mt-1 rounded-lg border border-border bg-muted/40 p-3">
+                        <div className="mb-2 flex items-center gap-2">
+                          <ImageIcon className="size-3.5 text-primary" />
+                          <p className="text-xs font-medium text-foreground">
+                            Header media ({template.header_type})
+                          </p>
+                        </div>
+                        <p className="mb-2 text-[11px] text-muted-foreground">
+                          Meta requires this file on every send. Set it once
+                          here and every broadcast using this template will
+                          include it automatically — no need to paste it
+                          again in the campaign wizard.
+                        </p>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <Input
+                            value={headerMediaDrafts[template.id] ?? template.header_media_url ?? ''}
+                            onChange={(e) =>
+                              setHeaderMediaDrafts((prev) => ({
+                                ...prev,
+                                [template.id]: e.target.value,
+                              }))
+                            }
+                            placeholder="https://... public URL"
+                            className="h-8 min-w-[200px] flex-1 bg-background border-border text-foreground placeholder:text-muted-foreground text-xs"
+                          />
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handleUploadClick(template)}
+                            disabled={uploadingHeaderMediaId === template.id}
+                            className="h-8 border-border bg-transparent text-foreground hover:bg-muted"
+                          >
+                            {uploadingHeaderMediaId === template.id ? (
+                              <Loader2 className="size-3.5 animate-spin" />
+                            ) : (
+                              <Upload className="size-3.5" />
+                            )}
+                            Upload
+                          </Button>
+                          <Button
+                            size="sm"
+                            onClick={() => handleSaveHeaderMedia(template)}
+                            disabled={savingHeaderMediaId === template.id}
+                            className="h-8 bg-primary text-primary-foreground hover:bg-primary/90"
+                          >
+                            {savingHeaderMediaId === template.id ? (
+                              <Loader2 className="size-3.5 animate-spin" />
+                            ) : (
+                              'Save'
+                            )}
+                          </Button>
+                        </div>
+                        {template.header_media_url && (
+                          <p className="mt-1.5 text-[11px] text-primary">
+                            ✓ Saved — sends will include this file automatically
+                          </p>
+                        )}
+                      </div>
+                    )}
                 </div>
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={() => handleDelete(template.id)}
-                  className="text-slate-400 hover:text-red-400 hover:bg-red-950/30 shrink-0 ml-2"
+                  className="text-muted-foreground hover:text-red-400 hover:bg-red-950/30 shrink-0 ml-2"
                 >
                   <Trash2 className="size-4" />
                 </Button>
@@ -357,40 +506,40 @@ export function TemplateManager() {
 
       {/* New Template Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="bg-slate-900 border-slate-700 sm:max-w-lg">
+        <DialogContent className="bg-card border-border sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle className="text-white">New Message Template</DialogTitle>
-            <DialogDescription className="text-slate-400">
+            <DialogTitle className="text-foreground">New Message Template</DialogTitle>
+            <DialogDescription className="text-muted-foreground">
               Create a new WhatsApp message template.
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4 py-2">
             <div className="space-y-2">
-              <Label className="text-slate-300">Template Name</Label>
+              <Label className="text-foreground">Template Name</Label>
               <Input
                 placeholder="e.g. order_confirmation"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-500"
+                className="bg-muted border-border text-foreground placeholder:text-muted-foreground"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label className="text-slate-300">Category</Label>
+                <Label className="text-foreground">Category</Label>
                 <Select
                   value={form.category}
                   onValueChange={(val) =>
                     setForm({ ...form, category: val as MessageTemplate['category'] })
                   }
                 >
-                  <SelectTrigger className="w-full bg-slate-800 border-slate-700 text-white">
+                  <SelectTrigger className="w-full bg-muted border-border text-foreground">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-slate-800 border-slate-700">
+                  <SelectContent className="bg-muted border-border">
                     {CATEGORIES.map((cat) => (
-                      <SelectItem key={cat} value={cat} className="text-white focus:bg-slate-700 focus:text-white">
+                      <SelectItem key={cat} value={cat} className="text-foreground focus:bg-muted focus:text-foreground">
                         {cat}
                       </SelectItem>
                     ))}
@@ -399,20 +548,20 @@ export function TemplateManager() {
               </div>
 
               <div className="space-y-2">
-                <Label className="text-slate-300">Language</Label>
+                <Label className="text-foreground">Language</Label>
                 <Input
                   list="template-language-codes"
                   placeholder="en_US"
                   value={form.language}
                   onChange={(e) => setForm({ ...form, language: e.target.value })}
-                  className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-500"
+                  className="bg-muted border-border text-foreground placeholder:text-muted-foreground"
                 />
                 <datalist id="template-language-codes">
                   {COMMON_LANGUAGE_CODES.map((code) => (
                     <option key={code} value={code} />
                   ))}
                 </datalist>
-                <p className="text-[11px] text-slate-500">
+                <p className="text-[11px] text-muted-foreground">
                   Must match the exact language code the template is approved
                   under on Meta â€” e.g. <code>en_US</code> and <code>en</code>{' '}
                   are distinct.
@@ -421,20 +570,20 @@ export function TemplateManager() {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-slate-300">Header Type</Label>
+              <Label className="text-foreground">Header Type</Label>
               <Select
                 value={form.header_type}
                 onValueChange={(val) => setForm({ ...form, header_type: val || '' })}
               >
-                <SelectTrigger className="w-full bg-slate-800 border-slate-700 text-white">
+                <SelectTrigger className="w-full bg-muted border-border text-foreground">
                   <SelectValue placeholder="None" />
                 </SelectTrigger>
-                <SelectContent className="bg-slate-800 border-slate-700">
-                  <SelectItem value="none" className="text-white focus:bg-slate-700 focus:text-white">
+                <SelectContent className="bg-muted border-border">
+                  <SelectItem value="none" className="text-foreground focus:bg-muted focus:text-foreground">
                     None
                   </SelectItem>
                   {HEADER_TYPES.map((type) => (
-                    <SelectItem key={type} value={type} className="text-white focus:bg-slate-700 focus:text-white">
+                    <SelectItem key={type} value={type} className="text-foreground focus:bg-muted focus:text-foreground">
                       {type.charAt(0).toUpperCase() + type.slice(1)}
                     </SelectItem>
                   ))}
@@ -444,43 +593,43 @@ export function TemplateManager() {
 
             {form.header_type === 'text' && (
               <div className="space-y-2">
-                <Label className="text-slate-300">Header Text</Label>
+                <Label className="text-foreground">Header Text</Label>
                 <Input
                   placeholder="e.g. Order Confirmation"
                   value={form.header_content}
                   onChange={(e) => setForm({ ...form, header_content: e.target.value })}
-                  className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-500"
+                  className="bg-muted border-border text-foreground placeholder:text-muted-foreground"
                 />
               </div>
             )}
 
             <div className="space-y-2">
-              <Label className="text-slate-300">Body Text</Label>
+              <Label className="text-foreground">Body Text</Label>
               <Textarea
                 placeholder="Enter your template message body. Use {{1}}, {{2}} for variables."
                 value={form.body_text}
                 onChange={(e) => setForm({ ...form, body_text: e.target.value })}
                 rows={4}
-                className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-500 resize-none"
+                className="bg-muted border-border text-foreground placeholder:text-muted-foreground resize-none"
               />
             </div>
 
             <div className="space-y-2">
-              <Label className="text-slate-300">Footer Text</Label>
+              <Label className="text-foreground">Footer Text</Label>
               <Input
                 placeholder="Optional footer text"
                 value={form.footer_text}
                 onChange={(e) => setForm({ ...form, footer_text: e.target.value })}
-                className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-500"
+                className="bg-muted border-border text-foreground placeholder:text-muted-foreground"
               />
             </div>
           </div>
 
-          <DialogFooter className="bg-slate-900 border-slate-700">
+          <DialogFooter className="bg-card border-border">
             <Button
               variant="outline"
               onClick={() => setDialogOpen(false)}
-              className="border-slate-700 text-slate-300 hover:bg-slate-800"
+              className="border-border text-foreground hover:bg-muted"
             >
               Cancel
             </Button>

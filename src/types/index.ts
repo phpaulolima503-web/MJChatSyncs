@@ -173,6 +173,11 @@ export interface MessageTemplate {
   language?: string;
   header_type?: 'text' | 'image' | 'video' | 'document';
   header_content?: string;
+  // Only meaningful when header_type is image/video/document. Meta
+  // requires this media reference on every send, so it's captured
+  // once here (Settings -> Message Templates) instead of asked for
+  // on every broadcast.
+  header_media_url?: string;
   body_text: string;
   footer_text?: string;
   buttons?: Record<string, unknown>[];

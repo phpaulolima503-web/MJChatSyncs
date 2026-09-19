@@ -216,12 +216,23 @@ export function Step3Personalize({
               Header {template.header_type}
             </p>
           </div>
-          <p className="mb-3 text-xs text-slate-400">
-            This template&apos;s header is a {template.header_type} — Meta
-            requires a link to it on every send, not just when the template
-            was approved. Paste a public HTTPS URL to the file (e.g. hosted
-            in Supabase Storage or anywhere reachable by Meta).
-          </p>
+          {template.header_media_url ? (
+            <p className="mb-3 text-xs text-emerald-400">
+              ✓ Loaded automatically from this template&apos;s saved media
+              (set in Settings → Message Templates). No action needed —
+              edit below only if you want to use a different file just for
+              this campaign.
+            </p>
+          ) : (
+            <p className="mb-3 text-xs text-slate-400">
+              This template&apos;s header is a {template.header_type} — Meta
+              requires a link to it on every send, not just when the
+              template was approved. Paste a public HTTPS URL below, or{' '}
+              <strong>save it once in Settings → Message Templates</strong>{' '}
+              so future campaigns using this template fill it in
+              automatically.
+            </p>
+          )}
           <Input
             value={headerMediaUrl}
             onChange={(e) => onHeaderMediaUrlChange(e.target.value)}

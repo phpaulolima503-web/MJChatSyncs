@@ -184,7 +184,13 @@ export default function NewBroadcastPage() {
           {currentStep === 0 && (
             <Step1ChooseTemplate
               selectedTemplate={template}
-              onSelect={setTemplate}
+              onSelect={(t) => {
+                setTemplate(t);
+                // Auto-fill from the value saved once in Settings ->
+                // Message Templates, so the operator doesn't have to
+                // paste it again on every campaign.
+                setHeaderMediaUrl(t.header_media_url ?? '');
+              }}
               onNext={() => setCurrentStep(1)}
               onBack={() => router.push('/broadcasts')}
             />
